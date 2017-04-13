@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/lifting_stats"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Lifting Stats" />
+        <item
+            android:id="@+id/body_stats"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Body Stats" />
+        <item
+            android:id="@+id/workout_menu"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Workouts" />
+        <item
+            android:id="@+id/exercise_menu"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Exercises" />
+        <item
+            android:id="@+id/calenderBtn"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Calender" />
+    </group>
+
+    <item android:title="Communicate">//delete this
+        <menu>
+            <item
+                android:id="@+id/nav"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Calender" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
