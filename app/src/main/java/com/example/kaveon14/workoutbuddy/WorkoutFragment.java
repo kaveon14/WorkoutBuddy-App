@@ -10,10 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kaveon14.workoutbuddy.dummy.DummyContent;
-import com.example.kaveon14.workoutbuddy.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent;
+import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
 
 /**
  * A fragment representing a list of Items.
@@ -69,7 +67,7 @@ public class WorkoutFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyWorkoutRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyWorkoutRecyclerViewAdapter(WorkoutContent.ITEMS, mListener));
         }
         return view;
     }
@@ -104,6 +102,6 @@ public class WorkoutFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(WorkoutItem item);
     }
 }

@@ -7,21 +7,21 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.WorkoutFragment.OnListFragmentInteractionListener;
-import com.example.kaveon14.workoutbuddy.dummy.DummyContent.DummyItem;
+import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link WorkoutItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MyWorkoutRecyclerViewAdapter extends RecyclerView.Adapter<MyWorkoutRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<WorkoutItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyWorkoutRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyWorkoutRecyclerViewAdapter(List<WorkoutItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -60,7 +60,7 @@ public class MyWorkoutRecyclerViewAdapter extends RecyclerView.Adapter<MyWorkout
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public WorkoutItem mItem;
 
         public ViewHolder(View view) {
             super(view);
