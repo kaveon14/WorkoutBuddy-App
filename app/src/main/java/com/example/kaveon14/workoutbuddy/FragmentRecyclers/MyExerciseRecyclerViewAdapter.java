@@ -1,14 +1,15 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.FragmentRecyclers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.example.kaveon14.workoutbuddy.ExerciseFragment.OnListFragmentInteractionListener;
+import com.example.kaveon14.workoutbuddy.Fragments.ExerciseFragment.OnListFragmentInteractionListener;
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
-import java.util.List;
+import com.example.kaveon14.workoutbuddy.R;
 
+import java.util.List;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link ExerciseItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
@@ -28,6 +29,7 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_exercise, parent, false);
+
         return new ViewHolder(view);
     }
 

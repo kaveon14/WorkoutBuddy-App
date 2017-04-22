@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import static com.example.kaveon14.workoutbuddy.WorkoutNames.standardWorkouts;
-import static com.example.kaveon14.workoutbuddy.WorkoutNames.workoutNames;
+
+import static com.example.kaveon14.workoutbuddy.FragmentTextHandling.WorkoutNames.workoutNames;
 
 /**
  * Helper class for providing sample content for user interfaces created by
@@ -40,8 +40,6 @@ public class WorkoutContent {
     }
 
     private static WorkoutItem createDummyItem(int position) {
-        System.out.println("wtf: "+workoutNames.get(position-1));
-        System.out.println("pos: "+position);
         return new WorkoutItem(String.valueOf(position), workoutNames.remove(position-1), makeDetails(position));
     }
 

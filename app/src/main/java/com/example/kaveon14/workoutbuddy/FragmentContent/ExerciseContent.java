@@ -1,13 +1,11 @@
 package com.example.kaveon14.workoutbuddy.FragmentContent;
 
 import com.example.kaveon14.workoutbuddy.MainActivity;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 /**
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
@@ -15,10 +13,6 @@ import java.util.Map;
  * TODO: Replace all uses of this class before publishing your app.
  */
 public class ExerciseContent {//change name (this one is for exercises)
-
-   static ArrayList<String> x = new ArrayList<String>();
-
-
     /**
      * An array of sample (dummy) items.
      */
@@ -27,9 +21,9 @@ public class ExerciseContent {//change name (this one is for exercises)
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public static final Map<String, ExerciseItem> ITEM_MAP = new HashMap<String, ExerciseItem>();
+    public static final Map<String, ExerciseItem> EXERCISE_ITEM_MAP = new HashMap<String, ExerciseItem>();
 
-    private static final int Row_Count = 5;
+    private static final int Row_Count = 40;
 
     static {
         // Add some sample items.
@@ -44,14 +38,11 @@ public class ExerciseContent {//change name (this one is for exercises)
 
     private static void addItem(ExerciseItem item) {
         ITEMS.add(item);
-        ITEM_MAP.put(item.id, item);
+        EXERCISE_ITEM_MAP.put(item.id, item);
     }
     
 
     private static ExerciseItem createDummyItem(int position) throws IOException {
-        //change name to exercise name(use an array or other DS)
-        //try to delete left hand numbers
-       // System.out.println("wtf: "+MainActivity.exerciseNames.remove(position-1));
         return new ExerciseItem(String.valueOf(position), MainActivity.exerciseNames.remove(position-1) , makeDetails(position));
     }
 
@@ -83,3 +74,7 @@ public class ExerciseContent {//change name (this one is for exercises)
         }
     }
 }
+//store R.mimpmap number in txt file in order with exercises
+//do the above once, most likely the old fashioned way
+//take the ints and put them in a map
+//just like the exercise descriptions being set

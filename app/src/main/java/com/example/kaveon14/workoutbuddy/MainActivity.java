@@ -1,7 +1,7 @@
 package com.example.kaveon14.workoutbuddy;
 
 import android.app.FragmentTransaction;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,26 +14,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import static com.example.kaveon14.workoutbuddy.Fragments.BlankFragment.setContext;
 import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
-import java.util.Hashtable;
+import com.example.kaveon14.workoutbuddy.FragmentTextHandling.ExerciseDescriptions;
+import com.example.kaveon14.workoutbuddy.FragmentTextHandling.ExerciseNames;
+import com.example.kaveon14.workoutbuddy.Fragments.BlankFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.ExerciseFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.WorkoutFragment;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import static com.example.kaveon14.workoutbuddy.WorkoutNames.standardWorkouts;
+import static com.example.kaveon14.workoutbuddy.FragmentTextHandling.WorkoutNames.standardWorkouts;
 
-//content main == first page
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ExerciseFragment.OnListFragmentInteractionListener,
-        WorkoutFragment.OnListFragmentInteractionListener {
-//create class to handle all functions
-
-    public static final String TAG = MainActivity.class.getSimpleName();
+        WorkoutFragment.OnListFragmentInteractionListener,BlankFragment.OnFragmentInteractionListener {
     private ExerciseNames exerciseObject;
     public static  List<String> exerciseNames = new LinkedList<>();
     private FragmentTransaction fragmentTransaction;
     private ExerciseFragment exercise_frag = new ExerciseFragment();
     private WorkoutFragment workout_frag = new WorkoutFragment();
+    private BlankFragment blank_frag = new BlankFragment();
+    public static ExerciseItem exerciseItem = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +44,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        exerciseObject = new ExerciseNames(this,"ExerciseNames.txt");
-        exerciseNames = exerciseObject.readFile();
-        standardWorkouts();
-        //for (String string : exerciseNames) {//not needed
-          //  Log.d(TAG, string);
-        //}
-        setFloatingButton();
-        setDrawerLayout(toolbar);
-        setNavigationView();
+        set_GUI_Elements(toolbar);
+        setExerciseContent();
+        addFragments();
+        ExerciseImages ex = new ExerciseImages(this);
+        ex.setImageMap();
     }
 
     @Override
@@ -57,10 +56,12 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }  else {
             super.onBackPressed();
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
-    @Override//possibly split up into seperate statements
+    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -97,23 +98,21 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ExerciseItem item) {
-
+        exerciseItem = item;
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.hide(exercise_frag);
+        fragmentTransaction.add(R.id.blank_fragment,blank_frag);
+        fragmentTransaction.commit();
     }
 
     @Override
     public void onListFragmentInteraction(WorkoutItem item) {
-
+        System.out.println("wk: "+item.toString());
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri){}
 
-
-    //zero put all this in new class and hide details
-    //first when in fragment allow back press to previous page
-    //second create a home button
-    //third allow items in list to open new page with associated details(fragment of main activity)
-    //fourth start database
-
-    //functions below are exclusively for the onCreate method
     private void setDrawerLayout(Toolbar toolbar) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -128,8 +127,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setFloatingButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);//email button delete? user for
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton homeBtn = (FloatingActionButton) findViewById(R.id.home_button);//email button delete? user for
+        homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {//possible home button
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -138,26 +137,25 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-   //thw functions below are exclusively for the onNavigationItemSelected method
-   private void navigationMenuButton(int id) {
-       switch (id) {
-           case R.id.lifting_stats:
-               liftingStatsButton();
-               break;
-           case R.id.body_stats:
-               bodyStatsButton();
-               break;
-           case R.id.workout_menu:
-               workoutMenuButton();
-               break;
-           case R.id.exercise_menu:
-               exerciseMenuButton(id);
-               break;
-           case R.id.calenderBtn:
-               calenderButton();
-               break;
-       }
-   }
+    public void navigationMenuButton(int id) {
+        switch (id) {
+            case R.id.lifting_stats:
+                liftingStatsButton();
+                break;
+            case R.id.body_stats:
+                bodyStatsButton();
+                break;
+            case R.id.workout_menu:
+                workoutMenuButton();
+                break;
+            case R.id.exercise_menu:
+                exerciseMenuButton(id);
+                break;
+            case R.id.calenderBtn:
+                calenderButton();
+                break;
+        }
+    }
 
     private void liftingStatsButton() {
         System.out.println("lifting stats");
@@ -168,33 +166,72 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void workoutMenuButton() {
-        workout_frag = WorkoutFragment.newInstance(1);
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(exercise_frag);
-        fragmentTransaction.add(R.id.workout_fragment,workout_frag);
+        if(exercise_frag.isVisible()) {
+            fragmentTransaction.hide(exercise_frag);
+            fragmentTransaction.show(workout_frag);
+        } else if(blank_frag.isVisible()) {
+            fragmentTransaction.hide(blank_frag);
+            fragmentTransaction.show(workout_frag);
+        } else {
+            fragmentTransaction.show(workout_frag);
+        }
         fragmentTransaction.commit();
     }
 
     private void exerciseMenuButton(int id) {
-        exercise_frag =  ExerciseFragment.newInstance(1);
-       // fragmentTransaction.hide(workout_frag);
         fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(workout_frag);
-        fragmentTransaction.add(R.id.exercise_fragment,exercise_frag);//change support.v4 to app.Fragment
+        if(workout_frag.isVisible()) {
+            fragmentTransaction.hide(workout_frag);
+            fragmentTransaction.show(exercise_frag);
+        } else if(blank_frag.isVisible()) {
+            fragmentTransaction.hide(blank_frag);
+            fragmentTransaction.show(exercise_frag);
+        } else {
+            fragmentTransaction.show(exercise_frag);
+        }
         fragmentTransaction.commit();
     }
 
-    private void calenderButton() {
-        System.out.println("calender");
+    private boolean calenderButton() {
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        if(exercise_frag.isVisible()) {
+            fragmentTransaction.hide(exercise_frag);
+            fragmentTransaction.show(workout_frag);
+            fragmentTransaction.commit();
+            return true;
+        } else if(workout_frag.isVisible()) {
+            fragmentTransaction.hide(workout_frag);
+            fragmentTransaction.show(exercise_frag);
+            fragmentTransaction.commit();
+            return true;
+        }
+        return false;
+
     }
 
-    public void testMap() {
-        Map<String,String> exercieses = new Hashtable<>();
-
-        exercieses.put("bench press","this is a bench press");
-        exercieses.put("back squat","this is a back squat");
-        exercieses.put("front squat","this is a front squat");
-        System.out.println("test: "+exercieses.get("back squat"));//yes it works as expected
-
+    private void addFragments() {
+        fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.exercise_fragment,exercise_frag);
+        fragmentTransaction.hide(exercise_frag);
+        fragmentTransaction.add(R.id.workout_fragment,workout_frag);
+        fragmentTransaction.hide(workout_frag);
+        fragmentTransaction.commit();
     }
+
+    private void set_GUI_Elements(Toolbar toolbar) {
+        setFloatingButton();
+        setDrawerLayout(toolbar);
+        setNavigationView();
+    }
+
+    private void setExerciseContent() {
+        setContext(this);
+        standardWorkouts();
+        exerciseObject = new ExerciseNames(this,"ExerciseNames.txt");
+        exerciseNames = exerciseObject.readFile();
+        ExerciseDescriptions ex = new ExerciseDescriptions(this);
+        ex.setExerciseDescriptions();
+    }
+
 }
