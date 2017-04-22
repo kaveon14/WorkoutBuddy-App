@@ -1,7 +1,6 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.Fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +12,11 @@ import android.view.ViewGroup;
 
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent;
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
+import com.example.kaveon14.workoutbuddy.FragmentRecyclers.MyExerciseRecyclerViewAdapter;
+import com.example.kaveon14.workoutbuddy.MainActivity;
+import com.example.kaveon14.workoutbuddy.R;
+
+import java.lang.reflect.Field;
 
 
 /**
@@ -87,6 +91,7 @@ public class ExerciseFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+
         mListener = null;
     }
 

@@ -1,6 +1,8 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.Fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -8,8 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.example.kaveon14.workoutbuddy.ExerciseImages;
+import com.example.kaveon14.workoutbuddy.MainActivity;
+import com.example.kaveon14.workoutbuddy.R;
+
 import java.util.Hashtable;
 import java.util.Map;
+
+import static com.example.kaveon14.workoutbuddy.ExerciseImages.EXERCISE_IMAGE_MAP;
 
 
 /**
@@ -64,7 +74,6 @@ public class BlankFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        testMap();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -74,11 +83,17 @@ public class BlankFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_blank, container, false);
-        //change text size
-        EditText textBox = (EditText) BlankFragment.view.findViewById(R.id.exerciseTextDisplay);
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+
+        String string_image_id = EXERCISE_IMAGE_MAP.get(MainActivity.exerciseItem.id);
+        final int num_image_id= Integer.valueOf(string_image_id);
+        Bitmap bitmap = BitmapFactory.decodeResource(view.getResources(),num_image_id);
+        imageView.setImageBitmap(bitmap);
+
+        EditText textBox = (EditText) view.findViewById(R.id.exerciseTextDisplay);
         textBox.setText(exercisesDescriptions.get(MainActivity.exerciseItem.id));
+
         return view;
     }
 
@@ -106,14 +121,6 @@ public class BlankFragment extends Fragment {
         mListener = null;
     }
 
-    public void testMap() {//pus in different class
-       // exercisesDescriptions.put("bench press"," this is a bench press" +
-          //      "\n it is a good exercise");//test string format anf yes it works
-        //exercisesDescriptions.put("back squat"," this is a back squat");
-        //exercisesDescriptions.put("front squat"," this is a front squat");
-        //System.out.println("test: "+ exercisesDescriptions.get("back squat"));//yes it works as expected
-
-    }
 
     /**
      * This interface must be implemented by activities that contain this

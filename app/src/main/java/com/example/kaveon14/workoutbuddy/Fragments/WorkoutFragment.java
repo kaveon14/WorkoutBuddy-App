@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent;
 import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
+import com.example.kaveon14.workoutbuddy.FragmentRecyclers.MyWorkoutRecyclerViewAdapter;
+import com.example.kaveon14.workoutbuddy.R;
 
 /**
  * A fragment representing a list of Items.
