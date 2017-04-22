@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.FragmentRecyclers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,7 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.kaveon14.workoutbuddy.WorkoutFragment.OnListFragmentInteractionListener;
+import com.example.kaveon14.workoutbuddy.R;
+import com.example.kaveon14.workoutbuddy.Fragments.WorkoutFragment.OnListFragmentInteractionListener;
 import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
 
 import java.util.List;

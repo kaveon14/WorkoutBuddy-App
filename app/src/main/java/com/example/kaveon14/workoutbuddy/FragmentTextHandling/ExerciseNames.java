@@ -1,7 +1,10 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.FragmentTextHandling;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+
+import com.example.kaveon14.workoutbuddy.MainActivity;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +20,7 @@ public class ExerciseNames extends MainActivity {
     public ExerciseNames(Context context,String fileName) {
         exContext = context;
         finalFileName = fileName;
-        InputStream inputStream = null;
+        InputStream inputStream = null;//see if needed
         try {
             inputStream = exContext.getAssets().open(fileName);
         } catch (IOException e) {

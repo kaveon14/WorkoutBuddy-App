@@ -1,7 +1,6 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.Fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,9 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent;
-import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
-
+import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent;
+import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
+import com.example.kaveon14.workoutbuddy.FragmentRecyclers.MyWorkoutRecyclerViewAdapter;
+import com.example.kaveon14.workoutbuddy.R;
 
 /**
  * A fragment representing a list of Items.
@@ -21,7 +21,7 @@ import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.Exercis
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ExerciseFragment extends Fragment {
+public class WorkoutFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -33,13 +33,13 @@ public class ExerciseFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ExerciseFragment() {
+    public WorkoutFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ExerciseFragment newInstance(int columnCount) {
-        ExerciseFragment fragment = new ExerciseFragment();
+    public static WorkoutFragment newInstance(int columnCount) {
+        WorkoutFragment fragment = new WorkoutFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -49,6 +49,7 @@ public class ExerciseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -57,7 +58,8 @@ public class ExerciseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_workout_list, container, false);
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -67,7 +69,7 @@ public class ExerciseFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyExerciseRecyclerViewAdapter(ExerciseContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyWorkoutRecyclerViewAdapter(WorkoutContent.ITEMS, mListener));
         }
         return view;
     }
@@ -102,6 +104,6 @@ public class ExerciseFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(ExerciseItem item);
+        void onListFragmentInteraction(WorkoutItem item);
     }
 }

@@ -1,9 +1,81 @@
+Barbell Curl
+
+Barbell Row
+
 Bench Press
 
-Back Squat
+Cable Bar Push-Downs
 
-Dead-lift
+Cable Crossover
 
-front Squat
+Cable Seated Back-Row
+
+Chin Ups
+
+Close Grip Bench Press
+
+Dead-Lift
+
+Dumbbell Bench Press
+
+Dumbbell Curl
+
+Dumbbell Fly
+
+Dumbbell Kick-Backs
+
+EZ Bar Curl
+
+EZ Bar Tricep Press
+
+Front Squat
 
 Incline Bench Press
+
+Incline Curls
+
+Incline Dumbbell Press
+
+Hack Squat
+
+Hammer Curls
+
+Hammer Incline Curls
+
+Hamstring Curls
+
+Leg Extensions
+
+Leg Press
+
+Lunges
+
+Lying Tricep Extensions
+
+Reverse Curls
+
+Plancks
+
+Pull Ups
+
+Push Ups
+
+Overhead Dumbbell Tricep Extensions
+
+Seated Calv Raises
+
+Shrugs
+
+Side Crunch
+
+Situps
+
+Standing Calv Raises
+
+Squat
+
+Straight Leg Dead-Lift
+
+Weighted Crunch Machine
+
+Weighted Leg Raises

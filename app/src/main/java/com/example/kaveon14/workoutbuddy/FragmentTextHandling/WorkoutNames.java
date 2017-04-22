@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.FragmentTextHandling;
 
 import java.util.LinkedList;
 import java.util.List;
