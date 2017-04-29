@@ -29,13 +29,15 @@ import static com.example.kaveon14.workoutbuddy.FragmentTextHandling.WorkoutName
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ExerciseFragment.OnListFragmentInteractionListener,
         WorkoutFragment.OnListFragmentInteractionListener,BlankFragment.OnFragmentInteractionListener {
-    private ExerciseNames exerciseObject;
+
+
     public static  List<String> exerciseNames = new LinkedList<>();
     private FragmentTransaction fragmentTransaction;
     private ExerciseFragment exercise_frag = new ExerciseFragment();
     private WorkoutFragment workout_frag = new WorkoutFragment();
     private BlankFragment blank_frag = new BlankFragment();
     public static ExerciseItem exerciseItem = null;
+    FloatingActionButton homeBtn = null;
 
 
     @Override
@@ -54,15 +56,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        homeBtn.show();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }  else {
             super.onBackPressed();
         }
     }
-
-
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -102,7 +103,9 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.hide(exercise_frag);
         fragmentTransaction.add(R.id.blank_fragment,blank_frag);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+        homeBtn.hide();
     }
 
     @Override
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setFloatingButton() {
-        FloatingActionButton homeBtn = (FloatingActionButton) findViewById(R.id.home_button);//email button delete? user for
+        homeBtn = (FloatingActionButton) findViewById(R.id.home_button);//email button delete? user for
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {//possible home button
@@ -176,6 +179,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             fragmentTransaction.show(workout_frag);
         }
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -190,10 +194,11 @@ public class MainActivity extends AppCompatActivity
         } else {
             fragmentTransaction.show(exercise_frag);
         }
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
-    private boolean calenderButton() {
+    private boolean calenderButton() {//not yet created
         fragmentTransaction = getFragmentManager().beginTransaction();
         if(exercise_frag.isVisible()) {
             fragmentTransaction.hide(exercise_frag);
@@ -228,7 +233,7 @@ public class MainActivity extends AppCompatActivity
     private void setExerciseContent() {
         setContext(this);
         standardWorkouts();
-        exerciseObject = new ExerciseNames(this,"ExerciseNames.txt");
+        ExerciseNames exerciseObject = new ExerciseNames(this,"ExerciseNames.txt");
         exerciseNames = exerciseObject.readFile();
         ExerciseDescriptions ex = new ExerciseDescriptions(this);
         ex.setExerciseDescriptions();
