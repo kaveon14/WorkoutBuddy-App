@@ -2,21 +2,21 @@ package com.example.kaveon14.workoutbuddy.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent;
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
 import com.example.kaveon14.workoutbuddy.FragmentRecyclers.MyExerciseRecyclerViewAdapter;
-import com.example.kaveon14.workoutbuddy.MainActivity;
 import com.example.kaveon14.workoutbuddy.R;
-
-import java.lang.reflect.Field;
 
 
 /**
@@ -25,13 +25,16 @@ import java.lang.reflect.Field;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ExerciseFragment extends Fragment {
+public class ExerciseFragment extends android.support.v4.app.Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+    private View myView = null;
+    private Context myContext = null;
+    ListView lv = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,6 +65,8 @@ public class ExerciseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
+        myView = view;
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -73,9 +78,9 @@ public class ExerciseFragment extends Fragment {
             }
             recyclerView.setAdapter(new MyExerciseRecyclerViewAdapter(ExerciseContent.ITEMS, mListener));
         }
+        System.out.println("wtf it is working nice");
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -95,6 +100,13 @@ public class ExerciseFragment extends Fragment {
         mListener = null;
     }
 
+    public void setExerciseContext(Context exerciseContext) {
+        myContext = exerciseContext;
+    }
+
+
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -110,3 +122,5 @@ public class ExerciseFragment extends Fragment {
         void onListFragmentInteraction(ExerciseItem item);
     }
 }
+
+

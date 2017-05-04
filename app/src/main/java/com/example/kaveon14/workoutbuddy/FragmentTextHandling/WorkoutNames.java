@@ -20,7 +20,7 @@ public class WorkoutNames {
     public static List<String> workoutNames = new LinkedList<>();
 
     public static void standardWorkouts() {
-        workoutNames.add(0,"Legs/Abs");
+        workoutNames.add(0,"Legs/Abs");//try using string feature from android
         workoutNames.add(1,"null");//not sure why null(placeholder) needed
         workoutNames.add(2,"Chest");
         workoutNames.add(3,"null");

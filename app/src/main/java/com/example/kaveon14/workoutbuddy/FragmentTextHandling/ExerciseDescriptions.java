@@ -3,11 +3,10 @@ package com.example.kaveon14.workoutbuddy.FragmentTextHandling;
 
 import android.content.Context;
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent;
-import com.example.kaveon14.workoutbuddy.Fragments.BlankFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.BlankExerciseFragment;
 
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class ExerciseDescriptions {
@@ -31,7 +30,7 @@ public class ExerciseDescriptions {
     }
 
     private void addDescriptionsToMap(String id,String data) {
-        BlankFragment.exercisesDescriptions.put(id,data);
+        BlankExerciseFragment.exercisesDescriptions.put(id,data);
     }
 
     private void getDataFromExerciseFile(String fileName) throws IOException {
