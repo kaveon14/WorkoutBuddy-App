@@ -5,22 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.example.kaveon14.workoutbuddy.Fragments.ExerciseFragment.OnListFragmentInteractionListener;
-import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
+
+import com.example.kaveon14.workoutbuddy.Fragments.BlankWorkoutFragment.OnListFragmentInteractionListener;
+import com.example.kaveon14.workoutbuddy.FragmentContent.BlankWorkoutContent.BlankWorkoutItem;
 import com.example.kaveon14.workoutbuddy.R;
+
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link ExerciseItem} and makes a call to the
+ * {@link RecyclerView.Adapter} that can display a {@link BlankWorkoutItem} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerciseRecyclerViewAdapter.ViewHolder> {
+public class MyBlankWorkoutRecyclerViewAdapter extends RecyclerView.Adapter<MyBlankWorkoutRecyclerViewAdapter.ViewHolder> {
 
-    private final List<ExerciseItem> mValues;
+    private final List<BlankWorkoutItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyExerciseRecyclerViewAdapter(List<ExerciseItem> items, OnListFragmentInteractionListener listener) {
+    public MyBlankWorkoutRecyclerViewAdapter(List<BlankWorkoutItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -28,8 +30,7 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_exercise, parent, false);
-
+                .inflate(R.layout.fragment_blank_workout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,7 +40,6 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
 
-
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,15 +48,6 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
-            }
-        });
-
-        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                v.performHapticFeedback(1);
-                //do stuff to add exercise to workout
-                return false;
             }
         });
     }
@@ -70,7 +61,7 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public ExerciseItem mItem;
+        public BlankWorkoutItem mItem;
 
         public ViewHolder(View view) {
             super(view);

@@ -22,10 +22,24 @@
         android:layout_height="wrap_content" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.BlankFragment"
-        android:id="@+id/blank_fragment"
+        class="com.example.kaveon14.workoutbuddy.Fragments.BlankExerciseFragment"
+        android:id="@+id/blankExercise_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
+
+    <FrameLayout
+        class="com.example.kaveon14.workoutbuddy.Fragments.TextViewHostFragment"
+        android:id="@+id/calendar_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <FrameLayout
+        class="com.example.kaveon14.workoutbuddy.Fragments.BlankWorkoutFragment"
+        android:id="@+id/blankWorkout_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    />
 
 </android.support.constraint.ConstraintLayout>
