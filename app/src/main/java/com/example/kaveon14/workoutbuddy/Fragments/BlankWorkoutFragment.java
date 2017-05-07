@@ -61,6 +61,7 @@ public class BlankWorkoutFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blank_workout_list, container, false);
 
         // Set the adapter
+        //put this in seperate function
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;

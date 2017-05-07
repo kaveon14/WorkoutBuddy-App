@@ -3,7 +3,7 @@ package com.example.kaveon14.workoutbuddy.FragmentTextHandling;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WorkoutNames {
+public class WorkoutNames {//TODO class will have major changes soon
     /**
      * 5 standard workouts and allow the grouping of workouts into workout plans
      * Day 1: Legs/abs

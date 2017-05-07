@@ -56,6 +56,3 @@ public class ExerciseDescriptions {
     }
 
 }
-//use this to load images
-//Bitmap bmImg = BitmapFactory.decodeFile("path of your img1");
-//imageView.setImageBitmap(bmImg);

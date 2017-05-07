@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.kaveon14.workoutbuddy.DataBase.DataBaseSQLiteHelper;
 import com.example.kaveon14.workoutbuddy.FragmentContent.BlankWorkoutContent.BlankWorkoutItem;
 import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
@@ -29,13 +30,19 @@ import com.example.kaveon14.workoutbuddy.Fragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.WorkoutFragment;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.FragmentTextHandling.WorkoutNames.standardWorkouts;
 
+// TODO CREATE DATABASE JUST FOR EXERCIES AND SORT ALPHABETICALLY
+
 // TODO test fragments with replace mthod to shorten the functions lentgh
+// TODO fix image errors
+// TODO add cardio and abs exercises etc.
+// TODO add reps and sets under workout exercises
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ExerciseFragment.OnListFragmentInteractionListener,
@@ -44,8 +51,8 @@ public class MainActivity extends AppCompatActivity
 
 
     public static  List<String> exerciseNames = new LinkedList<>();
-    private android.support.v4.app.FragmentTransaction fragmentTransaction;
-    private ExerciseFragment exercise_frag = new ExerciseFragment();
+    public android.support.v4.app.FragmentTransaction fragmentTransaction;
+    public ExerciseFragment exercise_frag = new ExerciseFragment();
     private WorkoutFragment workout_frag = new WorkoutFragment();
     private BlankExerciseFragment blankExercise_frag = new BlankExerciseFragment();
     private CaldroidFragment caldroid_frag = new CaldroidFragment();
@@ -54,9 +61,7 @@ public class MainActivity extends AppCompatActivity
     public static ExerciseItem exerciseItem = null;
     FloatingActionButton floatingBtn = null;
     Context context = this;
-
     Bundle args = new Bundle();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         ex.setImageMap();
         floatingBtn.hide();
         exercise_frag.setExerciseContext(this);
-
+        testDataBase();
     }
 
     @Override
@@ -82,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }  else {
             super.onBackPressed();
-            imge(workout_frag);
+            hideFloatingBtn(workout_frag);
         }
     }
     
@@ -121,12 +126,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ExerciseItem item) {
-
-
         exerciseItem = item;
-
-
-
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.hide(exercise_frag);
         fragmentTransaction.add(R.id.blankExercise_fragment, blankExercise_frag);
@@ -150,42 +150,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onFragmentInteraction(Uri uri){}
-
-    public void hh() {//make stuff global
-
-       /* final CaldroidListener listener  = new CaldroidListener() {
-            @Override
-            public void onSelectDate(Date date, View view) {
-                Toast.makeText(getApplicationContext(), "yeah",
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChangeMonth(int month, int year) {
-                String text = "month: " + month + " year: " + year;
-                Toast.makeText(getApplicationContext(), text,
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLongClickDate(Date date, View view) {
-                Toast.makeText(getApplicationContext(),
-                        "Long click " + "nice",
-                        Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCaldroidViewCreated() {
-                Toast.makeText(getApplicationContext(),
-                        "Caldroid view is created",
-                        Toast.LENGTH_SHORT).show();
-            }
-
-        };
-
-        caldroid_frag.setCaldroidListener(listener);
-    }*/
-    }
 
     private void setDrawerLayout(Toolbar toolbar) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -224,7 +188,7 @@ public class MainActivity extends AppCompatActivity
                 workoutMenuButton();
                 break;
             case R.id.exercise_menu:
-                exerciseMenuButton(id);
+               exerciseMenuButton();
                 break;
             case R.id.calenderBtn:
                 calenderButton();
@@ -256,7 +220,7 @@ public class MainActivity extends AppCompatActivity
         floatingBtn.show();
     }
 
-    private void exerciseMenuButton(int id) {
+    private void exerciseMenuButton() {
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if(workout_frag.isVisible()) {
             fragmentTransaction.hide(workout_frag);
@@ -285,7 +249,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         extra();
-        tt(caldroid_frag);
+        caldroidFragment(caldroid_frag);
     }
 
     private void addFragments() {
@@ -334,14 +298,14 @@ public class MainActivity extends AppCompatActivity
         caldroid_frag.setArguments(args);
     }
 
-    private void extra() {
+    private void extra() {//change the name of this function
         Date date = new Date("5/4/17");//works
         ColorDrawable transparent = new ColorDrawable(getResources().getColor(R.color.caldroid_transparent));
         caldroid_frag.setBackgroundDrawableForDate(transparent,date);//this is the color
         caldroid_frag.refreshView();
     }
 
-    public void tt(final CaldroidFragment caldroidFragment) {
+    public void caldroidFragment(final CaldroidFragment caldroidFragment) {//change the name of this function
         final CaldroidListener listener  = new CaldroidListener() {
             @Override
             public void onSelectDate(Date date, View view) {
@@ -371,12 +335,17 @@ public class MainActivity extends AppCompatActivity
         caldroidFragment.setCaldroidListener(listener);
     }
 
-    private void imge(WorkoutFragment workoutFragment) {
+    private void hideFloatingBtn(WorkoutFragment workoutFragment) {
         if(workoutFragment.isVisible()) {
             floatingBtn.show();
         } else {
             floatingBtn.hide();
         }
+    }
+
+    public void testDataBase() {
+        DataBaseSQLiteHelper db = new DataBaseSQLiteHelper(this);
+        db.printDataBase();
     }
 }
 /** possibly add no new fragments for adding exercises to workouts
