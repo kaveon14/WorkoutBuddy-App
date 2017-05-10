@@ -34,7 +34,6 @@ public class ExerciseFragment extends android.support.v4.app.Fragment {
     private OnListFragmentInteractionListener mListener;
     private View myView = null;
     private Context myContext = null;
-    ListView lv = null;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,6 +66,7 @@ public class ExerciseFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
         myView = view;
 
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -78,7 +78,6 @@ public class ExerciseFragment extends android.support.v4.app.Fragment {
             }
             recyclerView.setAdapter(new MyExerciseRecyclerViewAdapter(ExerciseContent.ITEMS, mListener));
         }
-        System.out.println("wtf it is working nice");
         return view;
     }
 
@@ -103,9 +102,6 @@ public class ExerciseFragment extends android.support.v4.app.Fragment {
     public void setExerciseContext(Context exerciseContext) {
         myContext = exerciseContext;
     }
-
-
-
 
     /**
      * This interface must be implemented by activities that contain this

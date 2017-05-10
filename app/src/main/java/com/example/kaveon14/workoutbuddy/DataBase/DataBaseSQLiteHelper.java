@@ -2,85 +2,148 @@ package com.example.kaveon14.workoutbuddy.DataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.Workout;
+import com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+import com.example.kaveon14.workoutbuddy.readFile;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.TABLE_NAME_WK1;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.TABLE_NAME_WK2;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.TABLE_NAME_WK3;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.TABLE_NAME_WK4;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.TABLE_NAME_WK5;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_NAMES;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_SETS;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_REPS;
+
 
 public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "workoutDataBase.db";
-
+    private Context context;
+    private Scanner scan;
+    private Map<String,String> defaultWorkouts = null;
 
     public DataBaseSQLiteHelper(Context context) {//this is a practice database will have to create a new one later
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(Workout.CREATE_TABLE);
-        setDefaultWorkouts(database);
+        database.execSQL(WorkoutData.createWorkoutTable(TABLE_NAME_WK1));
+        database.execSQL(WorkoutData.createWorkoutTable(TABLE_NAME_WK2));
+        database.execSQL(WorkoutData.createWorkoutTable(TABLE_NAME_WK3));
+        database.execSQL(WorkoutData.createWorkoutTable(TABLE_NAME_WK4));
+        database.execSQL(WorkoutData.createWorkoutTable(TABLE_NAME_WK5));
+        //database.execSQL(DataBaseContract.ExerciseData.CREATE_TABLE); no test data yet
+        //database.execSQL(DataBaseContract.BodyData.TABLE_NAME); no test data yet
+        addDefaultWorkoutsData(database);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase database, int x, int y) {
-        database.execSQL("DROP TABLE IF EXISTS "+Workout.TABLE_NAME);
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        database.execSQL("DROP TABLE IF EXISTS "+ WorkoutData.TABLE_NAME_WK1);//must do for all tables
+        database.execSQL("DROP TABLE IF EXISTS "+ WorkoutData.TABLE_NAME_WK2);//manually created
+        database.execSQL("DROP TABLE IF EXISTS "+ WorkoutData.TABLE_NAME_WK3);
+        database.execSQL("DROP TABLE IF EXISTS "+ WorkoutData.TABLE_NAME_WK4);
+        database.execSQL("DROP TABLE IF EXISTS "+ WorkoutData.TABLE_NAME_WK5);
+        //database.execSQL("DROP TABLE IF EXISTS "+ DataBaseContract.BodyData.TABLE_NAME);
+        //database.execSQL("DROP TABLE IF EXISTS "+ DataBaseContract.ExerciseData.TABLE_NAME);
         onCreate(database);
     }
 
-
-    public void printDataBase() {
-        SQLiteDatabase readableDatabase = getReadableDatabase();
-        Cursor cursor = readableDatabase.query(
-                Workout.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-        while(cursor.moveToNext()) {
-            System.out.println("exercise: "+cursor.getString(1) + " sets: "+cursor.getString(2)
-            + " reps: "+cursor.getString(3));
+    private void setDefaultWorkoutsMap() {
+        readFile rf = new readFile(context,"DefaultWorkoutValues.txt");
+        try {
+            defaultWorkouts = rf.readFile();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        cursor.close();
     }
 
-    private void setDefaultWorkouts(SQLiteDatabase database) {
-        defaultWorkout1Values(database);
+    private void addDefaultWorkoutsData(SQLiteDatabase database) {
+        setDefaultWorkoutsMap();
+        for (int x=1;x<=defaultWorkouts.size();x++) {
+            try {
+                setSingleDefaultWorkout(database,"Workout"+String.valueOf(x));
+            } catch (NoSuchElementException e) {
+                //scanner has reached end of string and throws an error
+            }
+        }
     }
 
-    //TODO add values to all of these below
+    private void setSingleDefaultWorkout(SQLiteDatabase database,String workoutName) throws NoSuchElementException {
+        String data = defaultWorkouts.get(workoutName);
+        scan = new Scanner(data);
+        Scanner s = new Scanner(data);
+        Scanner x = new Scanner(data);
+        String exercise,sets,reps;
+        while (s.hasNext()) {
+            s.nextLine();
+            exercise = getExerciseName(x);
+            sets = getSetsForExercise(x);
+            reps = getRepsForExercise(x);
+            addDefaultExerciseToWorkout(database,workoutName,exercise,sets,reps);
+        }
+    }
 
-    private void defaultWorkout1Values(SQLiteDatabase database) {//Legs and Abs / refactor this code
-        long itemId;//test data
+    private void addDefaultExerciseToWorkout(SQLiteDatabase database,String workoutName,String exerciseName,
+                                             String sets,String reps) {
         ContentValues values = new ContentValues();
-        String workout_1 = Workout.COLUMN_EXERCISE_NAMES;
-        String exSets = Workout.COLUMN_EXERCISE_SETS;
-        String exReps = Workout.COLUMN_EXERCISE_REPS;
-
-        values.put(workout_1,"bench");
-        values.put(exSets,"1");
-        values.put(exReps,"5");
-
-        itemId = database.insert(Workout.TABLE_NAME,null,values);
-
-        values.put(workout_1,"squat");
-        values.put(exSets,"2");
-        values.put(exReps,"6");
-
-        itemId = database.insert(Workout.TABLE_NAME,null,values);
-
-        values.put(workout_1,"dead lift");
-        values.put(exSets,"3");
-        values.put(exReps,"7");
-
-
-        itemId = database.insert(Workout.TABLE_NAME,null,values);
+        values.put(COLUMN_EXERCISE_NAMES, exerciseName);
+        values.put(COLUMN_EXERCISE_SETS,sets);
+        values.put(COLUMN_EXERCISE_REPS,reps);
+        long itemId = database.insert(workoutName,null,values);
     }
+
+    private String getExerciseName(Scanner scan) {
+        return scan.next().replace("_"," ");
+    }
+
+    private String getSetsForExercise(Scanner scan) {
+        return scan.next();
+    }
+
+    private String getRepsForExercise(Scanner scan) {
+        return scan.next();
+    }
+
+
+
+    /*public void ff() {
+        String fileName = "DefaultWorkoutValues.txt";
+        readFile rf = new readFile(context,fileName);
+        try {
+            defaultWorkouts = rf.readFile();
+            System.out.println("size: "+ defaultWorkouts.size());
+            for (int x = 1; x <= defaultWorkouts.size(); x++) {
+                //System.out.println("test file: "+ defaultWorkouts.get("Workout"+String.valueOf(x)));
+            }
+        } catch(IOException ex) {
+            ex.printStackTrace();
+            ex.getCause();
+        }
+
+        String data = defaultWorkouts.get("Workout1");
+        scan = new Scanner(data);
+        Scanner s = new Scanner(data);
+        String exercise,sets,reps;
+        try {
+            while (s.hasNext()) {
+                s.nextLine();
+                exercise = getExerciseName();
+                sets = getSetsForExercise();
+                reps = getRepsForExercise();
+                System.out.println("exercise: "+exercise + " sets: "+sets+" reps: "+reps);
+            }
+        } catch(NoSuchElementException ex) {
+            // error thrown because end of "data" string reached
+        }
+    }*/
 }

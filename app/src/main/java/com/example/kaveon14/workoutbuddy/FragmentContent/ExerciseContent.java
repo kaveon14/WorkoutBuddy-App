@@ -23,11 +23,12 @@ public class ExerciseContent {//change name (this one is for exercises)
      */
     public static final Map<String, ExerciseItem> EXERCISE_ITEM_MAP = new HashMap<String, ExerciseItem>();
 
-    private static final int Row_Count = 40;
+    private static final int Row_Count = 42;
 
     static {
         // Add some sample items.
-        for (int i = 1; i <= Row_Count; i++) {
+        for (int i = 1; i <= Row_Count; i++) {//make this a two step process
+            //first load the txt file then do the database
             try {
                 addItem(createDummyItem(i));
             } catch(IOException e) {
@@ -43,7 +44,7 @@ public class ExerciseContent {//change name (this one is for exercises)
     
 
     private static ExerciseItem createDummyItem(int position) throws IOException {
-        return new ExerciseItem(String.valueOf(position), MainActivity.exerciseNames.remove(position-1) , makeDetails(position));
+        return new ExerciseItem(String.valueOf(position), MainActivity.exerciseNames.get(position-1) , makeDetails(position));
     }
 
     private static String makeDetails(int position) {

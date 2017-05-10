@@ -1,5 +1,7 @@
 package com.example.kaveon14.workoutbuddy.FragmentRecyclers;
 
+import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.Fragments.ExerciseFragment.OnListFragmentInteractionListener;
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
+import com.example.kaveon14.workoutbuddy.MainActivity;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
@@ -53,9 +56,8 @@ public class MyExerciseRecyclerViewAdapter extends RecyclerView.Adapter<MyExerci
 
         holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                v.performHapticFeedback(1);
-                //do stuff to add exercise to workout
+            public boolean onLongClick(View view) {
+                view.performHapticFeedback(1);
                 return false;
             }
         });

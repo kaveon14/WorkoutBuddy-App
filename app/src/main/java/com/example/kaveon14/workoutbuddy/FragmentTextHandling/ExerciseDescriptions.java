@@ -34,7 +34,7 @@ public class ExerciseDescriptions {
     }
 
     private void getDataFromExerciseFile(String fileName) throws IOException {
-        String line = "";String scannerLine = "";int increment = 0;
+        String line = "";String scannerLine;int increment = 0;
         Scanner scan = openFileWithScanner(fileName);
         while(scan.hasNext()) {
             scannerLine = scan.nextLine();
@@ -54,5 +54,4 @@ public class ExerciseDescriptions {
             getDataFromExerciseFile("ExerciseDescriptions.txt");//change to match exercise images
         }
     }
-
 }

@@ -10,37 +10,33 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ExerciseNames extends MainActivity {
 
-    private String finalFileName;
+    private String fileName;
     private Context exContext;
 
     public ExerciseNames(Context context,String fileName) {
         exContext = context;
-        finalFileName = fileName;
-        InputStream inputStream = null;//see if needed
-        try {
-            inputStream = exContext.getAssets().open(fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.fileName = fileName;
     }
 
-    public List<String> readFile() {
-        List<String> fileLines = new ArrayList<>();
+    public List<String> readFileSorted() {
+        List<String> fileData = new ArrayList<>();
         AssetManager assetManager = exContext.getAssets();
         try {
-            InputStream inputStream = assetManager.open(finalFileName);
+            InputStream inputStream = assetManager.open(fileName);
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
-            while ((line = reader.readLine()) != null)
-                fileLines.add(line);
+            while ((line = reader.readLine()) != null) {
+                fileData.add(line);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return fileLines;
+       Collections.sort(fileData);
+        return fileData;
     }
-
 }
