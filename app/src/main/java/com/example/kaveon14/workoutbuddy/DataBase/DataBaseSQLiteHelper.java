@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import com.example.kaveon14.workoutbuddy.readFile;
+import com.example.kaveon14.workoutbuddy.ReadDefaultExerciseFile;
 import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.TABLE_NAME_WK1;
 import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.TABLE_NAME_WK2;
 import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.TABLE_NAME_WK3;
@@ -57,7 +57,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     }
 
     private void setDefaultWorkoutsMap() {
-        readFile rf = new readFile(context,"DefaultWorkoutValues.txt");
+        ReadDefaultExerciseFile rf = new ReadDefaultExerciseFile(context,"DefaultWorkoutValues.txt");
         try {
             defaultWorkouts = rf.readFile();
         } catch (IOException ex) {
