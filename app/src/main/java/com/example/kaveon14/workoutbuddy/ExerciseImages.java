@@ -1,14 +1,9 @@
 package com.example.kaveon14.workoutbuddy;
 
 import android.content.Context;
-import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent;
-import java.io.DataInputStream;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Scanner;
-
 import static com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.EXERCISE_ITEM_MAP;
 
 public class ExerciseImages {

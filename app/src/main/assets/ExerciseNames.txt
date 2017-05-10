@@ -1,81 +1,44 @@
 Barbell Curl
-
 Barbell Row
-
 Bench Press
-
 Cable Bar Push-Downs
-
 Cable Crossover
-
 Cable Seated Back-Row
-
 Chin Ups
-
 Close Grip Bench Press
-
 Dead-Lift
-
 Dumbbell Bench Press
-
 Dumbbell Curl
-
 Dumbbell Fly
-
 Dumbbell Kick-Backs
-
 EZ Bar Curl
-
-EZ Bar Tricep Press
-
+EZ Bar Triceps Press
 Front Squat
-
 Incline Bench Press
-
 Incline Curls
-
 Incline Dumbbell Press
-
 Hack Squat
-
 Hammer Curls
-
 Hammer Incline Curls
-
 Hamstring Curls
-
 Leg Extensions
-
 Leg Press
-
 Lunges
-
-Lying Tricep Extensions
-
+Lying Triceps Extensions
 Reverse Curls
-
-Plancks
-
+Planck
 Pull Ups
-
 Push Ups
-
-Overhead Dumbbell Tricep Extensions
-
+Overhead Dumbbell Triceps Extensions
 Seated Calv Raises
-
 Shrugs
-
 Side Crunch
-
-Situps
-
+Sit-up
 Standing Calv Raises
-
 Squat
-
 Straight Leg Dead-Lift
-
 Weighted Crunch Machine
-
 Weighted Leg Raises
+Ab Crunch
+Seated LegCurl
+Cable Crunch

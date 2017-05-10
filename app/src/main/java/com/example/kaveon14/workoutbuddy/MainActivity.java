@@ -1,11 +1,19 @@
 package com.example.kaveon14.workoutbuddy;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,12 +23,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.DataBase.DataBaseSQLiteHelper;
+import com.example.kaveon14.workoutbuddy.DataBase.WorkoutTable;
 import com.example.kaveon14.workoutbuddy.FragmentContent.BlankWorkoutContent.BlankWorkoutItem;
 import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
 import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
+import com.example.kaveon14.workoutbuddy.FragmentRecyclers.MyExerciseRecyclerViewAdapter;
 import com.example.kaveon14.workoutbuddy.FragmentTextHandling.ExerciseDescriptions;
 import com.example.kaveon14.workoutbuddy.FragmentTextHandling.ExerciseNames;
 import com.example.kaveon14.workoutbuddy.Fragments.BlankExerciseFragment;
@@ -31,18 +44,25 @@ import com.example.kaveon14.workoutbuddy.Fragments.WorkoutFragment;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 import static com.example.kaveon14.workoutbuddy.FragmentTextHandling.WorkoutNames.standardWorkouts;
-
+// TODO make this class smaller!!!!!!!!
 // TODO CREATE DATABASE JUST FOR EXERCIES AND SORT ALPHABETICALLY
-
 // TODO test fragments with replace mthod to shorten the functions lentgh
 // TODO fix image errors
 // TODO add cardio and abs exercises etc.
 // TODO add reps and sets under workout exercises
+
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ExerciseFragment.OnListFragmentInteractionListener,
@@ -50,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         TextViewHostFragment.OnFragmentInteractionListener,BlankWorkoutFragment.OnListFragmentInteractionListener {
 
 
-    public static  List<String> exerciseNames = new LinkedList<>();
+    public static  List<String> exerciseNames = new ArrayList<>();
     public android.support.v4.app.FragmentTransaction fragmentTransaction;
     public ExerciseFragment exercise_frag = new ExerciseFragment();
     private WorkoutFragment workout_frag = new WorkoutFragment();
@@ -118,7 +138,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        navigationMenuButton(id);
+        navigationMenuButtons(id);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -176,7 +196,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    public void navigationMenuButton(int id) {
+    public void navigationMenuButtons(int id) {
         switch (id) {
             case R.id.lifting_stats:
                 liftingStatsButton();
@@ -201,7 +221,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void bodyStatsButton() {
-        System.out.println("body stats");
     }
 
     private void workoutMenuButton() {
@@ -286,7 +305,7 @@ public class MainActivity extends AppCompatActivity
         blankExercise_frag.setContext(this);//error possibly here
         standardWorkouts();
         ExerciseNames exerciseObject = new ExerciseNames(this,"ExerciseNames.txt");
-        exerciseNames = exerciseObject.readFile();
+        exerciseNames = exerciseObject.readFileSorted();
         ExerciseDescriptions ex = new ExerciseDescriptions(this);
         ex.setExerciseDescriptions();
     }
@@ -345,8 +364,17 @@ public class MainActivity extends AppCompatActivity
 
     public void testDataBase() {
         DataBaseSQLiteHelper db = new DataBaseSQLiteHelper(this);
-        db.printDataBase();
+        SQLiteDatabase database = db.getWritableDatabase();
+
+        WorkoutTable wt = new WorkoutTable(this);
+        wt.printWorkoutTable("Workout1");
+        wt.printWorkoutTable("Workout2");
+        wt.printWorkoutTable("Workout3");
+        wt.printWorkoutTable("Workout4");
+        wt.printWorkoutTable("Workout5");
     }
+
+
 }
 /** possibly add no new fragments for adding exercises to workouts
  *  instead just put an add button or option to add exercise to workout and

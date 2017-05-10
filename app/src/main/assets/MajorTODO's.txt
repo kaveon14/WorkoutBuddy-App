@@ -1,0 +1,8 @@
+TODO
+-  clean up main activity class
+TODO
+-   write unit tests for most of the program
+TODO for app update:
+-   create user login to access account from different phones
+-   create new database with mySQL for online storage
+
