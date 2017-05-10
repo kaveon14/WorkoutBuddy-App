@@ -63,7 +63,6 @@ import static com.example.kaveon14.workoutbuddy.FragmentTextHandling.WorkoutName
 // TODO add cardio and abs exercises etc.
 // TODO add reps and sets under workout exercises
 
-//// on long click is in exercise recycler view
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ExerciseFragment.OnListFragmentInteractionListener,
@@ -307,10 +306,9 @@ public class MainActivity extends AppCompatActivity
         standardWorkouts();
         ExerciseNames exerciseObject = new ExerciseNames(this,"ExerciseNames.txt");
         exerciseNames = exerciseObject.readFileSorted();
-        System.out.println("exNames: "+exerciseNames.size());
         ExerciseDescriptions ex = new ExerciseDescriptions(this);
         ex.setExerciseDescriptions();
-    }// system here
+    }
 
     private void setUpCaldroidFragment() {
         Calendar cal = Calendar.getInstance();
@@ -367,8 +365,6 @@ public class MainActivity extends AppCompatActivity
     public void testDataBase() {
         DataBaseSQLiteHelper db = new DataBaseSQLiteHelper(this);
         SQLiteDatabase database = db.getWritableDatabase();
-        //db.addDefaultWorkoutsData(database);
-
 
         WorkoutTable wt = new WorkoutTable(this);
         wt.printWorkoutTable("Workout1");

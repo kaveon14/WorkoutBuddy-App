@@ -20,13 +20,11 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.Workou
 import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_SETS;
 import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_REPS;
 
-
 public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "workoutDataBase.db";
     private Context context;
-    private Scanner scan;
     private Map<String,String> defaultWorkouts = null;
 
     public DataBaseSQLiteHelper(Context context) {//this is a practice database will have to create a new one later
@@ -80,7 +78,6 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
     private void setSingleDefaultWorkout(SQLiteDatabase database,String workoutName) throws NoSuchElementException {
         String data = defaultWorkouts.get(workoutName);
-        scan = new Scanner(data);
         Scanner s = new Scanner(data);
         Scanner x = new Scanner(data);
         String exercise,sets,reps;
@@ -114,36 +111,4 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         return scan.next();
     }
 
-
-
-    /*public void ff() {
-        String fileName = "DefaultWorkoutValues.txt";
-        readFile rf = new readFile(context,fileName);
-        try {
-            defaultWorkouts = rf.readFile();
-            System.out.println("size: "+ defaultWorkouts.size());
-            for (int x = 1; x <= defaultWorkouts.size(); x++) {
-                //System.out.println("test file: "+ defaultWorkouts.get("Workout"+String.valueOf(x)));
-            }
-        } catch(IOException ex) {
-            ex.printStackTrace();
-            ex.getCause();
-        }
-
-        String data = defaultWorkouts.get("Workout1");
-        scan = new Scanner(data);
-        Scanner s = new Scanner(data);
-        String exercise,sets,reps;
-        try {
-            while (s.hasNext()) {
-                s.nextLine();
-                exercise = getExerciseName();
-                sets = getSetsForExercise();
-                reps = getRepsForExercise();
-                System.out.println("exercise: "+exercise + " sets: "+sets+" reps: "+reps);
-            }
-        } catch(NoSuchElementException ex) {
-            // error thrown because end of "data" string reached
-        }
-    }*/
 }
