@@ -10,15 +10,15 @@ public class DataBaseContract {
 
     public static class WorkoutData implements BaseColumns {
 
-        public static final String TABLE_NAME_WK1 = "Workout1";//change to real workout names
+        public static final String TABLE_NAME_WK1 = "Workout1_wk";//change to real workout names
 
-        public static final String TABLE_NAME_WK2 = "Workout2";
+        public static final String TABLE_NAME_WK2 = "Workout2_wk";
 
-        public static final String TABLE_NAME_WK3 = "Workout3";
+        public static final String TABLE_NAME_WK3 = "Workout3_wk";
 
-        public static final String TABLE_NAME_WK4 = "Workout4";
+        public static final String TABLE_NAME_WK4 = "Workout4_wk";
 
-        public static final String TABLE_NAME_WK5 = "Workout5";
+        public static final String TABLE_NAME_WK5 = "Workout5_wk";
 
         public static final String COLUMN_EXERCISE_NAMES = "Exercise_Names";
 
@@ -27,14 +27,14 @@ public class DataBaseContract {
         public static final String COLUMN_EXERCISE_REPS = "Exercise_Reps";
 
         public static final String createWorkoutTable(final String tableName) {
-             final String WORKOUT_TABLE = " CREATE TABLE " +
+            final String WORKOUT_TABLE = " CREATE TABLE " +
                     tableName + " (" +
                     _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_EXERCISE_NAMES + " TEXT, " +
                     COLUMN_EXERCISE_SETS + " INT, " +
                     COLUMN_EXERCISE_REPS +
                     " INT" + ")";
-           return WORKOUT_TABLE;
+            return WORKOUT_TABLE;
         }
     }//add date
 

@@ -2,121 +2,133 @@ package com.example.kaveon14.workoutbuddy.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.support.v4.app.Fragment;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent;
-import com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.ExerciseItem;
-import com.example.kaveon14.workoutbuddy.FragmentRecyclers.MyExerciseRecyclerViewAdapter;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
+import com.example.kaveon14.workoutbuddy.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.R;
+import java.util.ArrayList;
+import java.util.List;
 
+public class ExerciseFragment extends Fragment {
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class ExerciseFragment extends android.support.v4.app.Fragment {
+    private Context context;
+    protected static Exercise clickedExerciseName;
+    public static List<Exercise> exerciseList;
+    private ExerciseFragment exercise_frag = this;
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
-    private View myView = null;
-    private Context myContext = null;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ExerciseFragment() {
+
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ExerciseFragment newInstance(int columnCount) {
-        ExerciseFragment fragment = new ExerciseFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
+    public void onCreate(@Nullable Bundle savedInstance) {
+        super.onCreate(savedInstance);//not sure on item listener
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_exercise_list, container, false);
-        myView = view;
+        View root = inflater.inflate(R.layout.fragment_exercise, container, false);
+        setListView(root);
+        return root;
+    }
 
+    private void setListView(View root) {
+        ListView listView = (ListView) root.findViewById(R.id.exercise_listView);
+        listView.setAdapter(setExerciseAdapter());
+    }
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+    private ExerciseAdapter setExerciseAdapter() {
+        int amountOfExercise = new ExerciseTable(context).getColumn(COLUMN_EXERCISES).size();
+        List<Exercise> exercises = new ArrayList<>();
+        for(int x=0;x<amountOfExercise;x++) {
+            exercises.add(getExercise(x));
+        }
+        exerciseList = exercises;
+        return new ExerciseAdapter(exercises);
+    }
+
+    private Exercise getExercise(int x) {
+        List<String> exerciseNames = new ExerciseTable(context).getColumn(COLUMN_EXERCISES);
+        return new Exercise(exerciseNames.get(x),null);
+    }
+
+    public void showBlankExerciseFragment() {
+        BlankExerciseFragment bf = new BlankExerciseFragment();
+        bf.setContext(context);
+        getFragmentManager().beginTransaction()
+                .hide(exercise_frag)
+                .replace(R.id.blankExercise_fragment,bf)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private class ExerciseAdapter extends BaseAdapter {
+
+        private List<Exercise> exerciseList;
+
+        public ExerciseAdapter(List<Exercise> exercises) {
+            exerciseList = exercises;
+        }
+
+        @Override
+        public int getCount() {
+            return exerciseList.size();
+        }
+
+        @Override
+        public Exercise getItem(int i) {//may need work
+            return exerciseList.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            View rowView = view;
+            if (rowView == null) {
+                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+                rowView = inflater.inflate(R.layout.simple_list_item,viewGroup,false);
             }
-            recyclerView.setAdapter(new MyExerciseRecyclerViewAdapter(ExerciseContent.ITEMS, mListener));
+            final Exercise exercise = getItem(i);//TODO need to implement a checkbox and a small view to
+            setTextView(exercise,rowView);
+            exerciseClicked(rowView,exercise);
+            return rowView;
         }
-        return view;
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+        private void setTextView(Exercise exercise,View rowView) {
+            TextView exercseName = (TextView) rowView.findViewById(R.id.exerciseList_textView);
+            exercseName.setText(exercise.getExerciseName());
         }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        mListener = null;
-    }
-
-    public void setExerciseContext(Context exerciseContext) {
-        myContext = exerciseContext;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(ExerciseItem item);
+        private void exerciseClicked(View rowView,Exercise exercise) {
+            rowView.setOnClickListener(new View.OnClickListener() {//maybe do on long click too
+                @Override//or maybe this is just for sending information
+                public void onClick(View v) {
+                    MainActivity.fragId = R.id.blankExercise_fragment;
+                    ExerciseFragment.clickedExerciseName = exercise;
+                    exercise_frag.showBlankExerciseFragment();
+                }
+            });
+        }
     }
 }
+
 
 

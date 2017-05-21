@@ -1,10 +1,7 @@
-package com.example.kaveon14.workoutbuddy.FragmentTextHandling;
+package com.example.kaveon14.workoutbuddy.DataBase.DefaultData;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-
-import com.example.kaveon14.workoutbuddy.MainActivity;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ExerciseNames extends MainActivity {
+public class DefaultExerciseNames {
 
     private String fileName;
     private Context exContext;
 
-    public ExerciseNames(Context context,String fileName) {
+    public DefaultExerciseNames(Context context,String fileName) {
         exContext = context;
         this.fileName = fileName;
     }
@@ -36,7 +33,7 @@ public class ExerciseNames extends MainActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-       Collections.sort(fileData);
+        Collections.sort(fileData);
         return fileData;
     }
 }

@@ -3,108 +3,147 @@ package com.example.kaveon14.workoutbuddy.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.kaveon14.workoutbuddy.FragmentRecyclers.MyBlankWorkoutRecyclerViewAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import com.example.kaveon14.workoutbuddy.Data.Workout;
+import com.example.kaveon14.workoutbuddy.DataBase.WorkoutTable;
 import com.example.kaveon14.workoutbuddy.R;
-import com.example.kaveon14.workoutbuddy.FragmentContent.BlankWorkoutContent;
-import com.example.kaveon14.workoutbuddy.FragmentContent.BlankWorkoutContent.BlankWorkoutItem;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_NAMES;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_REPS;
+import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_SETS;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class BlankWorkoutFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    private Context context;
+
     public BlankWorkoutFragment() {
+        // Required empty public constructor
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static BlankWorkoutFragment newInstance(int columnCount) {
-        BlankWorkoutFragment fragment = new BlankWorkoutFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_blank_workout_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_blank_workout, container, false);
+        setTextView(rootView);
+        setListView(rootView);
+        return rootView;
+    }
 
-        // Set the adapter
-        //put this in seperate function
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+    private void setTextView(View rootView) {
+        TextView textView = (TextView) rootView.findViewById(R.id.workoutNameView);
+        textView.setText(WorkoutFragment.workoutName);
+    }
+
+    private void setListView(View rootView) {
+        ListView listView = (ListView) rootView.findViewById(R.id.blankWorkout_listView);
+        listView.setAdapter(setWorkoutAdapter());
+    }
+
+    private WorkoutAdapter setWorkoutAdapter() {
+        WorkoutTable workoutTable = new WorkoutTable(context);
+        int amountOfWorkouts = workoutTable.getWorkoutNames().size();
+        List<Workout> workouts = new ArrayList<>();
+        for(int x=0;x<amountOfWorkouts;x++) {
+            workouts.add(getWorkout(x));
+        }
+        return new  WorkoutAdapter(context,workouts);
+    }
+
+    private Workout getWorkout(int x) {
+        WorkoutTable workoutTable = new WorkoutTable(context);
+        String tableName = WorkoutFragment.workoutName+"_wk";
+        List<String> exerciseNameList = workoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES);
+
+        Map<String,String> setsMap = new Hashtable<>();
+        setsMap.put(exerciseNameList.get(x),workoutTable.getColumn(tableName,COLUMN_EXERCISE_SETS).get(x));
+
+        Map<String,String> repsMap = new Hashtable<>();
+        repsMap.put(exerciseNameList.get(x),workoutTable.getColumn(tableName,COLUMN_EXERCISE_REPS).get(x));
+
+        return new Workout(tableName.substring(0,tableName.length()-3), exerciseNameList,setsMap,repsMap);
+    }
+
+    private static class WorkoutAdapter extends BaseAdapter implements View.OnClickListener {
+
+        private List<Workout> workoutList;
+        private Context context;
+        private TextView exerciseNameView;
+
+        public WorkoutAdapter(Context context,List<Workout> workouts) {
+            this.context = context;
+            this.workoutList = workouts;
+        }
+
+        public int getCount() {
+            return workoutList.size();
+        }
+
+        public Object getItem(int position) {
+            return workoutList.get(position);
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public View getView(int position, View rowView, ViewGroup viewGroup) {
+            Workout workout = workoutList.get(position);
+            if (rowView == null) {
+                LayoutInflater inflater = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                rowView = inflater.inflate(R.layout.blank_workout_list_item, null);
             }
-            recyclerView.setAdapter(new MyBlankWorkoutRecyclerViewAdapter(BlankWorkoutContent.ITEMS, mListener));
+            setListItemView(rowView,workout,position);
+            return rowView;
         }
-        return view;
-    }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+        @Override
+        public void onClick(View view) {
+            //TODO open up the clicked exercise description
+            System.out.println("yes this works in blank workout fragment adapter");
         }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        private void setListItemView(View rowView,Workout workout,int position) {
+            setExerciseNameTextView(rowView,workout,position);
+            setExerciseRepsTextView(rowView,workout);
+            setExerciseSets(rowView,workout);
+        }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(BlankWorkoutItem item);
+        private void setExerciseNameTextView(View rowView,Workout workout,int position) {
+            exerciseNameView = (TextView) rowView.findViewById(R.id.nameView);
+            List<String> exerciseList =   workout.getExerciseList();
+            exerciseNameView.setText(exerciseList.get(position));
+        }
+
+        private void setExerciseRepsTextView(View rowView,Workout workout) {
+            TextView repsView = (TextView) rowView.findViewById(R.id.repsView);
+            String exerciseReps = workout.getExerciseReps().get(exerciseNameView.getText());
+            repsView.setText(exerciseReps);
+        }
+
+        private void setExerciseSets(View rowView,Workout workout) {
+            TextView setsView = (TextView) rowView.findViewById(R.id.setsView);
+            String exerciseSets = workout.getExerciseSets().get(exerciseNameView.getText());
+            setsView.setText(exerciseSets);
+        }
+
     }
 }

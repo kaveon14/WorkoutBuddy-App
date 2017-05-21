@@ -2,107 +2,70 @@ package com.example.kaveon14.workoutbuddy.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent;
-import com.example.kaveon14.workoutbuddy.FragmentContent.WorkoutContent.WorkoutItem;
-import com.example.kaveon14.workoutbuddy.FragmentRecyclers.MyWorkoutRecyclerViewAdapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
+import com.example.kaveon14.workoutbuddy.DataBase.WorkoutTable;
 import com.example.kaveon14.workoutbuddy.R;
+import java.util.List;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-public class WorkoutFragment extends android.support.v4.app.Fragment {
+public class WorkoutFragment extends Fragment {
+    // TODO create on click stuff
+    private Context context;
+    public static String workoutName;
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public WorkoutFragment() {
+        // Required empty public constructor
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static WorkoutFragment newInstance(int columnCount) {
-        WorkoutFragment fragment = new WorkoutFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_workout_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyWorkoutRecyclerViewAdapter(WorkoutContent.ITEMS, mListener));
-        }
+        View view = inflater.inflate(R.layout.fragment_workout, container, false);
+        ListView listView = (ListView) view.findViewById(R.id.wokoutListView);
+        listView.setAdapter(getAdapter());
+        WorkoutFragment workoutFragment = this;
+        openWorkoutOnClick(listView,workoutFragment);
         return view;
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
+    private void openWorkoutOnClick(ListView listView,WorkoutFragment workoutFragment) {
+        BlankWorkoutFragment blankWorkoutFragment = new BlankWorkoutFragment();
+        blankWorkoutFragment.setContext(context);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActivity.fragId = R.id.blankWorkout_fragment;
+                workoutName = parent.getItemAtPosition(position).toString();
+                getFragmentManager().beginTransaction()
+                        .hide(workoutFragment)
+                        .add(R.id.blankWorkout_fragment,blankWorkoutFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    private ArrayAdapter getAdapter() {
+        WorkoutTable workoutTable = new WorkoutTable(context);
+        List<String> list = workoutTable.getWorkoutNames();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+                R.layout.simple_list_item,list);
+        return adapter;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(WorkoutItem item);
-    }
 }

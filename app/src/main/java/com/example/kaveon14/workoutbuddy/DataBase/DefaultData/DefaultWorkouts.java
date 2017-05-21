@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.DataBase.DefaultData;
 
 import android.content.Context;
 import java.io.DataInputStream;
@@ -7,12 +7,12 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Scanner;
 
-public class ReadDefaultExerciseFile {
+public class DefaultWorkouts {
 
     private String fileName;
     private Context myContext;
 
-    public ReadDefaultExerciseFile(Context context, String fileName) {
+    public DefaultWorkouts(Context context, String fileName) {
         myContext = context;
         this.fileName = fileName;
     }
@@ -21,7 +21,7 @@ public class ReadDefaultExerciseFile {
         return new Scanner(new DataInputStream(myContext.getAssets().open(fileName)));
     }
 
-    public Map<String,String> readFile() throws IOException {
+    public Map<String,String> getWorkoutData() throws IOException {
         Map<String,String> defaultWorkouts = new Hashtable<>();
         String line = "";String scannerLine;
         Scanner scan = openFileWithScanner(fileName);
@@ -31,7 +31,7 @@ public class ReadDefaultExerciseFile {
                 line = line + System.lineSeparator();
                 Scanner mapKey = new Scanner(line);
                 String nameOfWorkout = mapKey.next();
-                defaultWorkouts.put(nameOfWorkout,line.substring(8));
+                defaultWorkouts.put(nameOfWorkout,line.substring(11));
                 line = "";
             } else {
                 line = line + scannerLine + System.lineSeparator();
