@@ -21,7 +21,8 @@ import java.util.List;
 public class ExerciseFragment extends Fragment {
 
     private Context context;
-    protected static String clickedExerciseName;
+    protected static Exercise clickedExerciseName;
+    public static List<Exercise> exerciseList;
     private ExerciseFragment exercise_frag = this;
 
     public ExerciseFragment() {
@@ -56,6 +57,7 @@ public class ExerciseFragment extends Fragment {
         for(int x=0;x<amountOfExercise;x++) {
             exercises.add(getExercise(x));
         }
+        exerciseList = exercises;
         return new ExerciseAdapter(exercises);
     }
 
@@ -120,7 +122,7 @@ public class ExerciseFragment extends Fragment {
                 @Override//or maybe this is just for sending information
                 public void onClick(View v) {
                     MainActivity.fragId = R.id.blankExercise_fragment;
-                    ExerciseFragment.clickedExerciseName = exercise.getExerciseName();
+                    ExerciseFragment.clickedExerciseName = exercise;
                     exercise_frag.showBlankExerciseFragment();
                 }
             });

@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         this.fragId = fragId;
         if(fragToHide != null) {fragmentTransaction.hide(fragToHide);}
-        if(caldroid_frag.isVisible()) {fragmentTransaction.hide(caldroid_frag);}
+        if(caldroid_frag!=null && caldroid_frag.isVisible()) {fragmentTransaction.hide(caldroid_frag);}
         fragmentTransaction.add(fragId, fragToShow);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
