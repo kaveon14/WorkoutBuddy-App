@@ -1,21 +1,28 @@
-package com.example.kaveon14.workoutbuddy;
+package com.example.kaveon14.workoutbuddy.Data;
 
 import android.content.Context;
+import com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract;
+import com.example.kaveon14.workoutbuddy.DataBase.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.R;
 import java.lang.reflect.Field;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
-import static com.example.kaveon14.workoutbuddy.FragmentContent.ExerciseContent.EXERCISE_ITEM_MAP;
 
 public class ExerciseImages {
 
     private Context exContext;
-    public static Map<String,String> EXERCISE_IMAGE_MAP = new Hashtable<>();
+    protected static Map<String,String> EXERCISE_IMAGE_MAP = new Hashtable<>();
     private final R.mipmap mipmapResources = new R.mipmap();
     private final Class<R.mipmap> mipmapClass = R.mipmap.class;
     private final Field[] mipmapFields = mipmapClass.getDeclaredFields();
+    private List<String> EXERCISE_LIST;
+
+    public ExerciseImages(){}
 
     public ExerciseImages(Context context) {
         exContext = context;
+        addElementsToExList();
         addElementsToMipMap();
     }
 
@@ -38,10 +45,10 @@ public class ExerciseImages {
     private void getImageAndItemNameForMap(int mainLoop) throws IllegalAccessException {
         String itemName;
         String uneditedImageName;String editedImageName;
-        for(int x=1;x<EXERCISE_ITEM_MAP.size();x++) {
+        for(int x=1;x<EXERCISE_LIST.size();x++) {
             uneditedImageName = mipmapFields[mainLoop].getName();
             editedImageName = uneditedImageName.replace("_", " ");
-            itemName = EXERCISE_ITEM_MAP.get(String.valueOf(x)).toString().replace("-", " ");
+            itemName = EXERCISE_LIST.get(x).replace("-", " ");
             matchImageAndItemToMap(x,mainLoop,editedImageName,itemName);
         }
     }
@@ -60,6 +67,11 @@ public class ExerciseImages {
 
     private boolean compareItemAndImageName(String itemName,String imageName) {
         return imageName.equalsIgnoreCase(itemName);
+    }
+
+    private void addElementsToExList() {
+        ExerciseTable exerciseTable = new ExerciseTable(exContext);
+        EXERCISE_LIST = exerciseTable.getColumn(DataBaseContract.ExerciseData.COLUMN_EXERCISES);
     }
 
     private void addElementsToMipMap() {
