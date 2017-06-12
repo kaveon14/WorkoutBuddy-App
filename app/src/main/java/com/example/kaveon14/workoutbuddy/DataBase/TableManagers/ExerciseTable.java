@@ -1,14 +1,16 @@
-package com.example.kaveon14.workoutbuddy.DataBase;
+package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.LinkedList;
 import java.util.List;
-import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
-import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION;
-import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.ExerciseData.TABLE_NAME;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.TABLE_NAME;
 
 public class ExerciseTable {
 
@@ -18,12 +20,11 @@ public class ExerciseTable {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
     }
 
-    public void addAnExercise(String exerciseName,String exerciseData) {
-        // TODO both will come from the fragment
+    public void addAnExercise(Exercise exercise) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_EXERCISES,exerciseName);
-        values.put(COLUMN_EXERCISE_DESCRIPTION,exerciseData);
+        values.put(COLUMN_EXERCISES,exercise.getExerciseName());
+        values.put(COLUMN_EXERCISE_DESCRIPTION,exercise.getExerciseDescripion());
         long itemID = writableDatabase.insert(TABLE_NAME,null,values);
     }
 

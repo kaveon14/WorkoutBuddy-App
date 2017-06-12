@@ -20,8 +20,8 @@ public class DefaultWorkouts {
     private Scanner openFileWithScanner(String fileName) throws IOException {
         return new Scanner(new DataInputStream(myContext.getAssets().open(fileName)));
     }
-
-    public Map<String,String> getWorkoutData() throws IOException {
+// TODO parse the workout names
+    public Map<String,String> getSubWorkoutData() throws IOException {
         Map<String,String> defaultWorkouts = new Hashtable<>();
         String line = "";String scannerLine;
         Scanner scan = openFileWithScanner(fileName);
@@ -31,7 +31,7 @@ public class DefaultWorkouts {
                 line = line + System.lineSeparator();
                 Scanner mapKey = new Scanner(line);
                 String nameOfWorkout = mapKey.next();
-                defaultWorkouts.put(nameOfWorkout,line.substring(11));
+                defaultWorkouts.put(nameOfWorkout,line.substring(nameOfWorkout.length()));
                 line = "";
             } else {
                 line = line + scannerLine + System.lineSeparator();

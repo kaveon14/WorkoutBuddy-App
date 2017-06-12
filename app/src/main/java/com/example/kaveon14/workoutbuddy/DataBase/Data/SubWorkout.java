@@ -1,28 +1,28 @@
-package com.example.kaveon14.workoutbuddy.Data;
+package com.example.kaveon14.workoutbuddy.DataBase.Data;
 
 import java.util.List;
 import java.util.Map;
 
-public class Workout {
+public class SubWorkout {
 
-    private String workoutName;
-    private List<String> exerciseList;
+    private String subWorkoutName;
+    private List<Exercise> exerciseList;
     private Map<String,String> exerciseSets;
     private Map<String,String> exerciseReps;
 
-    public Workout(String workoutName,List<String> exerciseList,
-                   Map<String,String> exerciseSets,Map<String,String> exerciseReps) {
-        this.workoutName = workoutName;
+    public SubWorkout(String subWorkoutName, List<Exercise> exerciseList,
+                      Map<String,String> exerciseSets, Map<String,String> exerciseReps) {
+        this.subWorkoutName = subWorkoutName;
         this.exerciseList = exerciseList;
         this.exerciseSets = exerciseSets;
         this.exerciseReps = exerciseReps;
     }
 
-    public String getWorkoutName() {
-        return workoutName;
+    public String getSubWorkoutName() {
+        return subWorkoutName;
     }
 
-    public List<String> getExerciseList() {
+    public List<Exercise> getExerciseList() {
         return exerciseList;
     }
 

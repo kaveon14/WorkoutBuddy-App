@@ -1,43 +1,48 @@
-package com.example.kaveon14.workoutbuddy.DataBase;
+package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
+import android.widget.EditText;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.LinkedList;
 import java.util.List;
-import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_NAMES;
-import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_REPS;
-import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.COLUMN_EXERCISE_SETS;
-import static com.example.kaveon14.workoutbuddy.DataBase.DataBaseContract.WorkoutData.createWorkoutTable;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.createWorkoutTable;
 
-public class WorkoutTable {
+public class SubWorkoutTable {
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
 
-    public WorkoutTable(Context context) {
+    public SubWorkoutTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
     }
 
-    public void addWorkoutTable(String tableName) {
-        tableName = correctTableName(tableName);
+    public void addSubWorkoutTable(String tableName) {
+        tableName = getCorrectTableName(tableName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         createWorkoutTable(tableName);
         writableDatabase.execSQL(createWorkoutTable(tableName));
     }
 
-    public void addExerciseToWorkout(String workoutName) {
+    public void addExerciseToSubWorkout(String mainWorkoutName,String subWorkoutName,Exercise ex) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
-        // TODO get data off of screen
+        // TODO make function require the main workout name //might have to subworkouts with same name
         ContentValues values = new ContentValues();
-        values.put(COLUMN_EXERCISE_NAMES,"");
-        values.put(COLUMN_EXERCISE_SETS,"");
-        values.put(COLUMN_EXERCISE_REPS,"");
-        long itemID = writableDatabase.insert(workoutName,null,values);
+        values.put(COLUMN_EXERCISE_NAMES,ex.getExerciseName());
+        values.put(COLUMN_EXERCISE_SETS,ex.getExerciseSets());
+        values.put(COLUMN_EXERCISE_REPS,ex.getExerciseReps());
+        long itemID = writableDatabase.insert(subWorkoutName,null,values);
     }
 
     public List<String> getColumn(String tableName,String columnName) {
-        tableName = correctTableName(tableName);
+        tableName = getCorrectTableName(tableName);
         List<String> columnList = new LinkedList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
@@ -50,22 +55,8 @@ public class WorkoutTable {
         return columnList;
     }
 
-    public List<String> getWorkoutNames() {
-        List<String> workoutNames = new LinkedList<>();
-        SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = readableDatabase.rawQuery("SELECT name FROM sqlite_master WHERE type='table'",null);
-        while(cursor.moveToNext()) {
-            String tableName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-            if(isTableNameCorrect(tableName))  {
-                tableName = tableName.substring(0,tableName.length()-3);
-                workoutNames.add(tableName);
-            }
-        }
-        return workoutNames;
-    }
-
-    public void printWorkoutTable(String tableName) {
-        tableName = correctTableName(tableName);
+    public void printSubWorkoutTable(String tableName) {
+        tableName = getCorrectTableName(tableName);
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
         while(cursor.moveToNext()) {
@@ -84,13 +75,20 @@ public class WorkoutTable {
         }
     }
 
-    private String correctTableName(String tableName) {//create new name
-        int length = tableName.length();
+    private String getCorrectTableName(String tableName) {//create new name
+        /*int length = tableName.length();
         if(tableName.substring(length-3,length).equalsIgnoreCase("_wk")) {
             return tableName;
         } else {
             return tableName + "_wk";
+        }*/
+        //test
+        if(isTableNameCorrect(tableName)) {
+            return tableName;
+        } else {
+            return tableName + "_wk";
         }
+
 
     }
 }

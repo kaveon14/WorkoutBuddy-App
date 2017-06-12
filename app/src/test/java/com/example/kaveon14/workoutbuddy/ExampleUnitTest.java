@@ -1,22 +1,15 @@
 package com.example.kaveon14.workoutbuddy;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 
-import com.example.kaveon14.workoutbuddy.DataBase.DataBaseSQLiteHelper;
-import com.example.kaveon14.workoutbuddy.DataBase.WorkoutTable;
-import com.example.kaveon14.workoutbuddy.FragmentTextHandling.ExerciseNames;
+import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -40,10 +33,11 @@ public class ExampleUnitTest {
 
     @Mock Context context;
     @Mock DataBaseSQLiteHelper dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
-    @Mock WorkoutTable workoutTable = new WorkoutTable(context);
+    @Mock
+    SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
     @Test
     public void setWorkoutTable() {
-        workoutTable.printWorkoutTable("Workout1");
+        subWorkoutTable.printSubWorkoutTable("Workout1");
     }
 
 }

@@ -7,9 +7,9 @@
 
 
     <ListView
-        android:id="@+id/listView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/popup_listView"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:visibility="visible" />
 
@@ -17,8 +17,26 @@
         android:id="@+id/popupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/listView"
+        android:text="Add Exercise"
+        android:visibility="invisible"
+        android:layout_below="@+id/popup_repsTextView"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/popup_setsTextView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Add Workout"
-        android:visibility="visible" />
+        android:layout_below="@+id/popup_listView"
+        android:visibility="invisible"
+        android:text="Sets:" />
+
+    <EditText
+        android:id="@+id/popup_repsTextView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        android:layout_below="@+id/popup_setsTextView"
+        android:text="Reps:" />
 </RelativeLayout>

@@ -1,8 +1,12 @@
-TODO
--  clean up main activity class
-TODO
--   write unit tests for most of the program
-TODO for app update:
--   create user login to access account from different phones
--   create new database with mySQL for online storage
-
+// TODO crete methods to delete data in database and "edit a listview" on long click
+// TODO create better looking list views
+// TODO use check boxes to mass add exercises to a workout
+// TODO create a body stats fragment(will most likely have two parts(sub fragment with graph)
+//will be extremely challening try some sort of tabbed container or another list view to hold the graph
+//with options of "first data loged" ,"in last year"in with in "last month" as default and "a weekly one"
+// TODO create lifting stats fragment(will most likely have two parts(sub fragment with graph)
+try to use same fragment as the one used for the body stats fragment on both of them
+// TODO create a log for the workout data
+// TODO allow user to create workouts
+// TODO allow user to create exercises
+// TODO allow user to set workouts for certain dates

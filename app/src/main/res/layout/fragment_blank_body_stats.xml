@@ -1,0 +1,298 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/blankBodyStats_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    >
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/date_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Date: "
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <TextView
+            android:id="@+id/weight_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="21dp"
+            android:text="Weight:"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_textView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <TextView
+            android:id="@+id/chest_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Chest:"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weight_textView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <TextView
+            android:id="@+id/back_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Back:"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/back_inputTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back_inputTextView"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <TextView
+            android:id="@+id/arms_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Arms:"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/back_textView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <TextView
+            android:id="@+id/forearm_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Forearms:"
+            android:visibility="visible"
+            app:layout_constraintBaseline_toBaselineOf="@+id/forearms_inputTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:layout_constraintBaseline_creator="1"
+            tools:layout_constraintLeft_creator="1" />
+
+        <TextView
+            android:id="@+id/waist_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="22dp"
+            android:text="Waist:"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forearm_textView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <TextView
+            android:id="@+id/quad_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="25dp"
+            android:text="Quads:"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/waist_textView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <TextView
+            android:id="@+id/calf_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Calves:"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/calf_inputTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/calf_inputTextView"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <EditText
+            android:id="@+id/date_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="21dp"
+            android:layout_marginStart="45dp"
+            android:text="Date mm/dd/yyyy"
+            android:visibility="visible"
+            android:textSize="14sp"
+
+            android:textStyle="normal"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintBottom_toTopOf="@+id/weight_textView"
+            app:layout_constraintLeft_toRightOf="@+id/weight_textView"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1" />
+
+        <EditText
+            android:id="@+id/weight_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:text=" Weight kg/lb"
+            android:selectAllOnFocus="true"
+            android:visibility="visible"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/date_inputTextView"
+            app:layout_constraintTop_toBottomOf="@+id/date_inputTextView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <EditText
+            android:id="@+id/chest_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Chest in/cm"
+            android:selectAllOnFocus="true"
+            android:visibility="visible"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/weight_inputTextView"
+            app:layout_constraintTop_toBottomOf="@+id/weight_inputTextView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <EditText
+            android:id="@+id/back_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:text="Back in/cm"
+            android:selectAllOnFocus="true"
+            android:visibility="visible"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/chest_inputTextView"
+            app:layout_constraintTop_toBottomOf="@+id/chest_inputTextView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <EditText
+            android:id="@+id/arm_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Arms in/cm"
+            android:selectAllOnFocus="true"
+            android:visibility="visible"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/back_inputTextView"
+            app:layout_constraintTop_toBottomOf="@+id/back_inputTextView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <EditText
+            android:id="@+id/forearms_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Forearms in/cm"
+            android:selectAllOnFocus="true"
+            android:visibility="visible"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/arm_inputTextView"
+            app:layout_constraintTop_toBottomOf="@+id/arm_inputTextView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <EditText
+            android:id="@+id/waist_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="Waist in/cm"
+            android:visibility="visible"
+            android:textSize="14sp"
+            android:selectAllOnFocus="true"
+            android:textStyle="normal"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/forearms_inputTextView"
+            app:layout_constraintTop_toBottomOf="@+id/forearms_inputTextView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <EditText
+            android:id="@+id/quad_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Quads in/cm"
+            android:visibility="visible"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:selectAllOnFocus="true"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/calf_inputTextView"
+            app:layout_constraintTop_toBottomOf="@+id/waist_inputTextView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <EditText
+            android:id="@+id/calf_inputTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="25dp"
+            android:text="Calves in/cm"
+            android:visibility="visible"
+            android:selectAllOnFocus="true"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            android:background="@color/caldroid_transparent"
+            app:layout_constraintLeft_toRightOf="@+id/calf_textView"
+            app:layout_constraintTop_toBottomOf="@+id/quad_inputTextView"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1" />
+
+        <Button
+            android:id="@+id/addStats_btn"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:text="Add Stats"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/calf_textView"
+            app:layout_constraintRight_toRightOf="@+id/calf_textView"
+            tools:layout_constraintBottom_creator="1"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

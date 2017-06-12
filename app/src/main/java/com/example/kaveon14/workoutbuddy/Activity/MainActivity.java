@@ -3,7 +3,6 @@ package com.example.kaveon14.workoutbuddy.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -15,29 +14,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.example.kaveon14.workoutbuddy.Fragments.ExerciseFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.WorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
-
 import java.util.Calendar;
-
-import com.example.kaveon14.workoutbuddy.Fragments.CalenderFragment;
-// TODO handle exercise content error
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
+// TODO allow add exercise to subworkout from subworkout fragment
+// TODO allow deletion of exercise from workout,subworkout from mainworkout,and mainworkout
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    // TODO create better looking list views
-// TODO use check boxes to mass add exercises to a workout
-// TODO create a body frag???? or just a blank "bodyFrag" ???
-    public static int fragId;
+
+    private static int fragId;
     private CaldroidFragment caldroid_frag;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContent();
-
     }
 
     @Override
@@ -52,7 +49,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -60,7 +56,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings) {
             return true;
         }
@@ -70,11 +65,10 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.body_stats) {
-
+        /*if (id == R.id.body_stats) {
+            showBodyStatsFragment();
         } else if (id == R.id.lifting_stats) {
 
         } else if (id == R.id.workout_menu) {
@@ -85,6 +79,27 @@ public class MainActivity extends AppCompatActivity
             showCaldroidFragment();
         } else if (id == R.id.nav_send) {
 
+        }*/
+
+        switch (id) {
+            case R.id.body_stats:
+                showBodyStatsFragment();
+                break;
+            case R.id.lifting_stats:
+                //nothing yet
+                break;
+            case R.id.workout_menu:
+                showWorkoutFragment();
+                break;
+            case R.id.exercise_menu:
+                showExerciseFragment();
+                break;
+            case R.id.calenderBtn:
+                showCaldroidFragment();
+                break;
+            case R.id.nav_send:
+                //nothing yet
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -96,17 +111,26 @@ public class MainActivity extends AppCompatActivity
         return getSupportFragmentManager().findFragmentById(fragId);
     }
 
+    private void showBlankBodyStatsFragment() {
+        BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
+        addFragmentToStack(getActiveFragment(),blankBodyStatsFragment,R.id.blankBodyStats_fragment);
+    }
+
+    private void showBodyStatsFragment() {
+        BodyStatsFragment bodyStats_fragment = new BodyStatsFragment();
+        addFragmentToStack(getActiveFragment(),bodyStats_fragment,R.id.bodyStats_fragment);
+        fab.setImageResource(R.drawable.ic_menu_manage);
+    }
+
     private void showExerciseFragment() {
         ExerciseFragment exercise_frag = new ExerciseFragment();
-        exercise_frag.setContext(this);
         addFragmentToStack(getActiveFragment(),exercise_frag,R.id.exercise_fragment);
         getActiveFragment();
     }
 
     private void showWorkoutFragment() {
-        WorkoutFragment workout_frag = new WorkoutFragment();
-        workout_frag.setContext(this);
-        addFragmentToStack(getActiveFragment(),workout_frag,R.id.workout_fragment);
+        MainWorkoutFragment mainWorkout_frag = new MainWorkoutFragment();
+        addFragmentToStack(getActiveFragment(),mainWorkout_frag,R.id.mainWorkout_fragment);
     }
 
     private void showCaldroidFragment() {
@@ -142,12 +166,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setFloatingButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(getActiveFragment() != null && getActiveFragment().getId()==R.id.bodyStats_fragment) {
+                    showBlankBodyStatsFragment();
+                }
             }
         });
     }
@@ -178,5 +203,5 @@ public class MainActivity extends AppCompatActivity
         args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
         caldroid_frag.setArguments(args);
     }
-
 }
+// do a-chart engine later for now just figure out how to save workout data and body data
