@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -46,9 +44,12 @@ public class BlankWorkoutFragment extends Fragment {
 
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        if(fab != null) {
-            fab.hide();
-        }
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //do nothing
+            }
+        });
         return fab;
     }
 

@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ExerciseImages;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;

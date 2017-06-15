@@ -11,8 +11,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;

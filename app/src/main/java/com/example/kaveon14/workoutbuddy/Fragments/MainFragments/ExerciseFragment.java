@@ -32,7 +32,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragme
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
-//create main workouts
+
 public class ExerciseFragment extends Fragment {
 
     public static Exercise clickedExercise;
