@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,8 +73,28 @@ public class ExerciseFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_exercise, container, false);
         setListView(root);
+        setFloatingActionButton();
         return root;
     }
+
+    private FloatingActionButton setFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setImageResource(R.drawable.ic_menu_manage);
+            handleFloatingActionButtonEvents(fab);
+        }
+        return fab;
+    }
+
+    private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Add exercise",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 
     private void setListView(View root) {
         ListView listView = (ListView) root.findViewById(R.id.exercise_listView);
@@ -257,6 +278,7 @@ public class ExerciseFragment extends Fragment {
         exercise.setExerciseReps(getExerciseReps(root));
         exercise.setExerciseSets(getExerciseSets(root));
 
+        SubWorkoutFragment.clickedSubWorkout.addExercise(exercise);
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
         subWorkoutTable.
                 addExerciseToSubWorkout(clickedMainWorkout,subWorkoutName+"_wk",

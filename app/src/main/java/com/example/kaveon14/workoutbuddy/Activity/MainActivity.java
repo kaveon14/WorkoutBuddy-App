@@ -66,21 +66,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        /*if (id == R.id.body_stats) {
-            showBodyStatsFragment();
-        } else if (id == R.id.lifting_stats) {
-
-        } else if (id == R.id.workout_menu) {
-            showWorkoutFragment();
-        } else if (id == R.id.exercise_menu) {
-            showExerciseFragment();
-        } else if (id == R.id.calenderBtn) {
-            showCaldroidFragment();
-        } else if (id == R.id.nav_send) {
-
-        }*/
-
         switch (id) {
             case R.id.body_stats:
                 showBodyStatsFragment();
@@ -119,7 +104,6 @@ public class MainActivity extends AppCompatActivity
     private void showBodyStatsFragment() {
         BodyStatsFragment bodyStats_fragment = new BodyStatsFragment();
         addFragmentToStack(getActiveFragment(),bodyStats_fragment,R.id.bodyStats_fragment);
-        fab.setImageResource(R.drawable.ic_menu_manage);
     }
 
     private void showExerciseFragment() {
@@ -161,20 +145,7 @@ public class MainActivity extends AppCompatActivity
     private void setBaseContent() {
         setContentView(R.layout.activity_main);
         setDrawer(setToolbar());
-        setFloatingButton();
         setNaviagtionView();
-    }
-
-    private void setFloatingButton() {
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(getActiveFragment() != null && getActiveFragment().getId()==R.id.bodyStats_fragment) {
-                    showBlankBodyStatsFragment();
-                }
-            }
-        });
     }
 
     private Toolbar setToolbar() {

@@ -2,6 +2,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -37,7 +40,16 @@ public class BlankWorkoutFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_blank_workout, container, false);
         setTextView(rootView);
         setListView(rootView);
+        setFloatingActionButton();
         return rootView;
+    }
+
+    private FloatingActionButton setFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.hide();
+        }
+        return fab;
     }
 
     private void setTextView(View rootView) {

@@ -1,6 +1,7 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
@@ -42,7 +45,26 @@ public class SubWorkoutFragment extends Fragment {
         listView.setAdapter(getAdapter());
         openWorkoutOnClick(listView);
         addExerciseToSubWorkout(listView);
+        setFloatingActionButton();
         return view;
+    }
+
+    private FloatingActionButton setFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setImageResource(R.drawable.ic_menu_manage);
+            handleFloatingActionButtonEvents(fab);
+        }
+        return fab;
+    }
+
+    private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Add sub workout directly",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private ArrayAdapter getAdapter() {

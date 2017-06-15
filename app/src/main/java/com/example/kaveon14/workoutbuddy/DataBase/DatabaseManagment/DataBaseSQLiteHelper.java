@@ -112,11 +112,10 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
         private void setDefaultWorkoutsMap() {
             DefaultWorkouts fileReader = new DefaultWorkouts(context, "DefaultWorkoutValues.txt");
-            MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
             try {
                 defaultWorkoutsMap = fileReader.getSubWorkoutData();
                 defaultWorkoutNames = new LinkedList<>();
-                defaultWorkoutNames.add("Chest_Day");//needs to read from a file
+                defaultWorkoutNames.add("Chest_Day");
                 defaultWorkoutNames.add("Back_Day");
                 defaultWorkoutNames.add("Shoulder_Day");
                 defaultWorkoutNames.add("Leg_Day");

@@ -2,6 +2,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
@@ -46,6 +49,7 @@ public class BodyStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_body_stats, container, false);
         setUpListView(root);
+        setFloatingActionButton();
         return root;
     }
 
@@ -55,6 +59,24 @@ public class BodyStatsFragment extends Fragment {
         if (hidden) {
         } else {
         }
+    }
+
+    private FloatingActionButton setFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setImageResource(R.drawable.ic_menu_manage);
+            handleFloatingActionButtonEvents(fab);
+        }
+        return fab;
+    }
+
+    private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {//do stuff to allow new creation of main workout
+                showBlankBodyStatsfragment();
+            }
+        });
     }
 
     private void setUpListView(View root) {
@@ -69,22 +91,26 @@ public class BodyStatsFragment extends Fragment {
     }
 
     private void updateRowView(ListView listView) {
-        BodyStatsFragment bodyStatsFragment = this;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 clickedBodyStatsItem = getBodyStats(position);
-                BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
-                getFragmentManager().beginTransaction()
-                        .hide(bodyStatsFragment)
-                        .add(R.id.blankBodyStats_fragment,blankBodyStatsFragment)
-                        .addToBackStack(null)
-                        .commit();
+                showBlankBodyStatsfragment();
             }
         });
     }
 
-    private void deleteRowView(ListView listView) {
+    private void showBlankBodyStatsfragment() {
+        getFragmentManager().beginTransaction()
+                .hide(this)
+                .add(R.id.blankBodyStats_fragment,new BlankBodyStatsFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+
+
+    private void deleteRowView(ListView listView) {// TODO show popup window first asking if they want to delete the stats
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

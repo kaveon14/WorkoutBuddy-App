@@ -5,12 +5,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ExerciseImages;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
@@ -34,6 +37,7 @@ public class BlankExerciseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_blank_exercise, container, false);
         setExerciseContent(view);
+        setFloatingActionButton();//shown for now
         return view;
     }
 
@@ -45,6 +49,25 @@ public class BlankExerciseFragment extends Fragment {
         exTextBox.setText(exerciseContent.getExerciseDescription());
         ImageView exImageView = (ImageView) view.findViewById(R.id.exerciseImageView);
         exImageView.setImageBitmap(exerciseContent.getImageBitmap(view));
+    }
+
+    private FloatingActionButton setFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setImageResource(R.drawable.ic_menu_manage);
+            handleFloatingActionButtonEvents(fab);
+        }
+        return fab;
+    }
+
+    private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"if custom exercise allow it too be editable " +
+                        "otherwise do nit==ot show the button",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private class ExerciseContent extends ExerciseImages {
