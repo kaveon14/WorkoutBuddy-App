@@ -79,7 +79,6 @@ public class MainWorkoutTable {
         for(int x=1;x<=7;x++) {
             rowData.add(x,getSubWorkoutNames(mainWorkout).get(x));
         }
-
         return rowData;
     }
 

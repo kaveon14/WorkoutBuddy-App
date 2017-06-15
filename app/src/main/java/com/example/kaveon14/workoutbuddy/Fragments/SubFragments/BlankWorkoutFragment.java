@@ -11,15 +11,11 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
@@ -46,20 +42,20 @@ public class BlankWorkoutFragment extends Fragment {
 
     private void setTextView(View rootView) {
         TextView textView = (TextView) rootView.findViewById(R.id.workoutNameView);
-        textView.setText(SubWorkoutFragment.clickedSubWorkoutName);
+        textView.setText(SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
     }
 
     private void setListView(View rootView) {
         ListView listView = (ListView) rootView.findViewById(R.id.blankWorkout_listView);
         listView.setAdapter(setWorkoutAdapter());
-         viewExerciseOnClick(listView);
+        viewExerciseOnClick(listView);
     }
 
     private void viewExerciseOnClick(ListView listView) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Exercise clickedExercise = getSubWorkout(position).getExerciseList().get(position);
+                Exercise clickedExercise = getSubWorkoutExercise(position);
                 showExercise(clickedExercise);
             }
         });
@@ -77,55 +73,47 @@ public class BlankWorkoutFragment extends Fragment {
 
     private WorkoutAdapter setWorkoutAdapter() {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = SubWorkoutFragment.clickedSubWorkoutName + "_wk";
+        String tableName = SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName() + "_wk";
         int amountOfExercises = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES).size();
-        List<SubWorkout> workouts = new ArrayList<>();
+        List<Exercise> exercises = new ArrayList<>();
         for(int x=0;x<amountOfExercises;x++) {
-            workouts.add(getSubWorkout(x));
+            exercises.add(getSubWorkoutExercise(x));
         }
-        return new WorkoutAdapter(getContext(),workouts);
+        return new WorkoutAdapter(getContext(),exercises);
     }
 
-    private SubWorkout getSubWorkout(int x) {
+    private Exercise getSubWorkoutExercise(int increment) {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = SubWorkoutFragment.clickedSubWorkoutName +"_wk";
+        String tableName = SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName() +"_wk";
 
-        List<Exercise> exerciseList = new LinkedList<>();//need to create exercise first
-        List<String> f = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES);
-        for(int z=0;z<f.size();z++) {
-            exerciseList.add(new Exercise(f.get(z),null));
+        List<String> exerciseNames = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES);
+        List<String> exerciseSets = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_SETS);
+        List<String> exerciseReps = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_REPS);
 
-        }
+        Exercise exercise = new Exercise(exerciseNames.get(increment),null);
+        exercise.setExerciseSets(exerciseSets.get(increment));
+        exercise.setExerciseReps(exerciseReps.get(increment));
 
-        Map<String,String> setsMap = new Hashtable<>();
-        setsMap.put(exerciseList.get(x).getExerciseName(),
-                subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_SETS).get(x));
-
-        Map<String,String> repsMap = new Hashtable<>();
-        repsMap.put(exerciseList.get(x).getExerciseName(),
-                subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_REPS).get(x));
-
-        return new SubWorkout(tableName.substring(0,tableName.length()-3),
-                exerciseList,setsMap,repsMap);
+        return exercise;
     }
 
     private static class WorkoutAdapter extends BaseAdapter  {
 
-        private List<SubWorkout> workoutList;
+        private List<Exercise> exerciseList;
         private Context context;
         private TextView exerciseNameView;
 
-        public WorkoutAdapter(Context context,List<SubWorkout> workouts) {
+        public WorkoutAdapter(Context context,List<Exercise> exercises) {
             this.context = context;
-            this.workoutList = workouts;
+            this.exerciseList = exercises;
         }
 
         public int getCount() {
-            return workoutList.size();
+            return exerciseList.size();
         }
 
         public Object getItem(int position) {
-            return workoutList.get(position);
+            return exerciseList.get(position);
         }
 
         public long getItemId(int position) {
@@ -133,38 +121,35 @@ public class BlankWorkoutFragment extends Fragment {
         }
 
         public View getView(int position, View rowView, ViewGroup viewGroup) {
-            SubWorkout workout = workoutList.get(position);
+            Exercise exercise = exerciseList.get(position);
             if (rowView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 rowView = inflater.inflate(R.layout.blank_workout_list_item, null);
             }
-            setListItemView(rowView,workout,position);
+            setListItemView(rowView,exercise);
             return rowView;
         }
 
-        private void setListItemView(View rowView, SubWorkout workout, int position) {
-            setExerciseNameTextView(rowView,workout,position);
-            setExerciseRepsTextView(rowView,workout);
-            setExerciseSets(rowView,workout);
+        private void setListItemView(View rowView,Exercise exercise) {
+            setExerciseNameTextView(rowView,exercise);
+            setExerciseRepsTextView(rowView,exercise);
+            setExerciseSets(rowView,exercise);
         }
 
-        private void setExerciseNameTextView(View rowView, SubWorkout workout, int position) {
+        private void setExerciseNameTextView(View rowView,Exercise exercise) {
             exerciseNameView = (TextView) rowView.findViewById(R.id.nameView);
-            List<Exercise> exerciseList =   workout.getExerciseList();
-            exerciseNameView.setText(exerciseList.get(position).getExerciseName());
+            exerciseNameView.setText(exercise.getExerciseName());
         }
 
-        private void setExerciseRepsTextView(View rowView,SubWorkout workout) {
+        private void setExerciseRepsTextView(View rowView,Exercise exercise) {
             TextView repsView = (TextView) rowView.findViewById(R.id.repsView);
-            String exerciseReps = workout.getExerciseReps().get(exerciseNameView.getText());
-            repsView.setText(exerciseReps);
+            repsView.setText(exercise.getExerciseReps());
         }
 
-        private void setExerciseSets(View rowView,SubWorkout workout) {
+        private void setExerciseSets(View rowView,Exercise exercise) {
             TextView setsView = (TextView) rowView.findViewById(R.id.setsView);
-            String exerciseSets = workout.getExerciseSets().get(exerciseNameView.getText());
-            setsView.setText(exerciseSets);
+            setsView.setText(exercise.getExerciseSets());
         }
 
     }

@@ -89,16 +89,20 @@ public class BodyStatsFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 view.performHapticFeedback(1);
-                List<String> bodyStats = new BodyTable(getContext()).getColumn(COLUMN_DATE);
-                String[] date = new String[] {
-                        bodyStats.get(position)
-                };
-                BodyTable bodyTable = new BodyTable(getContext());
-                bodyTable.deleteRow(date);
+                deleteBodyStatsRow(position);
                 listView.setAdapter(setAdapter());
-                return false;
+                return true;
             }
         });
+    }
+
+    private void deleteBodyStatsRow(int position) {
+        List<String> bodyStats = new BodyTable(getContext()).getColumn(COLUMN_DATE);
+        String[] date = new String[] {
+                bodyStats.get(position)
+        };
+        BodyTable bodyTable = new BodyTable(getContext());
+        bodyTable.deleteRow(date);
     }
 
      private BodyStatsAdapter setAdapter() {
@@ -126,9 +130,11 @@ public class BodyStatsFragment extends Fragment {
          List<String> quadSizeList = bodyTable.getColumn(COLUMN_QUAD_SIZE);
          List<String> calfSizeList = bodyTable.getColumn(COLUMN_CALF_SIZE);
 
-         return new Body(dateList.get(x),weightList.get(x),chestSizeList.get(x)
-         ,backSizeList. get(x),armSizeList.get(x),forearmSizeList.get(x),
-                 waistSizeList.get(x),quadSizeList.get(x),calfSizeList.get(x));
+         return new Body().setDate(dateList.get(x)).setWeight(weightList.get(x))
+                 .setChestSize(chestSizeList.get(x)).setBackSize(backSizeList.get(x))
+                 .setArmSize(armSizeList.get(x)).setForearmSize(forearmSizeList.get(x))
+                 .setWaistSize(waistSizeList.get(x)).setQuadSize(quadSizeList.get(x))
+                 .setCalfSize(calfSizeList.get(x));
      }
 
     private class BodyStatsAdapter extends BaseAdapter {
@@ -224,8 +230,8 @@ public class BodyStatsFragment extends Fragment {
             calfSizeView.setText("Calves: "+calfSize);
         }
 
-        public void sortByDate() {//TODO do oldest and newest date
-            Collections.sort(bodyStatsList, new Comparator<Body>() {//most recent needs to be first
+        public void sortByDate() {
+            Collections.sort(bodyStatsList, new Comparator<Body>() {
                 @Override
                 public int compare(Body object1, Body object2) {
                     return object2.getDate().compareTo(object1.getDate());

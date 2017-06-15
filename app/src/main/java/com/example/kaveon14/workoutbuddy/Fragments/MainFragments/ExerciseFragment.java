@@ -31,7 +31,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragme
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
-
+//create main workouts
 public class ExerciseFragment extends Fragment {
 
     public static Exercise clickedExercise;
@@ -82,7 +82,7 @@ public class ExerciseFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 exercise_frag.setUpAndShowPopupWindow(root);
-                return false;
+                return true;
             }
         });
     }
@@ -229,7 +229,8 @@ public class ExerciseFragment extends Fragment {
     private void showPartialSubWorkoutPopup(View root) {
         setAndShowPopupEditTextViews(root);
         showPopupButton(root);
-        popupButtonClicked(root,clickedExercise, SubWorkoutFragment.clickedSubWorkoutName);
+        popupButtonClicked(root,clickedExercise,
+                SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
     }
 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {

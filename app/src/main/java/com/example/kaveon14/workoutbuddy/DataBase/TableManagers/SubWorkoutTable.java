@@ -76,13 +76,6 @@ public class SubWorkoutTable {
     }
 
     private String getCorrectTableName(String tableName) {//create new name
-        /*int length = tableName.length();
-        if(tableName.substring(length-3,length).equalsIgnoreCase("_wk")) {
-            return tableName;
-        } else {
-            return tableName + "_wk";
-        }*/
-        //test
         if(isTableNameCorrect(tableName)) {
             return tableName;
         } else {

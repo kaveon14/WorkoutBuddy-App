@@ -11,7 +11,6 @@ import android.widget.ListView;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.List;
 
 public class MainWorkoutFragment extends Fragment {
@@ -22,11 +21,9 @@ public class MainWorkoutFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -38,10 +35,9 @@ public class MainWorkoutFragment extends Fragment {
     }
 
     private void setListView(View root) {
-        MainWorkoutFragment mainWorkoutFragment = this;
         ListView listView = (ListView) root.findViewById(R.id.mainWorkout_listView);
         listView.setAdapter(getAdapter());
-        openWorkoutOnClick(listView,mainWorkoutFragment);
+        openWorkoutOnClick(listView,this);
     }
 
     private void openWorkoutOnClick(ListView listView,MainWorkoutFragment mainWorkoutFragment) {

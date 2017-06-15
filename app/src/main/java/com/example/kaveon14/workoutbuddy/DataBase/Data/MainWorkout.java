@@ -1,7 +1,9 @@
 package com.example.kaveon14.workoutbuddy.DataBase.Data;
 
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class MainWorkout {
 
@@ -23,5 +25,17 @@ public class MainWorkout {
             subWorkoutNames.add(subWorkouts.get(x).getSubWorkoutName());
         }
         return subWorkoutNames;
+    }
+
+    public List<SubWorkout> getSubWorkoutsList() {
+        return subWorkouts;
+    }
+
+    public Map<String,SubWorkout> getSubWorkoutMap() {
+        Map<String,SubWorkout> subWorkoutMap = new Hashtable<>();
+        for(SubWorkout subWorkout : subWorkouts) {
+            subWorkoutMap.put(subWorkout.getSubWorkoutName(),subWorkout);
+        }
+        return subWorkoutMap;
     }
 }

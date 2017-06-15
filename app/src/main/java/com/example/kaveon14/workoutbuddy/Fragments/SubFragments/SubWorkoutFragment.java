@@ -8,15 +8,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
+import java.util.LinkedList;
 import java.util.List;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkout;
-// TODO on every on long click return true
+
 public class SubWorkoutFragment extends Fragment {
 
-    public static String clickedSubWorkoutName;// TODO make this an actual subworkout
+    public static SubWorkout clickedSubWorkout;
 
     public SubWorkoutFragment() {
         // Required empty public constructor
@@ -38,12 +45,20 @@ public class SubWorkoutFragment extends Fragment {
         return view;
     }
 
+    private ArrayAdapter getAdapter() {
+        MainWorkoutTable workoutTable = new MainWorkoutTable(getContext());
+        List<String> list = workoutTable.getSubWorkoutNames(clickedMainWorkout);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+                R.layout.simple_list_item,list);
+        return adapter;
+    }
+
     private void openWorkoutOnClick(ListView listView) {
-        BlankWorkoutFragment blankWorkoutFragment = new BlankWorkoutFragment();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedSubWorkoutName = parent.getItemAtPosition(position).toString();
+                String subWorkoutName = parent.getItemAtPosition(position).toString();
+                clickedSubWorkout = getSubWorkout(subWorkoutName);
                 showBlankWorkoutFragment();
             }
         });
@@ -53,12 +68,35 @@ public class SubWorkoutFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedSubWorkoutName = parent.getItemAtPosition(position).toString();
+                String subWorkoutName = parent.getItemAtPosition(position).toString();
+                clickedSubWorkout = getSubWorkout(subWorkoutName);
                 ExerciseFragment exerciseFragment = showExercisefragment();
                 exerciseFragment.addExerciseFromSubWorkout(true);
                 return true;
             }
         });
+    }
+
+    private SubWorkout getSubWorkout(String subWorkoutName) {
+        return new SubWorkout(subWorkoutName,
+                getExercisesForClickedSubWorkout(subWorkoutName));
+    }
+
+    private List<Exercise> getExercisesForClickedSubWorkout(String subWorkoutName) {
+        SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
+        String tableName = subWorkoutName +"_wk";
+        List<Exercise> exerciseList = new LinkedList<>();
+        List<String> exerciseNames = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES);
+        List<String> exerciseSets = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_SETS);
+        List<String> exerciseReps = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_REPS);
+
+        for(int x=0;x<exerciseNames.size();x++) {
+            Exercise exercise = new Exercise(exerciseNames.get(x),null);
+            exercise.setExerciseSets(exerciseSets.get(x));
+            exercise.setExerciseReps(exerciseReps.get(x));
+            exerciseList.add(exercise);
+        }
+        return exerciseList;
     }
 
     private void showBlankWorkoutFragment() {
@@ -80,14 +118,5 @@ public class SubWorkoutFragment extends Fragment {
                 .commit();
         return exerciseFragment;
     }
-
-    private ArrayAdapter getAdapter() {
-        MainWorkoutTable workoutTable = new MainWorkoutTable(getContext());
-        List<String> list = workoutTable.getSubWorkoutNames(clickedMainWorkout);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                R.layout.simple_list_item,list);
-        return adapter;
-    }
-
 
 }

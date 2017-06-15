@@ -4,8 +4,6 @@ import java.util.Date;
 
 public class Body {
 
-    private String unitOfMeasurement;
-    private String weightUofMeasurement;
     private String weight;
     private String chestSize;
     private String backSize;
@@ -17,32 +15,50 @@ public class Body {
     private String dateForDisplaying;
     private Date dateForSorting;
 
-    public Body(String date,String weight,String chest,String back,String arm,String forearm,
-                String waist,String quad, String calf) {
-        System.out.println("date: "+date);
+    public Body setDate(String date) {
         dateForSorting = new Date(date);
-        this.weight = weight;
         dateForDisplaying = date;
-        chestSize = chest;
-        backSize = back;
-        armSize = arm;
-        forearmSize = forearm;
-        waistSize = waist;
-        quadSize = quad;
-        calfSize = calf;
+        return this;
     }
 
-    public Body(String unitOfMeasurement) {
-        if(unitOfMeasurement.equalsIgnoreCase("cm")||unitOfMeasurement.equalsIgnoreCase("inches")) {
-            this.unitOfMeasurement = unitOfMeasurement;
-        } else {
-            throw new Error(("Unit of measurement Error!!"));
-        }
+    public Body setWeight(String weight) {
+        this.weight = weight;
+        return this;
     }
 
-    public void setDateLogged(Date dateForSorting,String dateForDisplaying) {//reformat so user never
-        this.dateForSorting = dateForSorting;//uses dateForSorting but it is still returned
-        this.dateForDisplaying = dateForDisplaying;
+    public Body setChestSize(String chestSize) {
+        this.chestSize = chestSize;
+        return this;
+    }
+
+    public Body setBackSize(String backSize) {
+        this.backSize = backSize;
+        return this;
+    }
+
+    public Body setArmSize(String armSize) {
+        this.armSize = armSize;
+        return this;
+    }
+
+    public Body setForearmSize(String forearmSize) {
+        this.forearmSize = forearmSize;
+        return this;
+    }
+
+    public Body setWaistSize(String waistSize) {
+        this.waistSize = waistSize;
+        return this;
+    }
+
+    public Body setQuadSize(String quadSize) {
+        this.quadSize = quadSize;
+        return this;
+    }
+
+    public Body setCalfSize(String calfSize) {
+        this.calfSize = calfSize;
+        return this;
     }
 
     public Date getDate() {

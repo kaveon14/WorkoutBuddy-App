@@ -41,7 +41,7 @@ public class DataBaseContract {
 
     public static class SubWorkoutData implements BaseColumns {
 
-        public static final String TABLE_NAME_WK1 = "Chest_Day_wk";// TODO change to real workout names
+        public static final String TABLE_NAME_WK1 = "Chest_Day_wk";
 
         public static final String TABLE_NAME_WK2 = "Back_Day_wk";
 

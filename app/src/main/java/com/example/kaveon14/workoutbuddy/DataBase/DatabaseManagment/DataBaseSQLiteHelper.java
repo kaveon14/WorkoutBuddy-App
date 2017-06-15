@@ -61,7 +61,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SUBWORKOUT_3,"Shoulder_Day");
         values.put(COLUMN_SUBWORKOUT_4,"Leg_Day");
         values.put(COLUMN_SUBWORKOUT_5,"Arm_Day");
-        values.put(COLUMN_SUBWORKOUT_6,"NULL_1");//make sure this don't show
+        values.put(COLUMN_SUBWORKOUT_6,"NULL_1");
         values.put(COLUMN_SUBWORKOUT_7,"NULL_2");
         long itemID = database.insert(DataBaseContract.MainWorkoutData.TABLE_NAME,null,values);
     }
