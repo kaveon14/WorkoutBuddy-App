@@ -27,6 +27,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,14 @@ public class ExerciseFragment extends Fragment {
     public static Exercise clickedExercise;
     private static List<Exercise> exerciseList;
     private ExerciseFragment exercise_frag = this;
+    private boolean fromSubWorkout = false;
 
     public ExerciseFragment() {
 
+    }
+
+    public void addExerciseFromSubWorkout(boolean fromSubWorkout) {
+        this.fromSubWorkout = fromSubWorkout;
     }
 
     public List<Exercise> getExerciseList() {
@@ -90,7 +96,7 @@ public class ExerciseFragment extends Fragment {
         return new Exercise(exerciseNames.get(x),null);
     }
 
-    public void showBlankExerciseFragment() {
+    private void showBlankExerciseFragment() {
         BlankExerciseFragment bf = new BlankExerciseFragment();
         getFragmentManager().beginTransaction()
                 .hide(exercise_frag)
@@ -103,22 +109,24 @@ public class ExerciseFragment extends Fragment {
         int width =  LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
-        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View popupLayout = inflater.inflate(R.layout.popup_layout,(ViewGroup)
-                root.findViewById(R.id.popupWindow));
+        View popupLayout = getPopupLayout(root);
         final PopupWindow popupWindow = new PopupWindow(popupLayout,width,height);
-
         popupWindow.setFocusable(true);
         popupWindow.update(0,0,width,height);
-        popupWindow.showAtLocation(root, Gravity.CENTER, 0, 0);
+        popupWindow.showAtLocation(root,Gravity.CENTER,0,0);
         dimBackground(popupWindow);
 
         ListView popupListView = setPopupListView(popupLayout);
-        mainWorkoutClicked(popupListView,popupLayout);
-
+        handlePopupEvents(popupListView,popupLayout);
         return popupWindow;
+    }
+
+    private View getPopupLayout(View root) {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        return inflater.inflate(R.layout.popup_layout,(ViewGroup)
+                root.findViewById(R.id.popupWindow));
     }
 
     private void showPopupButton(View popupLayout) {
@@ -138,7 +146,8 @@ public class ExerciseFragment extends Fragment {
         setsView.setBackgroundColor(Color.WHITE);
         setsView.setVisibility(View.VISIBLE);
 
-        if(setsView.isSelected() && setsView.getText().toString().equalsIgnoreCase("Sets:")) {
+
+        if(setsView.isFocused() && setsView.getText().toString().equalsIgnoreCase("Sets:")) {
             setsView.setText("");
         }
 
@@ -146,7 +155,7 @@ public class ExerciseFragment extends Fragment {
         repsView.setBackgroundColor(Color.WHITE);
         repsView.setVisibility(View.VISIBLE);
 
-        if(repsView.isSelected() && repsView.getText().toString().equalsIgnoreCase("Reps:")) {
+        if(repsView.isFocused() && repsView.getText().toString().equalsIgnoreCase("Reps:")) {
             repsView.setText("");
         }
     }
@@ -158,7 +167,7 @@ public class ExerciseFragment extends Fragment {
 
         WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) container.getLayoutParams();
         layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        layoutParams.dimAmount = 0.3f;
+        layoutParams.dimAmount = 0.6f;
         wm.updateViewLayout(container, layoutParams);
     }
 
@@ -179,58 +188,78 @@ public class ExerciseFragment extends Fragment {
         return adapter;
     }
 
-    private void mainWorkoutClicked(ListView listView,View root) {
+    private void handlePopupEvents(ListView listView, View root) {
+        if(!fromSubWorkout) {
+            mainWorkoutClicked(listView,root);
+        } else {
+            listView.setVisibility(View.INVISIBLE);
+            showPartialSubWorkoutPopup(root);
+        }
+    }
+
+    private void mainWorkoutClicked(ListView listView, View root) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 clickedMainWorkout = parent.getItemAtPosition(position).toString();
                 listView.setAdapter(getSubWorkoutAdapter());
-                subWorkoutClicked(listView,root);
+                subWorkoutClicked(listView, root);
             }
         });
     }
 
-    private void subWorkoutClicked(ListView listView,View root) {
+    private void subWorkoutClicked(ListView listView, View root) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 resetSubWorkoutListViewColors(parent);
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
-
-                String subWorkoutName = parent.getItemAtPosition(position).toString();
-                addExerciseToWorkoutOnButtonClick(root, clickedExercise, subWorkoutName);
-                setAndShowPopupEditTextViews(root);
-                showPopupButton(root);
+                showFullSubWorkoutPopup(listView,root,position);
             }
         });
+    }
+
+    private void showFullSubWorkoutPopup(AdapterView<?> parent, View root, int position) {
+        String subWorkoutName = parent.getItemAtPosition(position).toString();
+        popupButtonClicked(root, clickedExercise, subWorkoutName);
+        setAndShowPopupEditTextViews(root);
+        showPopupButton(root);
+    }
+
+    private void showPartialSubWorkoutPopup(View root) {
+        setAndShowPopupEditTextViews(root);
+        showPopupButton(root);
+        popupButtonClicked(root,clickedExercise, SubWorkoutFragment.clickedSubWorkoutName);
     }
 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {
         for(int x=0;x<parent.getCount();x++) {
-            View v = parent.getChildAt(x);
-            v.setBackgroundColor(Color.WHITE);
+            View view = parent.getChildAt(x);
+            view.setBackgroundColor(Color.WHITE);
 
         }
     }
 
-    private void addExerciseToWorkoutOnButtonClick(View root, Exercise exercise, String subWorkoutName) {
+    private void popupButtonClicked(View root, Exercise exercise, String subWorkoutName) {
         Button btn = (Button) root.findViewById(R.id.popupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                exercise.setExerciseReps(getExerciseReps(root));
-                exercise.setExerciseSets(getExerciseSets(root));
-
-                SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-                subWorkoutTable.
-                        addExerciseToSubWorkout(clickedMainWorkout,subWorkoutName+"_wk",
-                                exercise);
-
+                addExerciseToSubWorkout(exercise,root,subWorkoutName);
                 Toast.makeText(getContext(),"Exercise Successfully Added!",
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void addExerciseToSubWorkout(Exercise exercise, View root, String subWorkoutName) {
+        exercise.setExerciseReps(getExerciseReps(root));
+        exercise.setExerciseSets(getExerciseSets(root));
+
+        SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
+        subWorkoutTable.
+                addExerciseToSubWorkout(clickedMainWorkout,subWorkoutName+"_wk",
+                        exercise);
     }
 
     private String getExerciseSets(View popupLayout) {

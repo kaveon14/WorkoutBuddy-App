@@ -46,7 +46,7 @@ public class BlankWorkoutFragment extends Fragment {
 
     private void setTextView(View rootView) {
         TextView textView = (TextView) rootView.findViewById(R.id.workoutNameView);
-        textView.setText(SubWorkoutFragment.clickedWorkoutName);
+        textView.setText(SubWorkoutFragment.clickedSubWorkoutName);
     }
 
     private void setListView(View rootView) {
@@ -77,7 +77,7 @@ public class BlankWorkoutFragment extends Fragment {
 
     private WorkoutAdapter setWorkoutAdapter() {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = SubWorkoutFragment.clickedWorkoutName + "_wk";
+        String tableName = SubWorkoutFragment.clickedSubWorkoutName + "_wk";
         int amountOfExercises = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES).size();
         List<SubWorkout> workouts = new ArrayList<>();
         for(int x=0;x<amountOfExercises;x++) {
@@ -88,7 +88,7 @@ public class BlankWorkoutFragment extends Fragment {
 
     private SubWorkout getSubWorkout(int x) {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = SubWorkoutFragment.clickedWorkoutName +"_wk";
+        String tableName = SubWorkoutFragment.clickedSubWorkoutName +"_wk";
 
         List<Exercise> exerciseList = new LinkedList<>();//need to create exercise first
         List<String> f = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES);

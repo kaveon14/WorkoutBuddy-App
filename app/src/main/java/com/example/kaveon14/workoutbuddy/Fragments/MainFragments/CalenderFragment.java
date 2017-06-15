@@ -24,7 +24,7 @@ public class CalenderFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_calender, container, false);
         TextView textView = (TextView) root.findViewById(R.id.calenderTextView);
-        textView.setText("Show SubWorkout Name for the Date");
+        textView.setText("Show MainWorkout -> SubWorkout Name for the Date");
 
         return root;
     }
