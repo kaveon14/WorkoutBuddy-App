@@ -28,10 +28,13 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_ARM_SIZE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_BACK_SIZE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_CHEST_SIZE;
-// TODO make listview update
-public class BodyStatsFragment extends Fragment {
 // TODO create a blank list view adapter so screen is not all white
+public class BodyStatsFragment extends Fragment {
+
     public static Body clickedBodyStatsItem;
+    private List<Body> bodyStats;//possibly go back to local
+    private BodyStatsAdapter bodyStatsAdapter;
+    public static Body bb;
 
     public BodyStatsFragment() {
         // Required empty public constructor
@@ -52,10 +55,20 @@ public class BodyStatsFragment extends Fragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {//this works hahaahaah
         super.onHiddenChanged(hidden);
         if (hidden) {
+            System.out.println("hidden");
         } else {
+            if(bb != null) {
+                bodyStats.add(bb);//data being added twice because on resume is shit
+                bodyStatsAdapter.notifyDataSetChanged();
+            }
         }
     }
 
@@ -93,20 +106,21 @@ public class BodyStatsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 clickedBodyStatsItem = getBodyStats(position);
-                showBlankBodyStatsfragment();
+                BlankBodyStatsFragment blankBodyStatsFragment = showBlankBodyStatsfragment();
+                blankBodyStatsFragment.isUpdatingRow(true) ;
             }
         });
     }
 
-    private void showBlankBodyStatsfragment() {
+    private BlankBodyStatsFragment showBlankBodyStatsfragment() {
+        BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
         getFragmentManager().beginTransaction()
                 .hide(this)
-                .add(R.id.blankBodyStats_fragment,new BlankBodyStatsFragment())
+                .add(R.id.blankBodyStats_fragment,blankBodyStatsFragment)
                 .addToBackStack(null)
                 .commit();
+        return blankBodyStatsFragment;
     }
-
-
 
     private void deleteRowView(ListView listView) {// TODO show popup window first asking if they want to delete the stats
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -114,7 +128,7 @@ public class BodyStatsFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 view.performHapticFeedback(1);
                 deleteBodyStatsRow(position);
-                listView.setAdapter(setAdapter());
+                listView.setAdapter(setAdapter());//needs to be changed
                 return true;
             }
         });
@@ -132,11 +146,11 @@ public class BodyStatsFragment extends Fragment {
      private BodyStatsAdapter setAdapter() {
          BodyTable bodyTable = new BodyTable(getContext());
          int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
-         List<Body> bodyStats = new ArrayList<>();
+         bodyStats = new ArrayList<>();
          for(int x=0;x<amountOfStatsLogged;x++) {
              bodyStats.add(getBodyStats(x));
          }
-         BodyStatsAdapter bodyStatsAdapter = new BodyStatsAdapter(getContext(),bodyStats);
+         bodyStatsAdapter = new BodyStatsAdapter(getContext(),bodyStats);
          bodyStatsAdapter.sortByDate();
          return bodyStatsAdapter;
      }

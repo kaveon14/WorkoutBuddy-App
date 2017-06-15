@@ -22,7 +22,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-// TODO update listview after new main workout added
+
 public class MainWorkoutFragment extends Fragment {
 
     public static String clickedMainWorkout;
@@ -62,11 +62,6 @@ public class MainWorkoutFragment extends Fragment {
                 setUpAndShowPopupWindow(root);
             }
         });
-    }
-
-    private void addMainWorkout(String mainWorkoutName) {
-        MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(getContext());
-        mainWorkoutTable.addMainWorkout(mainWorkoutName);
     }
 
     private ListView setListView(View root) {
@@ -149,13 +144,22 @@ public class MainWorkoutFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mainWorkoutName = getMainWorkoutName(popupLayout);
-                addMainWorkout(mainWorkoutName);
-                mainWorkoutNames.add(mainWorkoutName);
-                adapter.notifyDataSetChanged();
+                addNewMainWorkoutOnClick(popupLayout);
                 Toast.makeText(getContext(),"MainWorkout Successfully Created!",Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void addNewMainWorkoutOnClick(View popupLayout) {
+        String mainWorkoutName = getMainWorkoutName(popupLayout);
+        addMainWorkoutToDatatable(mainWorkoutName);
+        mainWorkoutNames.add(mainWorkoutName);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void addMainWorkoutToDatatable(String mainWorkoutName) {
+        MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(getContext());
+        mainWorkoutTable.addMainWorkout(mainWorkoutName);
     }
 
     private String getMainWorkoutName(View popupLayout) {

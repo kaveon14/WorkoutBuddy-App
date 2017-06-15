@@ -27,7 +27,7 @@ public class BodyTable {
     public BodyTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
     }
-
+// TODO needs to be redone like the body objects
     public void addStatsToBodyTable(String date,String weight,String chestSize,String backSize,
     String bicepSize,String forearmSize,String waistSize,String quadSize,String calfSize) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();

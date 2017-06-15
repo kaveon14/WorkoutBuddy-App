@@ -15,10 +15,14 @@ import com.example.kaveon14.workoutbuddy.R;
 // TODO if no data added change data added to all zeros and throw error requesting a date
 public class BlankBodyStatsFragment extends Fragment {
 
-    private View root;
+    private boolean updatingRow = false;
 
     public BlankBodyStatsFragment() {
         // Required empty public constructor
+    }
+
+    public void isUpdatingRow(boolean updatingRow) {
+        this.updatingRow = updatingRow;
     }
 
     @Override
@@ -29,8 +33,11 @@ public class BlankBodyStatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_blank_body_stats, container, false);
+        View root = inflater.inflate(R.layout.fragment_blank_body_stats, container, false);
         addButton(root);
+        if(updatingRow) {
+            setEditTextView(root);
+        }
         return root;
     }
 
@@ -53,7 +60,7 @@ public class BlankBodyStatsFragment extends Fragment {
 
     public void addBodyStatsData() {
         BodyStatsExtension bodyStatsExtension = new BodyStatsExtension();
-        bodyStatsExtension.addBodyStatsData(root);
+        bodyStatsExtension.addBodyStatsData(getView());
     }
 
     private void addButton(View root) {
@@ -62,19 +69,29 @@ public class BlankBodyStatsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addBodyStatsData();
+                BodyStatsFragment.bb = new BodyStatsExtension()
+                        .getBodyStatsObject(root);
                 Toast.makeText(getContext(),"Stats Successfully Added!",
                         Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private class BodyStatsExtension {
+    private class BodyStatsExtension {//create a body object
 
         private void addBodyStatsData(View root) {
             BodyTable bodyTable = new BodyTable(getContext());
             bodyTable.addStatsToBodyTable(getDate(root),getWeight(root),getChestSize(root),
                     getBackSize(root),getArmSize(root),getForearmSize(root),getWaistSize(root),
                     getQuadSize(root),getCalfSize(root));
+        }
+
+        private Body getBodyStatsObject(View root) {
+            return new Body().setDate(getDate(root)).setWeight(getWeight(root))
+                    .setChestSize(getChestSize(root)).setBackSize(getBackSize(root))
+                    .setArmSize(getArmSize(root)).setForearmSize(getForearmSize(root))
+                    .setWaistSize(getWaistSize(root)).setQuadSize(getQuadSize(root))
+                    .setCalfSize(getCalfSize(root));
         }
 
         private String getDate(View root) {
