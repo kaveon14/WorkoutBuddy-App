@@ -32,6 +32,14 @@ public class CalenderFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden) {
+            setFloatingActionButton();
+        }
+    }
+
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if(fab != null) {
@@ -45,7 +53,7 @@ public class CalenderFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"do calender stuff",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"do calender stuff",Toast.LENGTH_SHORT).show();
             }
         });
     }

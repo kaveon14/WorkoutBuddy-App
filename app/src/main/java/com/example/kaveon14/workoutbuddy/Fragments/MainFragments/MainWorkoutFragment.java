@@ -46,6 +46,15 @@ public class MainWorkoutFragment extends Fragment {
         setFloatingActionButton(root);
         return root;
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden) {
+            setFloatingActionButton(getView());
+        }
+    }
+
     private FloatingActionButton setFloatingActionButton(View root) {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if(fab != null) {

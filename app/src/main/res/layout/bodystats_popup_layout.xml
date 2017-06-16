@@ -6,12 +6,12 @@
 
     <TextView
         android:id="@+id/bodystatsPopup_textView"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:text="Do you want to DELETE the clicked body stats??"
         android:textSize="15sp"
+        android:background="@android:color/white"
         android:textColor="@color/caldroid_black"/>
 
     <Button

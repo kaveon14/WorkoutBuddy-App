@@ -48,6 +48,14 @@ public class SubWorkoutFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden) {
+            setFloatingActionButton();
+        }
+    }
+
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if(fab != null) {

@@ -32,7 +32,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragme
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
-//make all poopup window global
+
 public class ExerciseFragment extends Fragment {
 
     public static Exercise clickedExercise;
@@ -76,6 +76,14 @@ public class ExerciseFragment extends Fragment {
         setListView(root);
         setFloatingActionButton();
         return root;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden) {
+            setFloatingActionButton();
+        }
     }
 
     private FloatingActionButton setFloatingActionButton() {
@@ -259,7 +267,6 @@ public class ExerciseFragment extends Fragment {
         for(int x=0;x<parent.getCount();x++) {
             View view = parent.getChildAt(x);
             view.setBackgroundColor(Color.WHITE);
-
         }
     }
 

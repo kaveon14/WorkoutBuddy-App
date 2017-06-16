@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,6 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
@@ -22,19 +24,41 @@ import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import java.util.Calendar;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
-// TODO allow add exercise to subworkout from subworkout fragment
 // TODO allow deletion of exercise from workout,subworkout from mainworkout,and mainworkout
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static int fragId;
     private CaldroidFragment caldroid_frag;
-    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContent();
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        boolean inActivity = true;
+        if(getActiveFragment() == null || fragId == 0) {
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            setFloatingActionButtonImage(fab,inActivity);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //do nothing
+                }
+            });
+        } else {
+            inActivity = false;
+        }
+    }
+
+    private void setFloatingActionButtonImage(FloatingActionButton fab, boolean onActivity) {
+        if(onActivity) {
+            fab.setImageResource(R.drawable.ic_menu_camera);
+        }
     }
 
     @Override
@@ -94,11 +118,6 @@ public class MainActivity extends AppCompatActivity
 
     private Fragment getActiveFragment() {
         return getSupportFragmentManager().findFragmentById(fragId);
-    }
-
-    private void showBlankBodyStatsFragment() {
-        BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
-        addFragmentToStack(getActiveFragment(),blankBodyStatsFragment,R.id.blankBodyStats_fragment);
     }
 
     private void showBodyStatsFragment() {

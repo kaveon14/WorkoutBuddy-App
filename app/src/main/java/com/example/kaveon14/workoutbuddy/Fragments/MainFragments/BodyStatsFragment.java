@@ -1,7 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -36,13 +35,13 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_BACK_SIZE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_CHEST_SIZE;
 // TODO create a blank list view adapter so screen is not all white
-
 public class BodyStatsFragment extends Fragment {
 
     public static Body clickedBodyStatsItem;
     private List<Body> bodyStats;
     private BodyStatsAdapter bodyStatsAdapter;
     public static Body bodyObject;
+    private View root;
 
     public BodyStatsFragment() {
         // Required empty public constructor
@@ -56,23 +55,18 @@ public class BodyStatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_body_stats, container, false);
-        setUpListView(root);
+        root = inflater.inflate(R.layout.fragment_body_stats, container, false);
+        setUpListView();
         setFloatingActionButton();
         return root;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden && bodyObject != null) {
-            bodyStats.add(bodyObject);
-            bodyStatsAdapter.notifyDataSetChanged();
+        if(!hidden) {
+            updateListView();
+            setFloatingActionButton();
         }
     }
 
@@ -86,23 +80,71 @@ public class BodyStatsFragment extends Fragment {
     }
 
     private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
+        View popupLayout = getPopupLayout();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {//do stuff to allow new creation of main workout
-                showBlankBodyStatsfragment();
+            public void onClick(View v) {
+                PopupWindow popupWindow = showPopupWindow(popupLayout);
+                setupFloatingActionButtonPopupWindow(popupWindow);
             }
         });
     }
 
-    private void setUpListView(View root) {
-        ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
-        listView.setAdapter(getAdapter());
-        handleListViewClicks(listView,root);
+    private PopupWindow showPopupWindow(View popupLayout) {
+        int width =  LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        final PopupWindow popupWindow = new PopupWindow(popupLayout,width,height);
+        popupWindow.setFocusable(true);
+        popupWindow.update(0,0,width,height);
+        popupWindow.showAtLocation(root, Gravity.CENTER,0,0);
+        dimBackground(popupWindow);
+        return popupWindow;
     }
 
-    private void handleListViewClicks(ListView listView,View root) {
+    private void setupFloatingActionButtonPopupWindow(PopupWindow popupWindow) {
+        View popupLayout = popupWindow.getContentView();
+        setFloatingActionButtonPopupTextView(popupLayout);
+        setFloatingActionButtonPopup_Yes_Btn(popupWindow);
+        setFloatingActionButtonPopup_No_Btn(popupWindow);
+    }
+
+    private void setFloatingActionButtonPopupTextView(View popupLayout) {
+        String message = "      Would you like to add a new body data??";
+        TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
+        textView.setText(message);
+    }
+
+    private void setFloatingActionButtonPopup_Yes_Btn(PopupWindow popupWindow) {
+        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_yes_popupBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBlankBodyStatsfragment();
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    private void setFloatingActionButtonPopup_No_Btn(PopupWindow popupWindow) {
+        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_no_popupBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    private void setUpListView() {
+        ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
+        listView.setAdapter(getAdapter());
+        handleListViewClicks(listView);
+    }
+
+    private void handleListViewClicks(ListView listView) {
         updateRowView(listView);
-        deleteRowView(listView,root);
+        deleteRowView(listView);
     }
 
     private void updateRowView(ListView listView) {
@@ -116,6 +158,13 @@ public class BodyStatsFragment extends Fragment {
         });
     }
 
+    private void updateListView() {
+        if (bodyObject != null) {
+            bodyStats.add(bodyObject);
+            bodyStatsAdapter.notifyDataSetChanged();
+        }
+    }
+
     private BlankBodyStatsFragment showBlankBodyStatsfragment() {
         BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
         getFragmentManager().beginTransaction()
@@ -126,35 +175,28 @@ public class BodyStatsFragment extends Fragment {
         return blankBodyStatsFragment;
     }
 
-    private void deleteRowView(ListView listView,View root) {
+    private void deleteRowView(ListView listView) {
+        View popupLayout = getPopupLayout();
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 view.performHapticFeedback(1);
-                setUpAndShowPopupWindow(root,listView,position);
+                PopupWindow popupWindow = showPopupWindow(popupLayout);
+                setUpListViewPopupWindow(popupWindow,position);
                 return true;
             }
         });
     }
 
-    private PopupWindow setUpAndShowPopupWindow(final View root,ListView listView,int position) {
-        int width =  LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        View popupLayout = getPopupLayout(root);
-        final PopupWindow popupWindow = new PopupWindow(popupLayout,width,height);
-        popupWindow.setFocusable(true);
-        popupWindow.update(0,0,width,height);
-        popupWindow.showAtLocation(root, Gravity.CENTER,0,0);
-        dimBackground(popupWindow);
-        setupPopupWindowContent(popupLayout);
-
-        popupYESButtonClicked(popupWindow,listView,popupLayout,position);
-        popupNOButtonClicked(popupLayout,popupWindow);
-        return popupWindow;
+    private void setUpListViewPopupWindow(PopupWindow popupWindow,int position) {
+        ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
+        View popupLayout = popupWindow.getContentView();
+        setListViewPopupTextView(popupLayout);
+        setListViewPopup_Yes_Btn(popupWindow,listView,position);
+        setListViewPopup_No_Btn(popupWindow);
     }
 
-    private View getPopupLayout(View root) {
+    private View getPopupLayout() {
         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -173,21 +215,21 @@ public class BodyStatsFragment extends Fragment {
         wm.updateViewLayout(container, layoutParams);
     }
 
-    private void popupYESButtonClicked(PopupWindow popupWindow,ListView listView,View popupLayout,int position) {
-        Button btn = (Button) popupLayout.findViewById(R.id.bodyStats_yes_popupBtn);
+    private void setListViewPopup_Yes_Btn(PopupWindow popupWindow, ListView listView,int position) {
+        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_yes_popupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteBodyStatsRow(position);
                 listView.setAdapter(getAdapter());
-                Toast.makeText(getContext(),"Body Stats Deleted!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Body Stats Deleted!",Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
             }
         });
     }
 
-    private void popupNOButtonClicked(View popupLayout,PopupWindow popupWindow) {
-        Button btn = (Button) popupLayout.findViewById(R.id.bodyStats_no_popupBtn);
+    private void setListViewPopup_No_Btn(PopupWindow popupWindow) {
+        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_no_popupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,18 +238,11 @@ public class BodyStatsFragment extends Fragment {
         });
     }
 
-    private void setupPopupWindowContent(View popupLayout) {
+    private void setListViewPopupTextView(View popupLayout) {
+        String message = "   Do you want to DELETE the clicked body stats??";
         TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
-        textView.setBackgroundColor(Color.WHITE);
-
+        textView.setText(message);
     }
-
-
-
-
-
-
-
 
     private void deleteBodyStatsRow(int position) {
         List<String> bodyStats = new BodyTable(getContext()).getColumn(COLUMN_DATE);
@@ -218,7 +253,7 @@ public class BodyStatsFragment extends Fragment {
         bodyTable.deleteRow(date);
     }
 
-     private BodyStatsAdapter getAdapter() {
+    private BodyStatsAdapter getAdapter() {
          BodyTable bodyTable = new BodyTable(getContext());
          int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
          bodyStats = new ArrayList<>();
@@ -230,7 +265,7 @@ public class BodyStatsFragment extends Fragment {
          return bodyStatsAdapter;
      }
 
-     private Body getBodyStats(int x) {
+    private Body getBodyStats(int x) {
          BodyTable bodyTable = new BodyTable(getContext());
 
          List<String> dateList = bodyTable.getColumn(COLUMN_DATE);

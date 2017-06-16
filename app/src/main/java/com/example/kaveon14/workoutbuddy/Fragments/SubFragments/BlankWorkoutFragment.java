@@ -42,12 +42,20 @@ public class BlankWorkoutFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden) {
+            setFloatingActionButton();
+        }
+    }
+
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //do nothing
+                //do nothing yet
             }
         });
         return fab;

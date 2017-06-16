@@ -12,7 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:inputType="textPersonName"
-        android:text="MainWorkout Name:" />
+        android:text="MainWorkout Name:"
+        android:background="@android:color/white"/>
 
     <Button
         android:id="@+id/mainWorkoutPopupBtn"
