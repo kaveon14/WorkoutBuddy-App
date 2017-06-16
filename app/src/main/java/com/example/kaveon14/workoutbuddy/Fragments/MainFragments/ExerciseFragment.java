@@ -32,13 +32,14 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragme
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
-
+//make all poopup window global
 public class ExerciseFragment extends Fragment {
 
     public static Exercise clickedExercise;
     private static List<Exercise> exerciseList;
     private ExerciseFragment exercise_frag = this;
     private boolean fromSubWorkout = false;
+    private PopupWindow popupWindow;
 
     public ExerciseFragment() {
 
@@ -131,11 +132,11 @@ public class ExerciseFragment extends Fragment {
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
         View popupLayout = getPopupLayout(root);
-        final PopupWindow popupWindow = new PopupWindow(popupLayout,width,height);
+        popupWindow = new PopupWindow(popupLayout,width,height);
         popupWindow.setFocusable(true);
         popupWindow.update(0,0,width,height);
         popupWindow.showAtLocation(root,Gravity.CENTER,0,0);
-        dimBackground(popupWindow);
+        dimBackground();
 
         ListView popupListView = setPopupListView(popupLayout);
         handlePopupEvents(popupListView,popupLayout);
@@ -146,24 +147,24 @@ public class ExerciseFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        return inflater.inflate(R.layout.popup_layout,(ViewGroup)
-                root.findViewById(R.id.popupWindow));
+        return inflater.inflate(R.layout.exercise_popup_layout,(ViewGroup)
+                root.findViewById(R.id.exercise_popupWindow));
     }
 
     private void showPopupButton(View popupLayout) {
-        Button btn = (Button) popupLayout.findViewById(R.id.popupBtn);
+        Button btn = (Button) popupLayout.findViewById(R.id.exercisePopupBtn);
         btn.setVisibility(View.VISIBLE);
     }
 
     private ListView setPopupListView(View popupLayout) {
-        ListView listView = (ListView) popupLayout.findViewById(R.id.popup_listView);
+        ListView listView = (ListView) popupLayout.findViewById(R.id.exercisePopup_listView);
         listView.setBackgroundColor(Color.WHITE);
         listView.setAdapter(getMainWorkoutAdapter());
         return listView;
     }
 
     private void setAndShowPopupEditTextViews(View popupLayout) {
-        EditText setsView = (EditText) popupLayout.findViewById(R.id.popup_setsTextView);
+        EditText setsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_setsTextView);
         setsView.setBackgroundColor(Color.WHITE);
         setsView.setVisibility(View.VISIBLE);
 
@@ -172,7 +173,7 @@ public class ExerciseFragment extends Fragment {
             setsView.setText("");
         }
 
-        EditText repsView = (EditText) popupLayout.findViewById(R.id.popup_repsTextView);
+        EditText repsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_repsTextView);
         repsView.setBackgroundColor(Color.WHITE);
         repsView.setVisibility(View.VISIBLE);
 
@@ -181,7 +182,7 @@ public class ExerciseFragment extends Fragment {
         }
     }
 
-    private void dimBackground(PopupWindow popupWindow) {
+    private void dimBackground() {
         View container = (View) popupWindow.getContentView().getParent();
         WindowManager wm = (WindowManager) getActivity().getBaseContext()
                 .getSystemService(Context.WINDOW_SERVICE);
@@ -263,13 +264,14 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void popupButtonClicked(View root, Exercise exercise, String subWorkoutName) {
-        Button btn = (Button) root.findViewById(R.id.popupBtn);
+        Button btn = (Button) root.findViewById(R.id.exercisePopupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addExerciseToSubWorkout(exercise,root,subWorkoutName);
                 Toast.makeText(getContext(),"Exercise Successfully Added!",
                         Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
             }
         });
     }
@@ -278,7 +280,6 @@ public class ExerciseFragment extends Fragment {
         exercise.setExerciseReps(getExerciseReps(root));
         exercise.setExerciseSets(getExerciseSets(root));
 
-        SubWorkoutFragment.clickedSubWorkout.addExercise(exercise);
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
         subWorkoutTable.
                 addExerciseToSubWorkout(clickedMainWorkout,subWorkoutName+"_wk",
@@ -286,12 +287,12 @@ public class ExerciseFragment extends Fragment {
     }
 
     private String getExerciseSets(View popupLayout) {
-        EditText setsView = (EditText) popupLayout.findViewById(R.id.popup_setsTextView);
+        EditText setsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_setsTextView);
         return setsView.getText().toString();
     }
 
     private String getExerciseReps(View popupLayout) {
-        EditText repsView = (EditText) popupLayout.findViewById(R.id.popup_repsTextView);
+        EditText repsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_repsTextView);
         return repsView.getText().toString();
     }
 

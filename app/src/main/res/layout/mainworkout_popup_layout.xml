@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/popupWindow2"
+    android:id="@+id/mainWorkout_popupWindow"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:visibility="visible">
 
     <EditText
-        android:id="@+id/popup2_editText"
+        android:id="@+id/mainWorkoutPopup_editText"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -15,10 +15,10 @@
         android:text="MainWorkout Name:" />
 
     <Button
-        android:id="@+id/popup2_btn"
+        android:id="@+id/mainWorkoutPopupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add MainWorkout"
-        android:layout_below="@+id/popup2_editText"
+        android:layout_below="@+id/mainWorkoutPopup_editText"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

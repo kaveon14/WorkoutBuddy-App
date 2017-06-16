@@ -41,7 +41,7 @@ public class BlankBodyStatsFragment extends Fragment {
         return root;
     }
 
-    private void setEditTextView(View root) {//used if editing a bodystats item
+    private void setEditTextView(View root) {
         BodyStatsExtension bodyStatsExtension = new BodyStatsExtension();
         Body body = BodyStatsFragment.clickedBodyStatsItem;
 
@@ -69,7 +69,7 @@ public class BlankBodyStatsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addBodyStatsData();
-                BodyStatsFragment.bb = new BodyStatsExtension()
+                BodyStatsFragment.bodyObject = new BodyStatsExtension()
                         .getBodyStatsObject(root);
                 Toast.makeText(getContext(),"Stats Successfully Added!",
                         Toast.LENGTH_SHORT).show();
@@ -77,7 +77,7 @@ public class BlankBodyStatsFragment extends Fragment {
         });
     }
 
-    private class BodyStatsExtension {//create a body object
+    private class BodyStatsExtension {
 
         private void addBodyStatsData(View root) {
             BodyTable bodyTable = new BodyTable(getContext());

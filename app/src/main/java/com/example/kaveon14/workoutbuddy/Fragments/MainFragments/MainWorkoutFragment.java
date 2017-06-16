@@ -110,7 +110,7 @@ public class MainWorkoutFragment extends Fragment {
         dimBackground(popupWindow);
         setupPopupWindowContent(popupLayout);
 
-        popupButtonClicked(popupLayout);
+        popupButtonClicked(popupWindow,popupLayout);
         return popupWindow;
     }
 
@@ -118,12 +118,12 @@ public class MainWorkoutFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        return inflater.inflate(R.layout.popup_layout2,(ViewGroup)
-                root.findViewById(R.id.popupWindow2));
+        return inflater.inflate(R.layout.mainworkout_popup_layout,(ViewGroup)
+                root.findViewById(R.id.mainWorkout_popupWindow));
     }
 
     private void setupPopupWindowContent(View popupLayout) {
-        EditText editText = (EditText) popupLayout.findViewById(R.id.popup2_editText);
+        EditText editText = (EditText) popupLayout.findViewById(R.id.mainWorkoutPopup_editText);
         editText.setBackgroundColor(Color.WHITE);
 
     }
@@ -139,13 +139,14 @@ public class MainWorkoutFragment extends Fragment {
         wm.updateViewLayout(container, layoutParams);
     }
 
-    private void popupButtonClicked(View popupLayout) {
-        Button btn = (Button) popupLayout.findViewById(R.id.popup2_btn);
+    private void popupButtonClicked(PopupWindow popupWindow,View popupLayout) {
+        Button btn = (Button) popupLayout.findViewById(R.id.mainWorkoutPopupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addNewMainWorkoutOnClick(popupLayout);
                 Toast.makeText(getContext(),"MainWorkout Successfully Created!",Toast.LENGTH_LONG).show();
+                popupWindow.dismiss();
             }
         });
     }
@@ -163,7 +164,7 @@ public class MainWorkoutFragment extends Fragment {
     }
 
     private String getMainWorkoutName(View popupLayout) {
-        EditText mainWorkoutEditText = (EditText) popupLayout.findViewById(R.id.popup2_editText);
+        EditText mainWorkoutEditText = (EditText) popupLayout.findViewById(R.id.mainWorkoutPopup_editText);
         return mainWorkoutEditText.getText().toString();
     }
 }

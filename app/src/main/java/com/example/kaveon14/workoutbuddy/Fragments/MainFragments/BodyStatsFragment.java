@@ -1,16 +1,23 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
@@ -29,12 +36,13 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_BACK_SIZE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_CHEST_SIZE;
 // TODO create a blank list view adapter so screen is not all white
+
 public class BodyStatsFragment extends Fragment {
 
     public static Body clickedBodyStatsItem;
-    private List<Body> bodyStats;//possibly go back to local
+    private List<Body> bodyStats;
     private BodyStatsAdapter bodyStatsAdapter;
-    public static Body bb;
+    public static Body bodyObject;
 
     public BodyStatsFragment() {
         // Required empty public constructor
@@ -60,15 +68,11 @@ public class BodyStatsFragment extends Fragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {//this works hahaahaah
+    public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden) {
-            System.out.println("hidden");
-        } else {
-            if(bb != null) {
-                bodyStats.add(bb);//data being added twice because on resume is shit
-                bodyStatsAdapter.notifyDataSetChanged();
-            }
+        if (!hidden && bodyObject != null) {
+            bodyStats.add(bodyObject);
+            bodyStatsAdapter.notifyDataSetChanged();
         }
     }
 
@@ -92,13 +96,13 @@ public class BodyStatsFragment extends Fragment {
 
     private void setUpListView(View root) {
         ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
-        listView.setAdapter(setAdapter());
-        handleListViewClicks(listView);
+        listView.setAdapter(getAdapter());
+        handleListViewClicks(listView,root);
     }
 
-    private void handleListViewClicks(ListView listView) {
+    private void handleListViewClicks(ListView listView,View root) {
         updateRowView(listView);
-        deleteRowView(listView);
+        deleteRowView(listView,root);
     }
 
     private void updateRowView(ListView listView) {
@@ -122,17 +126,88 @@ public class BodyStatsFragment extends Fragment {
         return blankBodyStatsFragment;
     }
 
-    private void deleteRowView(ListView listView) {// TODO show popup window first asking if they want to delete the stats
+    private void deleteRowView(ListView listView,View root) {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 view.performHapticFeedback(1);
-                deleteBodyStatsRow(position);
-                listView.setAdapter(setAdapter());//needs to be changed
+                setUpAndShowPopupWindow(root,listView,position);
                 return true;
             }
         });
     }
+
+    private PopupWindow setUpAndShowPopupWindow(final View root,ListView listView,int position) {
+        int width =  LinearLayout.LayoutParams.MATCH_PARENT;
+        int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+        View popupLayout = getPopupLayout(root);
+        final PopupWindow popupWindow = new PopupWindow(popupLayout,width,height);
+        popupWindow.setFocusable(true);
+        popupWindow.update(0,0,width,height);
+        popupWindow.showAtLocation(root, Gravity.CENTER,0,0);
+        dimBackground(popupWindow);
+        setupPopupWindowContent(popupLayout);
+
+        popupYESButtonClicked(popupWindow,listView,popupLayout,position);
+        popupNOButtonClicked(popupLayout,popupWindow);
+        return popupWindow;
+    }
+
+    private View getPopupLayout(View root) {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        return inflater.inflate(R.layout.bodystats_popup_layout,(ViewGroup)
+                root.findViewById(R.id.bodyStats_popupWindow));
+    }
+
+    private void dimBackground(PopupWindow popupWindow) {
+        View container = (View) popupWindow.getContentView().getParent();
+        WindowManager wm = (WindowManager) getActivity().getBaseContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+
+        WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) container.getLayoutParams();
+        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        layoutParams.dimAmount = 0.6f;
+        wm.updateViewLayout(container, layoutParams);
+    }
+
+    private void popupYESButtonClicked(PopupWindow popupWindow,ListView listView,View popupLayout,int position) {
+        Button btn = (Button) popupLayout.findViewById(R.id.bodyStats_yes_popupBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteBodyStatsRow(position);
+                listView.setAdapter(getAdapter());
+                Toast.makeText(getContext(),"Body Stats Deleted!",Toast.LENGTH_LONG).show();
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    private void popupNOButtonClicked(View popupLayout,PopupWindow popupWindow) {
+        Button btn = (Button) popupLayout.findViewById(R.id.bodyStats_no_popupBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    private void setupPopupWindowContent(View popupLayout) {
+        TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
+        textView.setBackgroundColor(Color.WHITE);
+
+    }
+
+
+
+
+
+
+
 
     private void deleteBodyStatsRow(int position) {
         List<String> bodyStats = new BodyTable(getContext()).getColumn(COLUMN_DATE);
@@ -143,7 +218,7 @@ public class BodyStatsFragment extends Fragment {
         bodyTable.deleteRow(date);
     }
 
-     private BodyStatsAdapter setAdapter() {
+     private BodyStatsAdapter getAdapter() {
          BodyTable bodyTable = new BodyTable(getContext());
          int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
          bodyStats = new ArrayList<>();
