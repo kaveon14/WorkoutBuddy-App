@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-
+// TODO create popup for deleting workouts
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,9 +21,9 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
 
-public class BlankWorkoutFragment extends Fragment {
+public class BlankSubWorkoutFragment extends Fragment {
 
-    public BlankWorkoutFragment() {
+    public BlankSubWorkoutFragment() {
         // Required empty public constructor
     }
 

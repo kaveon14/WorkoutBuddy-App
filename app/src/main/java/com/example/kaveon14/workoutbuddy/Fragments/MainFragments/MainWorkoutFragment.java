@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-
+// TODO allow deletion of mainworkouts like bodystats
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;

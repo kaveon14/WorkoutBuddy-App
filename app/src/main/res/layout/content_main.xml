@@ -36,7 +36,7 @@
         />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankWorkoutFragment"
+        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment"
         android:id="@+id/blankWorkout_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

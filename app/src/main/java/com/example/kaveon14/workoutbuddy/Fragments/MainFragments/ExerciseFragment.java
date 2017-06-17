@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkout;
+
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
@@ -37,7 +40,6 @@ public class ExerciseFragment extends Fragment {
 
     public static Exercise clickedExercise;
     private static List<Exercise> exerciseList;
-    private ExerciseFragment exercise_frag = this;
     private boolean fromSubWorkout = false;
     private PopupWindow popupWindow;
 
@@ -99,11 +101,12 @@ public class ExerciseFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Add exercise",Toast.LENGTH_LONG).show();
-            }
-        });
+               MainActivity.activity.fuck();
+                Toast.makeText(getContext(),"Add ExercisePopupWindow or view custom exercises",
+                        Toast.LENGTH_LONG).show();
+            }//when viewing custom exercises allow them to be deleted on long click
+        });// with popup
     }
-
 
     private void setListView(View root) {
         ListView listView = (ListView) root.findViewById(R.id.exercise_listView);
@@ -111,7 +114,7 @@ public class ExerciseFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                exercise_frag.setUpAndShowPopupWindow(root);
+                setUpAndShowPopupWindow(root);
                 return true;
             }
         });
@@ -129,7 +132,7 @@ public class ExerciseFragment extends Fragment {
     private void showBlankExerciseFragment() {
         BlankExerciseFragment bf = new BlankExerciseFragment();
         getFragmentManager().beginTransaction()
-                .hide(exercise_frag)
+                .hide(this)
                 .replace(R.id.blankExercise_fragment,bf)
                 .addToBackStack(null)
                 .commit();
@@ -350,7 +353,7 @@ public class ExerciseFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     ExerciseFragment.clickedExercise = exercise;
-                    exercise_frag.showBlankExerciseFragment();
+                    showBlankExerciseFragment();
                 }
             });
         }

@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-
+// TODO allow deletion of subworkouts like bodystats frag
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -129,11 +129,11 @@ public class SubWorkoutFragment extends Fragment {
     }
 
     private void showBlankWorkoutFragment() {
-        BlankWorkoutFragment blankWorkoutFragment = new BlankWorkoutFragment();
+        BlankSubWorkoutFragment blankSubWorkoutFragment = new BlankSubWorkoutFragment();
         SubWorkoutFragment subWorkoutFragment = this;
         getFragmentManager().beginTransaction()
                 .hide(subWorkoutFragment)
-                .add(R.id.blankWorkout_fragment,blankWorkoutFragment)
+                .add(R.id.blankWorkout_fragment, blankSubWorkoutFragment)
                 .addToBackStack(null)
                 .commit();
     }

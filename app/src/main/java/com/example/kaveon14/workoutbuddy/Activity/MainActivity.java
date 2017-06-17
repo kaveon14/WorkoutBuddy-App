@@ -1,40 +1,60 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-
+// TODO next step add custom exercises put it in differnet class most likely
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import java.util.Calendar;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
-// TODO allow deletion of exercise from workout,subworkout from mainworkout,and mainworkout
+// TODO allow deletion of ExercisePopupWindow from workout,subworkout from mainworkout,and mainworkout
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static int fragId;
     private CaldroidFragment caldroid_frag;
+    public static MainActivity activity;
+    private Bitmap bitmap;
+    private int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContent();
+        permissionShit();
+        activity =  this;
     }
 
     @Override
@@ -110,11 +130,40 @@ public class MainActivity extends AppCompatActivity
                 //nothing yet
                 break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void permissionShit() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                }
+            }
+        }
+    }
+
+
+
+
 
     private Fragment getActiveFragment() {
         return getSupportFragmentManager().findFragmentById(fragId);
@@ -192,6 +241,119 @@ public class MainActivity extends AppCompatActivity
         args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
         caldroid_frag.setArguments(args);
+    }
+
+
+
+
+
+
+
+    public void fuck() {
+        ExercisePopupWindow e = new ExercisePopupWindow();
+        e.showPopupWindow(getCurrentFocus());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        bitmap = getGalleryImage(requestCode,resultCode,data);
+    }
+
+    private Bitmap getGalleryImage(int requestCode,int resultCode,Intent data) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            return BitmapFactory.decodeFile(picturePath);
+        }
+        return null;
+    }
+
+    @Override
+    public void onStart() {//this shit still not called
+        super.onStart();
+        setImageViewWithGalleryImage();
+    }
+
+    private void setImageViewWithGalleryImage() {
+        ExercisePopupWindow ex = new ExercisePopupWindow();
+        ImageView imageView;
+        if (bitmap != null) {
+            PopupWindow popupWindow = ex.showPopupWindow(getCurrentFocus());
+            if(popupWindow.isShowing()) {
+                imageView = (ImageView) popupWindow.getContentView().findViewById(R.id.addExercisePopup_imageView);
+                imageView.setImageBitmap(bitmap);
+                imageView.setScaleX(1.0f);
+                imageView.setScaleY(1.0f);
+            }
+        }
+    }
+
+    public class ExercisePopupWindow {
+
+        public PopupWindow showPopupWindow(View root) {
+            int width = LinearLayout.LayoutParams.MATCH_PARENT;
+            int height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+            View popupLayout = getPopupLayout(root);
+            PopupWindow popupWindow = new PopupWindow(popupLayout, width, height);
+            popupWindow.setFocusable(true);
+            popupWindow.update(0, 0, width, height);
+            popupWindow.showAtLocation(root, Gravity.CENTER, 0, 0);
+            dimBackground(popupLayout);
+            setPopupImageView(popupLayout);
+
+            return popupWindow;
+        }
+
+        private View getPopupLayout(View root) {
+            LayoutInflater inflater = (LayoutInflater) getBaseContext().
+                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            return inflater.inflate(R.layout.addexercise_popup_layout, (ViewGroup)
+                    root.findViewById(R.id.addExercise_PopupWindow));
+        }
+
+        private void dimBackground(View popupLayout) {
+            View container = (View) popupLayout.getParent();
+            WindowManager wm = (WindowManager) getBaseContext()
+                    .getSystemService(Context.WINDOW_SERVICE);
+
+            WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) container.getLayoutParams();
+            layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            layoutParams.dimAmount = 0.6f;
+            wm.updateViewLayout(container, layoutParams);
+        }
+
+        private void setPopupImageView(View popupLayout) {
+            ImageView imageView = (ImageView) popupLayout.findViewById(R.id.addExercisePopup_imageView);
+            imageView.setImageResource(R.drawable.ic_menu_gallery);
+            float x = 0.5f;float y = 0.5f;
+            imageView.setScaleX(x);
+            imageView.setScaleY(y);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openExternalImageGallery();
+                }
+            });
+        }
+
+        private void openExternalImageGallery() {//
+            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickIntent.setType("image/*");
+            startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
+        }
+
     }
 }
 // do a-chart engine later for now just figure out how to save workout data and body data
