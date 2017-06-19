@@ -3,7 +3,7 @@ package com.example.kaveon14.workoutbuddy.DataBase.Data;
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 
-public final class Exercise {//possibly add an "image" to the exercise
+public final class Exercise {
 
     private String exerciseName;
     private String exerciseDescripion;

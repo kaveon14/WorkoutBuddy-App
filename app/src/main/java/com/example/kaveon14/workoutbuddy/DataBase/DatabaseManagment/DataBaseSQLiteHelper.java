@@ -4,8 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseNames;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +37,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.TABLE_NAME_WK5;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData;
 import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultWorkouts;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
+import com.example.kaveon14.workoutbuddy.R;
 
 public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
@@ -176,14 +184,60 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
     private class DefaultExercisesExtension {
 
-        protected void addDefaultExercises(SQLiteDatabase database) {//add exercise descriptions also nd change func name
-            List<String> exerciseNames = new DefaultExerciseNames(context, "ExerciseNames.txt").//and add exercise images
-                    readFileSorted();
+        protected void addDefaultExercises(SQLiteDatabase database) {//add exercise descriptions also change func name
+            List<String> exerciseNames = new DefaultExerciseNames(context, "ExerciseNames.txt")
+                    .readFileSorted();
             ContentValues values = new ContentValues();
             for (int x = 0; x < exerciseNames.size(); x++) {
                 values.put(DataBaseContract.ExerciseData.COLUMN_EXERCISES, exerciseNames.get(x));
+                byte[] data = getDefaultImages(exerciseNames.get(x));
+                values.put(DataBaseContract.ExerciseData.COLUMN_EXERCISE_IMAGES,data);
                 database.insert(DataBaseContract.ExerciseData.TABLE_NAME, null, values);
             }
+        }
+
+
+        private byte[] getDefaultImages(String exerciseName) {
+            final Field[] mipmapFields = R.mipmap.class.getDeclaredFields();
+            try {
+                return getExerciseImage(exerciseName,mipmapFields);
+            } catch (IllegalAccessException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        }
+
+        private byte[] getExerciseImage(String exerciseName, Field[] mipmapFields) throws IllegalAccessException {
+            for (int x = 0; x < mipmapFields.length; x++) {
+                String imageName = mipmapFields[x].getName();
+                if(doImageAndExerciseMatch(imageName,exerciseName)) {
+                    Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
+                            mipmapFields[x].getInt(new R.mipmap()));
+                    return getExerciseImageData(exerciseName,bitmap);
+                }
+            }
+            return null;
+        }
+
+        private boolean doImageAndExerciseMatch(String imageName, String exerciseName) {
+            imageName = imageName.replace("_"," ");
+            exerciseName = exerciseName.replace("-"," ");
+            return imageName.equalsIgnoreCase(exerciseName);
+        }
+
+
+        private byte[] getExerciseImageData(String exerciseName,Bitmap bitmap) {
+            Exercise exercise = new Exercise(exerciseName, null);
+            exercise.setExerciseImage(bitmap);
+            return getImageData(exercise);
+        }
+
+        private byte[] getImageData(Exercise exercise) {
+            Bitmap bitmap = exercise.getExerciseImage();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+            byte[] data = stream.toByteArray();
+            return data;
         }
     }
 }

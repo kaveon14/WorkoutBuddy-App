@@ -4,9 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.View;
-import android.widget.EditText;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.LinkedList;
@@ -51,6 +48,7 @@ public class SubWorkoutTable {
             columnList.add(increment,cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
             increment++;
         }
+        readableDatabase.close();
         cursor.close();
         return columnList;
     }
@@ -63,6 +61,7 @@ public class SubWorkoutTable {
             System.out.println("Exercise: "+cursor.getString(1) + " Sets: "+cursor.getString(2)
                     + " Reps: "+cursor.getString(3));
         }
+        readableDatabase.close();
         cursor.close();
     }
 

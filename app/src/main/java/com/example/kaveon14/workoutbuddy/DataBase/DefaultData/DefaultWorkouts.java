@@ -37,6 +37,7 @@ public class DefaultWorkouts {
                 line = line + scannerLine + System.lineSeparator();
             }
         }
+        scan.close();
         return defaultWorkouts;
     }
 }

@@ -53,6 +53,7 @@ public class BodyTable {
             columnList.add(increment, cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
             increment++;
         }
+        readableDatabase.close();
         cursor.close();
         return columnList;
     }
@@ -67,10 +68,13 @@ public class BodyTable {
             " Waist Size: "+cursor.getString(6) + " Quad Size: "+cursor.getString(7) +
             " Calf Size: "+cursor.getString(8));
         }
+        readableDatabase.close();
+        cursor.close();
     }
 
     public void deleteRow(String datesToDelete[]) {
         SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
         database.delete(TABLE_NAME,COLUMN_DATE+"=?",datesToDelete);
+        database.close();
     }
 }

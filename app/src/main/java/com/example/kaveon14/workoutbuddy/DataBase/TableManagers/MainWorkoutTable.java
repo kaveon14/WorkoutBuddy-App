@@ -27,7 +27,6 @@ public class MainWorkoutTable {
     }
 
     public void addSubWorkout(String mainWorkoutName,String subWorkoutNames,int day) {
-
         SQLiteDatabase writableDatabase  = dataBaseSQLiteHelper.getWritableDatabase();
         List<String> rowValues = getSubWorkouts(mainWorkoutName);
         deleteRow(mainWorkoutName);
@@ -52,6 +51,7 @@ public class MainWorkoutTable {
         while(cursor.moveToNext()) {
             columnData.add(cursor.getString(1));
         }
+        database.close();
         cursor.close();
         return columnData;
     }
@@ -68,6 +68,7 @@ public class MainWorkoutTable {
                 }
             }
         }
+        database.close();
         cursor.close();
         return rowData;
     }
@@ -87,6 +88,7 @@ public class MainWorkoutTable {
                 mainWorkout
         };
         database.delete("Main_Workouts","Main_Workout=?",data);
+        database.close();
     }
 
     public List<String> getColumn(String tableName,String columnName) {
@@ -98,6 +100,7 @@ public class MainWorkoutTable {
             columnList.add(increment,cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
             increment++;
         }
+        readableDatabase.close();
         cursor.close();
         return columnList;
 

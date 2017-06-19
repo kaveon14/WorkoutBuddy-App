@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-// FIX all database leaks
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -32,14 +32,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
+
+import java.lang.reflect.Field;
 import java.util.Calendar;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 // TODO allow deletion of ex from workout,subworkout from mainworkout,and mainworkout
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
-        //this has to be somewhere else slowing down appilication
+        // TODO move this
         boolean inActivity = true;
         if(getActiveFragment() == null || fragId == 0) {
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -82,14 +81,6 @@ public class MainActivity extends AppCompatActivity
     private void setFloatingActionButtonImage(FloatingActionButton fab, boolean onActivity) {
         if(onActivity) {
             fab.setImageResource(R.drawable.ic_menu_camera);
-            if(bitmap !=null) {
-                System.out.println("called");
-                Exercise ex = new Exercise("Bench Squat", "blank");//extremely rough concept for now
-                ex.setExerciseImage(bitmap);
-                ExerciseTable et = new ExerciseTable(getBaseContext());
-                et.addAnExercise(ex);
-                bitmap = et.getImage(ex);
-            }
         }
     }
 
@@ -185,7 +176,6 @@ public class MainActivity extends AppCompatActivity
     private void showExerciseFragment() {
         ExerciseFragment exercise_frag = new ExerciseFragment();
         addFragmentToStack(getActiveFragment(),exercise_frag,R.id.exercise_fragment);
-        getActiveFragment();
     }
 
     private void showWorkoutFragment() {

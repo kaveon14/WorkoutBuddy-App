@@ -30,6 +30,8 @@ public class DefaultExerciseNames {
             while ((line = reader.readLine()) != null) {
                 fileData.add(line);
             }
+            inputStream.close();
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

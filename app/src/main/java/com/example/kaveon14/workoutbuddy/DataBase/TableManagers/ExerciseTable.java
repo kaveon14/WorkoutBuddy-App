@@ -2,22 +2,15 @@ package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
-
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_IMAGES;
@@ -31,12 +24,12 @@ public class ExerciseTable {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
     }
 
-    public void addAnExercise(Exercise exercise) {//needs to include
+    public void addAnExercise(Exercise exercise) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXERCISES,exercise.getExerciseName());
         values.put(COLUMN_EXERCISE_DESCRIPTION,exercise.getExerciseDescripion());
-        //image chosen was may be too big
+        //if app is slowing down image chosen  may be too big
         values.put(COLUMN_EXERCISE_IMAGES,getImageData(exercise));
         long itemID = writableDatabase.insert(TABLE_NAME,null,values);
     }
@@ -76,16 +69,36 @@ public class ExerciseTable {
         cursor.close();
     }
 
-    public Bitmap getImage(Exercise exercise) {
+    public Bitmap getExerciseImage(Exercise exercise) {
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(TABLE_NAME, null, null, null, null, null, null);
-        while (cursor.moveToNext()) {//possibly not loading right content
+        Bitmap bitmap = getImageData(cursor,exercise);
+        if(bitmap != null) {
+            cursor.close();
+            readableDatabase.close();
+            return bitmap;
+        }
+        cursor.close();
+        readableDatabase.close();
+        return null;
+    }
+
+    private Bitmap getImageData(Cursor cursor,Exercise exercise) {
+        byte[] data;
+        while (cursor.moveToNext()) {
+            data = getImageBytes(cursor,exercise);
+            if(data != null) {
+                return BitmapFactory.decodeByteArray(data,0,data.length);
+            }
+        }
+        return null;
+    }
+
+    private byte[] getImageBytes(Cursor cursor, Exercise exercise) {
+        while (cursor.moveToNext()) {
             String exerciseName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXERCISES));
             if (exerciseName.equalsIgnoreCase(exercise.getExerciseName())) {
-                byte[] imageId = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_EXERCISE_IMAGES));
-                readableDatabase.close();
-                cursor.close();
-                return BitmapFactory.decodeByteArray(imageId, 0, imageId.length);
+                return cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_EXERCISE_IMAGES));
             }
         }
         return null;

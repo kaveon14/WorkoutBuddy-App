@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-
+// TODO put in different package
 import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
@@ -221,6 +221,4 @@ public class ExercisePopupWindowHandler {
         layoutParams.dimAmount = 0.6f;
         wm.updateViewLayout(container, layoutParams);
     }
-}//get the image id and store it first on add exercise click make sure to resort list
-//then do the view custom exercises
-//then do the delete custoum exercises
+}

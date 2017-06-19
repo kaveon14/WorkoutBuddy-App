@@ -17,6 +17,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ExerciseImages;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
@@ -46,8 +47,14 @@ public class BlankExerciseFragment extends Fragment {
         ExerciseContent exerciseContent = new ExerciseContent();
         EditText exTextBox = (EditText) view.findViewById(R.id.exDescriptionBox);
         exTextBox.setText(exerciseContent.getExerciseDescription());
+
         ImageView exImageView = (ImageView) view.findViewById(R.id.exerciseImageView);
-        exImageView.setImageBitmap(exerciseContent.getImageBitmap(view));
+        Bitmap bitmap = exerciseContent.getExerciseImage();
+        if(bitmap != null) {
+            exImageView.setImageBitmap(bitmap);
+        } else {
+            exImageView.setImageBitmap(exerciseContent.getImageBitmap(view));
+        }
     }
 
     @Override
@@ -72,7 +79,7 @@ public class BlankExerciseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"if custom exercise allow it too be editable " +
-                        "otherwise do nit==ot show the button",Toast.LENGTH_LONG).show();
+                        "otherwise do not show the button",Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -80,27 +87,20 @@ public class BlankExerciseFragment extends Fragment {
     private class ExerciseContent extends ExerciseImages {
 
         private final int getImageID() {
-            int image_id;
-            try {
-                String string_image_id = EXERCISE_IMAGE_MAP.
-                        get(ExerciseFragment.clickedExercise.getExerciseName());
-                image_id = Integer.valueOf(string_image_id);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                image_id = R.mipmap.ic_launcher;
+            String string_image_id = EXERCISE_IMAGE_MAP.
+                    get(ExerciseFragment.clickedExercise.getExerciseName());
+            if(string_image_id != null) {
+                return Integer.valueOf(string_image_id);
+            } else {
+                return R.mipmap.ic_launcher;
             }
-            return image_id;
-        }
-
-        public Bitmap getImageBitmap(View view) {
-            return BitmapFactory.decodeResource(view.getResources(),getImageID());
         }
 
         private Exercise getClickedExercise() {
             return ExerciseFragment.clickedExercise;
         }
 
-        public String getExerciseDescription() {
+        public String getExerciseDescription() {//not even needed
             DataBaseSQLiteHelper db = new DataBaseSQLiteHelper(getContext());
             SQLiteDatabase database = db.getReadableDatabase();
             Cursor cursor = database.query(DataBaseContract.ExerciseData.TABLE_NAME,
@@ -110,6 +110,15 @@ public class BlankExerciseFragment extends Fragment {
                 exDescription = cursor.getString(2);
             }
             return exDescription;
+        }
+
+        public Bitmap getExerciseImage() {
+            ExerciseTable et = new ExerciseTable(getContext());
+            return et.getExerciseImage(getClickedExercise());
+        }
+
+        public Bitmap getImageBitmap(View view) {
+            return BitmapFactory.decodeResource(view.getResources(),getImageID());
         }
     }
 }
