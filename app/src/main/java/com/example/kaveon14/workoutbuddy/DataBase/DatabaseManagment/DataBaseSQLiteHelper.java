@@ -13,6 +13,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseNam
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,7 +72,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SUBWORKOUT_5,"Arm_Day");
         values.put(COLUMN_SUBWORKOUT_6,"NULL_1");
         values.put(COLUMN_SUBWORKOUT_7,"NULL_2");
-        long itemID = database.insert(DataBaseContract.MainWorkoutData.TABLE_NAME,null,values);
+        database.insert(DataBaseContract.MainWorkoutData.TABLE_NAME,null,values);
     }
 
     @Override
@@ -86,9 +87,8 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     private String createLiftDataTable() {
         List<String> exerciseNames = new
                 DefaultExerciseNames(context,"ExerciseNames.txt").readFileSorted();
-        String columnName;
-        for(int x=0;x<exerciseNames.size();x++) {
-            columnName = exerciseNames.get(x).replace(" ","_").replace("-","_");
+        for(String columnName : exerciseNames) {
+            columnName = columnName.replace(" ","_").replace("-","_");
             DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
         }
         DataBaseContract.LiftData.setColumns();
@@ -122,7 +122,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             DefaultWorkouts fileReader = new DefaultWorkouts(context, "DefaultWorkoutValues.txt");
             try {
                 defaultWorkoutsMap = fileReader.getSubWorkoutData();
-                defaultWorkoutNames = new LinkedList<>();
+                defaultWorkoutNames = new ArrayList<>(5);
                 defaultWorkoutNames.add("Chest_Day");
                 defaultWorkoutNames.add("Back_Day");
                 defaultWorkoutNames.add("Shoulder_Day");
@@ -135,9 +135,9 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
         private void addDefaultWorkoutsData(SQLiteDatabase database) {
             setDefaultWorkoutsMap();
-            for (int x = 0; x < defaultWorkoutsMap.size(); x++) {
+            for(String workoutName : defaultWorkoutNames) {
                 try {
-                    setSingleDefaultWorkout(database, defaultWorkoutNames.get(x)+"_wk");
+                    setSingleDefaultWorkout(database,workoutName+"_wk");
                 } catch (NoSuchElementException e) {
                     //scanner has reached end of string and throws an error
                 }
@@ -145,7 +145,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         }
 
         private void setSingleDefaultWorkout(SQLiteDatabase database, String workoutName) throws NoSuchElementException {
-            String data = defaultWorkoutsMap.get(workoutName);
+            String data = defaultWorkoutsMap.get(workoutName);//dafuq is data
             Scanner scanner = new Scanner(data);
             Scanner insertData = new Scanner(data);
             String exercise, sets, reps;
@@ -166,7 +166,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             values.put(COLUMN_EXERCISE_NAMES, exerciseName);
             values.put(COLUMN_EXERCISE_SETS, sets);
             values.put(COLUMN_EXERCISE_REPS, reps);
-            long itemId = database.insert(workoutName, null, values);
+            database.insert(workoutName, null, values);
         }
 
         private String getExerciseName(Scanner scan) {
@@ -188,9 +188,9 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             List<String> exerciseNames = new DefaultExerciseNames(context, "ExerciseNames.txt")
                     .readFileSorted();
             ContentValues values = new ContentValues();
-            for (int x = 0; x < exerciseNames.size(); x++) {
-                values.put(DataBaseContract.ExerciseData.COLUMN_EXERCISES, exerciseNames.get(x));
-                byte[] data = getDefaultImages(exerciseNames.get(x));
+            for(String exerciseName : exerciseNames) {
+                values.put(DataBaseContract.ExerciseData.COLUMN_EXERCISES, exerciseName);
+                byte[] data = getDefaultImages(exerciseName);
                 values.put(DataBaseContract.ExerciseData.COLUMN_EXERCISE_IMAGES,data);
                 database.insert(DataBaseContract.ExerciseData.TABLE_NAME, null, values);
             }

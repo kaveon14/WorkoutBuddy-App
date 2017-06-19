@@ -61,7 +61,7 @@ public class Body {
         return this;
     }
 
-    public Date getDate() {
+    public Date getDateForSorting() {
         return dateForSorting;
     }
 

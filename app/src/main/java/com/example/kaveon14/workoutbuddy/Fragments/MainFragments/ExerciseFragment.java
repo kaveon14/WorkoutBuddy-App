@@ -186,3 +186,4 @@ public class ExerciseFragment extends Fragment {
         }
     }
 }
+//no need to change the custom image name because it is tied and retrieved by an exercise object

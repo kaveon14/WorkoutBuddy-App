@@ -80,10 +80,7 @@ public class BlankBodyStatsFragment extends Fragment {
     private class BodyStatsExtension {
 
         private void addBodyStatsData(View root) {
-            BodyTable bodyTable = new BodyTable(getContext());
-            bodyTable.addStatsToBodyTable(getDate(root),getWeight(root),getChestSize(root),
-                    getBackSize(root),getArmSize(root),getForearmSize(root),getWaistSize(root),
-                    getQuadSize(root),getCalfSize(root));
+            new BodyTable(getContext()).addStatsToBodyTable(getBodyStatsObject(root));
         }
 
         private Body getBodyStatsObject(View root) {

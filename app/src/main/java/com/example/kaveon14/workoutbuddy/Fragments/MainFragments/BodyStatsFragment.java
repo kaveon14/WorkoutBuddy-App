@@ -382,7 +382,7 @@ public class BodyStatsFragment extends Fragment {
             Collections.sort(bodyStatsList, new Comparator<Body>() {
                 @Override
                 public int compare(Body object1, Body object2) {
-                    return object2.getDate().compareTo(object1.getDate());
+                    return object2.getDateForSorting().compareTo(object1.getDateForSorting());
                 }
             });
         }

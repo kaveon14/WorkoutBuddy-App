@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.DataBase.Data;
-
+// go and put initial size in all array lists
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +10,7 @@ public class MainWorkout {
 
     private String mainWorkoutName;
     private List<SubWorkout> subWorkouts;
-
+//make sure it is an array list
     public MainWorkout(String mainWorkoutName, List<SubWorkout> subWorkouts) {
         this.mainWorkoutName = mainWorkoutName;
         this.subWorkouts = subWorkouts;
@@ -20,9 +21,9 @@ public class MainWorkout {
     }
 
     public List<String> getAllSubWorkoutNames() {
-        List<String> subWorkoutNames = new LinkedList<>();
-        for(int x=0;x<subWorkouts.size();x++) {
-            subWorkoutNames.add(subWorkouts.get(x).getSubWorkoutName());
+        List<String> subWorkoutNames = new ArrayList<>(7);
+        for(SubWorkout data : subWorkouts) {
+            subWorkoutNames.add(data.getSubWorkoutName());
         }
         return subWorkoutNames;
     }

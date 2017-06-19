@@ -18,8 +18,6 @@ public class ExerciseImages {
 
     private Context context;
     protected static Map<String,String> EXERCISE_IMAGE_MAP = new Hashtable<>();
-    private final Class<R.mipmap> mipmapClass = R.mipmap.class;
-    private final Field[] mipmapFields = mipmapClass.getDeclaredFields();
 
     public ExerciseImages() {
 
@@ -27,7 +25,6 @@ public class ExerciseImages {
 
     public ExerciseImages(Context context) {
         this.context = context;
-        //addElementsToMipMap();//this has no use
     }
 
     public void setImageMap() {
@@ -39,6 +36,8 @@ public class ExerciseImages {
     }
 
     private void setElementsToImageMap() throws IllegalAccessException {
+        final Class<R.mipmap> mipmapClass = R.mipmap.class;
+        final Field[] mipmapFields = mipmapClass.getDeclaredFields();
         int increment=0,maxImages = mipmapFields.length;
         while(increment<maxImages) {
             getImageAndItemNameForMap(increment);
@@ -47,15 +46,12 @@ public class ExerciseImages {
     }
 
     private void getImageAndItemNameForMap(int imagePosition) throws IllegalAccessException {
-        String itemName;
-        ExerciseTable exerciseTable = new ExerciseTable(context);
-        List<String> EXERCISE_LIST = exerciseTable.getColumn(COLUMN_EXERCISES);
-        String uneditedImageName;String editedImageName;
-        for(int x=1;x<EXERCISE_LIST.size();x++) {
-            uneditedImageName = mipmapFields[imagePosition].getName();
-            editedImageName = uneditedImageName.replace("_", " ");
-            itemName = EXERCISE_LIST.get(x).replace("-", " ");
-            matchImageAndItemToMap(imagePosition,editedImageName,itemName);
+        List<String> EXERCISE_LIST = new ExerciseTable(context).getColumn(COLUMN_EXERCISES);
+        final Class<R.mipmap> mipmapClass = R.mipmap.class;
+        final Field[] mipmapFields = mipmapClass.getDeclaredFields();
+        String imageName = mipmapFields[imagePosition].getName().replace("_"," ");
+        for(String exerciseName : EXERCISE_LIST) {
+            matchImageAndItemToMap(imagePosition,imageName,exerciseName.replace("-"," "));
         }
     }
 
@@ -67,24 +63,13 @@ public class ExerciseImages {
 
     private void addImagesToMap(String mapID,int fieldLocation) throws IllegalAccessException {
         final R.mipmap mipmapResources = new R.mipmap();
+        final Class<R.mipmap> mipmapClass = R.mipmap.class;
+        final Field[] mipmapFields = mipmapClass.getDeclaredFields();
         String imageID = String.valueOf(mipmapFields[fieldLocation].getInt(mipmapResources));
         EXERCISE_IMAGE_MAP.put(mapID,imageID);
     }
 
     private boolean compareItemAndImageName(String itemName,String imageName) {
         return imageName.equalsIgnoreCase(itemName);
-    }
-//what is the use of this
-    private void addElementsToMipMap() {
-        final R.mipmap mipmapResources = new R.mipmap();
-        for (int i = 0, max = mipmapFields.length; i < max; i++) {
-            final int resourceId;
-            try {
-                resourceId = mipmapFields[i].getInt(mipmapResources);
-                EXERCISE_IMAGE_MAP.put(String.valueOf(i+1),String.valueOf(resourceId));
-            } catch (Exception e) {
-                continue;
-            }
-        }
     }
 }

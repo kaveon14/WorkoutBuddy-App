@@ -23,7 +23,8 @@ public class MainWorkoutTable {
         SQLiteDatabase writableDatabase  = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_MAINWORKOUT,workoutName);
-        long itemId = writableDatabase.insert("Main_Workouts",null,values);
+        writableDatabase.insert("Main_Workouts",null,values);
+        writableDatabase.close();
     }
 
     public void addSubWorkout(String mainWorkoutName,String subWorkoutNames,int day) {
@@ -40,7 +41,8 @@ public class MainWorkoutTable {
             String COLUMN_NAME = "Day"+x+"_Workout"+x;
             values.put(COLUMN_NAME,rowValues.get(x));
         }
-        long itemID = writableDatabase.insert("Main_Workouts",null,values);
+        writableDatabase.insert("Main_Workouts",null,values);
+        writableDatabase.close();
     }
 
     public List<String> getMainWorkoutNames() {
@@ -64,8 +66,9 @@ public class MainWorkoutTable {
         while(cursor.moveToNext()) {
             if(cursor.getString(1).equalsIgnoreCase(mainWorkout)) {
                 for(int x=2;x<=8;x++) {
-                    rowData.add(x-2,cursor.getString(x));
+                    rowData.add(cursor.getString(x));
                 }
+                break;
             }
         }
         database.close();
@@ -73,12 +76,10 @@ public class MainWorkoutTable {
         return rowData;
     }
 
-    private List<String> getSubWorkouts(String mainWorkout) {//needs to be renamed
+    private List<String> getSubWorkouts(String mainWorkout) {//needs to be tested
         List<String> rowData = new ArrayList<>();
-        rowData.add(0,"*/* SPACE HOLDER */*");
-        for(int x=1;x<=7;x++) {
-            rowData.add(x,getSubWorkoutNames(mainWorkout).get(x));
-        }
+        rowData.add("*/* SPACE HOLDER */*");
+        rowData.addAll(getSubWorkoutNames(mainWorkout));
         return rowData;
     }
 
@@ -92,13 +93,11 @@ public class MainWorkoutTable {
     }
 
     public List<String> getColumn(String tableName,String columnName) {
-        List<String> columnList = new LinkedList<>();
+        List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
-        int increment = 0;
         while(cursor.moveToNext()) {
-            columnList.add(increment,cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
-            increment++;
+            columnList.add(cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
         }
         readableDatabase.close();
         cursor.close();

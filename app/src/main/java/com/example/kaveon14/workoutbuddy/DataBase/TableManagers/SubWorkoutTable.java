@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
@@ -26,6 +26,7 @@ public class SubWorkoutTable {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         createWorkoutTable(tableName);
         writableDatabase.execSQL(createWorkoutTable(tableName));
+        writableDatabase.close();
     }
 
     public void addExerciseToSubWorkout(String mainWorkoutName,String subWorkoutName,Exercise ex) {
@@ -35,12 +36,13 @@ public class SubWorkoutTable {
         values.put(COLUMN_EXERCISE_NAMES,ex.getExerciseName());
         values.put(COLUMN_EXERCISE_SETS,ex.getExerciseSets());
         values.put(COLUMN_EXERCISE_REPS,ex.getExerciseReps());
-        long itemID = writableDatabase.insert(subWorkoutName,null,values);
+        writableDatabase.insert(subWorkoutName,null,values);
+        writableDatabase.close();
     }
 
     public List<String> getColumn(String tableName,String columnName) {
         tableName = getCorrectTableName(tableName);
-        List<String> columnList = new LinkedList<>();
+        List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
         int increment = 0;
@@ -80,8 +82,6 @@ public class SubWorkoutTable {
         } else {
             return tableName + "_wk";
         }
-
-
     }
 }
 

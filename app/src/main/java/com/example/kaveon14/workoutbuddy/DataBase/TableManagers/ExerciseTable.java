@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
@@ -30,20 +32,31 @@ public class ExerciseTable {
         values.put(COLUMN_EXERCISES,exercise.getExerciseName());
         values.put(COLUMN_EXERCISE_DESCRIPTION,exercise.getExerciseDescripion());
         //if app is slowing down image chosen  may be too big
-        values.put(COLUMN_EXERCISE_IMAGES,getImageData(exercise));
-        long itemID = writableDatabase.insert(TABLE_NAME,null,values);
+
+
+        try {//take out
+            values.put(COLUMN_EXERCISE_IMAGES, getImageData(exercise));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        writableDatabase.insert(TABLE_NAME,null,values);
+        writableDatabase.close();
     }
 
-    private byte[] getImageData(Exercise exercise) {
+    private byte[] getImageData(Exercise exercise) throws IOException {
         Bitmap bitmap = exercise.getExerciseImage();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
         byte[] data = stream.toByteArray();
+        stream.close();
         return data;
     }
 
     public List<String> getColumn(String columnName) {
-        List<String> columnList = new LinkedList<>();
+        List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null,null);
         int increment = 0;
