@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-// TODO next step add custom exercises put it in differnet class most likely
+// FIX all database leaks
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +32,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
@@ -39,7 +42,7 @@ import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import java.util.Calendar;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
-// TODO allow deletion of ExercisePopupWindow from workout,subworkout from mainworkout,and mainworkout
+// TODO allow deletion of ex from workout,subworkout from mainworkout,and mainworkout
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
+        //this has to be somewhere else slowing down appilication
         boolean inActivity = true;
         if(getActiveFragment() == null || fragId == 0) {
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -78,6 +82,14 @@ public class MainActivity extends AppCompatActivity
     private void setFloatingActionButtonImage(FloatingActionButton fab, boolean onActivity) {
         if(onActivity) {
             fab.setImageResource(R.drawable.ic_menu_camera);
+            if(bitmap !=null) {
+                System.out.println("called");
+                Exercise ex = new Exercise("Bench Squat", "blank");//extremely rough concept for now
+                ex.setExerciseImage(bitmap);
+                ExerciseTable et = new ExerciseTable(getBaseContext());
+                et.addAnExercise(ex);
+                bitmap = et.getImage(ex);
+            }
         }
     }
 
@@ -161,10 +173,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
-
-
     private Fragment getActiveFragment() {
         return getSupportFragmentManager().findFragmentById(fragId);
     }
@@ -236,22 +244,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setCaldroidFragContent(CaldroidFragment caldroid_frag) {
-        Calendar cal = Calendar.getInstance();//put this in different function
+        Calendar cal = Calendar.getInstance();
         Bundle args = new Bundle();
         args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
         args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
         caldroid_frag.setArguments(args);
-    }
-
-
-
-
-
-
-
-    public void fuck() {
-        ExercisePopupWindow e = new ExercisePopupWindow();
-        e.showPopupWindow(getCurrentFocus());
     }
 
     @Override
@@ -279,13 +276,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onStart() {//this shit still not called
+    public void onStart() {
         super.onStart();
         setImageViewWithGalleryImage();
     }
 
     private void setImageViewWithGalleryImage() {
-        ExercisePopupWindow ex = new ExercisePopupWindow();
+        ExercisePopupWindowHandler ex = new ExercisePopupWindowHandler();
         ImageView imageView;
         if (bitmap != null) {
             PopupWindow popupWindow = ex.showPopupWindow(getCurrentFocus());
@@ -298,7 +295,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public class ExercisePopupWindow {
+    public void showAddExercisePopupWindow() {
+        ExercisePopupWindowHandler popupWindowHandler = new ExercisePopupWindowHandler();
+        popupWindowHandler.showPopupWindow(getCurrentFocus());
+    }
+
+    public class ExercisePopupWindowHandler {
 
         public PopupWindow showPopupWindow(View root) {
             int width = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -353,7 +355,6 @@ public class MainActivity extends AppCompatActivity
             pickIntent.setType("image/*");
             startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
         }
-
     }
 }
 // do a-chart engine later for now just figure out how to save workout data and body data

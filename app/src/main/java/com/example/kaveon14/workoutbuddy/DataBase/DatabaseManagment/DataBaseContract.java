@@ -77,11 +77,14 @@ public class DataBaseContract {
 
         public static final String COLUMN_EXERCISE_DESCRIPTION = "Exercise_Content";//add line seperators
 
+        public static final String COLUMN_EXERCISE_IMAGES = "Exercise_Image_IDs";
+
         public static final String CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_EXERCISES + " TEXT, " +
-                COLUMN_EXERCISE_DESCRIPTION + " BLOB" + ")";
+                COLUMN_EXERCISE_DESCRIPTION + " BLOB, " +
+                COLUMN_EXERCISE_IMAGES + " BLOB" + ")";
     }
 
     public static final class BodyData implements BaseColumns {//DONT FORGET TOP GET HEIGHT FOR AND AGE FOR BMI

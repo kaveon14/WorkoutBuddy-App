@@ -177,7 +177,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     private class DefaultExercisesExtension {
 
         protected void addDefaultExercises(SQLiteDatabase database) {//add exercise descriptions also nd change func name
-            List<String> exerciseNames = new DefaultExerciseNames(context, "ExerciseNames.txt").
+            List<String> exerciseNames = new DefaultExerciseNames(context, "ExerciseNames.txt").//and add exercise images
                     readFileSorted();
             ContentValues values = new ContentValues();
             for (int x = 0; x < exerciseNames.size(); x++) {
