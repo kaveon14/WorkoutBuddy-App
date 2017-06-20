@@ -16,6 +16,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindowHandler;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
@@ -88,9 +89,12 @@ public class ExerciseFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExercisePopupWindowHandler windowHandler =
-                        new ExercisePopupWindowHandler(getContext(),fromSubWorkout);
-                windowHandler.setMainExercisePopupWindow(fab.getRootView());
+                //ExercisePopupWindowHandler windowHandler =
+                  //      new ExercisePopupWindowHandler(getContext(),fromSubWorkout);
+                //windowHandler.setMainExercisePopupWindow(fab.getRootView());
+                PopupWindowManager manager = new PopupWindowManager(fab.getRootView(),
+                        R.layout.popup_window,R.id.popupWin);
+                manager.displayPopupWindow();
             }
         });
     }
