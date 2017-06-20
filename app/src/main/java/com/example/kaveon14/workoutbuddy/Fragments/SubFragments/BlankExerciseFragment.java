@@ -21,7 +21,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
-public class BlankExerciseFragment extends Fragment {
+public class BlankExerciseFragment extends Fragment {//works now
 
     public BlankExerciseFragment() {
         // Required empty public constructor
@@ -46,14 +46,19 @@ public class BlankExerciseFragment extends Fragment {
         exerciseImages.setImageMap();
         ExerciseContent exerciseContent = new ExerciseContent();
         EditText exTextBox = (EditText) view.findViewById(R.id.exDescriptionBox);
-        exTextBox.setText(exerciseContent.getExerciseDescription());
+        exTextBox.setText(exerciseContent.getClickedExercise().getExerciseDescription());
+        /*if(description != null) {
+            exTextBox.setText(description);
+        } else {
+            exTextBox.setText("Add Exercise Description");
+        }*/
 
         ImageView exImageView = (ImageView) view.findViewById(R.id.exerciseImageView);
-        Bitmap bitmap = exerciseContent.getExerciseImage();
+        Bitmap bitmap = exerciseContent.getClickedExercise().getExerciseImage();
         if(bitmap != null) {
             exImageView.setImageBitmap(bitmap);
         } else {
-            exImageView.setImageBitmap(exerciseContent.getImageBitmap(view));
+            exImageView.setImageResource(R.mipmap.ic_launcher);
         }
     }
 
@@ -84,7 +89,7 @@ public class BlankExerciseFragment extends Fragment {
         });
     }
 
-    private class ExerciseContent extends ExerciseImages {
+    private class ExerciseContent extends ExerciseImages {//most likely nothing needed
 
         private final int getImageID() {
             String string_image_id = EXERCISE_IMAGE_MAP.
@@ -106,8 +111,15 @@ public class BlankExerciseFragment extends Fragment {
             Cursor cursor = database.query(DataBaseContract.ExerciseData.TABLE_NAME,
                     null,null,null,null,null,null);
             String exDescription = null;
-            while(cursor.moveToNext() && cursor.getString(1) != getClickedExercise().getExerciseName()) {
-                exDescription = cursor.getString(2);
+            Exercise exercise = getClickedExercise();
+            while(cursor.moveToNext() && cursor
+                    .getString(cursor.getColumnIndexOrThrow(DataBaseContract.ExerciseData.COLUMN_EXERCISES))
+                    != exercise.getExerciseName()) {
+
+                exDescription = cursor
+                        .getString(cursor.getColumnIndexOrThrow(DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION));
+                String dafuq = exDescription;
+
             }
             return exDescription;
         }

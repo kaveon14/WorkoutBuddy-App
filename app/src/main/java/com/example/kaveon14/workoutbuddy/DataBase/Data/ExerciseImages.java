@@ -1,15 +1,10 @@
 package com.example.kaveon14.workoutbuddy.DataBase.Data;
-// TODO put this in different package
-import android.content.Context;
-import android.content.res.Resources;
 
+import android.content.Context;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_IMAGES;
-
 import com.example.kaveon14.workoutbuddy.R;
 import java.lang.reflect.Field;
-import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;

@@ -12,17 +12,21 @@ import android.support.v4.app.Fragment;
 import android.widget.ListView;
 import android.widget.TextView;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindowHandler;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ExerciseFragment extends Fragment {
 
     public static Exercise clickedExercise;
-    private static List<Exercise> exerciseList;
+    public static List<Exercise> exerciseList;
     private boolean fromSubWorkout = false;
 
     public ExerciseFragment() {
@@ -46,6 +50,7 @@ public class ExerciseFragment extends Fragment {
         for(int x=0;x<amountOfExercise;x++) {
             exerciseList.add(getExercise(x));
         }
+        sortExerciseListByName();
     }
 
     @Override
@@ -90,7 +95,7 @@ public class ExerciseFragment extends Fragment {
         });
     }
 
-    private void setListView(View root) {//stays
+    private void setListView(View root) {
         ListView listView = (ListView) root.findViewById(R.id.exercise_listView);
         listView.setAdapter(setExerciseAdapter());
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -105,13 +110,28 @@ public class ExerciseFragment extends Fragment {
         });
     }
 
+    private void sortExerciseListByName() {
+        Collections.sort(exerciseList, new Comparator<Exercise>() {
+            @Override
+            public int compare(Exercise exercise1, Exercise exercis2) {
+                return exercise1.getExerciseName().compareTo(exercis2.getExerciseName());
+            }
+        });
+    }
+
     private ExerciseAdapter setExerciseAdapter() {
         return new ExerciseAdapter(getExerciseList());
     }
 
     private Exercise getExercise(int x) {
-        List<String> exerciseNames = new ExerciseTable(getContext()).getColumn(COLUMN_EXERCISES);
-        return new Exercise(exerciseNames.get(x),null);
+        ExerciseTable exerciseTable = new ExerciseTable(getContext());
+
+        List<String> exerciseNames = exerciseTable.getColumn(COLUMN_EXERCISES);
+        List<String> exerciseDescriptions =
+                 exerciseTable.getColumn(COLUMN_EXERCISE_DESCRIPTION);
+        Exercise exercise = new Exercise(exerciseNames.get(x),exerciseDescriptions.get(x));
+        exercise.setExerciseImage(exerciseTable.getExerciseImage(exercise));
+        return exercise;
     }
 
     private void showBlankExerciseFragment() {

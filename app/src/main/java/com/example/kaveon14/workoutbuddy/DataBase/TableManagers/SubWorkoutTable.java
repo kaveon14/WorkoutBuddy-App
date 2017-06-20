@@ -76,7 +76,7 @@ public class SubWorkoutTable {
         }
     }
 
-    private String getCorrectTableName(String tableName) {//create new name
+    private String getCorrectTableName(String tableName) {
         if(isTableNameCorrect(tableName)) {
             return tableName;
         } else {

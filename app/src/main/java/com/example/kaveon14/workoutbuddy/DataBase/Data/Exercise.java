@@ -6,14 +6,14 @@ import android.support.annotation.Nullable;
 public final class Exercise {
 
     private String exerciseName;
-    private String exerciseDescripion;
+    private String exerciseDescription;
     private String exerciseReps;
     private String exerciseSets;
     private Bitmap exerciseImage;
 
     public Exercise(String exerciseName,@Nullable String exerciseDescription) {
         this.exerciseName = exerciseName;
-        this.exerciseDescripion = exerciseDescription;
+        this.exerciseDescription = exerciseDescription;
     }
 
     public void setExerciseReps(String repsRange) {
@@ -40,8 +40,8 @@ public final class Exercise {
         return exerciseName;
     }
 
-    public String getExerciseDescripion() {
-        return exerciseDescripion;
+    public String getExerciseDescription() {
+        return exerciseDescription;
     }
 
     public Bitmap getExerciseImage() {

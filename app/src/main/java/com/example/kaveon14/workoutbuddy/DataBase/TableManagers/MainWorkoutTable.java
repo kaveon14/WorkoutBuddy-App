@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT;
 
@@ -76,7 +75,7 @@ public class MainWorkoutTable {
         return rowData;
     }
 
-    private List<String> getSubWorkouts(String mainWorkout) {//needs to be tested
+    private List<String> getSubWorkouts(String mainWorkout) {
         List<String> rowData = new ArrayList<>();
         rowData.add("*/* SPACE HOLDER */*");
         rowData.addAll(getSubWorkoutNames(mainWorkout));

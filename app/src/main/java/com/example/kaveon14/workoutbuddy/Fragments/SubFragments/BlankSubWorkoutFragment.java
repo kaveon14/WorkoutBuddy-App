@@ -82,14 +82,23 @@ public class BlankSubWorkoutFragment extends Fragment {
         });
     }
 
-    private void showExercise(Exercise clickedExercise) {
-        ExerciseFragment.clickedExercise = clickedExercise;
+    private void showExercise(Exercise exercise) {
+        findExercise(exercise);
         BlankExerciseFragment blankExerciseFragment = new BlankExerciseFragment();
         getFragmentManager().beginTransaction()
                 .hide(this)
                 .add(R.id.blankExercise_fragment,blankExerciseFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void findExercise(Exercise exercise) {
+        for(Exercise ex : ExerciseFragment.exerciseList) {
+            if(ex.getExerciseName().equalsIgnoreCase(exercise.getExerciseName())) {
+                ExerciseFragment.clickedExercise = ex;
+                break;
+            }
+        }
     }
 
     private WorkoutAdapter setWorkoutAdapter() {
@@ -103,7 +112,7 @@ public class BlankSubWorkoutFragment extends Fragment {
         return new WorkoutAdapter(getContext(),exercises);
     }
 
-    private Exercise getSubWorkoutExercise(int increment) {
+    private Exercise getSubWorkoutExercise(int increment) {//how about no
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
         String tableName = SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName() +"_wk";
 

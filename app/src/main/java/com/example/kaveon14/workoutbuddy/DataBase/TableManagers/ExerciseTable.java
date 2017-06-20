@@ -11,7 +11,6 @@ import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLi
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION;
@@ -30,17 +29,14 @@ public class ExerciseTable {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXERCISES,exercise.getExerciseName());
-        values.put(COLUMN_EXERCISE_DESCRIPTION,exercise.getExerciseDescripion());
+        values.put(COLUMN_EXERCISE_DESCRIPTION,exercise.getExerciseDescription());
         //if app is slowing down image chosen  may be too big
-
 
         try {//take out
             values.put(COLUMN_EXERCISE_IMAGES, getImageData(exercise));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
         writableDatabase.insert(TABLE_NAME,null,values);
         writableDatabase.close();

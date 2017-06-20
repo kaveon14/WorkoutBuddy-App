@@ -1,7 +1,9 @@
-package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-// TODO put in different package
+package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows;
+// TODO put most in sub classes
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
@@ -35,12 +39,12 @@ public class ExercisePopupWindowHandler {
         this.fromSubWorkout = fromSubWorkout;
     }
 
-    protected void setMainExercisePopupWindow(View root) {
+    public void setMainExercisePopupWindow(View root) {
         PopupWindow pw = showPopupWindow(root,R.layout.popup_window,R.id.popupWin);
-        addExerciseBtn(pw.getContentView(),pw);
+        addCustomExerciseBtn(pw.getContentView(),pw);
     }
 
-    private void addExerciseBtn(View popupLayout, PopupWindow popupWindow) {
+    private void addCustomExerciseBtn(View popupLayout, PopupWindow popupWindow) {
         Button btn = (Button) popupLayout.findViewById(R.id.button3);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +55,22 @@ public class ExercisePopupWindowHandler {
         });
     }
 
-    protected void showExerciseToWorkoutPopupWindow(View root, int layout, int id) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void showExerciseToWorkoutPopupWindow(View root, int layout, int id) {
         View popupLayout = showPopupWindow(root,layout,id).getContentView();
         ListView popupListView = setPopupListView(popupLayout);
         handlePopupEvents(popupListView,popupLayout);
@@ -147,7 +166,7 @@ public class ExercisePopupWindowHandler {
         });
     }
 
-    private void addExerciseToSubWorkout(Exercise exercise, View root, String subWorkoutName) {//checked
+    private void addExerciseToSubWorkout(Exercise exercise, View root, String subWorkoutName) {
         exercise.setExerciseReps(getExerciseReps(root));
         exercise.setExerciseSets(getExerciseSets(root));
 

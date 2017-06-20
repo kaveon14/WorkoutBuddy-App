@@ -16,14 +16,13 @@
         android:layout_centerInParent="true" />
 
     <EditText
-        android:id="@+id/addExercisePopup_editText"
+        android:id="@+id/addExercisePopup_DescriptionEditText"
         android:layout_width="150dp"
         android:layout_height="200dp"
         android:gravity="top"
-        android:text="Add Exercise Description"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/addExercisePopup_imageView"
+        android:layout_below="@+id/addExercisePopup_NameEditText"
         android:background="@android:color/white"
         android:inputType="textMultiLine" />
 
@@ -32,8 +31,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Exercise"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/addExercisePopup_editText" />
+        android:layout_below="@+id/addExercisePopup_DescriptionEditText"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/addExercisePopup_NameEditText"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/addExercisePopup_imageView"
+        android:layout_below="@+id/addExercisePopup_imageView"
+        android:ems="10"
+        android:background="@android:color/white"
+        android:inputType="textPersonName"
+        android:text="Exercise Name:" />
 
 </RelativeLayout>

@@ -29,9 +29,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Toast;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
@@ -52,9 +58,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setBaseContent();
-        permissionShit();
         activity =  this;
+        setBaseContent();
+        getPermissions();
+        preloadExerciseData();
     }
 
     @Override
@@ -136,7 +143,15 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void permissionShit() {
+    private void preloadExerciseData() {
+        ExerciseFragment exerciseFragment = new ExerciseFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.exercise_fragment,exerciseFragment)
+                .hide(exerciseFragment)
+                .commit();
+    }
+
+    private void getPermissions() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -276,6 +291,7 @@ public class MainActivity extends AppCompatActivity
             PopupWindow popupWindow = ex.showPopupWindow(getCurrentFocus());
             if(popupWindow.isShowing()) {
                 imageView = (ImageView) popupWindow.getContentView().findViewById(R.id.addExercisePopup_imageView);
+                imageView.setImageResource(0);
                 imageView.setImageBitmap(bitmap);
                 imageView.setScaleX(1.0f);
                 imageView.setScaleY(1.0f);
@@ -286,6 +302,42 @@ public class MainActivity extends AppCompatActivity
     public void showAddExercisePopupWindow() {
         ExercisePopupWindowHandler popupWindowHandler = new ExercisePopupWindowHandler();
         popupWindowHandler.showPopupWindow(getCurrentFocus());
+    }
+
+    private void addExerciseButton(PopupWindow popupWindow) {
+        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.addExercisePopupBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new ExerciseTable(getBaseContext())
+                        .addAnExercise(getCustomExercise(popupWindow.getContentView()));
+                Toast.makeText(getBaseContext()
+                        ,"Custom Exercise Added",
+                        Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    private Exercise getCustomExercise(View popupLayout) {
+        String exerciseName = getExerciseName(popupLayout);
+        String exerciseDescription = getExerciseDescription(popupLayout);
+        Bitmap exerciseImage = bitmap;
+
+        Exercise exercise = new Exercise(exerciseName,exerciseDescription);
+        exercise.setExerciseImage(exerciseImage);
+        return exercise;
+    }
+
+
+    private String getExerciseName(View popupLayout) {
+        EditText et = (EditText) popupLayout.findViewById(R.id.addExercisePopup_NameEditText);
+        return et.getText().toString();
+    }
+
+    private String getExerciseDescription(View popupLayout) {
+        EditText et = (EditText) popupLayout.findViewById(R.id.addExercisePopup_DescriptionEditText);
+        return et.getText().toString();
     }
 
     public class ExercisePopupWindowHandler {
@@ -301,7 +353,7 @@ public class MainActivity extends AppCompatActivity
             popupWindow.showAtLocation(root, Gravity.CENTER, 0, 0);
             dimBackground(popupLayout);
             setPopupImageView(popupLayout);
-
+            addExerciseButton(popupWindow);
             return popupWindow;
         }
 
