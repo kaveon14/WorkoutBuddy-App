@@ -10,29 +10,34 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 
-public class PopupWindowManager {
+public abstract class PopupWindowManager {
 
     private int id;
     private View root;
-    private int layout;
-    private View popupLayout = null;
-    private PopupWindow popupWindow = null;
-    private Context context = MainActivity.activity.getBaseContext();
+    protected int layout;
+    protected View popupLayout = null;
+    protected PopupWindow popupWindow = null;
+    protected Context context = MainActivity.activity.getBaseContext();
 
-
-    public PopupWindowManager(View root, int layout, int id) {
-        this.root = root;
-        this.layout = layout;
-        this.id = id;
-    }
-
-    public void displayPopupWindow() {
+    protected void displayPopupWindow() {
         if(popupLayout == null)
             setPopupLayout();
         if(popupWindow == null)
             createPopupWindow();
         showPopupWindow();
         dimBackground();
+    }
+
+    protected void setPopupLayout(int layout) {
+        this.layout = layout;
+    }
+
+    protected void setPopupViewId(int id) {
+        this.id = id;
+    }
+
+    protected void setRootView(View root) {
+        this.root = root;
     }
 
     private void setPopupLayout() {
@@ -48,19 +53,16 @@ public class PopupWindowManager {
         popupWindow.setFocusable(true);
     }
 
-    private void showPopupWindow() {
+    private void showPopupWindow() {//change name
         int width =  LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
         popupWindow.update(0,0,width,height);
         popupWindow.showAtLocation(root, Gravity.CENTER,0,0);
     }
 
-    public PopupWindow getPopupWindow() {
-        return popupWindow;
-    }
 
-    public View getPopupLayout() {
-        return popupLayout;
+    protected View getRootView() {
+        return root;
     }
 
     private void dimBackground() {

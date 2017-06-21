@@ -15,6 +15,8 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.EPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExPopUp;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindowHandler;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
@@ -89,12 +91,8 @@ public class ExerciseFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ExercisePopupWindowHandler windowHandler =
-                  //      new ExercisePopupWindowHandler(getContext(),fromSubWorkout);
-                //windowHandler.setMainExercisePopupWindow(fab.getRootView());
-                PopupWindowManager manager = new PopupWindowManager(fab.getRootView(),
-                        R.layout.popup_window,R.id.popupWin);
-                manager.displayPopupWindow();
+                ExPopUp pop = new ExPopUp(fab.getRootView());
+                pop.showPopupWindow();
             }
         });
     }
@@ -105,10 +103,12 @@ public class ExerciseFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ExercisePopupWindowHandler windowHandler
-                        = new ExercisePopupWindowHandler(getContext(),fromSubWorkout);
-                windowHandler.showExerciseToWorkoutPopupWindow(root,R.layout.exercise_popup_layout,
-                        R.id.exercise_popupWindow);
+                //ExercisePopupWindowHandler windowHandler
+                  //      = new ExercisePopupWindowHandler(getContext(),fromSubWorkout);
+                //windowHandler.showExerciseToWorkoutPopupWindow(root,R.layout.exercise_popup_layout,
+                  //      R.id.exercise_popupWindow);
+                EPopup pop = new EPopup(root,fromSubWorkout);
+                pop.showPopupWindow();
                 return true;
             }
         });
