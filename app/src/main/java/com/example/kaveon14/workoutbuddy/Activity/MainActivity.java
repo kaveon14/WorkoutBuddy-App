@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
@@ -52,7 +53,8 @@ public class MainActivity extends AppCompatActivity
     private static int fragId;
     private CaldroidFragment caldroid_frag;
     public static MainActivity activity;
-    private Bitmap bitmap;
+    private ExercisePopupWindowHandler pop;
+    public static Bitmap bitmap;
     private int RESULT_LOAD_IMAGE = 1;
 
     @Override
@@ -281,27 +283,16 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onStart() {
         super.onStart();
-        setImageViewWithGalleryImage();
-    }
-
-    private void setImageViewWithGalleryImage() {
-        ExercisePopupWindowHandler ex = new ExercisePopupWindowHandler();
-        ImageView imageView;
-        if (bitmap != null) {
-            PopupWindow popupWindow = ex.showPopupWindow(getCurrentFocus());
-            if(popupWindow.isShowing()) {
-                imageView = (ImageView) popupWindow.getContentView().findViewById(R.id.addExercisePopup_imageView);
-                imageView.setImageResource(0);
-                imageView.setImageBitmap(bitmap);
-                imageView.setScaleX(1.0f);
-                imageView.setScaleY(1.0f);
-            }
+        if(pop != null) {
+            pop.setImageViewWithGalleryImage();
         }
     }
 
+
     public void showAddExercisePopupWindow() {
-        ExercisePopupWindowHandler popupWindowHandler = new ExercisePopupWindowHandler();
-        popupWindowHandler.showPopupWindow(getCurrentFocus());
+        pop = new ExercisePopupWindowHandler(getCurrentFocus());
+        pop.showPopupWindow();
+
     }
 
     private void addExerciseButton(PopupWindow popupWindow) {
@@ -340,32 +331,62 @@ public class MainActivity extends AppCompatActivity
         return et.getText().toString();
     }
 
-    public class ExercisePopupWindowHandler {
 
-        public PopupWindow showPopupWindow(View root) {
-            int width = LinearLayout.LayoutParams.MATCH_PARENT;
-            int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
-            View popupLayout = getPopupLayout(root);
-            PopupWindow popupWindow = new PopupWindow(popupLayout, width, height);
-            popupWindow.setFocusable(true);
-            popupWindow.update(0, 0, width, height);
-            popupWindow.showAtLocation(root, Gravity.CENTER, 0, 0);
-            dimBackground(popupLayout);
-            setPopupImageView(popupLayout);
-            addExerciseButton(popupWindow);
-            return popupWindow;
+
+
+
+
+
+
+    public class ExercisePopupWindowHandler extends PopupWindowManager {
+//back button not working right because of this so on start dismiss
+        public ExercisePopupWindowHandler(View root) {
+            setRootView(root);
+            setPopupLayout(R.layout.addexercise_popup_layout);
+            setPopupViewId(R.id.addExercise_PopupWindow);
         }
 
-        private View getPopupLayout(View root) {
-            LayoutInflater inflater = (LayoutInflater) getBaseContext().
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            return inflater.inflate(R.layout.addexercise_popup_layout, (ViewGroup)
-                    root.findViewById(R.id.addExercise_PopupWindow));
+        public void showPopupWindow() {
+            displayPopupWindow();
+            setPopupImageView();
         }
 
-        private void dimBackground(View popupLayout) {
+        private void setPopupImageView() {
+            ImageView imageView = (ImageView) popupLayout.findViewById(R.id.addExercisePopup_imageView);
+            imageView.setImageResource(R.drawable.ic_menu_gallery);
+            float x = 0.5f;float y = 0.5f;
+            imageView.setScaleX(x);
+            imageView.setScaleY(y);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openExternalImageGallery();
+                }
+            });
+        }
+
+        private void openExternalImageGallery() {//
+            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickIntent.setType("image/*");
+            MainActivity.activity.startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
+        }
+
+        private void setImageViewWithGalleryImage() {
+            ImageView imageView;
+            if (bitmap != null) {
+                if(popupWindow.isShowing()) {
+                    imageView = (ImageView) popupWindow.getContentView().findViewById(R.id.addExercisePopup_imageView);
+                    imageView.setImageResource(0);
+                    imageView.setImageBitmap(bitmap);
+                    imageView.setScaleX(1.0f);
+                    imageView.setScaleY(1.0f);
+                }
+            }
+        }
+
+
+        /*private void dimBackground(View popupLayout) {
             View container = (View) popupLayout.getParent();
             WindowManager wm = (WindowManager) getBaseContext()
                     .getSystemService(Context.WINDOW_SERVICE);
@@ -395,6 +416,7 @@ public class MainActivity extends AppCompatActivity
             pickIntent.setType("image/*");
             startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
         }
+    }*/
     }
 }
 // do a-chart engine later for now just figure out how to save workout data and body data

@@ -18,11 +18,11 @@ import java.util.List;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment.clickedExercise;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkout;
 
-public class EPopup extends PopupWindowManager {
+public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
     private boolean fromSubWorkout;
 
-    public EPopup(View root,boolean fromSubWorkout) {
+    public ExerciseToWorkoutPopup(View root, boolean fromSubWorkout) {
         this.fromSubWorkout = fromSubWorkout;
       setRootView(root);
       setPopupLayout(R.layout.exercise_popup_layout);

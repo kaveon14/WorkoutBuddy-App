@@ -11,10 +11,10 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkout;
 
-public class ExPopUp extends PopupWindowManager {//nice everything is working just
+public class ExercisePopupMenu extends PopupWindowManager {//nice everything is working just
 //create rest of buttons
 
-    public ExPopUp(View root) {
+    public ExercisePopupMenu(View root) {
         setRootView(root);
         setPopupLayout(R.layout.popup_window);
         setPopupViewId(R.id.popupWin);
@@ -30,12 +30,11 @@ public class ExPopUp extends PopupWindowManager {//nice everything is working ju
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.activity.showAddExercisePopupWindow();//needs to be redone
+                MainActivity.activity.showAddExercisePopupWindow();
                 popupWindow.dismiss();
             }
         });
     }
-
 
     private ListView setPopupListView() {//not needed here
         ListView listView = (ListView) popupLayout.findViewById(R.id.exercisePopup_listView);

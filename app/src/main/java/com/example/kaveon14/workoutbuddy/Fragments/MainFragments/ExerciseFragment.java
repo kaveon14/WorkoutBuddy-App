@@ -15,10 +15,8 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.EPopup;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExPopUp;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindowHandler;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExerciseToWorkoutPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupMenu;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
@@ -91,7 +89,7 @@ public class ExerciseFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExPopUp pop = new ExPopUp(fab.getRootView());
+                ExercisePopupMenu pop = new ExercisePopupMenu(fab.getRootView());
                 pop.showPopupWindow();
             }
         });
@@ -107,7 +105,7 @@ public class ExerciseFragment extends Fragment {
                   //      = new ExercisePopupWindowHandler(getContext(),fromSubWorkout);
                 //windowHandler.showExerciseToWorkoutPopupWindow(root,R.layout.exercise_popup_layout,
                   //      R.id.exercise_popupWindow);
-                EPopup pop = new EPopup(root,fromSubWorkout);
+                ExerciseToWorkoutPopup pop = new ExerciseToWorkoutPopup(root,fromSubWorkout);
                 pop.showPopupWindow();
                 return true;
             }
