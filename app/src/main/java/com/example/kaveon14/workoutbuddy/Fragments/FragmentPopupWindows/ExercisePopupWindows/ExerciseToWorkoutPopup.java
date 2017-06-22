@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows;
+package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows;
 
 import android.graphics.Color;
 import android.view.MotionEvent;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
@@ -34,7 +35,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
         handlePopupEvents(setPopupListView(popupLayout));
     }
 
-    private ListView setPopupListView(View popupLayout) {//take
+    private ListView setPopupListView(View popupLayout) {
         ListView listView = (ListView) popupLayout.findViewById(R.id.exercisePopup_listView);
         listView.setBackgroundColor(Color.WHITE);
         listView.setAdapter(getMainWorkoutAdapter());
@@ -132,20 +133,12 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
          });
      }
 
-    private void popupButtonClicked(Exercise exercise, String subWorkoutName) {//lots of shit here needs to be fixed
+    private void popupButtonClicked(Exercise exercise, String subWorkoutName) {
         Button btn = (Button) popupLayout.findViewById(R.id.exercisePopupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addExerciseToSubWorkout(exercise,
-
-
-
-
-
-
-
-
                         subWorkoutName);
                 Toast.makeText(context,"Exercise Successfully Added!",
                         Toast.LENGTH_SHORT).show();

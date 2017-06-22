@@ -1,7 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-
+// will most likely need an adapter class for exercise data to update list view
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -22,20 +21,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
@@ -53,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     private static int fragId;
     private CaldroidFragment caldroid_frag;
     public static MainActivity activity;
-    private ExercisePopupWindowHandler pop;
+    private CustomExercisePopup customExercisePopup;
     public static Bitmap bitmap;
     private int RESULT_LOAD_IMAGE = 1;
 
@@ -67,9 +59,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if(customExercisePopup != null) {
+            customExercisePopup.setImageViewWithGalleryImage();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(customExercisePopup != null) {
+            bitmap = customExercisePopup.getGalleryImage(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     public void onUserInteraction() {
         super.onUserInteraction();
-        // TODO move this
+        // TODO move this or think if better method
         boolean inActivity = true;
         if(getActiveFragment() == null || fragId == 0) {
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -256,92 +264,14 @@ public class MainActivity extends AppCompatActivity
         caldroid_frag.setArguments(args);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        bitmap = getGalleryImage(requestCode,resultCode,data);
-    }
-
-    private Bitmap getGalleryImage(int requestCode,int resultCode,Intent data) {
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            return BitmapFactory.decodeFile(picturePath);
-        }
-        return null;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(pop != null) {
-            pop.setImageViewWithGalleryImage();
-        }
-    }
-
-
     public void showAddExercisePopupWindow() {
-        pop = new ExercisePopupWindowHandler(getCurrentFocus());
-        pop.showPopupWindow();
-
+        customExercisePopup = new CustomExercisePopup(getCurrentFocus());
+        customExercisePopup.showPopupWindow();
     }
 
-    private void addExerciseButton(PopupWindow popupWindow) {
-        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.addExercisePopupBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new ExerciseTable(getBaseContext())
-                        .addAnExercise(getCustomExercise(popupWindow.getContentView()));
-                Toast.makeText(getBaseContext()
-                        ,"Custom Exercise Added",
-                        Toast.LENGTH_SHORT).show();
-                popupWindow.dismiss();
-            }
-        });
-    }
+    private class CustomExercisePopup extends PopupWindowManager {
 
-    private Exercise getCustomExercise(View popupLayout) {
-        String exerciseName = getExerciseName(popupLayout);
-        String exerciseDescription = getExerciseDescription(popupLayout);
-        Bitmap exerciseImage = bitmap;
-
-        Exercise exercise = new Exercise(exerciseName,exerciseDescription);
-        exercise.setExerciseImage(exerciseImage);
-        return exercise;
-    }
-
-
-    private String getExerciseName(View popupLayout) {
-        EditText et = (EditText) popupLayout.findViewById(R.id.addExercisePopup_NameEditText);
-        return et.getText().toString();
-    }
-
-    private String getExerciseDescription(View popupLayout) {
-        EditText et = (EditText) popupLayout.findViewById(R.id.addExercisePopup_DescriptionEditText);
-        return et.getText().toString();
-    }
-
-
-
-
-
-
-
-
-
-    public class ExercisePopupWindowHandler extends PopupWindowManager {
-//back button not working right because of this so on start dismiss
-        public ExercisePopupWindowHandler(View root) {
+        public CustomExercisePopup(View root) {
             setRootView(root);
             setPopupLayout(R.layout.addexercise_popup_layout);
             setPopupViewId(R.id.addExercise_PopupWindow);
@@ -350,6 +280,7 @@ public class MainActivity extends AppCompatActivity
         public void showPopupWindow() {
             displayPopupWindow();
             setPopupImageView();
+            addExerciseButton();
         }
 
         private void setPopupImageView() {
@@ -366,7 +297,25 @@ public class MainActivity extends AppCompatActivity
             });
         }
 
-        private void openExternalImageGallery() {//
+        private void addExerciseButton() {
+            Button btn = (Button) popupLayout.findViewById(R.id.addExercisePopupBtn);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Exercise customExercise = getCustomExercise(popupLayout);
+                    new ExerciseTable(getBaseContext())
+                            .addAnExercise(customExercise);
+
+                    Toast.makeText(getBaseContext()
+                            ,"Custom Exercise Added",
+                            Toast.LENGTH_SHORT).show();
+                    ExerciseFragment.customExerciseList.add(customExercise);
+                    popupWindow.dismiss();
+                }
+            });
+        }
+
+        private void openExternalImageGallery() {
             Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickIntent.setType("image/*");
             MainActivity.activity.startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
@@ -385,38 +334,43 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+        private Bitmap getGalleryImage(int requestCode,int resultCode,Intent data) {
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-        /*private void dimBackground(View popupLayout) {
-            View container = (View) popupLayout.getParent();
-            WindowManager wm = (WindowManager) getBaseContext()
-                    .getSystemService(Context.WINDOW_SERVICE);
+                Cursor cursor = getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                cursor.moveToFirst();
 
-            WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) container.getLayoutParams();
-            layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-            layoutParams.dimAmount = 0.6f;
-            wm.updateViewLayout(container, layoutParams);
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String picturePath = cursor.getString(columnIndex);
+                cursor.close();
+
+                return BitmapFactory.decodeFile(picturePath);
+            }
+            return null;
         }
 
-        private void setPopupImageView(View popupLayout) {
-            ImageView imageView = (ImageView) popupLayout.findViewById(R.id.addExercisePopup_imageView);
-            imageView.setImageResource(R.drawable.ic_menu_gallery);
-            float x = 0.5f;float y = 0.5f;
-            imageView.setScaleX(x);
-            imageView.setScaleY(y);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openExternalImageGallery();
-                }
-            });
+        private Exercise getCustomExercise(View popupLayout) {
+            String exerciseName = getExerciseName(popupLayout);
+            String exerciseDescription = getExerciseDescription(popupLayout);
+            Bitmap exerciseImage = bitmap;
+
+            Exercise exercise = new Exercise(exerciseName,exerciseDescription);
+            exercise.setExerciseImage(exerciseImage);
+            return exercise;
         }
 
-        private void openExternalImageGallery() {//
-            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            pickIntent.setType("image/*");
-            startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
+        private String getExerciseName(View popupLayout) {
+            EditText et = (EditText) popupLayout.findViewById(R.id.addExercisePopup_NameEditText);
+            return et.getText().toString();
         }
-    }*/
+
+        private String getExerciseDescription(View popupLayout) {
+            EditText et = (EditText) popupLayout.findViewById(R.id.addExercisePopup_DescriptionEditText);
+            return et.getText().toString();
+        }
     }
 }
 // do a-chart engine later for now just figure out how to save workout data and body data

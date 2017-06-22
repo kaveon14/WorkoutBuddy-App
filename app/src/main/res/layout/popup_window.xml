@@ -13,22 +13,22 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/showCustomExercisePopupBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add New Exercise" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/deleteCustomExerciseBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Delete an Exercise" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/showCustomExercisesBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View Custom Exercise" />
+            android:text="View Custom Exercises" />
 
     </LinearLayout>
 

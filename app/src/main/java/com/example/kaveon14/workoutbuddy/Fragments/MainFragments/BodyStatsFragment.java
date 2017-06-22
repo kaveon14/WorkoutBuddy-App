@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStats;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
@@ -37,7 +38,8 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 // TODO create a blank list view adapter so screen is not all white
 public class BodyStatsFragment extends Fragment {
 
-    public static Body clickedBodyStatsItem;
+    public static BodyStatsFragment bodyStatsFragment;
+    public static Body clickedBodyStatsItem;//these can be private with getters and setters
     private List<Body> bodyStats;
     private BodyStatsAdapter bodyStatsAdapter;
     public static Body bodyObject;
@@ -50,6 +52,7 @@ public class BodyStatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        bodyStatsFragment = this;
     }
 
     @Override
@@ -84,13 +87,15 @@ public class BodyStatsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupWindow popupWindow = showPopupWindow(popupLayout);
-                setupFloatingActionButtonPopupWindow(popupWindow);
+                //PopupWindow popupWindow = showPopupWindow(popupLayout);
+                BodyStats bt = new BodyStats(getView());
+                bt.showPopupWindow();
+                //setupFloatingActionButtonPopupWindow(popupWindow);
             }
         });
     }
 
-    private PopupWindow showPopupWindow(View popupLayout) {
+    private PopupWindow showPopupWindow(View popupLayout) {//delete
         int width =  LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
@@ -102,6 +107,7 @@ public class BodyStatsFragment extends Fragment {
         return popupWindow;
     }
 
+    /*take
     private void setupFloatingActionButtonPopupWindow(PopupWindow popupWindow) {
         View popupLayout = popupWindow.getContentView();
         setFloatingActionButtonPopupTextView(popupLayout);
@@ -109,12 +115,14 @@ public class BodyStatsFragment extends Fragment {
         setFloatingActionButtonPopup_No_Btn(popupWindow);
     }
 
+    //take
     private void setFloatingActionButtonPopupTextView(View popupLayout) {
         String message = "      Would you like to add a new body data??";
         TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
         textView.setText(message);
     }
 
+    //take
     private void setFloatingActionButtonPopup_Yes_Btn(PopupWindow popupWindow) {
         Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_yes_popupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +134,7 @@ public class BodyStatsFragment extends Fragment {
         });
     }
 
+    //take
     private void setFloatingActionButtonPopup_No_Btn(PopupWindow popupWindow) {
         Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_no_popupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +143,7 @@ public class BodyStatsFragment extends Fragment {
                 popupWindow.dismiss();
             }
         });
-    }
+    }*/
 
     private void setUpListView() {
         ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
@@ -165,7 +174,7 @@ public class BodyStatsFragment extends Fragment {
         }
     }
 
-    private BlankBodyStatsFragment showBlankBodyStatsfragment() {
+    public BlankBodyStatsFragment showBlankBodyStatsfragment() {
         BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
         getFragmentManager().beginTransaction()
                 .hide(this)
