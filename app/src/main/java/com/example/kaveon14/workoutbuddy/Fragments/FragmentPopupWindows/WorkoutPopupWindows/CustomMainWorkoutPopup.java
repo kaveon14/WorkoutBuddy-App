@@ -1,5 +1,4 @@
-package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows;
-
+package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
 import android.graphics.Color;
 import android.view.View;
@@ -8,15 +7,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
-public class MWPop extends PopupWindowManager {
+public class CustomMainWorkoutPopup extends PopupWindowManager {
 
     private List<String> mainWorkoutNames;
     private ArrayAdapter adapter;
 
-    public MWPop(View root) {
+    public CustomMainWorkoutPopup(View root) {
         setRootView(root);
         setPopupLayout(R.layout.mainworkout_popup_layout);
         setPopupViewId(R.id.mainWorkout_popupWindow);
@@ -24,8 +24,8 @@ public class MWPop extends PopupWindowManager {
 
     public void showPopupWindow() {
         displayPopupWindow();
-        popupButtonClicked();
-        setupPopupWindowContent();
+        setAddMainWorkoutBtn();
+        setTextView();
     }
 
     public void setMainWorkoutList(List<String> mainWorkoutNames) {
@@ -36,7 +36,7 @@ public class MWPop extends PopupWindowManager {
         this.adapter = adapter;
     }
 
-    private void popupButtonClicked() {
+    private void setAddMainWorkoutBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.mainWorkoutPopupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +48,7 @@ public class MWPop extends PopupWindowManager {
         });
     }
 
-    private void setupPopupWindowContent() {
+    private void setTextView() {
         EditText editText = (EditText) popupLayout.findViewById(R.id.mainWorkoutPopup_editText);
         editText.setBackgroundColor(Color.WHITE);
 

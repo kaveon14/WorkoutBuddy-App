@@ -23,7 +23,7 @@
         android:layout_height="wrap_content" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment"
+        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment"
         android:id="@+id/subWorkout_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

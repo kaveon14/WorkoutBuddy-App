@@ -9,6 +9,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLi
 import java.util.ArrayList;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.TABLE_NAME;
 
 public class MainWorkoutTable {
 
@@ -22,25 +23,24 @@ public class MainWorkoutTable {
         SQLiteDatabase writableDatabase  = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_MAINWORKOUT,workoutName);
-        writableDatabase.insert("Main_Workouts",null,values);
+        writableDatabase.insert(TABLE_NAME,null,values);
         writableDatabase.close();
     }
 
     public void addSubWorkout(String mainWorkoutName,String subWorkoutNames,int day) {
-        SQLiteDatabase writableDatabase  = dataBaseSQLiteHelper.getWritableDatabase();
         List<String> rowValues = getSubWorkouts(mainWorkoutName);
         deleteRow(mainWorkoutName);
+        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
 
         rowValues.remove(day);
         rowValues.add(day,subWorkoutNames);
-
         ContentValues values = new ContentValues();
-        values.put("Main_Workout",mainWorkoutName);
+        values.put(COLUMN_MAINWORKOUT,mainWorkoutName);
         for(int x=1;x<=7;x++) {
             String COLUMN_NAME = "Day"+x+"_Workout"+x;
             values.put(COLUMN_NAME,rowValues.get(x));
         }
-        writableDatabase.insert("Main_Workouts",null,values);
+        writableDatabase.insert(TABLE_NAME,null,values);
         writableDatabase.close();
     }
 
@@ -87,7 +87,7 @@ public class MainWorkoutTable {
         String[] data = new String[]{
                 mainWorkout
         };
-        database.delete("Main_Workouts","Main_Workout=?",data);
+        database.delete(TABLE_NAME,"Main_Workout_Names=?",data);
         database.close();
     }
 

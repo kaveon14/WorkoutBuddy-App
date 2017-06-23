@@ -10,7 +10,7 @@ public class DataBaseContract {
 
         public static final String TABLE_NAME = "Main_Workouts";
 
-        public static final String COLUMN_MAINWORKOUT = "Main_Workout";
+        public static final String COLUMN_MAINWORKOUT = "Main_Workout_Names";
 
         public static final String COLUMN_SUBWORKOUT_1 = "Day1_Workout1";
 

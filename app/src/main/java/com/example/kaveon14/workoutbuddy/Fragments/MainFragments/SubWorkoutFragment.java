@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
+package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 // TODO allow deletion of subworkouts like bodystats frag
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +14,8 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.CustomSubWorkoutPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,6 +27,8 @@ import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWork
 public class SubWorkoutFragment extends Fragment {
 
     public static SubWorkout clickedSubWorkout;
+    private ArrayAdapter adapter;
+    private List<String> subWorkoutNames;
 
     public SubWorkoutFragment() {
         // Required empty public constructor
@@ -69,16 +72,24 @@ public class SubWorkoutFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"Add sub workout directly",Toast.LENGTH_LONG).show();
+                test();
+                //Toast.makeText(getContext(),"Add sub workout directly",Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    private void test() {
+        CustomSubWorkoutPopup pop = new CustomSubWorkoutPopup(getView());
+        pop.subWorkoutNamesList(subWorkoutNames);
+        pop.setAdapter(adapter);
+        pop.showPopupWindow();
+    }
+
     private ArrayAdapter getAdapter() {
         MainWorkoutTable workoutTable = new MainWorkoutTable(getContext());
-        List<String> list = workoutTable.getSubWorkoutNames(clickedMainWorkout);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
-                R.layout.simple_list_item,list);
+        subWorkoutNames = workoutTable.getSubWorkoutNames(clickedMainWorkout);
+        adapter = new ArrayAdapter<>(getContext(),
+                R.layout.simple_list_item,subWorkoutNames);
         return adapter;
     }
 
