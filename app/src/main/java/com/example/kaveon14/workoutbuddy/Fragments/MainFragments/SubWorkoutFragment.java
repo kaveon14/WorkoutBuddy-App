@@ -23,7 +23,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkout;
-
+//fixed add mainWorkout asnd subWorkout bugs and mainWorkout table
 public class SubWorkoutFragment extends Fragment {
 
     public static SubWorkout clickedSubWorkout;
@@ -44,7 +44,9 @@ public class SubWorkoutFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_subworkout, container, false);
         ListView listView = (ListView) view.findViewById(R.id.subWokoutListView);
-        listView.setAdapter(getAdapter());
+        if(getAdapter() != null) {
+            listView.setAdapter(getAdapter());
+        }
         openWorkoutOnClick(listView);
         addExerciseToSubWorkout(listView);
         setFloatingActionButton();
@@ -88,6 +90,11 @@ public class SubWorkoutFragment extends Fragment {
     private ArrayAdapter getAdapter() {
         MainWorkoutTable workoutTable = new MainWorkoutTable(getContext());
         subWorkoutNames = workoutTable.getSubWorkoutNames(clickedMainWorkout);
+        if(subWorkoutNames.size()!=0) {
+            if (subWorkoutNames.get(0) == null) {
+                return null;
+            }
+        }
         adapter = new ArrayAdapter<>(getContext(),
                 R.layout.simple_list_item,subWorkoutNames);
         return adapter;

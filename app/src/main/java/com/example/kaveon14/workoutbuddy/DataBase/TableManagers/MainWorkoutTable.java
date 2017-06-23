@@ -27,18 +27,19 @@ public class MainWorkoutTable {
         writableDatabase.close();
     }
 
-    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames,int day) {
-        List<String> rowValues = getSubWorkouts(mainWorkoutName);
+    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames) {
+        List<String> rowValues = getSubWorkoutNames(mainWorkoutName);
         deleteRow(mainWorkoutName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
 
-        rowValues.remove(day);
-        rowValues.add(day,subWorkoutNames);
+        int day = 1;
+        rowValues.add(subWorkoutNames);
         ContentValues values = new ContentValues();
         values.put(COLUMN_MAINWORKOUT,mainWorkoutName);
-        for(int x=1;x<=7;x++) {
-            String COLUMN_NAME = "Day"+x+"_Workout"+x;
+        for(int x=0;x<rowValues.size();x++) {
+            String COLUMN_NAME = "Day"+day + "_Workout"+day;
             values.put(COLUMN_NAME,rowValues.get(x));
+            day++;
         }
         writableDatabase.insert(TABLE_NAME,null,values);
         writableDatabase.close();
@@ -70,6 +71,7 @@ public class MainWorkoutTable {
                 break;
             }
         }
+        rowData = deleteNullValues(rowData);
         database.close();
         cursor.close();
         return rowData;
@@ -101,6 +103,13 @@ public class MainWorkoutTable {
         readableDatabase.close();
         cursor.close();
         return columnList;
+    }
 
+    private List<String> deleteNullValues(List<String> rowData) {
+        int limit = rowData.size()*2;
+        for(int x=0;x<limit;x++) {
+            rowData.remove(null);
+        }
+        return rowData;
     }
 }
