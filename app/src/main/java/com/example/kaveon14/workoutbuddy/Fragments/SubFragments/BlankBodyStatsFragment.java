@@ -73,6 +73,8 @@ public class BlankBodyStatsFragment extends Fragment {
                         .getBodyStatsObject(root);
                 Toast.makeText(getContext(),"Stats Successfully Added!",
                         Toast.LENGTH_SHORT).show();
+                getActivity().getSupportFragmentManager().popBackStack();
+
             }
         });
     }

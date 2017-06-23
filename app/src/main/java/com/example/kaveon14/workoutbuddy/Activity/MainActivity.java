@@ -38,6 +38,7 @@ import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import java.util.Calendar;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
+// TODO enable jack options again and chagne jave verions to 1_8 when error fixed
 // TODO allow deletion of ex from workout,subworkout from mainworkout,and mainworkout
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
+// TODO rename class
 public class BodyStats extends PopupWindowManager {
 
     public BodyStats(View root) {
@@ -49,11 +49,4 @@ public class BodyStats extends PopupWindowManager {
             }
         });
     }
-
-
-
-
-
-
-
 }

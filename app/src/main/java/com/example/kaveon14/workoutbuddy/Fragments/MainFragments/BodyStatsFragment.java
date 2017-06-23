@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-
+//clean up and commit
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BPop;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStats;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -37,13 +38,18 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_CHEST_SIZE;
 // TODO create a blank list view adapter so screen is not all white
 public class BodyStatsFragment extends Fragment {
-
+//nice now just sort on update
     public static BodyStatsFragment bodyStatsFragment;
     public static Body clickedBodyStatsItem;//these can be private with getters and setters
-    private List<Body> bodyStats;
-    private BodyStatsAdapter bodyStatsAdapter;
     public static Body bodyObject;
     private View root;
+
+
+
+    private List<Body> bodyStats;
+    private BodyStatsAdapter bodyStatsAdapter;
+
+
 
     public BodyStatsFragment() {
         // Required empty public constructor
@@ -83,67 +89,14 @@ public class BodyStatsFragment extends Fragment {
     }
 
     private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
-        View popupLayout = getPopupLayout();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //PopupWindow popupWindow = showPopupWindow(popupLayout);
                 BodyStats bt = new BodyStats(getView());
                 bt.showPopupWindow();
-                //setupFloatingActionButtonPopupWindow(popupWindow);
             }
         });
     }
-
-    private PopupWindow showPopupWindow(View popupLayout) {//delete
-        int width =  LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        final PopupWindow popupWindow = new PopupWindow(popupLayout,width,height);
-        popupWindow.setFocusable(true);
-        popupWindow.update(0,0,width,height);
-        popupWindow.showAtLocation(root, Gravity.CENTER,0,0);
-        dimBackground(popupWindow);
-        return popupWindow;
-    }
-
-    /*take
-    private void setupFloatingActionButtonPopupWindow(PopupWindow popupWindow) {
-        View popupLayout = popupWindow.getContentView();
-        setFloatingActionButtonPopupTextView(popupLayout);
-        setFloatingActionButtonPopup_Yes_Btn(popupWindow);
-        setFloatingActionButtonPopup_No_Btn(popupWindow);
-    }
-
-    //take
-    private void setFloatingActionButtonPopupTextView(View popupLayout) {
-        String message = "      Would you like to add a new body data??";
-        TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
-        textView.setText(message);
-    }
-
-    //take
-    private void setFloatingActionButtonPopup_Yes_Btn(PopupWindow popupWindow) {
-        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_yes_popupBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showBlankBodyStatsfragment();
-                popupWindow.dismiss();
-            }
-        });
-    }
-
-    //take
-    private void setFloatingActionButtonPopup_No_Btn(PopupWindow popupWindow) {
-        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_no_popupBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-    }*/
 
     private void setUpListView() {
         ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
@@ -167,10 +120,12 @@ public class BodyStatsFragment extends Fragment {
         });
     }
 
-    private void updateListView() {
+    //delete this is not a hack
+    private void updateListView() {//needs new name or bette handling
         if (bodyObject != null) {
             bodyStats.add(bodyObject);
             bodyStatsAdapter.notifyDataSetChanged();
+            bodyStatsAdapter.sortByDate();
         }
     }
 
@@ -185,73 +140,21 @@ public class BodyStatsFragment extends Fragment {
     }
 
     private void deleteRowView(ListView listView) {
-        View popupLayout = getPopupLayout();
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 view.performHapticFeedback(1);
-                PopupWindow popupWindow = showPopupWindow(popupLayout);
-                setUpListViewPopupWindow(popupWindow,position);
+                BPop pop = new BPop(getView());
+                pop.setAdapter(bodyStatsAdapter);
+                pop.setListView(listView);
+                pop.setBodyStatsList(bodyStats);
+                pop.setPosition(position);
+                pop.showPopupWindow();
                 return true;
             }
         });
     }
 
-    private void setUpListViewPopupWindow(PopupWindow popupWindow,int position) {
-        ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
-        View popupLayout = popupWindow.getContentView();
-        setListViewPopupTextView(popupLayout);
-        setListViewPopup_Yes_Btn(popupWindow,listView,position);
-        setListViewPopup_No_Btn(popupWindow);
-    }
-
-    private View getPopupLayout() {
-        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        return inflater.inflate(R.layout.bodystats_popup_layout,(ViewGroup)
-                root.findViewById(R.id.bodyStats_popupWindow));
-    }
-
-    private void dimBackground(PopupWindow popupWindow) {
-        View container = (View) popupWindow.getContentView().getParent();
-        WindowManager wm = (WindowManager) getActivity().getBaseContext()
-                .getSystemService(Context.WINDOW_SERVICE);
-
-        WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) container.getLayoutParams();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        layoutParams.dimAmount = 0.6f;
-        wm.updateViewLayout(container, layoutParams);
-    }
-
-    private void setListViewPopup_Yes_Btn(PopupWindow popupWindow, ListView listView,int position) {
-        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_yes_popupBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteBodyStatsRow(position);
-                listView.setAdapter(getAdapter());
-                Toast.makeText(getContext(),"Body Stats Deleted!",Toast.LENGTH_SHORT).show();
-                popupWindow.dismiss();
-            }
-        });
-    }
-
-    private void setListViewPopup_No_Btn(PopupWindow popupWindow) {
-        Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_no_popupBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-    }
-
-    private void setListViewPopupTextView(View popupLayout) {
-        String message = "   Do you want to DELETE the clicked body stats??";
-        TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
-        textView.setText(message);
-    }
 
     private void deleteBodyStatsRow(int position) {
         List<String> bodyStats = new BodyTable(getContext()).getColumn(COLUMN_DATE);
@@ -294,7 +197,7 @@ public class BodyStatsFragment extends Fragment {
                  .setCalfSize(calfSizeList.get(x));
      }
 
-    private class BodyStatsAdapter extends BaseAdapter {
+    public class BodyStatsAdapter extends BaseAdapter {
 
         private Context context;
         private List<Body> bodyStatsList;
@@ -388,9 +291,11 @@ public class BodyStatsFragment extends Fragment {
         }
 
         public void sortByDate() {
+
             Collections.sort(bodyStatsList, new Comparator<Body>() {
                 @Override
-                public int compare(Body object1, Body object2) {
+                public int compare(Body object1, Body object2) {//this shit aint working
+
                     return object2.getDateForSorting().compareTo(object1.getDateForSorting());
                 }
             });
