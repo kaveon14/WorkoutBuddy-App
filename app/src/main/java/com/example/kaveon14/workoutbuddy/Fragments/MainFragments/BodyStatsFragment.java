@@ -1,26 +1,20 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-//clean up and commit
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BPop;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStats;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.DeleteBodyStatsPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.AddBodyStatsPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
@@ -38,9 +32,9 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_CHEST_SIZE;
 // TODO create a blank list view adapter so screen is not all white
 public class BodyStatsFragment extends Fragment {
-//nice now just sort on update
-    public static BodyStatsFragment bodyStatsFragment;
-    public static Body clickedBodyStatsItem;//these can be private with getters and setters
+
+    public static BodyStatsFragment bodyStatsFragment;//figure out how to do this better
+    public static Body clickedBodyStatsItem;
     public static Body bodyObject;
     private View root;
 
@@ -74,7 +68,7 @@ public class BodyStatsFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(!hidden) {
-            updateListView();
+            updateListViewForNewBodyStats();
             setFloatingActionButton();
         }
     }
@@ -92,7 +86,7 @@ public class BodyStatsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BodyStats bt = new BodyStats(getView());
+                AddBodyStatsPopup bt = new AddBodyStatsPopup(getView());
                 bt.showPopupWindow();
             }
         });
@@ -120,8 +114,7 @@ public class BodyStatsFragment extends Fragment {
         });
     }
 
-    //delete this is not a hack
-    private void updateListView() {//needs new name or bette handling
+    private void updateListViewForNewBodyStats() {
         if (bodyObject != null) {
             bodyStats.add(bodyObject);
             bodyStatsAdapter.notifyDataSetChanged();
@@ -144,25 +137,19 @@ public class BodyStatsFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 view.performHapticFeedback(1);
-                BPop pop = new BPop(getView());
-                pop.setAdapter(bodyStatsAdapter);
-                pop.setListView(listView);
-                pop.setBodyStatsList(bodyStats);
-                pop.setPosition(position);
-                pop.showPopupWindow();
+                showDeleteBodyStatsPopup(listView,position);
                 return true;
             }
         });
     }
 
-
-    private void deleteBodyStatsRow(int position) {
-        List<String> bodyStats = new BodyTable(getContext()).getColumn(COLUMN_DATE);
-        String[] date = new String[] {
-                bodyStats.get(position)
-        };
-        BodyTable bodyTable = new BodyTable(getContext());
-        bodyTable.deleteRow(date);
+    private void showDeleteBodyStatsPopup(ListView listView,int position) {
+        DeleteBodyStatsPopup popup = new DeleteBodyStatsPopup(getView());
+        popup.setAdapter(bodyStatsAdapter);
+        popup.setListView(listView);
+        popup.setBodyStatsList(bodyStats);
+        popup.setPosition(position);
+        popup.showPopupWindow();
     }
 
     private BodyStatsAdapter getAdapter() {
@@ -294,7 +281,7 @@ public class BodyStatsFragment extends Fragment {
 
             Collections.sort(bodyStatsList, new Comparator<Body>() {
                 @Override
-                public int compare(Body object1, Body object2) {//this shit aint working
+                public int compare(Body object1, Body object2) {
 
                     return object2.getDateForSorting().compareTo(object1.getDateForSorting());
                 }

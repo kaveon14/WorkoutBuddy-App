@@ -1,16 +1,18 @@
-package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows;
-
+package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
-// TODO rename class
-public class BodyStats extends PopupWindowManager {
 
-    public BodyStats(View root) {
+public class AddBodyStatsPopup extends PopupWindowManager {
+
+    public AddBodyStatsPopup(View root) {
         setRootView(root);
         setPopupLayout(R.layout.bodystats_popup_layout);
         setPopupViewId(R.id.bodyStats_popupWindow);
@@ -34,7 +36,7 @@ public class BodyStats extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BodyStatsFragment.bodyStatsFragment.showBlankBodyStatsfragment();
+                MainActivity.activity.showBlankBodyStatsFragment();
                 popupWindow.dismiss();
             }
         });
@@ -49,4 +51,15 @@ public class BodyStats extends PopupWindowManager {
             }
         });
     }
+
+    public BlankBodyStatsFragment showBlankBodyStatsfragment() {//get shit from mainactivty
+        BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
+        MainActivity.activity.getFragmentManager().beginTransaction()
+                .hide(null)
+                .add(R.id.blankBodyStats_fragment,null)
+                .addToBackStack(null)
+                .commit();
+        return blankBodyStatsFragment;
+    }
+
 }

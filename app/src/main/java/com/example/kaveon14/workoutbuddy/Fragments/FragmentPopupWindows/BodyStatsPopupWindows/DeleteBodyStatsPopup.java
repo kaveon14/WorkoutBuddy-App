@@ -1,26 +1,26 @@
-package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows;
+package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_DATE;
 
-public class BPop extends PopupWindowManager {//rewrite to account for bodystatsfragmnet object
+public class DeleteBodyStatsPopup extends PopupWindowManager {
 
     private int position;
     private ListView listView;
     private List<Body> bodyStats;
     private BodyStatsFragment.BodyStatsAdapter adapter;
 
-    public BPop(View root) {
+    public DeleteBodyStatsPopup(View root) {
         setRootView(root);
         setPopupLayout(R.layout.bodystats_popup_layout);
         setPopupViewId(R.id.bodyStats_popupWindow);
@@ -56,7 +56,6 @@ public class BPop extends PopupWindowManager {//rewrite to account for bodystats
             @Override
             public void onClick(View v) {
                 deleteBodyStatsRow();
-                //listView.setAdapter(adapter);
                 Toast.makeText(context,"Body Stats Data Deleted!",Toast.LENGTH_SHORT).show();
                 deleteRowView();
                 popupWindow.dismiss();
@@ -64,7 +63,7 @@ public class BPop extends PopupWindowManager {//rewrite to account for bodystats
         });
     }
 
-    private void setNoPopupButton() {//take
+    private void setNoPopupButton() {
         Button btn = (Button) popupWindow.getContentView().findViewById(R.id.bodyStats_no_popupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +92,4 @@ public class BPop extends PopupWindowManager {//rewrite to account for bodystats
         BodyTable bodyTable = new BodyTable(context);
         bodyTable.deleteRow(date);
     }
-
-
 }

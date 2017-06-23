@@ -34,6 +34,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWin
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import java.util.Calendar;
@@ -205,6 +206,11 @@ public class MainActivity extends AppCompatActivity
     private void showWorkoutFragment() {
         MainWorkoutFragment mainWorkout_frag = new MainWorkoutFragment();
         addFragmentToStack(getActiveFragment(),mainWorkout_frag,R.id.mainWorkout_fragment);
+    }
+
+    public void showBlankBodyStatsFragment() {
+        BlankBodyStatsFragment blankBodyStats_frag = new BlankBodyStatsFragment();
+        addFragmentToStack(getActiveFragment(),blankBodyStats_frag,R.id.blankBodyStats_fragment);
     }
 
     private void showCaldroidFragment() {
