@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.MWPop;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
@@ -68,9 +69,17 @@ public class MainWorkoutFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setUpAndShowPopupWindow(root);
+                //setUpAndShowPopupWindow(root);
+                dd();
             }
         });
+    }
+
+    private void dd() {
+        MWPop pop = new MWPop(getView());
+        pop.setMainWorkoutList(mainWorkoutNames);
+        pop.setAdapter(adapter);
+        pop.showPopupWindow();
     }
 
     private ListView setListView(View root) {
@@ -107,7 +116,7 @@ public class MainWorkoutFragment extends Fragment {
                 .commit();
     }
 
-    private PopupWindow setUpAndShowPopupWindow(final View root) {
+    private PopupWindow setUpAndShowPopupWindow(final View root) {//delete
         int width =  LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
 
@@ -123,7 +132,7 @@ public class MainWorkoutFragment extends Fragment {
         return popupWindow;
     }
 
-    private View getPopupLayout(View root) {
+    private View getPopupLayout(View root) {//delete
         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -131,13 +140,13 @@ public class MainWorkoutFragment extends Fragment {
                 root.findViewById(R.id.mainWorkout_popupWindow));
     }
 
-    private void setupPopupWindowContent(View popupLayout) {
+    private void setupPopupWindowContent(View popupLayout) {//delete
         EditText editText = (EditText) popupLayout.findViewById(R.id.mainWorkoutPopup_editText);
         editText.setBackgroundColor(Color.WHITE);
 
     }
 
-    private void dimBackground(PopupWindow popupWindow) {
+    private void dimBackground(PopupWindow popupWindow) {//delete
         View container = (View) popupWindow.getContentView().getParent();
         WindowManager wm = (WindowManager) getActivity().getBaseContext()
                 .getSystemService(Context.WINDOW_SERVICE);
@@ -148,7 +157,7 @@ public class MainWorkoutFragment extends Fragment {
         wm.updateViewLayout(container, layoutParams);
     }
 
-    private void popupButtonClicked(PopupWindow popupWindow,View popupLayout) {
+    private void popupButtonClicked(PopupWindow popupWindow,View popupLayout) {//take
         Button btn = (Button) popupLayout.findViewById(R.id.mainWorkoutPopupBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,19 +169,19 @@ public class MainWorkoutFragment extends Fragment {
         });
     }
 
-    private void addNewMainWorkoutOnClick(View popupLayout) {
+    private void addNewMainWorkoutOnClick(View popupLayout) {//take
         String mainWorkoutName = getMainWorkoutName(popupLayout);
         addMainWorkoutToDatatable(mainWorkoutName);
         mainWorkoutNames.add(mainWorkoutName);
         adapter.notifyDataSetChanged();
     }
 
-    private void addMainWorkoutToDatatable(String mainWorkoutName) {
+    private void addMainWorkoutToDatatable(String mainWorkoutName) {//take
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(getContext());
         mainWorkoutTable.addMainWorkout(mainWorkoutName);
     }
 
-    private String getMainWorkoutName(View popupLayout) {
+    private String getMainWorkoutName(View popupLayout) {//take
         EditText mainWorkoutEditText = (EditText) popupLayout.findViewById(R.id.mainWorkoutPopup_editText);
         return mainWorkoutEditText.getText().toString();
     }

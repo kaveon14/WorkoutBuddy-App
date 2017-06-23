@@ -3,11 +3,8 @@ package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodySta
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
 public class AddBodyStatsPopup extends PopupWindowManager {
@@ -51,15 +48,4 @@ public class AddBodyStatsPopup extends PopupWindowManager {
             }
         });
     }
-
-    public BlankBodyStatsFragment showBlankBodyStatsfragment() {//get shit from mainactivty
-        BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
-        MainActivity.activity.getFragmentManager().beginTransaction()
-                .hide(null)
-                .add(R.id.blankBodyStats_fragment,null)
-                .addToBackStack(null)
-                .commit();
-        return blankBodyStatsFragment;
-    }
-
 }

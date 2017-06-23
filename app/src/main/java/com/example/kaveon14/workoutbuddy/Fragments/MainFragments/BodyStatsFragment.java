@@ -33,7 +33,6 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 // TODO create a blank list view adapter so screen is not all white
 public class BodyStatsFragment extends Fragment {
 
-    public static BodyStatsFragment bodyStatsFragment;//figure out how to do this better
     public static Body clickedBodyStatsItem;
     public static Body bodyObject;
     private View root;
@@ -52,7 +51,6 @@ public class BodyStatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bodyStatsFragment = this;
     }
 
     @Override
