@@ -67,7 +67,10 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
         });
     }
     private void showDeleteMainWorkoutPopup() {
-       //not create yet
+       DeleteMainWorkoutPopup popup = new DeleteMainWorkoutPopup(getRootView());
+        popup.setMainWorkoutAdapter(mainWorkoutAdapter);
+        popup.setMainWorkoutNames(mainWorkoutNames);
+        popup.showPopupWindow();
     }
 
 }
