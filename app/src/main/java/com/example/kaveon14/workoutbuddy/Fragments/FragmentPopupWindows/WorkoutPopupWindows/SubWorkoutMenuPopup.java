@@ -57,17 +57,20 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
         pop.showPopupWindow();
     }
 
-
     private void setDeleteSubWorkoutBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.showCustomExercisesBtn);
         btn.setText("Delete a SubWorkout");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //show popup
+                showDeleteSubWorkoutPopup();
             }
         });
     }
-
-
+    private void showDeleteSubWorkoutPopup() {
+        DeleteSubWorkoutPopup popup = new DeleteSubWorkoutPopup(getRootView());
+        popup.setSubWorkoutAdapter(subWorkoutAdapter);
+        popup.setSubWorkoutNames(subWorkoutNames);
+        popup.showPopupWindow();
+    }
 }

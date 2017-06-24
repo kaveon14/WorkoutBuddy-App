@@ -1,13 +1,10 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows;
 
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
-import java.util.List;
 
 public class ExercisePopupMenu extends PopupWindowManager {//nice everything is working just
 //create rest of buttons
@@ -55,12 +52,4 @@ public class ExercisePopupMenu extends PopupWindowManager {//nice everything is 
             }
         });
     }//need static list with all custom exercise
-
-    private ArrayAdapter getMainWorkoutAdapter() {//not needed
-        MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
-        List<String> list = mainWorkoutTable.getMainWorkoutNames();
-        ArrayAdapter adapter = new ArrayAdapter<>(context,
-                R.layout.simple_list_item,list);
-        return adapter;
-    }
 }
