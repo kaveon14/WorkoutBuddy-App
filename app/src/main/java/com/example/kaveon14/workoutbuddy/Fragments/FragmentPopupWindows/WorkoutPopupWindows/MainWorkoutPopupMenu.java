@@ -7,12 +7,12 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWin
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
-public class SubWorkoutMenuPopup extends PopupWindowManager {
+public class MainWorkoutPopupMenu extends PopupWindowManager {
 
-    private ArrayAdapter subWorkoutAdapter;
-    private List<String> subWorkoutNames;
+    private ArrayAdapter mainWorkoutAdapter;
+    private List<String> mainWorkoutNames;
 
-    public SubWorkoutMenuPopup(View root) {
+    public MainWorkoutPopupMenu(View root) {
         setRootView(root);
         setPopupLayout(R.layout.popup_window);
         setPopupViewId(R.id.popupWin);
@@ -21,16 +21,16 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
     public void showPopupWindow() {
         displayPopupWindow();
         hidePopupBtn();
-        setAddCustomSubWorkoutBtn();
-        setDeleteSubWorkoutBtn();
+        setAddCustomMainWorkoutBtn();
+        setDeleteMainWorkoutBtn();
     }
 
-    public void setSubWorkoutAdapter(ArrayAdapter subWorkoutAdapter) {
-        this.subWorkoutAdapter = subWorkoutAdapter;
+    public void setMainWorkoutAdapter(ArrayAdapter mainWorkoutAdapter) {
+        this.mainWorkoutAdapter = mainWorkoutAdapter;
     }
 
-    public void setSubWorkoutNames(List<String> subWorkoutNames) {
-        this.subWorkoutNames = subWorkoutNames;
+    public void setMainWorkoutNames(List<String> mainWorkoutNames) {
+        this.mainWorkoutNames = mainWorkoutNames;
     }
 
     private void hidePopupBtn() {
@@ -38,38 +38,36 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
         btn.setVisibility(View.INVISIBLE);
     }
 
-    private void setAddCustomSubWorkoutBtn() {
+    private void setAddCustomMainWorkoutBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.deleteCustomExerciseBtn);
         btn.setText("Add Custom SubWorkout");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCustomSubWorkoutPopup();
+                showCustomMainWorkoutPopup();
             }
         });
     }
 
-    private void showCustomSubWorkoutPopup() {
-        CustomSubWorkoutPopup pop = new CustomSubWorkoutPopup(getRootView());
-        pop.subWorkoutNamesList(subWorkoutNames);
-        pop.setAdapter(subWorkoutAdapter);
+    private void showCustomMainWorkoutPopup() {
+        CustomMainWorkoutPopup pop = new CustomMainWorkoutPopup(getRootView());
+        pop.setMainWorkoutList(mainWorkoutNames);
+        pop.setAdapter(mainWorkoutAdapter);
         pop.showPopupWindow();
     }
 
-    private void setDeleteSubWorkoutBtn() {
+    private void setDeleteMainWorkoutBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.showCustomExercisesBtn);
-        btn.setText("Delete a SubWorkout");
+        btn.setText("Delete a MainWorkout");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDeleteSubWorkoutPopup();
+                showDeleteMainWorkoutPopup();
             }
         });
     }
-    private void showDeleteSubWorkoutPopup() {
-        DeleteSubWorkoutPopup popup = new DeleteSubWorkoutPopup(getRootView());
-        popup.setSubWorkoutAdapter(subWorkoutAdapter);
-        popup.setSubWorkoutNames(subWorkoutNames);
-        popup.showPopupWindow();
+    private void showDeleteMainWorkoutPopup() {
+       //not create yet
     }
+
 }

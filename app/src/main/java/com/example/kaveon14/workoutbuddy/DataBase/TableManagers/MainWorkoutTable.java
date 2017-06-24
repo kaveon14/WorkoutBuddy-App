@@ -77,12 +77,15 @@ public class MainWorkoutTable {
         return rowData;
     }
 
+    public void deleteMainWorkout(String mainWorkoutName) {
+        deleteRow(mainWorkoutName);
+    }
+
     public void deleteSubWorkout(String mainWorkoutName,String subWorkoutName) {
         List<String> rowValues = getSubWorkoutNames(mainWorkoutName);
         rowValues.remove(subWorkoutName);
         deleteRow(mainWorkoutName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
-
 
         int day = 1;
         ContentValues values = new ContentValues();

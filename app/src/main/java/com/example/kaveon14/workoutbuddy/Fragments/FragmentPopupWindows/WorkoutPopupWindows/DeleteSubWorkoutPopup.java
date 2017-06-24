@@ -7,13 +7,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.List;
 
 public class DeleteSubWorkoutPopup extends PopupWindowManager {
@@ -29,7 +27,7 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
 
     public void showPopupWindow() {
         displayPopupWindow();
-        listView();
+        setSubWorkoutListView();
     }
 
     public void setSubWorkoutAdapter(ArrayAdapter subWorkoutAdapter) {
@@ -40,7 +38,7 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
         this.subWorkoutNames = subWorkoutNames;
     }
 
-    private void listView() {
+    private void setSubWorkoutListView() {
         ListView listView = (ListView) popupLayout.findViewById(R.id.deleteSubWorkoutPopup_listView);
         listView.setAdapter(subWorkoutAdapter);
         listView.setBackgroundColor(Color.WHITE);
@@ -49,12 +47,12 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 resetSubWorkoutListViewColors(parent);
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
-                btn(parent.getItemAtPosition(position).toString());
+                setDeleteBtn(parent.getItemAtPosition(position).toString());
             }
         });
     }
 
-    private void btn(String subWorkoutName) {
+    private void setDeleteBtn(String subWorkoutName) {
         Button btn = (Button) popupLayout.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +67,7 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
 
     private void deleteSubWorkout(String subWorkoutName) {
         subWorkoutNames.remove(subWorkoutName);
-        subWorkoutAdapter.notifyDataSetChanged();=
+        subWorkoutAdapter.notifyDataSetChanged();
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
         mainWorkoutTable.deleteSubWorkout(MainWorkoutFragment.clickedMainWorkout,

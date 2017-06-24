@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.CustomMainWorkoutPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.MainWorkoutPopupMenu;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
@@ -59,16 +60,16 @@ public class MainWorkoutFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCustomMainWorkoutPopup();
+                showMainWorkoutPopupMenu();
             }
         });
     }
 
-    private void showCustomMainWorkoutPopup() {
-        CustomMainWorkoutPopup pop = new CustomMainWorkoutPopup(getView());
-        pop.setMainWorkoutList(mainWorkoutNames);
-        pop.setAdapter(adapter);
-        pop.showPopupWindow();
+    private void showMainWorkoutPopupMenu() {
+        MainWorkoutPopupMenu popup = new MainWorkoutPopupMenu(getView());
+        popup.setMainWorkoutAdapter(adapter);
+        popup.setMainWorkoutNames(mainWorkoutNames);
+        popup.showPopupWindow();
     }
 
     private ListView setListView(View root) {

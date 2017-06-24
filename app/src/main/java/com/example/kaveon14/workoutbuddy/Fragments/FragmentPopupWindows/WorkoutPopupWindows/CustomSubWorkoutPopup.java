@@ -52,7 +52,6 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
             public void onClick(View v) {
                 addNewSubWorkoutOnClick();
                 Toast.makeText(context,"SubWorkout Successfully Created!",Toast.LENGTH_LONG).show();
-                popupWindow.dismiss();
             }
         });
     }
