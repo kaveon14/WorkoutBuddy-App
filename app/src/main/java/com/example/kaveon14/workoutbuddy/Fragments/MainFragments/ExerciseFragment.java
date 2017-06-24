@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExerciseFragment extends Fragment {//create static method to add custom exercise to list
+public class ExerciseFragment extends Fragment {//create static method to add custom exercise to list or other method
     public static Exercise clickedExercise;
     public static List<Exercise> exerciseList;
     public static List<Exercise> customExerciseList;

@@ -26,7 +26,7 @@ public class ExercisePopupMenu extends PopupWindowManager {//nice everything is 
     }
 
     private void addCustomExerciseBtn() {
-        Button btn = (Button) popupLayout.findViewById(R.id.showCustomExercisePopupBtn);
+        Button btn = (Button) popupLayout.findViewById(R.id.addCustomExerciseBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

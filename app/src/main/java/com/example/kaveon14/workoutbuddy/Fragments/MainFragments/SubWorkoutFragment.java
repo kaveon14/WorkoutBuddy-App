@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.CustomSubWorkoutPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.SubWorkoutMenuPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.LinkedList;
@@ -23,11 +24,11 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkout;
-//fixed add mainWorkout asnd subWorkout bugs and mainWorkout table
+
 public class SubWorkoutFragment extends Fragment {
 
     public static SubWorkout clickedSubWorkout;
-    private ArrayAdapter adapter;
+    private ArrayAdapter subWorkoutAdapter;
     private List<String> subWorkoutNames;
 
     public SubWorkoutFragment() {
@@ -74,17 +75,16 @@ public class SubWorkoutFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                test();
-                //Toast.makeText(getContext(),"Add sub workout directly",Toast.LENGTH_LONG).show();
+                showSubWorkoutPopupMenu();
             }
         });
     }
 
-    private void test() {
-        CustomSubWorkoutPopup pop = new CustomSubWorkoutPopup(getView());
-        pop.subWorkoutNamesList(subWorkoutNames);
-        pop.setAdapter(adapter);
-        pop.showPopupWindow();
+    private void showSubWorkoutPopupMenu() {
+        SubWorkoutMenuPopup popup = new SubWorkoutMenuPopup(getView());
+        popup.setSubWorkoutAdapter(subWorkoutAdapter);
+        popup.setSubWorkoutNames(subWorkoutNames);
+        popup.showPopupWindow();
     }
 
     private ArrayAdapter getAdapter() {
@@ -95,9 +95,9 @@ public class SubWorkoutFragment extends Fragment {
                 return null;
             }
         }
-        adapter = new ArrayAdapter<>(getContext(),
+        subWorkoutAdapter = new ArrayAdapter<>(getContext(),
                 R.layout.simple_list_item,subWorkoutNames);
-        return adapter;
+        return subWorkoutAdapter;
     }
 
     private void openWorkoutOnClick(ListView listView) {

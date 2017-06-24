@@ -13,10 +13,9 @@ import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFrag
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 // TODO DELETE the day part of the mainWorkout table and instead tell user to delete a subWorkout first if limit is at 7
-// and dont allow editing of mainWorkout after done testing
+// and don't allow editing of mainWorkout after done testing
 public class CustomSubWorkoutPopup extends PopupWindowManager {
 
-    private int SUBWORKOUT_DAY = 1;
     private ArrayAdapter adapter;
     private List<String> subWorkoutNames;
 
@@ -63,9 +62,8 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
         addSubWorkoutToDatatable(subWorkoutName);
         subWorkoutNames.add(subWorkoutName);
         if(adapter != null) {
-            adapter.notifyDataSetChanged();//error here for some reason
+            adapter.notifyDataSetChanged();
         }
-        SUBWORKOUT_DAY++;
     }
 
     private void addSubWorkoutToDatatable(String subWorkoutName) {
@@ -74,7 +72,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
         mainWorkoutTable.addSubWorkout(MainWorkoutFragment.clickedMainWorkout
-                ,subWorkoutName);//day must be done differently
+                ,subWorkoutName);
     }
 
     private String getSubWorkoutName() {

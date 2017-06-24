@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/showCustomExercisePopupBtn"
+            android:id="@+id/addCustomExerciseBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add New Exercise" />

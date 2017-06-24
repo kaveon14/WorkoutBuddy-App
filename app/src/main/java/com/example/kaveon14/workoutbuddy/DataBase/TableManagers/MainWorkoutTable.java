@@ -77,13 +77,6 @@ public class MainWorkoutTable {
         return rowData;
     }
 
-    private List<String> getSubWorkouts(String mainWorkout) {
-        List<String> rowData = new ArrayList<>();
-        rowData.add("*/* SPACE HOLDER */*");
-        rowData.addAll(getSubWorkoutNames(mainWorkout));
-        return rowData;
-    }
-
     private void deleteRow(String mainWorkout) {
         SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
         String[] data = new String[]{
