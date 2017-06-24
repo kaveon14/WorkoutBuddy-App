@@ -1,23 +1,25 @@
-package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
+package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows;
 
 import android.graphics.Color;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
-public class DeleteMainWorkoutPopup extends PopupWindowManager {
+// ViewCustomExercisesPopup just change adapter not create popup class
+public class DeleteExercisesPopup extends PopupWindowManager {//dont create popup just
 
-    private ArrayAdapter mainWorkoutAdapter;
-    private List<String> mainWorkoutNames;
+    private ExerciseFragment.ExerciseAdapter customExerciseAdapter;
+    private List<Exercise> customExerciseList;
 
-    public DeleteMainWorkoutPopup(View root) {
+    public DeleteExercisesPopup(View root) {
         setRootView(root);
         setPopupLayout(R.layout.deletesubworkout_popup_layout);
         setPopupViewId(R.id.deleteSubWorkoutPopup);
@@ -25,50 +27,52 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     public void showPopupWindow() {
         displayPopupWindow();
-        setMainWorkoutListView();
+        setCustomExerciseListView();
     }
 
-    public void setMainWorkoutAdapter(ArrayAdapter mainWorkoutAdapter) {
-        this.mainWorkoutAdapter = mainWorkoutAdapter;
+    public void setCustomExerciseAdapter(ExerciseFragment.ExerciseAdapter customExerciseAdapter) {
+        this.customExerciseAdapter = customExerciseAdapter;
     }
 
-    public void setMainWorkoutNames(List<String> mainWorkoutNames) {
-        this.mainWorkoutNames = mainWorkoutNames;
+    public void setCustomExerciseList(List<Exercise> customExerciseList) {
+        this.customExerciseList = customExerciseList;
     }
 
-    private void setMainWorkoutListView() {
+    private void setCustomExerciseListView() {
         ListView listView = (ListView) popupLayout.findViewById(R.id.deleteSubWorkoutPopup_listView);
-        listView.setAdapter(mainWorkoutAdapter);
+        listView.setAdapter(customExerciseAdapter);
         listView.setBackgroundColor(Color.WHITE);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 resetSubWorkoutListViewColors(parent);
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
-                setDeleteButton(parent.getItemAtPosition(position).toString());
+
+                Exercise exercise = customExerciseList.get(position);
+                setDeleteButton(exercise);
             }
         });
     }
 
-    private void setDeleteButton(String mainWorkoutName) {
+    private void setDeleteButton(Exercise exercise) {
         Button btn = (Button) popupLayout.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteMainWorkout(mainWorkoutName);
-                Toast.makeText(context,"MainWorkout Successfully Deleted!"
+                deleteMainWorkout(exercise);
+                Toast.makeText(context,"Exercise Successfully Deleted!"
                         ,Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
             }
         });
     }
 
-    private void deleteMainWorkout(String mainWorkoutName) {
-        mainWorkoutNames.remove(mainWorkoutName);
-        mainWorkoutAdapter.notifyDataSetChanged();
+    private void deleteMainWorkout(Exercise exercise) {
+        customExerciseList.remove(exercise);
+        customExerciseAdapter.notifyDataSetChanged();
 
-        MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
-        mainWorkoutTable.deleteMainWorkout(mainWorkoutName);
+        ExerciseTable exerciseTable = new ExerciseTable(context);
+        exerciseTable.deleteExercise(exercise);
     }
 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {

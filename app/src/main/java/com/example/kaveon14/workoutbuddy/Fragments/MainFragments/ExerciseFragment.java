@@ -25,6 +25,11 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ExerciseFragment extends Fragment {//create static method to add custom exercise to list or other method
+
+
+
+
+
     public static Exercise clickedExercise;
     public static List<Exercise> exerciseList;
     public static List<Exercise> customExerciseList;//need to also add custom adapter and method to
@@ -65,6 +70,7 @@ public class ExerciseFragment extends Fragment {//create static method to add cu
         View root = inflater.inflate(R.layout.fragment_exercise, container, false);
         setListView(root);
         setFloatingActionButton();
+        customExerciseList = new ArrayList<>();
         return root;
     }
 
@@ -141,7 +147,7 @@ public class ExerciseFragment extends Fragment {//create static method to add cu
                 .commit();
     }
 
-    private class ExerciseAdapter extends BaseAdapter {
+    public final class ExerciseAdapter extends BaseAdapter {
 
         private List<Exercise> exerciseList;
 

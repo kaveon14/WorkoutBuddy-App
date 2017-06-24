@@ -275,6 +275,30 @@ public class MainActivity extends AppCompatActivity
         customExercisePopup.showPopupWindow();
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private class CustomExercisePopup extends PopupWindowManager {
 
         public CustomExercisePopup(View root) {
