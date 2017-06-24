@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.List;
 
 public class DeleteMainWorkoutPopup extends PopupWindowManager {

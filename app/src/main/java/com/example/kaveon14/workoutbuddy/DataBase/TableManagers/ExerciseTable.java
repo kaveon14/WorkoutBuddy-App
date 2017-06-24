@@ -65,6 +65,15 @@ public class ExerciseTable {
         return columnList;
     }
 
+    public void deleteExercise(Exercise exercise) {
+        SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
+        String[] data = new String[]{
+                exercise.getExerciseName()
+        };
+        database.delete(TABLE_NAME,COLUMN_EXERCISES+"=?",data);
+        database.close();
+    }
+
     public void printExerciseTable() {
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null,null);

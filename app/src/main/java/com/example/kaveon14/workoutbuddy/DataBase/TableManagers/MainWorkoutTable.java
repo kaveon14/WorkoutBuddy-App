@@ -104,7 +104,7 @@ public class MainWorkoutTable {
         String[] data = new String[]{
                 mainWorkout
         };
-        database.delete(TABLE_NAME,"Main_Workout_Names=?",data);
+        database.delete(TABLE_NAME,COLUMN_MAINWORKOUT+"=?",data);
         database.close();
     }
 

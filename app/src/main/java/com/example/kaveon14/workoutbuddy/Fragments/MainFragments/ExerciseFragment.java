@@ -27,8 +27,8 @@ import java.util.List;
 public class ExerciseFragment extends Fragment {//create static method to add custom exercise to list or other method
     public static Exercise clickedExercise;
     public static List<Exercise> exerciseList;
-    public static List<Exercise> customExerciseList;
-    private boolean fromSubWorkout = false;
+    public static List<Exercise> customExerciseList;//need to also add custom adapter and method to
+    private boolean fromSubWorkout = false;//show difference between standard and custom
 
     public ExerciseFragment() {
 
