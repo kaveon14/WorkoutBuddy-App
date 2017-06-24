@@ -55,6 +55,12 @@ public class SubWorkoutTable {
         return columnList;
     }
 
+    public void deleteSubWorkoutTable(String tableName) {
+        tableName = getCorrectTableName(tableName);
+        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
+        writableDatabase.execSQL("DROP TABLE IF EXISTS "+tableName);
+    }
+
     public void printSubWorkoutTable(String tableName) {
         tableName = getCorrectTableName(tableName);
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
@@ -67,20 +73,20 @@ public class SubWorkoutTable {
         cursor.close();
     }
 
+    private String getCorrectTableName(String tableName) {
+        if(isTableNameCorrect(tableName)) {
+            return tableName;
+        } else {
+            return tableName + "_wk";
+        }
+    }
+
     private boolean isTableNameCorrect(String tableName) {
         int length = tableName.length();
         if(tableName.substring(length-3,length).equalsIgnoreCase("_wk")) {
             return true;
         } else {
             return false;
-        }
-    }
-
-    private String getCorrectTableName(String tableName) {
-        if(isTableNameCorrect(tableName)) {
-            return tableName;
-        } else {
-            return tableName + "_wk";
         }
     }
 }

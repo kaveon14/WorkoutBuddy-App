@@ -77,6 +77,25 @@ public class MainWorkoutTable {
         return rowData;
     }
 
+    public void deleteSubWorkout(String mainWorkoutName,String subWorkoutName) {
+        List<String> rowValues = getSubWorkoutNames(mainWorkoutName);
+        rowValues.remove(subWorkoutName);
+        deleteRow(mainWorkoutName);
+        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
+
+
+        int day = 1;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_MAINWORKOUT,mainWorkoutName);
+        for(int x=0;x<rowValues.size();x++) {
+            String COLUMN_NAME = "Day"+day + "_Workout"+day;
+            values.put(COLUMN_NAME,rowValues.get(x));
+            day++;
+        }
+        writableDatabase.insert(TABLE_NAME,null,values);
+        writableDatabase.close();
+    }
+
     private void deleteRow(String mainWorkout) {
         SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
         String[] data = new String[]{

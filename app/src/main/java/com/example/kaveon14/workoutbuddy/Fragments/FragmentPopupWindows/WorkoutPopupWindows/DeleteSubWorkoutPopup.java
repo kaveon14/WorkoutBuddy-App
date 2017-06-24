@@ -6,9 +6,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
 import java.util.List;
@@ -57,16 +60,23 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
             @Override
             public void onClick(View v) {
                 deleteSubWorkout(subWorkoutName);
+                Toast.makeText(context,"SubWorkout Successfully Deleted!"
+                        ,Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
             }
         });
     }
 
     private void deleteSubWorkout(String subWorkoutName) {
+        subWorkoutNames.remove(subWorkoutName);
+        subWorkoutAdapter.notifyDataSetChanged();=
+
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
-        //methods not created yet
+        mainWorkoutTable.deleteSubWorkout(MainWorkoutFragment.clickedMainWorkout,
+                subWorkoutName);
 
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
-        //methods not created yet
+        subWorkoutTable.deleteSubWorkoutTable(subWorkoutName);
     }
 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {
