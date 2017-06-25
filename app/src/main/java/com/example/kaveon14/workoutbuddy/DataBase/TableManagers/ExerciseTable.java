@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
+import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseNames;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,10 +20,19 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 
 public class ExerciseTable {
 
+    private Context context;
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
+    public static int DEFAULT_EXERCISE_COUNT = 1;
+    public static int CUSTOM_EXERCISE_COUNT = 1;//do later
 
     public ExerciseTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
+        this.context = context;
+    }
+
+    public void setDefaultExerciseCount() {
+        DEFAULT_EXERCISE_COUNT = new DefaultExerciseNames(context,"ExerciseNames.txt")
+                .readFileSorted().size();
     }
 
     public void addAnExercise(Exercise exercise) {
@@ -63,6 +73,38 @@ public class ExerciseTable {
         readableDatabase.close();
         cursor.close();
         return columnList;
+    }
+
+    public List<Exercise> getExercises() {
+        List<Exercise> exerciseList = new ArrayList<>();
+        List<String> exerciseNames = getColumn(COLUMN_EXERCISES);
+        List<String> exerciseDescriptions = getColumn(COLUMN_EXERCISE_DESCRIPTION);
+
+        for(int x=0;x<exerciseNames.size();x++) {
+            Exercise exercise = new Exercise(exerciseNames.get(x),
+                    exerciseDescriptions.get(x));
+            exercise.setExerciseImage(getExerciseImage(exercise));
+            exerciseList.add(exercise);
+        }
+        return exerciseList;
+    }
+
+    public List<Exercise> getCustomExercises() {
+        if(DEFAULT_EXERCISE_COUNT==1) {
+            setDefaultExerciseCount();
+        }
+
+        List<Exercise> exerciseList = new ArrayList<>();
+        List<String> exerciseNames = getColumn(COLUMN_EXERCISES);
+        List<String> exerciseDescriptions = getColumn(COLUMN_EXERCISE_DESCRIPTION);
+        for(int x=DEFAULT_EXERCISE_COUNT;x<exerciseNames.size();x++) {
+            Exercise exercise = new Exercise(exerciseNames.get(x),
+                    exerciseDescriptions.get(x));
+
+            exercise.setExerciseImage(getExerciseImage(exercise));
+            exerciseList.add(exercise);
+        }
+        return exerciseList;
     }
 
     public void deleteExercise(Exercise exercise) {

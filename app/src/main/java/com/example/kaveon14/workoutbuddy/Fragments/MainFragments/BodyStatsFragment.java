@@ -36,9 +36,6 @@ public class BodyStatsFragment extends Fragment {
     public static Body clickedBodyStatsItem;
     public static Body bodyObject;
     private View root;
-
-
-
     private List<Body> bodyStats;
     private BodyStatsAdapter bodyStatsAdapter;
 

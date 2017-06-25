@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-
+// TODO refactor
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -7,12 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
-import android.widget.TextView;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISES;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.ExerciseToWorkoutPopup;
@@ -24,16 +21,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExerciseFragment extends Fragment {//create static method to add custom exercise to list or other method
+public class ExerciseFragment extends Fragment {
 
-
-
-
-
+    private static ArrayAdapter exerciseAdapter;
     public static Exercise clickedExercise;
     public static List<Exercise> exerciseList;
-    public static List<Exercise> customExerciseList;//need to also add custom adapter and method to
-    private boolean fromSubWorkout = false;//show difference between standard and custom
+    public static List<Exercise> customExerciseList;
+    private static List<String> exerciseNames;
+    private boolean fromSubWorkout = false;
 
     public ExerciseFragment() {
 
@@ -41,22 +36,6 @@ public class ExerciseFragment extends Fragment {//create static method to add cu
 
     public void addExerciseFromSubWorkout(boolean fromSubWorkout) {
         this.fromSubWorkout = fromSubWorkout;
-    }
-
-    public List<Exercise> getExerciseList() {
-        if(exerciseList ==null) {
-            setExerciseList();
-        }
-        return exerciseList;
-    }
-
-    private void setExerciseList() {
-        exerciseList = new ArrayList<>();
-        int amountOfExercise = new ExerciseTable(getContext()).getColumn(COLUMN_EXERCISES).size();
-        for(int x=0;x<amountOfExercise;x++) {
-            exerciseList.add(getExercise(x));
-        }
-        sortExerciseListByName();
     }
 
     @Override
@@ -68,9 +47,9 @@ public class ExerciseFragment extends Fragment {//create static method to add cu
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_exercise, container, false);
+        setExerciseAdapter();
         setListView(root);
         setFloatingActionButton();
-        customExerciseList = new ArrayList<>();
         return root;
     }
 
@@ -95,18 +74,39 @@ public class ExerciseFragment extends Fragment {//create static method to add cu
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ExercisePopupMenu pop = new ExercisePopupMenu(fab.getRootView());
-                pop.showPopupWindow();
+                showExercisePopupMenu();
             }
         });
     }
 
+    private void showExercisePopupMenu() {
+        ExercisePopupMenu popup = new ExercisePopupMenu(getView());
+        popup.setCustomExerciseList(customExerciseList);
+        popup.showPopupWindow();
+    }
+
     private void setListView(View root) {
         ListView listView = (ListView) root.findViewById(R.id.exercise_listView);
-        listView.setAdapter(setExerciseAdapter());
+        listView.setAdapter(exerciseAdapter);
+        listViewonClick(listView,root);
+        listViewOnLongClick(listView,root);
+    }
+
+    private void listViewonClick(ListView listView,View root) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                clickedExercise = exerciseList.get(position);
+                showBlankExerciseFragment();
+            }
+        });
+    }
+
+    private void listViewOnLongClick(ListView listView,View root) {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                clickedExercise = exerciseList.get(position);
                 ExerciseToWorkoutPopup popup = new ExerciseToWorkoutPopup(root,fromSubWorkout);
                 popup.showPopupWindow();
                 return true;
@@ -114,28 +114,68 @@ public class ExerciseFragment extends Fragment {//create static method to add cu
         });
     }
 
-    private void sortExerciseListByName() {
-        Collections.sort(exerciseList, new Comparator<Exercise>() {
+    public static void addExerciseToList(Exercise exercise) {//needs to be changed
+        exerciseList.add(exercise);
+        customExerciseList.add(exercise);
+        exerciseNames.add(exercise.getExerciseName());
+        sortExerciseListByName();
+        sortCustomExerciseListByName();
+        sortExerciseNames();
+        exerciseAdapter.notifyDataSetChanged();
+    }
+
+    public static void deleteExerciseFromList(Exercise exercise) {
+        exerciseList.remove(exercise);
+        exerciseNames.remove(exercise.getExerciseName());
+        customExerciseList.remove(exercise);//if in there
+        exerciseAdapter.notifyDataSetChanged();
+    }
+
+    private static void sortExerciseNames() {
+        Collections.sort(exerciseNames, new Comparator<String>() {
             @Override
-            public int compare(Exercise exercise1, Exercise exercis2) {
-                return exercise1.getExerciseName().compareTo(exercis2.getExerciseName());
+            public int compare(String exercise1, String exercise2) {
+                return exercise1.compareTo(exercise2);
             }
         });
     }
 
-    private ExerciseAdapter setExerciseAdapter() {
-        return new ExerciseAdapter(getExerciseList());
+    private static void sortExerciseListByName() {
+        Collections.sort(exerciseList, new Comparator<Exercise>() {
+            @Override
+            public int compare(Exercise exercise1, Exercise exercise2) {
+                return exercise1.getExerciseName().compareTo(exercise2.getExerciseName());
+            }
+        });
     }
 
-    private Exercise getExercise(int x) {
-        ExerciseTable exerciseTable = new ExerciseTable(getContext());
+    private static void sortCustomExerciseListByName() {
+        Collections.sort(customExerciseList, new Comparator<Exercise>() {
+            @Override
+            public int compare(Exercise exercise1, Exercise exercise2) {
+                return exercise1.getExerciseName().compareTo(exercise2.getExerciseName());
+            }
+        });
+    }
 
-        List<String> exerciseNames = exerciseTable.getColumn(COLUMN_EXERCISES);
-        List<String> exerciseDescriptions =
-                 exerciseTable.getColumn(COLUMN_EXERCISE_DESCRIPTION);
-        Exercise exercise = new Exercise(exerciseNames.get(x),exerciseDescriptions.get(x));
-        exercise.setExerciseImage(exerciseTable.getExerciseImage(exercise));
-        return exercise;
+    private void setExerciseAdapter() {//can be made faster by using static method
+        ExerciseTable exerciseTable = new ExerciseTable(getContext());//just create list from here no data table
+        if(exerciseList == null) {
+            exerciseList = exerciseTable.getExercises();
+            sortExerciseListByName();
+        }
+        if(customExerciseList == null) {
+            customExerciseList = exerciseTable.getCustomExercises();
+            sortCustomExerciseListByName();
+        }
+        if(exerciseNames == null) {
+            exerciseNames = new ArrayList<>();
+            for(int x=0;x<exerciseList.size();x++) {
+                exerciseNames.add(exerciseList.get(x).getExerciseName());
+            }
+        }
+
+        exerciseAdapter = new ArrayAdapter(getContext(),R.layout.simple_list_item,exerciseNames);
     }
 
     private void showBlankExerciseFragment() {
@@ -145,69 +185,6 @@ public class ExerciseFragment extends Fragment {//create static method to add cu
                 .replace(R.id.blankExercise_fragment,bf)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    public final class ExerciseAdapter extends BaseAdapter {
-
-        private List<Exercise> exerciseList;
-
-        public ExerciseAdapter(List<Exercise> exercises) {
-            exerciseList = exercises;
-        }
-
-        @Override
-        public int getCount() {
-            return exerciseList.size();
-        }
-
-        @Override
-        public Exercise getItem(int i) {//may need work
-            return exerciseList.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View rowView = view;
-            if (rowView == null) {
-                LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                rowView = inflater.inflate(R.layout.simple_list_item,viewGroup,false);
-            }
-            final Exercise exercise = getItem(i);
-            setTextView(exercise,rowView);
-            exerciseClicked(rowView,exercise);
-            exerciseLongClicked(rowView,exercise);
-            return rowView;
-        }
-
-        private void setTextView(Exercise exercise,View rowView) {
-            TextView exercseName = (TextView) rowView.findViewById(R.id.exerciseList_textView);
-            exercseName.setText(exercise.getExerciseName());
-        }
-
-        private void exerciseClicked(View rowView,Exercise exercise) {
-            rowView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ExerciseFragment.clickedExercise = exercise;
-                    showBlankExerciseFragment();
-                }
-            });
-        }
-
-        private void exerciseLongClicked(View rowView,Exercise exercise) {
-            rowView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    ExerciseFragment.clickedExercise = exercise;
-                    return false;
-                }
-            });
-        }
     }
 }
 //no need to change the custom image name because it is tied and retrieved by an exercise object

@@ -38,6 +38,7 @@ import com.example.kaveon14.workoutbuddy.R;
 
 public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
+
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "workoutDataBase.db";
     private Context context;

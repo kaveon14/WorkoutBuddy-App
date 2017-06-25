@@ -38,6 +38,8 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFr
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import java.util.Calendar;
+import java.util.List;
+
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 // TODO allow deletion of ex from workout,subworkout from mainworkout,and mainworkout
 public class MainActivity extends AppCompatActivity
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         activity =  this;
         setBaseContent();
         getPermissions();
-        preloadExerciseData();
+        //preloadExerciseData();
     }
 
     @Override
@@ -275,30 +277,6 @@ public class MainActivity extends AppCompatActivity
         customExercisePopup.showPopupWindow();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private class CustomExercisePopup extends PopupWindowManager {
 
         public CustomExercisePopup(View root) {
@@ -335,11 +313,10 @@ public class MainActivity extends AppCompatActivity
                     Exercise customExercise = getCustomExercise(popupLayout);
                     new ExerciseTable(getBaseContext())
                             .addAnExercise(customExercise);
-
                     Toast.makeText(getBaseContext()
                             ,"Custom Exercise Added",
                             Toast.LENGTH_SHORT).show();
-                    ExerciseFragment.customExerciseList.add(customExercise);
+                    ExerciseFragment.addExerciseToList(customExercise);
                     popupWindow.dismiss();
                 }
             });

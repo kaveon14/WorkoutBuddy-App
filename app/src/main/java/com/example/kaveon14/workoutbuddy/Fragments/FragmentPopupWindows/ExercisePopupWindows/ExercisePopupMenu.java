@@ -3,11 +3,16 @@ package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.Exercis
 import android.view.View;
 import android.widget.Button;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 
+import java.util.List;
+
 public class ExercisePopupMenu extends PopupWindowManager {//nice everything is working just
 //create rest of buttons
+
+    private List<Exercise> customExerciseList;
 
     public ExercisePopupMenu(View root) {
         setRootView(root);
@@ -22,13 +27,16 @@ public class ExercisePopupMenu extends PopupWindowManager {//nice everything is 
         deleteCustomExercisesBtn();
     }
 
+    public void setCustomExerciseList(List<Exercise> customExerciseList) {
+        this.customExerciseList = customExerciseList;
+    }
+
     private void addCustomExerciseBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.addCustomExerciseBtn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity.activity.showAddExercisePopupWindow();
-                popupWindow.dismiss();
             }
         });
     }
@@ -48,8 +56,14 @@ public class ExercisePopupMenu extends PopupWindowManager {//nice everything is 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindow.dismiss();
+                showDeleteExercisePopupWindow();
             }
         });
-    }//need static list with all custom exercise
+    }
+
+    private void showDeleteExercisePopupWindow() {
+        DeleteExercisesPopup popup = new DeleteExercisesPopup(getRootView());
+        popup.setCustomExerciseList(customExerciseList);
+        popup.showPopupWindow();
+    }
 }
