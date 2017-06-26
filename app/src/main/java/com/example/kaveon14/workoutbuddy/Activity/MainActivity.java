@@ -52,13 +52,21 @@ public class MainActivity extends AppCompatActivity
     public static Bitmap bitmap;
     private int RESULT_LOAD_IMAGE = 1;
 
+    public static MainActivity getMainActivity() {
+        return activity;
+    }
+
+    public static Bitmap getgalleryImageBitmap() {
+        return bitmap;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity =  this;
         setBaseContent();
         getPermissions();
-        //preloadExerciseData();
+        preloadExerciseData();
     }
 
     @Override

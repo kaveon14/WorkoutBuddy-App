@@ -5,12 +5,12 @@ import android.widget.Button;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
 import java.util.List;
 
-public class ExercisePopupMenu extends PopupWindowManager {//nice everything is working just
-//create rest of buttons
+public class ExercisePopupMenu extends PopupWindowManager {
 
     private List<Exercise> customExerciseList;
 
@@ -46,6 +46,7 @@ public class ExercisePopupMenu extends PopupWindowManager {//nice everything is 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               //create popup window like delete exercise but allow same func as the main list
                 popupWindow.dismiss();
             }
         });

@@ -48,15 +48,13 @@ public class DeleteExercisesPopup extends PopupWindowManager {//dont create popu
         listViewOnClick(listView);
     }
 
-    private void listViewOnClick(ListView listView) {//same adpter so shit not overidden
+    private void listViewOnClick(ListView listView) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 resetExerciseListViewColors(parent);
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
-
-                System.out.println("Clicked");
-                Exercise exercise = customExerciseList.get(position);//dont use yet
+                Exercise exercise = customExerciseList.get(position);
                 setDeleteButton(exercise);
             }
         });
@@ -64,6 +62,7 @@ public class DeleteExercisesPopup extends PopupWindowManager {//dont create popu
 
     private void setDeleteButton(Exercise exercise) {//test
         Button btn = (Button) popupLayout.findViewById(R.id.button);
+        btn.setText("Delete Exercise");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
