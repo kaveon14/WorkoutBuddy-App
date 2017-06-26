@@ -1,6 +1,4 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-// TODO refactor
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,8 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
-
-import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.ExerciseToWorkoutPopup;
@@ -89,6 +85,7 @@ public class ExerciseFragment extends Fragment {
     private void showExercisePopupMenu() {
         ExercisePopupMenu popup = new ExercisePopupMenu(getView());
         popup.setCustomExerciseList(customExerciseList);
+        popup.setFromSubWorkout(fromSubWorkout);
         popup.showPopupWindow();
     }
 

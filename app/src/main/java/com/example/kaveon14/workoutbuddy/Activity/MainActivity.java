@@ -35,12 +35,14 @@ import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragme
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import java.util.Calendar;
 import java.util.List;
 
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
+// TODO replace all public static variables with private ones and static getter functions
 // TODO allow deletion of ex from workout,subworkout from mainworkout,and mainworkout
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -210,6 +212,13 @@ public class MainActivity extends AppCompatActivity
     private void showExerciseFragment() {
         ExerciseFragment exercise_frag = new ExerciseFragment();
         addFragmentToStack(getActiveFragment(),exercise_frag,R.id.exercise_fragment);
+    }
+
+    public void showBlankExerciseFragment() {
+        BlankExerciseFragment blankExercise_frag = new BlankExerciseFragment();
+        addFragmentToStack(getActiveFragment(),blankExercise_frag
+                ,
+                R.id.blankExercise_fragment);
     }
 
     private void showWorkoutFragment() {

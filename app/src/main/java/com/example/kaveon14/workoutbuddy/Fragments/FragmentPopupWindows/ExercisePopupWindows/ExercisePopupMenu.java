@@ -5,14 +5,13 @@ import android.widget.Button;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.List;
 
 public class ExercisePopupMenu extends PopupWindowManager {
 
     private List<Exercise> customExerciseList;
+    private boolean fromSubWorkout;
 
     public ExercisePopupMenu(View root) {
         setRootView(root);
@@ -31,6 +30,10 @@ public class ExercisePopupMenu extends PopupWindowManager {
         this.customExerciseList = customExerciseList;
     }
 
+    public void setFromSubWorkout(boolean fromSubWorkout) {
+        this.fromSubWorkout = fromSubWorkout;
+    }
+
     private void addCustomExerciseBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.addCustomExerciseBtn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -46,11 +49,18 @@ public class ExercisePopupMenu extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //create popup window like delete exercise but allow same func as the main list
-                popupWindow.dismiss();
+               showCustomExercisePopupWindow();
             }
         });
-    }//need static list with all custom exercise
+    }
+
+    private void showCustomExercisePopupWindow() {
+        ViewCustomExercisesPopup popup = new ViewCustomExercisesPopup(getRootView());
+        popup.setCustomExerciseList(customExerciseList);
+        popup.setMainPopupWindow(popupWindow);
+        popup.setFromSubWorkout(fromSubWorkout);
+        popup.showPopupWindow();
+    }
 
     private void deleteCustomExercisesBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.deleteCustomExerciseBtn);
