@@ -28,7 +28,7 @@ public class SubWorkoutTable {
         writableDatabase.execSQL(createWorkoutTable(tableName));
         writableDatabase.close();
     }
-
+//think of a new way to save subWorkout tables so they can match with the mainWorkoutName
     public void addExerciseToSubWorkout(String mainWorkoutName,String subWorkoutName,Exercise ex) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         // TODO make function require the main workout name //might have to subworkouts with same name
@@ -37,6 +37,16 @@ public class SubWorkoutTable {
         values.put(COLUMN_EXERCISE_SETS,ex.getExerciseSets());
         values.put(COLUMN_EXERCISE_REPS,ex.getExerciseReps());
         writableDatabase.insert(subWorkoutName,null,values);
+        writableDatabase.close();
+    }
+
+    public void deleteExerciseFromSubWorkout(Exercise exercise,String tableName) {
+        tableName = getCorrectTableName(tableName);
+        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
+        String[] data = new String[] {
+                exercise.getExerciseName()
+        };
+        writableDatabase.delete(tableName,COLUMN_EXERCISE_NAMES+"=?",data);
         writableDatabase.close();
     }
 

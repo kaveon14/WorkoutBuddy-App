@@ -156,7 +156,6 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
                         exercise);
     }
 
-
     private String getExerciseSets() {
         EditText setsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_setsTextView);
         return setsView.getText().toString();

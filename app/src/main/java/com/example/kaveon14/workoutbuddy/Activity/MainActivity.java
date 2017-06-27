@@ -42,25 +42,16 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
-// TODO replace all public static variables with private ones and static getter functions
-// TODO allow deletion of ex from workout,subworkout from mainworkout,and mainworkout
+// TODO allow deletion of ex from workout
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static int fragId;
-    private CaldroidFragment caldroid_frag;
+    private CaldroidFragment caldroid_frag;//try to make non global
     public static MainActivity activity;
     private CustomExercisePopup customExercisePopup;
-    public static Bitmap bitmap;
+    private static Bitmap bitmap;
     private int RESULT_LOAD_IMAGE = 1;
-
-    public static MainActivity getMainActivity() {
-        return activity;
-    }
-
-    public static Bitmap getgalleryImageBitmap() {
-        return bitmap;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +137,7 @@ public class MainActivity extends AppCompatActivity
                 showBodyStatsFragment();
                 break;
             case R.id.lifting_stats:
-                //nothing yet
+                //nothing yet and not sure needed
                 break;
             case R.id.workout_menu:
                 showWorkoutFragment();

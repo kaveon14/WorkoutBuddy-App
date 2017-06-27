@@ -22,7 +22,11 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
 
-public class BlankSubWorkoutFragment extends Fragment {
+public class
+BlankSubWorkoutFragment extends Fragment {
+
+    private WorkoutAdapter workoutAdapter;
+    private List<Exercise> exerciseList;
 
     public BlankSubWorkoutFragment() {
         // Required empty public constructor
@@ -69,8 +73,13 @@ public class BlankSubWorkoutFragment extends Fragment {
 
     private void setListView(View rootView) {
         ListView listView = (ListView) rootView.findViewById(R.id.blankWorkout_listView);
-        listView.setAdapter(setWorkoutAdapter());
+        if(workoutAdapter != null) {
+            listView.setAdapter(workoutAdapter);
+        } else {
+            listView.setAdapter(setWorkoutAdapter());
+        }
         viewExerciseOnClick(listView);
+        deleteExerciseOnLongClick(listView);
     }
 
     private void viewExerciseOnClick(ListView listView) {
@@ -81,6 +90,25 @@ public class BlankSubWorkoutFragment extends Fragment {
                 showExercise(clickedExercise);
             }
         });
+    }
+
+    private void deleteExerciseOnLongClick(ListView listView) {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Exercise exercise = exerciseList.get(position);
+                deleteExerciseFromSubWorkout(exercise);
+                exerciseList.remove(exercise);
+                workoutAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+    }
+
+    private void deleteExerciseFromSubWorkout(Exercise exercise) {
+        SubWorkoutTable subWorkoutTable  = new SubWorkoutTable(getContext());
+        subWorkoutTable.deleteExerciseFromSubWorkout(exercise
+                ,SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
     }
 
     private void showExercise(Exercise exercise) {
@@ -106,11 +134,12 @@ public class BlankSubWorkoutFragment extends Fragment {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
         String tableName = SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName() + "_wk";
         int amountOfExercises = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES).size();
-        List<Exercise> exercises = new ArrayList<>();
+        exerciseList = new ArrayList<>();
         for(int x=0;x<amountOfExercises;x++) {
-            exercises.add(getSubWorkoutExercise(x));
+            exerciseList.add(getSubWorkoutExercise(x));
         }
-        return new WorkoutAdapter(getContext(),exercises);
+        workoutAdapter = new WorkoutAdapter(getContext(),exerciseList);
+        return workoutAdapter;
     }
 
     private Exercise getSubWorkoutExercise(int increment) {//how about no
