@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteExFromSWPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -96,19 +97,18 @@ BlankSubWorkoutFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Exercise exercise = exerciseList.get(position);
-                deleteExerciseFromSubWorkout(exercise);
-                exerciseList.remove(exercise);
-                workoutAdapter.notifyDataSetChanged();
+                showDeleteExercisePopupWindow(position);
                 return true;
             }
         });
     }
 
-    private void deleteExerciseFromSubWorkout(Exercise exercise) {
-        SubWorkoutTable subWorkoutTable  = new SubWorkoutTable(getContext());
-        subWorkoutTable.deleteExerciseFromSubWorkout(exercise
-                ,SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
+    private void showDeleteExercisePopupWindow(int position) {
+        DeleteExFromSWPopup popup = new DeleteExFromSWPopup(getView());
+        popup.setAdapter(workoutAdapter);
+        popup.setExerciseList(exerciseList);
+        popup.setListViewPosition(position);
+        popup.showPopupWindow();
     }
 
     private void showExercise(Exercise exercise) {
@@ -157,7 +157,7 @@ BlankSubWorkoutFragment extends Fragment {
         return exercise;
     }
 
-    private static class WorkoutAdapter extends BaseAdapter  {
+    public static class WorkoutAdapter extends BaseAdapter  {
 
         private List<Exercise> exerciseList;
         private Context context;
