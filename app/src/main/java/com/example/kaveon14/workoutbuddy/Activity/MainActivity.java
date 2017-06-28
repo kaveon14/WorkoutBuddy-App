@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-// will most likely need an adapter class for exercise data to update list view
+// TODO start lifting stats stuff
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -39,15 +39,14 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFra
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import java.util.Calendar;
-import java.util.List;
 
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
-// TODO allow deletion of ex from workout
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static int fragId;
-    private CaldroidFragment caldroid_frag;//try to make non global
+    private CaldroidFragment caldroid_frag;
     public static MainActivity activity;
     private CustomExercisePopup customExercisePopup;
     private static Bitmap bitmap;

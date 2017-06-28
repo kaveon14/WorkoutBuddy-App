@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-// TODO create popup for deleting workouts
+// will be disabled in default workouts
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
