@@ -123,11 +123,17 @@ public class DataBaseContract {
                 COLUMN_CALF_SIZE + " TEXT" + ")";
     }
 
-    public static final class LiftData implements BaseColumns {
+    public static final class LiftData implements BaseColumns {//gonna have to expand a lot
 
-         static List<String> columnNames = new LinkedList<>();
+        static List<String> columnNames = new LinkedList<>();
 
         public static final String TABLE_NAME = "Exercise_Stats";
+
+        public static final String COLUMN_ACTUAL_REPS = "Exercise_Actual_Reps";//completed for each sets
+
+        public static final String COLUMN_ACTUAL_SETS = "Exercise_Actual_Sets";//completed
+
+        public static final String COLUMN_WEIGHT = "Exercise_Weight";//need to store weight for each set
 
         public static void createLiftingStatsColumn(final String columnName) {
             columnNames.add(columnName);
@@ -149,5 +155,5 @@ public class DataBaseContract {
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
 
-    }
-}
+    }//need to add 10 set columns to the table need to store both weight and reps
+}//Set1_Reps,Set1_Weight

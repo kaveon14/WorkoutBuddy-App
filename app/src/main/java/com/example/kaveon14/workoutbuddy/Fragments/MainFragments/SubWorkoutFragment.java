@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-// TODO allow deletion of subworkouts like bodystats frag
+// TODO put cap to max sets to 10
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -166,4 +166,4 @@ public class SubWorkoutFragment extends Fragment {
         return exerciseFragment;
     }
 
-}
+}//if sets entered over cap warn user that the sets have been changed to ten,the maximum

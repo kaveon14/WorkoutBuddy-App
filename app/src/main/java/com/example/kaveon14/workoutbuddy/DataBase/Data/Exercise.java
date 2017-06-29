@@ -10,6 +10,9 @@ public final class Exercise {
     private String exerciseReps;
     private String exerciseSets;
     private Bitmap exerciseImage;
+    private int actualSets;
+    private int actualReps;
+    private int actualWeight;
 
     public Exercise(String exerciseName,@Nullable String exerciseDescription) {
         this.exerciseName = exerciseName;
@@ -24,6 +27,17 @@ public final class Exercise {
         this.exerciseSets = sets;
     }
 
+    public void setActualSets(int actualSets) {
+        this.actualSets = actualSets;
+    }
+
+    public void setActualReps(int actualReps) {
+        this.actualReps = actualReps;
+    }
+
+    public void setActualWeight(int actualWeight) {
+        this.actualWeight = actualWeight;
+    }
     public void setExerciseImage(Bitmap exerciseImage) {
         this.exerciseImage = exerciseImage;
     }
@@ -42,6 +56,18 @@ public final class Exercise {
 
     public String getExerciseDescription() {
         return exerciseDescription;
+    }
+
+    public int getActualSets() {
+        return actualSets;
+    }
+
+    public int getActualReps() {
+        return actualReps;
+    }
+
+    public int getActualWeight() {
+        return actualWeight;
     }
 
     public Bitmap getExerciseImage() {

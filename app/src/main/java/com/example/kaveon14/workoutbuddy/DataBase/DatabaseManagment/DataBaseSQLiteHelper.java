@@ -88,6 +88,24 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             columnName = columnName.replace(" ","_").replace("-","_");
             DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
         }
+
+
+
+        for(int x=1;x<=10;x++) {//put in wrapper functions
+            String columnName = "Set" + x + "_Reps";
+            DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
+        }
+
+        for(int x=1;x<=10;x++) {//put in wrapper functions
+            String columnName = "Set" + x + "_Weight";
+            DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
+        }
+
+
+
+
+
+
         DataBaseContract.LiftData.setColumns();
         String createTable  = DataBaseContract.LiftData.CREATE_TABLE +
                 DataBaseContract.LiftData.setColumns();

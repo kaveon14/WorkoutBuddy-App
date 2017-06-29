@@ -181,7 +181,7 @@ public class BodyStatsFragment extends Fragment {
 
     public class BodyStatsAdapter extends BaseAdapter {
 
-        private Context context;
+        private Context context;//delete
         private List<Body> bodyStatsList;
 
         public BodyStatsAdapter(Context context,List<Body> bodyStats) {
