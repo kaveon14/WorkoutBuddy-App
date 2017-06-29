@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         preloadExerciseData();
-        LiftingStatsTable tt = new LiftingStatsTable(getBaseContext());
-        tt.dd(null);
     }
 
     @Override

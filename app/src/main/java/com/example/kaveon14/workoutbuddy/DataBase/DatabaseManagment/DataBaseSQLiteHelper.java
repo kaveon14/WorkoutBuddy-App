@@ -84,27 +84,21 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     private String createLiftDataTable() {
         List<String> exerciseNames = new
                 DefaultExerciseNames(context,"ExerciseNames.txt").readFileSorted();
-        for(String columnName : exerciseNames) {
+        for(String columnName : exerciseNames) {//will most likely delete this columns later
             columnName = columnName.replace(" ","_").replace("-","_");
             DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
         }
 
-
-
-        for(int x=1;x<=10;x++) {//put in wrapper functions
-            String columnName = "Set" + x + "_Reps";
-            DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
+        String columnName = "";
+        for(int x=1;x<=15;x++) {//put in wrapper functions
+            String columnPart1 = "Exercise" + x;
+            for(int z=1;z<=10;z++) {
+                columnName = columnPart1 + "_Set" + z;
+                System.out.println("Column Name: "+columnName);
+            }
+            columnName = "";
+            //DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
         }
-
-        for(int x=1;x<=10;x++) {//put in wrapper functions
-            String columnName = "Set" + x + "_Weight";
-            DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
-        }
-
-
-
-
-
 
         DataBaseContract.LiftData.setColumns();
         String createTable  = DataBaseContract.LiftData.CREATE_TABLE +

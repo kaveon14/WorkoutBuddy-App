@@ -1,6 +1,5 @@
 package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,19 +20,15 @@ public class LiftingStatsTable {//possibly change actual table name
         this.context = context;
     }
 
-    public void dd(Exercise exercise) {
-        System.out.println("Yes");
-        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor c = writableDatabase.query(TABLE_NAME, null, null, null, null, null, null);
-        int x = 0;
-        System.out.println("Please: "+x);
-        while(x<74) {
-            System.out.println("name: "+c.getColumnName(x));
-            x++;
-        }
-        writableDatabase.close();
-        c.close();
+    public void addAWorkout(Exercise exercise) {//possibly also store the main and sub workout name for searching
+        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
+        String COLUMN_NAME = exercise.getExerciseName().replace(" ","_").replace("-","_");
+
+        ContentValues values = new ContentValues();//
     }
-
-
 }
+// use system line seperator
+//   Exercise#_Set#      Exercise1_Set1 Exercise1_Set2 Exercise2_Set1
+// Exercise name          Bench Press    Bench Press     Front Squat
+// Reps                       6              8               10
+// Weight                  200lbs          180lbs           250lbs

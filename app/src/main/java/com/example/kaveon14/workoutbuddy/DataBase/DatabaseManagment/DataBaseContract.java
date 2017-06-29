@@ -129,17 +129,11 @@ public class DataBaseContract {
 
         public static final String TABLE_NAME = "Exercise_Stats";
 
-        public static final String COLUMN_ACTUAL_REPS = "Exercise_Actual_Reps";//completed for each sets
-
-        public static final String COLUMN_ACTUAL_SETS = "Exercise_Actual_Sets";//completed
-
-        public static final String COLUMN_WEIGHT = "Exercise_Weight";//need to store weight for each set
-
         public static void createLiftingStatsColumn(final String columnName) {
             columnNames.add(columnName);
         }
 
-        public static String setColumns() {
+        public static String setColumns() {//are the specific exercise columns necessary ????
             String columns = "";
             for(int x=0;x<columnNames.size();x++) {
                 if(x==columnNames.size()-1) {
