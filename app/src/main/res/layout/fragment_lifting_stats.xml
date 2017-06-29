@@ -3,9 +3,9 @@
     android:id="@+id/liftingStats_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="layout.LiftingStatsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context=".Fragments.MainFragments.LiftingStatsFragment">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
