@@ -1,16 +1,12 @@
 package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
-
+// TODO crate table manager class like the popup window manager
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
-import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData;
-import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData;
 import java.util.List;
-
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_DATE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_MAINWORKOUT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_SUBWORKOUT;
@@ -26,16 +22,15 @@ public class LiftingStatsTable {//possibly change actual table name
         this.context = context;
     }
 
-    public void addAWorkout(List<Exercise> exerciseList,SubWorkout subWorkout) {//change name
+    public void addAWorkout(List<Exercise> exerciseList,SubWorkout subWorkout,String date) {//change name
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         String mainWorkoutName = subWorkout.getMainWorkoutName();
         String subWorkoutName = subWorkout.getSubWorkoutName();
-        //date stuff
 
         values.put(COLUMN_MAINWORKOUT,mainWorkoutName);
         values.put(COLUMN_SUBWORKOUT,subWorkoutName);
-        values.put(COLUMN_DATE,"");
+        values.put(COLUMN_DATE,date);
 
         for(int x=0;x<exerciseList.size();x++) {
             Exercise exercise = exerciseList.get(x);

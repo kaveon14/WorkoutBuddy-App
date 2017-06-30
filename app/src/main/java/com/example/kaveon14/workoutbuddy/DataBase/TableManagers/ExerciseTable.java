@@ -18,16 +18,18 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.COLUMN_EXERCISE_IMAGES;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.TABLE_NAME;
 
-public class ExerciseTable {
+public class ExerciseTable extends TableManager {
 
-    private Context context;
+    //private Context context;
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
     public static int DEFAULT_EXERCISE_COUNT = 1;
     public static int CUSTOM_EXERCISE_COUNT = 1;//do later
 
     public ExerciseTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
-        this.context = context;
+        //this.context = context;
+        setContext(context);
+        setTableName(TABLE_NAME);
     }
 
     public void setDefaultExerciseCount() {
@@ -61,7 +63,7 @@ public class ExerciseTable {
         return data;
     }
 
-    public List<String> getColumn(String columnName) {
+    /*public List<String> getColumn(String columnName) {
         List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null,null);
@@ -73,7 +75,7 @@ public class ExerciseTable {
         readableDatabase.close();
         cursor.close();
         return columnList;
-    }
+    }*/
 
     public List<Exercise> getExercises() {
         List<Exercise> exerciseList = new ArrayList<>();

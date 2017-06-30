@@ -42,6 +42,7 @@ import com.roomorama.caldroid.CaldroidFragment;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.List;
 
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 
@@ -61,10 +62,13 @@ public class MainActivity extends AppCompatActivity
         activity =  this;
         setBaseContent();
         getPermissions();
-        preloadExerciseData();
-        String path = getBaseContext().getDatabasePath("workoutDataBase.db").toString();
-        File f = new File(path);
-        System.out.println("size: "+f.length());
+        //preloadExerciseData();
+        ExerciseTable et = new ExerciseTable(getBaseContext());
+        List<String> x =  et.getColumn("Exercises");
+        for(String z : x) {
+            System.out.println("test: "+z);
+        }
+
     }
 
     @Override
