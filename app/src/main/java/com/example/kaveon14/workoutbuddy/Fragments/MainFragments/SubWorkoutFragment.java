@@ -14,7 +14,6 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.CustomSubWorkoutPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.SubWorkoutMenuPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -23,7 +22,7 @@ import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
-import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkout;
+import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkoutName;
 
 public class SubWorkoutFragment extends Fragment {
 
@@ -89,7 +88,7 @@ public class SubWorkoutFragment extends Fragment {
 
     private ArrayAdapter getAdapter() {
         MainWorkoutTable workoutTable = new MainWorkoutTable(getContext());
-        subWorkoutNames = workoutTable.getSubWorkoutNames(clickedMainWorkout);
+        subWorkoutNames = workoutTable.getSubWorkoutNames(clickedMainWorkoutName);
         if(subWorkoutNames.size()!=0) {
             if (subWorkoutNames.get(0) == null) {
                 return null;
@@ -125,8 +124,10 @@ public class SubWorkoutFragment extends Fragment {
     }
 
     private SubWorkout getSubWorkout(String subWorkoutName) {
-        return new SubWorkout(subWorkoutName,
+        SubWorkout subWorkout = new SubWorkout(subWorkoutName,
                 getExercisesForClickedSubWorkout(subWorkoutName));
+        subWorkout.setMainWorkoutName(clickedMainWorkoutName);
+        return subWorkout;
     }
 
     private List<Exercise> getExercisesForClickedSubWorkout(String subWorkoutName) {

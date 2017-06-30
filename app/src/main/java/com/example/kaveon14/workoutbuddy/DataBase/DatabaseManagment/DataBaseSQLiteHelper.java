@@ -82,24 +82,14 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     }
 
     private String createLiftDataTable() {
-        List<String> exerciseNames = new
-                DefaultExerciseNames(context,"ExerciseNames.txt").readFileSorted();
-        for(String columnName : exerciseNames) {//will most likely delete this columns later
-            columnName = columnName.replace(" ","_").replace("-","_");
-            DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
-        }
-
         String columnName = "";
-        for(int x=1;x<=15;x++) {//put in wrapper functions
+        for(int x=1;x<=15;x++) {
             String columnPart1 = "Exercise" + x;
             for(int z=1;z<=10;z++) {
                 columnName = columnPart1 + "_Set" + z;
-                System.out.println("Column Name: "+columnName);
+                DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
             }
-            columnName = "";
-            //DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
         }
-
         DataBaseContract.LiftData.setColumns();
         String createTable  = DataBaseContract.LiftData.CREATE_TABLE +
                 DataBaseContract.LiftData.setColumns();
@@ -249,4 +239,10 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             return data;
         }
     }
-}
+}//add max weight lifted to exercise table or totally new table with date
+/*  List<String> exerciseNames = new
+                DefaultExerciseNames(context,"ExerciseNames.txt").readFileSorted();
+        for(String columnName : exerciseNames) {//will most likely delete this columns later
+            columnName = columnName.replace(" ","_").replace("-","_");
+            DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
+        } */

@@ -10,14 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.CustomMainWorkoutPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.MainWorkoutPopupMenu;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 public class MainWorkoutFragment extends Fragment {
 
-    public static String clickedMainWorkout;
+    public static String clickedMainWorkoutName;
     private List<String> mainWorkoutNames;
     private ArrayAdapter adapter;
 
@@ -91,7 +90,7 @@ public class MainWorkoutFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedMainWorkout = parent.getItemAtPosition(position).toString();
+                clickedMainWorkoutName = parent.getItemAtPosition(position).toString();
                 showSubWorkoutfragment();
             }
         });

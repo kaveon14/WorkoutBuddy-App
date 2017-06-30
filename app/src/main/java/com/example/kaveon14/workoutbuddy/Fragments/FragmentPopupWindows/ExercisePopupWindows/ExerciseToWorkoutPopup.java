@@ -17,7 +17,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragm
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment.clickedExercise;
-import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkout;
+import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkoutName;
 
 public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
@@ -55,7 +55,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedMainWorkout = parent.getItemAtPosition(position).toString();
+                clickedMainWorkoutName = parent.getItemAtPosition(position).toString();
                 listView.setAdapter(getSubWorkoutAdapter());
                 subWorkoutClicked(listView);
             }
@@ -152,7 +152,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
         subWorkoutTable.
-                addExerciseToSubWorkout(clickedMainWorkout,subWorkoutName+"_wk",
+                addExerciseToSubWorkout(clickedMainWorkoutName,subWorkoutName+"_wk",
                         exercise);
     }
 
@@ -176,7 +176,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter getSubWorkoutAdapter() {
         MainWorkoutTable workoutTable = new MainWorkoutTable(context);
-        List<String> list = workoutTable.getSubWorkoutNames(clickedMainWorkout);
+        List<String> list = workoutTable.getSubWorkoutNames(clickedMainWorkoutName);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                 R.layout.simple_list_item,list);
         return adapter;

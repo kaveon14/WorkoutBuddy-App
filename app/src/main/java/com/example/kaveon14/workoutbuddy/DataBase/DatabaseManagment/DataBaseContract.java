@@ -79,12 +79,18 @@ public class DataBaseContract {
 
         public static final String COLUMN_EXERCISE_IMAGES = "Exercise_Image_IDs";
 
+        public static final String COLUMN_DATE = "Date";
+
+        public static final String COLUMN_MAX = "MaxWeight";
+
         public static final String CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_EXERCISES + " TEXT, " +
                 COLUMN_EXERCISE_DESCRIPTION + " BLOB, " +
-                COLUMN_EXERCISE_IMAGES + " BLOB" + ")";
+                COLUMN_EXERCISE_IMAGES + " BLOB" +
+                COLUMN_DATE + " TEXT, " +
+                COLUMN_MAX + " TEXT" + ")";
     }
 
     public static final class BodyData implements BaseColumns {//DONT FORGET TOP GET HEIGHT FOR AND AGE FOR BMI
@@ -129,6 +135,12 @@ public class DataBaseContract {
 
         public static final String TABLE_NAME = "Exercise_Stats";
 
+        public static final String COLUMN_MAINWORKOUT = "MainWorkoutName";
+
+        public static final String COLUMN_SUBWORKOUT = "SubWorkoutName";
+
+        public static final String COLUMN_DATE = "Date";
+
         public static void createLiftingStatsColumn(final String columnName) {
             columnNames.add(columnName);
         }
@@ -147,7 +159,10 @@ public class DataBaseContract {
 
         public static final String CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +
-                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, ";
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_MAINWORKOUT + " TEXT, " +
+                COLUMN_SUBWORKOUT + " TEXT, " +
+                COLUMN_DATE + " TEXT, ";
 
     }//need to add 10 set columns to the table need to store both weight and reps
 }//Set1_Reps,Set1_Weight

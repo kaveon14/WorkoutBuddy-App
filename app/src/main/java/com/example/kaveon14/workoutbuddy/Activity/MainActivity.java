@@ -39,6 +39,8 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFr
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
+
+import java.io.File;
 import java.util.Calendar;
 
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
@@ -60,6 +62,9 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         preloadExerciseData();
+        String path = getBaseContext().getDatabasePath("workoutDataBase.db").toString();
+        File f = new File(path);
+        System.out.println("size: "+f.length());
     }
 
     @Override

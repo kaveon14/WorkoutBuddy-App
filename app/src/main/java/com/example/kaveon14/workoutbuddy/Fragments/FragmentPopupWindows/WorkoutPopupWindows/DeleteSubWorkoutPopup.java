@@ -70,7 +70,7 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
         subWorkoutAdapter.notifyDataSetChanged();
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
-        mainWorkoutTable.deleteSubWorkout(MainWorkoutFragment.clickedMainWorkout,
+        mainWorkoutTable.deleteSubWorkout(MainWorkoutFragment.clickedMainWorkoutName,
                 subWorkoutName);
 
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);

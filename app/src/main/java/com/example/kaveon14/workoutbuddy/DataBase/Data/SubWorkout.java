@@ -1,11 +1,12 @@
 package com.example.kaveon14.workoutbuddy.DataBase.Data;
-
+// TODO implement the actual main workout name into this
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 public class SubWorkout {
 
+    private String mainWorkoutName;
     private String subWorkoutName;
     private List<Exercise> exerciseList;
 
@@ -13,6 +14,14 @@ public class SubWorkout {
         this.subWorkoutName = subWorkoutName;
         this.exerciseList = exerciseList;
 
+    }
+
+    public void setMainWorkoutName(String mainWorkoutName) {
+        this.mainWorkoutName = mainWorkoutName;
+    }
+
+    public String getMainWorkoutName() {
+        return mainWorkoutName;
     }
 
     public String getSubWorkoutName() {
