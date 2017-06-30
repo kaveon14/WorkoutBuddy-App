@@ -20,14 +20,11 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 
 public class ExerciseTable extends TableManager {
 
-    //private Context context;
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
     public static int DEFAULT_EXERCISE_COUNT = 1;
-    public static int CUSTOM_EXERCISE_COUNT = 1;//do later
 
     public ExerciseTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
-        //this.context = context;
         setContext(context);
         setTableName(TABLE_NAME);
     }
@@ -62,20 +59,6 @@ public class ExerciseTable extends TableManager {
         stream.close();
         return data;
     }
-
-    /*public List<String> getColumn(String columnName) {
-        List<String> columnList = new ArrayList<>();
-        SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null,null);
-        int increment = 0;
-        while(cursor.moveToNext()) {
-            columnList.add(increment,cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
-            increment++;
-        }
-        readableDatabase.close();
-        cursor.close();
-        return columnList;
-    }*/
 
     public List<Exercise> getExercises() {
         List<Exercise> exerciseList = new ArrayList<>();
@@ -116,19 +99,6 @@ public class ExerciseTable extends TableManager {
         };
         database.delete(TABLE_NAME,COLUMN_EXERCISES+"=?",data);
         database.close();
-    }
-
-    public void printExerciseTable() {
-        SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null,null);
-        while(cursor.moveToNext()) {
-            System.out.println("Exercise Name: "+cursor
-                    .getString(cursor.getColumnIndexOrThrow(COLUMN_EXERCISES)) +
-                    " Exercise Description: "+cursor.
-                    getString(cursor.getColumnIndexOrThrow(COLUMN_EXERCISE_DESCRIPTION)));
-        }
-        readableDatabase.close();
-        cursor.close();
     }
 
     public Bitmap getExerciseImage(Exercise exercise) {

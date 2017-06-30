@@ -62,13 +62,7 @@ public class MainActivity extends AppCompatActivity
         activity =  this;
         setBaseContent();
         getPermissions();
-        //preloadExerciseData();
-        ExerciseTable et = new ExerciseTable(getBaseContext());
-        List<String> x =  et.getColumn("Exercises");
-        for(String z : x) {
-            System.out.println("test: "+z);
-        }
-
+        preloadExerciseData();
     }
 
     @Override

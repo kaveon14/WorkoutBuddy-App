@@ -3,13 +3,9 @@ package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ExerciseData.TABLE_NAME;
 
 public abstract class TableManager {
 
@@ -29,7 +25,7 @@ public abstract class TableManager {
     public List<String> getColumn(String columnName) {
         List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null,null);
+        Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
         int increment = 0;
         while(cursor.moveToNext()) {
             columnList.add(increment,cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
@@ -41,9 +37,8 @@ public abstract class TableManager {
     }
 
     public void printTable() {
-        System.out.println("working");
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null,null);
+        Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
         int columnCount = cursor.getColumnCount();
         while(cursor.moveToNext()) {
             for(int x=0;x<columnCount;x++) {

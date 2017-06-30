@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.R;
+
+import java.util.List;
 
 public class LiftingStatsFragment extends Fragment {
 
@@ -29,27 +33,33 @@ public class LiftingStatsFragment extends Fragment {
         return root;
     }
 
-    private abstract class LiftingStatsAdapter extends BaseAdapter {
-        //just abstract until workout object finished
-      public int getCount() {
+    private class LiftingStatsAdapter extends BaseAdapter {//this
+
+        //needs to show mainWorkout, subWorkout,date logged and total weight,reps,and sets
+        // on click allow partial editing of an already completed workout
+        public LiftingStatsAdapter() {
+        }
+
+        public int getCount() {
           return 0;
       }
 
-      public long getItemId(int i) {
+        public long getItemId(int i) {
           return i;
       }
 
-      public View getView(int position,View rowView,ViewGroup viewGroup) {
+        public String getItem(int i) {
+            return null;
+        }
 
+        public View getView(int position,View rowView,ViewGroup viewGroup) {
 
-          return null;
-      }
-
-
-
-
-
-
-
+            if(rowView == null) {
+                LayoutInflater inflater = (LayoutInflater) getContext()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                rowView = inflater.inflate(null,null);//first one null until view created
+            }
+          return rowView;
+        }
     }
 }

@@ -11,12 +11,14 @@ import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.TABLE_NAME;
 
-public class MainWorkoutTable {
+public class MainWorkoutTable extends TableManager {
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
 
     public MainWorkoutTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
+        setContext(context);
+        setTableName(TABLE_NAME);
     }
 
     public void addMainWorkout(String workoutName) {
@@ -106,18 +108,6 @@ public class MainWorkoutTable {
         };
         database.delete(TABLE_NAME,COLUMN_MAINWORKOUT+"=?",data);
         database.close();
-    }
-
-    public List<String> getColumn(String tableName,String columnName) {
-        List<String> columnList = new ArrayList<>();
-        SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
-        while(cursor.moveToNext()) {
-            columnList.add(cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
-        }
-        readableDatabase.close();
-        cursor.close();
-        return columnList;
     }
 
     private List<String> deleteNullValues(List<String> rowData) {

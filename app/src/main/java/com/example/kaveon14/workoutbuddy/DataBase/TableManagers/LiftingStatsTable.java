@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
-// TODO crate table manager class like the popup window manager
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,14 +12,14 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_SUBWORKOUT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.TABLE_NAME;
 
-public class LiftingStatsTable {//possibly change actual table name
+public class LiftingStatsTable extends TableManager {//possibly change actual table name
 
-    private Context context;
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
 
     public LiftingStatsTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
-        this.context = context;
+        setContext(context);
+        setTableName(TABLE_NAME);
     }
 
     public void addAWorkout(List<Exercise> exerciseList,SubWorkout subWorkout,String date) {//change name
@@ -43,6 +43,15 @@ public class LiftingStatsTable {//possibly change actual table name
         writableDatabase.insert(TABLE_NAME,null,values);
         writableDatabase.close();
     }
+
+
+
+
+
+
+
+
+
 }
 //hopefully final column stup
 // MainWorkout_Name     SubWorkout_Name     Workout_Date    Exercise#_Set#
