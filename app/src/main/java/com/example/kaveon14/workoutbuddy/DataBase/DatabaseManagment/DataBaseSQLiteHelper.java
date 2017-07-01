@@ -67,8 +67,8 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SUBWORKOUT_3,"Shoulder_Day");
         values.put(COLUMN_SUBWORKOUT_4,"Leg_Day");
         values.put(COLUMN_SUBWORKOUT_5,"Arm_Day");
-        values.put(COLUMN_SUBWORKOUT_6,"NULL_1");
-        values.put(COLUMN_SUBWORKOUT_7,"NULL_2");
+        //values.put(COLUMN_SUBWORKOUT_6,"NULL_1");//needs to be deleted
+        //values.put(COLUMN_SUBWORKOUT_7,"NULL_2");
         database.insert(DataBaseContract.MainWorkoutData.TABLE_NAME,null,values);
     }
 

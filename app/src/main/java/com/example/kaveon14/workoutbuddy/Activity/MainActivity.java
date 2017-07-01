@@ -64,13 +64,7 @@ public class MainActivity extends AppCompatActivity
         activity =  this;
         setBaseContent();
         getPermissions();
-        //preloadExerciseData();
-        SubWorkoutTable st = new SubWorkoutTable(getBaseContext());
-        List<SubWorkout> subWorkouts = st.getSubworkouts();
-        for(int x=0;x<subWorkouts.size();x++) {
-            System.out.println("nice: "+subWorkouts.get(x).getSubWorkoutName());
-        }
-
+        preloadExerciseData();
     }
 
     @Override

@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-
+// TODO temporary switching focus to the act of doing a workout and storing the results
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,6 +21,8 @@ import java.util.List;
 
 public class LiftingStatsFragment extends Fragment {//change name to workout stats
 
+    private LiftingStatsAdapter liftingStatsAdapter;
+
     public LiftingStatsFragment() {
         // Required empty public constructor
     }
@@ -38,7 +40,7 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
         return root;
     }
 
-    private void test(View root){
+    private LiftingStatsAdapter test(View root){
 
         MainWorkoutTable mt = new MainWorkoutTable(getContext());
         List<String> m = mt.getSubWorkoutNames("TEST WORKOUT");
@@ -55,6 +57,21 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
         for(int x=0;x<m.size();x++) {
             subWorkouts.add(new SubWorkout(m.get(x),ex));
         }
+
+        // best bet create workout object that extends the subWorkout
+
+
+
+
+
+
+
+
+
+
+
+
+        return liftingStatsAdapter;
     }
 
     private class LiftingStatsAdapter extends BaseAdapter {
@@ -98,7 +115,8 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
             setTotalWeightView(rowView);
         }
 
-        private void setDateView() {
+        private void setDateView() {//not sure how i will log this
+            //possinly add new column to table
 
         }
 
@@ -116,7 +134,7 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
 
         private void setTotalSetsView(View rowView) {
             int totalSets = 0;
-            for(Exercise exercise : exerciseList) {
+            for(Exercise exercise : exerciseList) {//will probably be deleted when workout object created
                 totalSets += exercise.getActualSets();
             }
             TextView textView = (TextView) rowView.findViewById(R.id.sets_textView);

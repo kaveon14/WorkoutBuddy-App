@@ -7,7 +7,7 @@ public final class Exercise {
 
     private String exerciseName;
     private String exerciseDescription;
-    private String exerciseReps;
+    private String exerciseReps;//possibly delete
     private String exerciseSets;
     private Bitmap exerciseImage;
     private int actualSets;

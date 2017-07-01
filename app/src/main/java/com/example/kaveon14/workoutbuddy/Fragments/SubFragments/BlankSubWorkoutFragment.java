@@ -17,14 +17,9 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutP
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-import java.util.ArrayList;
 import java.util.List;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
 
-public class
-BlankSubWorkoutFragment extends Fragment {
+public class BlankSubWorkoutFragment extends Fragment {
 
     private WorkoutAdapter workoutAdapter;
     private List<Exercise> exerciseList;

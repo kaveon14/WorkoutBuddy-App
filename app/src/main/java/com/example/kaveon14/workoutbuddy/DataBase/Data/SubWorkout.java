@@ -10,6 +10,10 @@ public class SubWorkout {
     private String subWorkoutName;
     private List<Exercise> exerciseList;
 
+    public SubWorkout() {
+
+    }
+
     public SubWorkout(String subWorkoutName, List<Exercise> exerciseList) {
         this.subWorkoutName = subWorkoutName;
         this.exerciseList = exerciseList;
