@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +16,12 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 //not possible to extend table manager class because this class handles multiple tables
 public class SubWorkoutTable {
 
+    private Context context;
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
 
     public SubWorkoutTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
+        this.context = context;
     }
 
     public void addSubWorkoutTable(String tableName) {
@@ -28,10 +31,11 @@ public class SubWorkoutTable {
         writableDatabase.execSQL(createWorkoutTable(tableName));
         writableDatabase.close();
     }
-//think of a new way to save subWorkout tables so they can match with the mainWorkoutName
+
     public void addExerciseToSubWorkout(String mainWorkoutName,String subWorkoutName,Exercise ex) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
-        // TODO make function require the main workout name //might have to subworkouts with same name
+        // TODO make function require the main workout name //might have two subWorkouts with same name
+        subWorkoutName = getCorrectTableName(subWorkoutName);
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXERCISE_NAMES,ex.getExerciseName());
         values.put(COLUMN_EXERCISE_SETS,ex.getExerciseSets());
@@ -63,6 +67,48 @@ public class SubWorkoutTable {
         readableDatabase.close();
         cursor.close();
         return columnList;
+    }
+
+    public List<SubWorkout> getSubworkouts() {
+        MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
+        List<String> mainWorkoutNames = mainWorkoutTable.getMainWorkoutNames();
+
+        List<SubWorkout> subWorkouts = new ArrayList<>(15);
+        for(int x=0;x<mainWorkoutNames.size();x++) {
+
+            String mainWorkoutName = mainWorkoutNames.get(x);
+            List<String> subWorkoutNames = mainWorkoutTable.getSubWorkoutNames(mainWorkoutName);
+
+            for(int z=0;z<subWorkoutNames.size();z++) {
+
+                String subWorkoutName = subWorkoutNames.get(z);
+                List<Exercise> exerciseList = getSubWorkoutExercises(subWorkoutName);
+
+                SubWorkout subWorkout = new SubWorkout(subWorkoutName, exerciseList);
+                subWorkout.setMainWorkoutName(mainWorkoutName);
+                subWorkouts.add(subWorkout);
+
+            }
+        }
+
+
+        return subWorkouts;
+    }
+
+    public List<Exercise> getSubWorkoutExercises(String tableName) {
+        tableName = getCorrectTableName(tableName);
+        List<String> exerciseNames = getColumn(tableName,COLUMN_EXERCISE_NAMES);
+        List<String> exerciseSets = getColumn(tableName,COLUMN_EXERCISE_SETS);
+        List<String> exerciseReps = getColumn(tableName,COLUMN_EXERCISE_REPS);
+
+        List<Exercise> exerciselist = new ArrayList<>(10);
+        for(int x=0;x<exerciseNames.size();x++) {
+            Exercise exercise = new Exercise(exerciseNames.get(x),null);
+            exercise.setExerciseSets(exerciseSets.get(x));
+            exercise.setExerciseReps(exerciseReps.get(x));
+            exerciselist.add(exercise);
+        }
+        return exerciselist;
     }
 
     public void deleteSubWorkoutTable(String tableName) {

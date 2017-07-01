@@ -87,7 +87,7 @@ BlankSubWorkoutFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Exercise clickedExercise = getSubWorkoutExercise(position);
+                Exercise clickedExercise = exerciseList.get(position);
                 showExercise(clickedExercise);
             }
         });
@@ -133,28 +133,9 @@ BlankSubWorkoutFragment extends Fragment {
     private WorkoutAdapter setWorkoutAdapter() {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
         String tableName = SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName() + "_wk";
-        int amountOfExercises = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES).size();
-        exerciseList = new ArrayList<>();
-        for(int x=0;x<amountOfExercises;x++) {
-            exerciseList.add(getSubWorkoutExercise(x));
-        }
+        exerciseList = subWorkoutTable.getSubWorkoutExercises(tableName);
         workoutAdapter = new WorkoutAdapter(getContext(),exerciseList);
         return workoutAdapter;
-    }
-
-    private Exercise getSubWorkoutExercise(int increment) {//how about no
-        SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName() +"_wk";
-
-        List<String> exerciseNames = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES);
-        List<String> exerciseSets = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_SETS);
-        List<String> exerciseReps = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_REPS);
-
-        Exercise exercise = new Exercise(exerciseNames.get(increment),null);
-        exercise.setExerciseSets(exerciseSets.get(increment));
-        exercise.setExerciseReps(exerciseReps.get(increment));
-
-        return exercise;
     }
 
     public static class WorkoutAdapter extends BaseAdapter  {

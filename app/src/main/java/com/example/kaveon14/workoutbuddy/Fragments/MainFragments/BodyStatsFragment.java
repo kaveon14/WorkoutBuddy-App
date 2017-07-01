@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-
+//restore sorted values to increase sorting speeds
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -38,8 +38,6 @@ public class BodyStatsFragment extends Fragment {
     private View root;
     private List<Body> bodyStats;
     private BodyStatsAdapter bodyStatsAdapter;
-
-
 
     public BodyStatsFragment() {
         // Required empty public constructor

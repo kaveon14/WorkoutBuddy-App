@@ -29,8 +29,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -62,7 +64,13 @@ public class MainActivity extends AppCompatActivity
         activity =  this;
         setBaseContent();
         getPermissions();
-        preloadExerciseData();
+        //preloadExerciseData();
+        SubWorkoutTable st = new SubWorkoutTable(getBaseContext());
+        List<SubWorkout> subWorkouts = st.getSubworkouts();
+        for(int x=0;x<subWorkouts.size();x++) {
+            System.out.println("nice: "+subWorkouts.get(x).getSubWorkoutName());
+        }
+
     }
 
     @Override

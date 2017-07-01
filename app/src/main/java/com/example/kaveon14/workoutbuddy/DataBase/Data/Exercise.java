@@ -38,6 +38,7 @@ public final class Exercise {
     public void setActualWeight(int actualWeight) {
         this.actualWeight = actualWeight;
     }
+
     public void setExerciseImage(Bitmap exerciseImage) {
         this.exerciseImage = exerciseImage;
     }
