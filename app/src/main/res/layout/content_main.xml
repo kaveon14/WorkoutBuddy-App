@@ -68,4 +68,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+    <FrameLayout
+        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutFragment"
+        android:id="@+id/workout_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </android.support.constraint.ConstraintLayout>
