@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -25,27 +26,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
-
-import java.io.File;
 import java.util.Calendar;
-import java.util.List;
-
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -65,6 +61,17 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         preloadExerciseData();
+
+
+        Chronometer c = new Chronometer(getBaseContext());
+        c.setBase(SystemClock.elapsedRealtime());
+        c.start();
+        c.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                System.out.println("time: "+chronometer.getText());
+            }
+        });
     }
 
     @Override
@@ -143,6 +150,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.lifting_stats:
                 //nothing yet and not sure needed
+                showRealWorkoutFragment();
                 break;
             case R.id.workout_menu:
                 showWorkoutFragment();
@@ -196,6 +204,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void showRealWorkoutFragment() {
+        WorkoutFragment wf = new WorkoutFragment();
+        addFragmentToStack(getActiveFragment(),wf,R.id.workout_fragment);
+    }
+
     private Fragment getActiveFragment() {
         return getSupportFragmentManager().findFragmentById(fragId);
     }
@@ -213,8 +226,7 @@ public class MainActivity extends AppCompatActivity
     public void showBlankExerciseFragment() {
         BlankExerciseFragment blankExercise_frag = new BlankExerciseFragment();
         addFragmentToStack(getActiveFragment(),blankExercise_frag
-                ,
-                R.id.blankExercise_fragment);
+                , R.id.blankExercise_fragment);
     }
 
     private void showWorkoutFragment() {
