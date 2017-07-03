@@ -50,17 +50,17 @@
     private ArrayAdapter getMainWorkoutAdapter() {//moved
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(getContext());
         List<String> list = mainWorkoutTable.getMainWorkoutNames();
-        ArrayAdapter adapter = new ArrayAdapter<>(getContext(),
+        ArrayAdapter workoutAdapter = new ArrayAdapter<>(getContext(),
                 R.layout.simple_list_item,list);
-        return adapter;
+        return workoutAdapter;
     }
 
     private ArrayAdapter getSubWorkoutAdapter() {//moved
         MainWorkoutTable workoutTable = new MainWorkoutTable(getContext());
         List<String> list = workoutTable.getSubWorkoutNames(clickedMainWorkout);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),
+        ArrayAdapter<String> workoutAdapter = new ArrayAdapter<String>(getContext(),
                 R.layout.simple_list_item,list);
-        return adapter;
+        return workoutAdapter;
     }
 
     private void handlePopupEvents(ListView listView, View root) {//moved

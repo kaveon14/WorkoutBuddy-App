@@ -10,17 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteExFromSWPopup;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -72,8 +68,9 @@ public class BlankSubWorkoutFragment extends Fragment {
 
     private void showPopupMenu() {
         BlankSWPopupMenu popup = new BlankSWPopupMenu(getView());
-        popup.showPopupWindow();
         popup.setExerciseList(exerciseList);
+        popup.setAdapter(workoutAdapter);
+        popup.showPopupWindow();
     }
 
     private void setTextView(View rootView) {
@@ -88,16 +85,14 @@ public class BlankSubWorkoutFragment extends Fragment {
         } else {
             listView.setAdapter(setWorkoutAdapter());
         }
-        viewExerciseOnClick(listView);
-        deleteExerciseOnLongClick(listView);
+        openWorkoutOnClick(listView);
     }
 
-    private void viewExerciseOnClick(ListView listView) {
+    private void openWorkoutOnClick(ListView listView) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Exercise clickedExercise = exerciseList.get(position);
-                //showExercise(clickedExercise);gonna be moved
                 openWorkoutFragment(clickedExercise);
             }
         });
@@ -111,43 +106,6 @@ public class BlankSubWorkoutFragment extends Fragment {
                 .add(R.id.workout_fragment,workoutFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    private void deleteExerciseOnLongClick(ListView listView) {
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showDeleteExercisePopupWindow(position);
-                return true;
-            }
-        });
-    }
-
-    private void showDeleteExercisePopupWindow(int position) {
-        DeleteExFromSWPopup popup = new DeleteExFromSWPopup(getView());
-        popup.setAdapter(workoutAdapter);
-        popup.setExerciseList(exerciseList);
-        popup.setListViewPosition(position);
-        popup.showPopupWindow();
-    }
-
-    private void showExercise(Exercise exercise) {
-        findExercise(exercise);
-        BlankExerciseFragment blankExerciseFragment = new BlankExerciseFragment();
-        getFragmentManager().beginTransaction()
-                .hide(this)
-                .add(R.id.blankExercise_fragment,blankExerciseFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    private void findExercise(Exercise exercise) {
-        for(Exercise ex : ExerciseFragment.exerciseList) {
-            if(ex.getExerciseName().equalsIgnoreCase(exercise.getExerciseName())) {
-                ExerciseFragment.clickedExercise = ex;
-                break;
-            }
-        }
     }
 
     private WorkoutAdapter setWorkoutAdapter() {

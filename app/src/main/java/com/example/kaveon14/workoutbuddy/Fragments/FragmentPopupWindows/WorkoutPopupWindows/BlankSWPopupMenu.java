@@ -5,12 +5,14 @@ import android.widget.Button;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 public class BlankSWPopupMenu extends PopupWindowManager {
 
     private List<Exercise> exerciseList;
+    private BlankSubWorkoutFragment.WorkoutAdapter adapter;
 
     public BlankSWPopupMenu(View root) {
         setRootView(root);
@@ -21,10 +23,15 @@ public class BlankSWPopupMenu extends PopupWindowManager {
     public void showPopupWindow() {
         displayPopupWindow();
         setViewExerciseBtn();
+        setDeleteExerciseBtn();
     }
 
     public void setExerciseList(List<Exercise> exerciseList) {
         this.exerciseList = exerciseList;
+    }
+
+    public void setAdapter(BlankSubWorkoutFragment.WorkoutAdapter adapter) {
+        this.adapter = adapter;
     }
 
     private void setViewExerciseBtn() {
@@ -45,7 +52,20 @@ public class BlankSWPopupMenu extends PopupWindowManager {
     }
 
     private void setDeleteExerciseBtn() {
-        //show popup window
+        Button btn = (Button) popupLayout.findViewById(R.id.deleteExerciseButton);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteExercisePopup();
+            }
+        });
+    }
+
+    private void showDeleteExercisePopup() {
+        DeleteExFromSWPopup popup = new DeleteExFromSWPopup(getRootView());
+        popup.setWorkoutAdapter(adapter);
+        popup.setExerciseList(exerciseList);
+        popup.showPopupWindow();
     }
 
     private void setStartWorkoutBtn() {
