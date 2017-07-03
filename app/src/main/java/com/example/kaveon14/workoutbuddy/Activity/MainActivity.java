@@ -48,7 +48,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragmen
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static int fragId;
+    public static int fragId;
     private CaldroidFragment caldroid_frag;
     public static MainActivity activity;
     private CustomExercisePopup customExercisePopup;

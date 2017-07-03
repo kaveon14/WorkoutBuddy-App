@@ -13,7 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteExFromSWPopup;
@@ -43,6 +46,7 @@ public class BlankSubWorkoutFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_blank_workout, container, false);
         setTextView(rootView);
         setListView(rootView);
+        MainActivity.fragId = R.id.blankWorkout_fragment;
         setFloatingActionButton();
         return rootView;
     }
@@ -60,15 +64,16 @@ public class BlankSubWorkoutFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupMenu(fab.getRootView());
+                showPopupMenu();
             }
         });
         return fab;
     }
 
-    private void showPopupMenu(View root) {
-        BlankSWPopupMenu blankSWPopupMenu = new BlankSWPopupMenu(root);
-        blankSWPopupMenu.showPopupWindow();
+    private void showPopupMenu() {
+        BlankSWPopupMenu popup = new BlankSWPopupMenu(getView());
+        popup.showPopupWindow();
+        popup.setExerciseList(exerciseList);
     }
 
     private void setTextView(View rootView) {
