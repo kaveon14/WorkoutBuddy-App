@@ -8,16 +8,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            />
+            android:layout_alignParentStart="true" />
 
 
         <ProgressBar
@@ -25,41 +23,41 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="100dp"
             android:layout_height="10dp"
+            android:progress="0"
+            android:layout_marginTop="5dp"
             android:layout_below="@+id/button3"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"
-            android:progress="0" />
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:id="@+id/button3"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="90dp"
             android:layout_height="45dp"
+            android:layout_marginTop="6dp"
+            android:text="Start"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="19dp"
-            android:text="Start" />
+            android:layout_centerHorizontal="true" />
 
         <EditText
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:inputType="time"
             android:text="00:00"
             android:textColor="@android:color/black"
             android:layout_below="@+id/timeProgressBar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="13dp" />
+            android:layout_centerHorizontal="true" />
 
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="Hide Time Intervals"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="5dp"
+            android:checked="true"
+            android:text="Hide Time Intervals" />
 
         <Chronometer
             android:id="@+id/chronometer2"
@@ -67,9 +65,19 @@
             android:layout_height="23dp"
             android:layout_above="@+id/timeProgressBar"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="11dp"
+            android:layout_marginBottom="5dp"
             android:textAlignment="center"
             android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="Add Workout Data"
+            android:layout_marginTop="160dp"
+            android:layout_alignStart="@+id/checkBox" />
+
     </RelativeLayout>
 
 </FrameLayout>

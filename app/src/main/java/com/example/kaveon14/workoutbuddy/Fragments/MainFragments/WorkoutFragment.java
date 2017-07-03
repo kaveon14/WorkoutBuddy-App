@@ -15,19 +15,18 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
+//needs more robust features for time intervals
 public class WorkoutFragment extends Fragment {
 
     private Exercise exercise;
     private WorkoutAdapter workoutAdapter;
-    private int setCount = 1;
+    private int setCount = 1;//needs more accurate name
     private int partialSetCount = 1;
     private List<String> sets;
 
@@ -56,7 +55,7 @@ public class WorkoutFragment extends Fragment {
     }
 
     private void setStartButtonFOrSingleUse(View root) {
-        //without this user must uncheck and tyhen recheck checkbox for button to work
+        //without this user must un-check and then recheck checkbox for button to work
         int x = 0;
         if(x<1) {
             setStartButton(root);
@@ -231,7 +230,6 @@ public class WorkoutFragment extends Fragment {
     private void showPartialAdapter() {
         for(int x = sets.size(); x> partialSetCount; x--) {
             sets.remove("Set "+x);
-            setCount--;
         }
         workoutAdapter.notifyDataSetChanged();
     }
@@ -244,6 +242,11 @@ public class WorkoutFragment extends Fragment {
     private void showEditText(View root) {
         EditText editText = (EditText) root.findViewById(R.id.textView2);
         editText.setVisibility(View.VISIBLE);
+    }
+
+    private void addWorkoutData() {
+        //add nothing to table need to add to a data structure with ine final push that stores
+        //everything at same time
     }
 
     private class WorkoutAdapter extends BaseAdapter {//abstract until required methods implemented

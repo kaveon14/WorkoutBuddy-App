@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-// will be disabled in default workouts
+//add checkbox to list view if checked data stored un-check data not stores and load data on click in workout fragment
+// in popup menu have start a workout button that brings up the checkboxes and change floating add extra button to submit data
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteExFromSWPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment;
@@ -58,10 +60,15 @@ public class BlankSubWorkoutFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //do nothing yet
+                showPopupMenu(fab.getRootView());
             }
         });
         return fab;
+    }
+
+    private void showPopupMenu(View root) {
+        BlankSWPopupMenu blankSWPopupMenu = new BlankSWPopupMenu(root);
+        blankSWPopupMenu.showPopupWindow();
     }
 
     private void setTextView(View rootView) {
