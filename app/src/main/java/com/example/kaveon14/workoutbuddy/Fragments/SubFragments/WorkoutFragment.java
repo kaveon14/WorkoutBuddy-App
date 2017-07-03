@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
+package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -57,10 +57,11 @@ public class WorkoutFragment extends Fragment {
     private void setStartButtonFOrSingleUse(View root) {
         //without this user must un-check and then recheck checkbox for button to work
         int x = 0;
-        if(x<1) {
+       // if(x<1) {
             setStartButton(root);
             x++;
-        }
+        //
+        // }
     }
 
     private void checkBox(View root) {

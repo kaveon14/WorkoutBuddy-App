@@ -18,7 +18,6 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 //add menu to delete or view exercise

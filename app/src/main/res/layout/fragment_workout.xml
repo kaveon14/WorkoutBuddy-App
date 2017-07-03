@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/workout_fragment"
-    tools:context="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutFragment">
+    tools:context="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.WorkoutFragment">
 
 
     <RelativeLayout
