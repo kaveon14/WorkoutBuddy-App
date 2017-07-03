@@ -1,10 +1,10 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,18 +12,31 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.R;
-//fix some stuff refactor then push
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class WorkoutFragment extends Fragment {
 
-    private String START_TIME_INTERVALS = "Start";
-    private String RESET_TIME_INTERVALS = "Reset";
+    private Exercise exercise;
+    private WorkoutAdapter workoutAdapter;
+    private int setCount = 1;
+    private int partialSetCount = 1;
+    private List<String> sets;
 
     public WorkoutFragment() {
         // Required empty public constructor
+    }
+
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
     }
 
     @Override
@@ -35,48 +48,63 @@ public class WorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_workout, container, false);
-        // content needs to be loaded dynamically based on amount of exercises,sets, and reps
         checkBox(root);
+        setStartButtonFOrSingleUse(root);
+        ListView listView = (ListView) root.findViewById(R.id.listView);
+        listView.setAdapter(getAdapter());
         return root;
     }
 
+    private void setStartButtonFOrSingleUse(View root) {
+        //without this user must uncheck and tyhen recheck checkbox for button to work
+        int x = 0;
+        if(x<1) {
+            setStartButton(root);
+            x++;
+        }
+    }
+
     private void checkBox(View root) {
-        String m = "Enter Time in MM:SS";
         CheckBox checkBox = (CheckBox) root.findViewById(R.id.checkBox);
-
-        System.out.println("dafuq: "+checkBox.isChecked());
-
-        EditText ed = (EditText) root.findViewById(R.id.textView2);
-        ed.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(ed.getText().toString().equalsIgnoreCase(m)) {
-                    ed.setText("");
-                }
-                return false;
-            }
-        });
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkBox.isChecked()) {
-                    checkBox.setText("Hide Time Intervals");
-                    setStartButton(root);
-                    ed.setVisibility(View.VISIBLE);
+                    showContent(checkBox);
                 } else  {
-                    checkBox.setText("Show Time Intervals");
-                    hideButton(root);
-                    hideChrono(root);
-                    ed.setVisibility(View.INVISIBLE);
+                    hideContent(checkBox);
                 }
             }
         });
+    }
+
+    private void showContent(CheckBox checkBox) {
+        View root = checkBox.getRootView();
+        checkBox.setText("Hide Time Intervals");
+        showEditText(root);
+        ProgressBar timeProgressBar = (ProgressBar) root.findViewById(R.id.timeProgressBar);
+        if(timeProgressBar.getProgress() == timeProgressBar.getMax()) {
+            setResetButton(root);
+        }else {
+            setStartButton(root);
+        }
+        showPartialAdapter();
+    }
+
+    private void hideContent(CheckBox checkBox) {
+        View root = checkBox.getRootView();
+        checkBox.setText("Show Time Intervals");
+        hideButton(root);
+        hideChronometer(root);
+        hideProgressBar(root);
+        hideEditText(root);
+        showFullAdapter();
     }
 
     private void setStartButton(View root) {
         Button btn = (Button) root.findViewById(R.id.button3);
         EditText editText = (EditText) root.findViewById(R.id.textView2);
-        btn.setText(START_TIME_INTERVALS);
+        btn.setText("Start");
         btn.setVisibility(View.VISIBLE);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +116,22 @@ public class WorkoutFragment extends Fragment {
     }
 
     private void startChronoTimeInterval(View root, String timeLimit) {
+        Chronometer chrono = setupChronometer(root,timeLimit);
+        chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+            @Override
+            public void onChronometerTick(Chronometer chronometer) {
+                int time = getTime(chrono.getText().toString());
+                setProgressBarProgress(root,time);
+                if(chronometer.getText().toString().equalsIgnoreCase(timeLimit)) {//this is called again need to reset chrono
+                    resetChronometer(chronometer);
+                    setResetButton(root);
+                    addSet();
+                }
+            }
+        });
+    }
+
+    private Chronometer setupChronometer(View root,String timeLimit) {
         Chronometer chrono = (Chronometer) root.findViewById(R.id.chronometer2);
         chrono.setFormat("%s");
         chrono.setBase(SystemClock.elapsedRealtime());
@@ -95,20 +139,13 @@ public class WorkoutFragment extends Fragment {
         int maxTime = getTime(timeLimit);
         setProgressBarMax(root,maxTime);
         chrono.setVisibility(View.VISIBLE);
-        chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                int time = getTime(chrono.getText().toString());
-                setProgressBarProgress(root,time);
-                if(chronometer.getText().toString().equalsIgnoreCase(timeLimit)) {//this is called again need to reset chrono
-                    System.out.println("vcalled: "+timeLimit);
-                    chronometer.setText("00:00");
-                    chronometer.stop();
-                    chronometer.setVisibility(View.INVISIBLE);
-                    setResetButton(root);
-                }
-            }
-        });
+        return chrono;
+    }
+
+    private void resetChronometer(Chronometer chronometer) {
+        chronometer.setText("00:00");
+        chronometer.stop();
+        chronometer.setVisibility(View.INVISIBLE);
     }
 
     private int getTime(String time){
@@ -125,17 +162,14 @@ public class WorkoutFragment extends Fragment {
     }
 
     private void setResetButton(View root) {
-        hideChrono(root);
+        hideChronometer(root);
         Button btn = (Button) root.findViewById(R.id.button3);
-        EditText editText = (EditText) root.findViewById(R.id.textView2);
-        btn.setText(RESET_TIME_INTERVALS);
+        btn.setText("Reset");
         btn.setVisibility(View.VISIBLE);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 btn.setVisibility(View.INVISIBLE);
-                String text = "Enter Time in MM:SS";
-                editText.setText(text);
                 setProgressBarProgress(root,0);
                 setStartButton(root);
             }
@@ -147,8 +181,7 @@ public class WorkoutFragment extends Fragment {
         btn.setVisibility(View.INVISIBLE);
     }
 
-
-    private void hideChrono(View root) {
+    private void hideChronometer(View root) {
         Chronometer chrono = (Chronometer) root.findViewById(R.id.chronometer2);
         chrono.setVisibility(View.INVISIBLE);
     }
@@ -164,8 +197,94 @@ public class WorkoutFragment extends Fragment {
         timeProgressBar.setProgress(progress);
     }
 
-    private abstract class WorkoutAdapter extends BaseAdapter {//abstract until required methods implemented
+    private void hideProgressBar(View root) {
+        ProgressBar timeProgressBar = (ProgressBar) root.findViewById(R.id.timeProgressBar);
+        timeProgressBar.setVisibility(View.INVISIBLE);
+    }
 
+    private void addSet() {
+        if(setCount<=Integer.valueOf(exercise.getExerciseSets())) {
+            setCount++;
+            sets.add("Set "+setCount);
+            partialSetCount = sets.size();
+            workoutAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private WorkoutAdapter getAdapter() {
+        sets = new ArrayList<>(5);
+        sets.add("Set 1");
+        workoutAdapter = new WorkoutAdapter(exercise,sets);
+        return workoutAdapter;
+    }
+
+    private void showFullAdapter() {
+        int exerciseSets = Integer.valueOf(exercise.getExerciseSets());
+        if(setCount<exerciseSets) {
+            for (int x = setCount; x < exerciseSets; x++) {
+                sets.add("Set " + (x + 1));
+            }
+            workoutAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void showPartialAdapter() {
+        for(int x = sets.size(); x> partialSetCount; x--) {
+            sets.remove("Set "+x);
+            setCount--;
+        }
+        workoutAdapter.notifyDataSetChanged();
+    }
+
+    private void hideEditText(View root) {
+        EditText editText = (EditText) root.findViewById(R.id.textView2);
+        editText.setVisibility(View.INVISIBLE);
+    }
+
+    private void showEditText(View root) {
+        EditText editText = (EditText) root.findViewById(R.id.textView2);
+        editText.setVisibility(View.VISIBLE);
+    }
+
+    private class WorkoutAdapter extends BaseAdapter {//abstract until required methods implemented
+
+        private SubWorkout subWorkout;
+        private Exercise exercise;
+        private List<String> sets;
+        //set#: reps#/weight#
+        public WorkoutAdapter(Exercise exercise,List<String> sets) {
+            this.exercise = exercise;
+            this.sets = sets;
+
+        }
+
+        public int getCount() {
+            return sets.size();
+        }
+
+        public String getItem(int i) {
+            return sets.get(i);
+        }
+
+        public long getItemId(int i) {
+            return i;
+        }
+
+        public View getView(int position, View rowView, ViewGroup viewGroup) {
+            if(rowView == null) {
+                LayoutInflater inflater = (LayoutInflater) getContext()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                rowView = inflater.inflate(R.layout.workout_list_item,null);
+            }
+            String set = sets.get(position);
+            setSetsTextView(rowView,set);
+            return rowView;
+        }
+
+        private void setSetsTextView(View rowView,String set) {
+            TextView setsView = (TextView) rowView.findViewById(R.id.setsTextView);
+            setsView.setText(set);
+        }
     }
 }
 //button update text every second with time once time met set text to reset before have button set to start to get data from edit text

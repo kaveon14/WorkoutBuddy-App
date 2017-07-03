@@ -25,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
@@ -61,17 +62,7 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         preloadExerciseData();
-
-
-        Chronometer c = new Chronometer(getBaseContext());
-        c.setBase(SystemClock.elapsedRealtime());
-        c.start();
-        c.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                System.out.println("time: "+chronometer.getText());
-            }
-        });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override

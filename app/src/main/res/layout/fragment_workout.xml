@@ -8,7 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <ListView
             android:id="@+id/listView"
@@ -16,8 +17,7 @@
             android:layout_height="300dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:descendantFocusability="afterDescendants"
-            android:windowSoftInputMode="adjustPan" />
+            />
 
 
         <ProgressBar
@@ -37,30 +37,29 @@
             android:layout_height="45dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="19dp"
             android:text="Start" />
 
         <EditText
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
+            android:inputType="time"
+            android:text="00:00"
+            android:textColor="@android:color/black"
             android:layout_below="@+id/timeProgressBar"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            android:text="Enter Time in MM:SS"
-            android:inputType="time"
-            android:textColor="@android:color/black" />
+            android:layout_marginTop="13dp" />
 
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Hide Time Intervals"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="13dp"
-            android:checked="true"
-            android:text="Hide Time Intervals" />
+            android:layout_marginTop="16dp" />
 
         <Chronometer
             android:id="@+id/chronometer2"

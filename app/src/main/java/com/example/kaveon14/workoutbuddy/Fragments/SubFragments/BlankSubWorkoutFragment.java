@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
@@ -16,9 +17,10 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteExFromSWPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-
+//add menu to delete or view exercise
 public class BlankSubWorkoutFragment extends Fragment {
 
     private WorkoutAdapter workoutAdapter;
@@ -83,9 +85,20 @@ public class BlankSubWorkoutFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Exercise clickedExercise = exerciseList.get(position);
-                showExercise(clickedExercise);
+                //showExercise(clickedExercise);gonna be moved
+                openWorkoutFragment(clickedExercise);
             }
         });
+    }
+
+    private void openWorkoutFragment(Exercise exercise) {
+        WorkoutFragment workoutFragment =  new WorkoutFragment();
+        workoutFragment.setExercise(exercise);
+        getFragmentManager().beginTransaction()
+                .hide(this)
+                .add(R.id.workout_fragment,workoutFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void deleteExerciseOnLongClick(ListView listView) {
