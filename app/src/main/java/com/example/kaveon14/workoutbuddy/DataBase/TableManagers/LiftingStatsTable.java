@@ -43,15 +43,6 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
         writableDatabase.insert(TABLE_NAME,null,values);
         writableDatabase.close();
     }
-
-
-
-
-
-
-
-
-
 }
 //hopefully final column stup
 // MainWorkout_Name     SubWorkout_Name     Workout_Date    Exercise#_Set#

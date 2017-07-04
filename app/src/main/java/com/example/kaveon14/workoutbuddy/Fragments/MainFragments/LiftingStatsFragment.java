@@ -155,7 +155,7 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
         private void setTotalWeightView(View rowView) {
             int totalWeight = 0;
             for(Exercise exercise : exerciseList) {
-                totalWeight += exercise.getActualWeight();
+                //totalWeight += exercise.getActualWeight();
             }
             TextView textView = (TextView) rowView.findViewById(R.id.weight_textView);
             String text = textView.getText().toString();

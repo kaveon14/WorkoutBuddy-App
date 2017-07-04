@@ -12,7 +12,7 @@ public final class Exercise {
     private Bitmap exerciseImage;
     private int actualSets;
     private int actualReps;
-    private int actualWeight;
+    private String actualWeight;
 
     public Exercise(String exerciseName,@Nullable String exerciseDescription) {
         this.exerciseName = exerciseName;
@@ -35,7 +35,7 @@ public final class Exercise {
         this.actualReps = actualReps;
     }
 
-    public void setActualWeight(int actualWeight) {
+    public void setActualWeight(String actualWeight) {
         this.actualWeight = actualWeight;
     }
 
@@ -67,7 +67,7 @@ public final class Exercise {
         return actualReps;
     }
 
-    public int getActualWeight() {
+    public String getActualWeight() {
         return actualWeight;
     }
 

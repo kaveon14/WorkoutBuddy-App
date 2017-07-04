@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +28,7 @@ public class WorkoutFragment extends Fragment {
     private int setCount = 1;//needs more accurate name
     private int partialSetCount = 1;
     private List<String> sets;
+    List<Exercise> exerciseList;
 
     public WorkoutFragment() {
         // Required empty public constructor
@@ -48,20 +48,11 @@ public class WorkoutFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_workout, container, false);
         checkBox(root);
-        setStartButtonFOrSingleUse(root);
+        setStartButton(root);
         ListView listView = (ListView) root.findViewById(R.id.listView);
         listView.setAdapter(getAdapter());
+        setSaveDataBtn(root);
         return root;
-    }
-
-    private void setStartButtonFOrSingleUse(View root) {
-        //without this user must un-check and then recheck checkbox for button to work
-        int x = 0;
-       // if(x<1) {
-            setStartButton(root);
-            x++;
-        //
-        // }
     }
 
     private void checkBox(View root) {
@@ -94,7 +85,7 @@ public class WorkoutFragment extends Fragment {
     private void hideContent(CheckBox checkBox) {
         View root = checkBox.getRootView();
         checkBox.setText("Show Time Intervals");
-        hideButton(root);
+        hideChronoButton(root);
         hideChronometer(root);
         hideProgressBar(root);
         hideEditText(root);
@@ -176,7 +167,18 @@ public class WorkoutFragment extends Fragment {
         });
     }
 
-    private void hideButton(View root) {
+    private void setSaveDataBtn(View root) {
+        if(exerciseList==null) {exerciseList = new ArrayList<>();}
+        Button btn = (Button) root.findViewById(R.id.button4);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                workoutAdapter.getExerciseList();
+            }
+        });
+    }
+
+    private void hideChronoButton(View root) {
         Button btn = (Button) root.findViewById(R.id.button3);
         btn.setVisibility(View.INVISIBLE);
     }
@@ -214,7 +216,8 @@ public class WorkoutFragment extends Fragment {
     private WorkoutAdapter getAdapter() {
         sets = new ArrayList<>(5);
         sets.add("Set 1");
-        workoutAdapter = new WorkoutAdapter(exercise,sets);
+        exerciseList = new ArrayList<>();
+        workoutAdapter = new WorkoutAdapter(exercise,sets,exerciseList);
         return workoutAdapter;
     }
 
@@ -256,9 +259,14 @@ public class WorkoutFragment extends Fragment {
         private Exercise exercise;
         private List<String> sets;
         //set#: reps#/weight#
-        public WorkoutAdapter(Exercise exercise,List<String> sets) {
+        List<Exercise> exerciseList;
+        List<View> rowViews;
+
+
+        public WorkoutAdapter(Exercise exercise,List<String> sets,List<Exercise> exerciseList) {
             this.exercise = exercise;
             this.sets = sets;
+            this.exerciseList = exerciseList;
 
         }
 
@@ -274,11 +282,52 @@ public class WorkoutFragment extends Fragment {
             return i;
         }
 
+        private void test(View rowView) {
+            for(int x=0;x<getCount();x++) {
+                getExerciseObject(rowView);
+            }
+        }
+
+        public Exercise getExerciseObject(View rowView) {
+            int actualSets = getCount();
+            EditText repsAndWeight_editTextView = (EditText) rowView.findViewById(R.id.repsNweightEditText);
+            String repsAndWeight = repsAndWeight_editTextView.getText().toString();
+            int index = repsAndWeight.indexOf("/");
+            String reps = repsAndWeight.subSequence(0,index).toString();
+            String weight = repsAndWeight.subSequence(index+1,repsAndWeight.length()).toString();
+
+            Exercise ex = new Exercise(exercise.getExerciseName(),null);
+            if(!reps.equalsIgnoreCase("reps")) {
+                ex.setActualReps(Integer.valueOf(reps));
+            }
+            ex.setActualSets(actualSets);
+            ex.setActualWeight(weight);
+            System.out.println("wtf");
+            return ex;
+        }
+
+        public List<Exercise> getExerciseList() {
+            for(int x=rowViews.size()-1;x>0;x--) {
+                exerciseList.add(getExerciseObject(rowViews.get(x)));
+            }
+            System.out.println("yes: "+exerciseList.size());
+            //exerciseList.remove(0);
+            for(int x=0;x<exerciseList.size();x++) {
+                System.out.println("nice: "+exerciseList.get(x).getActualReps());
+            }
+            return exerciseList;
+        }
+
         public View getView(int position, View rowView, ViewGroup viewGroup) {
             if(rowView == null) {
+                if(rowViews==null) {
+                    rowViews = new ArrayList<>();
+                }
                 LayoutInflater inflater = (LayoutInflater) getContext()
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 rowView = inflater.inflate(R.layout.workout_list_item,null);
+                rowViews.add(position,rowView);
+                //getExerciseObject(rowView);
             }
             String set = sets.get(position);
             setSetsTextView(rowView,set);
