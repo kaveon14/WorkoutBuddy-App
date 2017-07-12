@@ -4,12 +4,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import static com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu.workoutData;
 
 public class GetDatePopup extends PopupWindowManager {
@@ -42,6 +40,7 @@ public class GetDatePopup extends PopupWindowManager {
                 table.addAWorkout(workoutData, SubWorkoutFragment.clickedSubWorkout,date);//get date from subworkout
                 Toast.makeText(context,"Date Added and Workout Saved",Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
+                workoutData = null;
             }
         });
     }

@@ -21,13 +21,13 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LiftingStatsFragment extends Fragment {//change name to workout stats
+public class LiftingStatsFragment extends Fragment {//change name
 
     private LiftingStatsAdapter liftingStatsAdapter;
 
     public LiftingStatsFragment() {
         // Required empty public constructor
-    }//working but data screwed up
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,14 +39,14 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_lifting_stats, container, false);
         ListView listView = (ListView) root.findViewById(R.id.liftStats_listView);
-        listView.setAdapter(test());
+        listView.setAdapter(test());//on click view full workout stats
         return root;
     }
 
     private LiftingStatsAdapter test(){
         LiftingStatsTable table = new LiftingStatsTable(getContext());
 
-        List<SubWorkout> subWorkouts = table.getEx();//better to get specif subWorkouts with exercise and sht alredy done
+        List<SubWorkout> subWorkouts = table.getEx();
 
         liftingStatsAdapter = new LiftingStatsAdapter(subWorkouts);
         return new LiftingStatsAdapter(subWorkouts);
@@ -54,9 +54,9 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
 
     private class LiftingStatsAdapter extends BaseAdapter {
 
-        private List<SubWorkout> subWorkoutList;//ex list needs to come from subWorkouts
+        private List<SubWorkout> subWorkoutList;
 
-        public LiftingStatsAdapter(List<SubWorkout> subWorkoutList) {//subWorkoutList??
+        public LiftingStatsAdapter(List<SubWorkout> subWorkoutList) {
             this.subWorkoutList = subWorkoutList;
         }
 
@@ -92,7 +92,7 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
             setTotalWeightView(rowView,subWorkout);
         }
 
-        private void setDateView(View rowView,SubWorkout subWorkout) {//not sure how i will log this
+        private void setDateView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView)  rowView.findViewById(R.id.liftingStatsDate_textView);
             String text = "Date -> ";
             textView.setText(text + subWorkout.getDate());
@@ -110,8 +110,7 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
             textView.setText(text + subWorkout.getSubWorkoutName());
         }
 
-        //mostly no longer needed(the algo is not needed)
-        private void setTotalSetsView(View rowView,SubWorkout subWorkout) {//this won't work for now
+        private void setTotalSetsView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.sets_textView);
             String text = "Total Sets -> ";
             textView.setText(text + subWorkout.getTotalSets());

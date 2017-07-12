@@ -80,7 +80,7 @@ public class BlankSWPopupMenu extends PopupWindowManager {
         popup.showPopupWindow();
     }
 
-    private void setStartWorkoutBtn() {//open window and ask for date in in DD-MM-YYYY
+    private void setStartWorkoutBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.startWorkoutButton);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,21 +95,18 @@ public class BlankSWPopupMenu extends PopupWindowManager {
         });
     }
 
-    private void setSaveWorkoutBtn() {//get data from each checked exercise
+    private void setSaveWorkoutBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.saveWorkoutButton);
         btn.setVisibility(View.VISIBLE);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //end process of getting data and save workout data
-                if(workoutData == null) {//need to make check boxes useful
+                if(workoutData == null) {
                     workoutData = new ArrayList<>(5);
                 }
                 adapter.hideCheckBoxes();
                 popupWindow.dismiss();
                 showGetDatePopup();
-                //get date then save on button push ion date window
-                //workoutData = null;
                 btn.setVisibility(View.INVISIBLE);
             }
         });
