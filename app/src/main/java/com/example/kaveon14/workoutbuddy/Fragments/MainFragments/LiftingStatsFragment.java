@@ -10,15 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LiftingStatsFragment extends Fragment {//change name
@@ -46,7 +41,7 @@ public class LiftingStatsFragment extends Fragment {//change name
     private LiftingStatsAdapter test(){
         LiftingStatsTable table = new LiftingStatsTable(getContext());
 
-        List<SubWorkout> subWorkouts = table.getEx();
+        List<SubWorkout> subWorkouts = table.getCompletedWorkouts();
 
         liftingStatsAdapter = new LiftingStatsAdapter(subWorkouts);
         return new LiftingStatsAdapter(subWorkouts);
