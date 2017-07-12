@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-// TODO start lifting stats stuff
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,17 +30,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.LiftingStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.WorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -61,6 +68,85 @@ public class MainActivity extends AppCompatActivity
         getPermissions();
         preloadExerciseData();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        LiftingStatsTable table = new LiftingStatsTable(getBaseContext());
+        table.printTable();
+
+        /*Exercise ex = new Exercise("Bench Press",null);//extremely rough draft
+        ex.setActualReps(5);
+        ex.setActualSets(3);
+        ex.setActualWeight("120lb");
+
+        Exercise eb = new Exercise("Bench Press",null);//extremely rough draft
+        eb.setActualReps(5);
+        eb.setActualSets(3);
+        eb.setActualWeight("140lb");
+
+        Exercise ebb = new Exercise("Bench Press",null);//extremely rough draft
+        ebb.setActualReps(5);
+        ebb.setActualSets(3);
+        ebb.setActualWeight("160lb");
+
+        Exercise e = new Exercise("Squat",null);
+        e.setActualReps(10);
+        e.setActualSets(3);//should log all 6 sets
+        e.setActualWeight("220lb");
+
+        Exercise es = new Exercise("Squat",null);
+        es.setActualReps(8);
+        es.setActualSets(3);//should log all 6 sets
+        es.setActualWeight("240lb");
+
+        Exercise ess = new Exercise("Squat",null);
+        ess.setActualReps(6);
+        ess.setActualSets(3);//should log all 6 sets
+        ess.setActualWeight("260lb");
+
+        Exercise fs = new Exercise("Front Squat",null);
+        fs.setActualReps(6);
+        fs.setActualSets(2);//should log all 6 sets
+        fs.setActualWeight("260lb");
+
+        Exercise fss = new Exercise("Front Squat",null);
+        fss.setActualReps(6);
+        fss.setActualSets(2);//should log all 6 sets
+        fss.setActualWeight("280lb");*/
+
+        /*List<Exercise> exList = new ArrayList<>(2);
+        exList.add(e);
+        exList.add(es);
+        exList.add(ess);
+        exList.add(ex);
+        exList.add(eb);
+        exList.add(ebb);
+        exList.add(fs);
+        exList.add(fss);
+
+        SubWorkout subWorkout = new SubWorkout("test subWorkout",exList);
+        subWorkout.setMainWorkoutName("Tst mainWokrout");
+        subWorkout.setDate("1997-08-23");
+
+        LiftingStatsTable table = new LiftingStatsTable(getBaseContext());
+        table.addAWorkout(exList,subWorkout,"2017-08-23");*/
+       /* table.testSort("2015-08-23");
+        table.testSort("2010-10-19");
+        table.testSort("1999-01-25");
+        table.testSort("2005-07-27");//nice it is working do same for other class
+        //table.dafuq();
+        //table.getExerciseIndex(exList,exList.get(0));
+        table.addAWorkout(exList,subWorkout,"1/11/1");/
+        //table.getData();
+        /*List<SubWorkout> subWorkouts = table.getData();
+        for(SubWorkout s : subWorkouts) {
+            System.out.println("s name: "+s.getSubWorkoutName());
+            System.out.println("m name: "+s.getMainWorkoutName());
+            System.out.println("date: "+s.getDate());
+        }*/
+        /*List<Exercise> exercises = table.getEx();
+        System.out.println("fuck: "+exercises.size());
+        for(Exercise ez : exercises) {
+            System.out.println("name: "+ez.getExerciseName());
+        }*/
     }
 
     @Override
@@ -139,7 +225,8 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.lifting_stats:
                 //nothing yet and not sure needed
-                showRealWorkoutFragment();
+                //showRealWorkoutFragment();
+                showLiftingStatsFragment();
                 break;
             case R.id.workout_menu:
                 showWorkoutFragment();
@@ -193,13 +280,18 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private Fragment getActiveFragment() {
+        return getSupportFragmentManager().findFragmentById(fragId);
+    }
+
+    private void showLiftingStatsFragment() {
+        LiftingStatsFragment liftingStatsFragment = new LiftingStatsFragment();
+        addFragmentToStack(getActiveFragment(),liftingStatsFragment,R.id.liftingStats_fragment);
+    }
+
     private void showRealWorkoutFragment() {
         WorkoutFragment wf = new WorkoutFragment();
         addFragmentToStack(getActiveFragment(),wf,R.id.workout_fragment);
-    }
-
-    private Fragment getActiveFragment() {
-        return getSupportFragmentManager().findFragmentById(fragId);
     }
 
     private void showBodyStatsFragment() {

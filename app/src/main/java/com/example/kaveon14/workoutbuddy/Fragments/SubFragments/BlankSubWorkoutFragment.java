@@ -10,21 +10,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 //add menu to delete or view exercise
 public class BlankSubWorkoutFragment extends Fragment {
 
     private WorkoutAdapter workoutAdapter;
     private List<Exercise> exerciseList;
+    public static Map<String,Workout> workoutMap;
 
     public BlankSubWorkoutFragment() {
         // Required empty public constructor
@@ -115,15 +122,18 @@ public class BlankSubWorkoutFragment extends Fragment {
         return workoutAdapter;
     }
 
-    public static class WorkoutAdapter extends BaseAdapter  {
+    public static class WorkoutAdapter extends BaseAdapter  {//workout object needs tocome in to play
 
         private List<Exercise> exerciseList;
         private Context context;
         private TextView exerciseNameView;
+        private List<View> rowViews;
+        private List<Workout> workouts;
 
         public WorkoutAdapter(Context context,List<Exercise> exercises) {
             this.context = context;
             this.exerciseList = exercises;
+            workouts = new ArrayList<>(10);
         }
 
         public int getCount() {
@@ -141,12 +151,42 @@ public class BlankSubWorkoutFragment extends Fragment {
         public View getView(int position, View rowView, ViewGroup viewGroup) {
             Exercise exercise = exerciseList.get(position);
             if (rowView == null) {
+                if(rowViews == null) {
+                    rowViews = new ArrayList<>();
+                }
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 rowView = inflater.inflate(R.layout.blank_workout_list_item, null);
+                rowViews.add(position,rowView);
             }
             setListItemView(rowView,exercise);
             return rowView;
+        }
+
+        public void showCheckBoxes() {
+            CheckBox checkBox;
+            for(View rowView : rowViews) {
+                checkBox = (CheckBox) rowView.findViewById(R.id.blankWorkoutCheckBox);
+                checkBox.setVisibility(View.VISIBLE);
+            }
+        }
+
+        public void onCheckedBox() {
+            CheckBox checkBox;
+            for (View rowView : rowViews) {
+                checkBox = (CheckBox) rowView.findViewById(R.id.blankWorkoutCheckBox);
+                if (checkBox.isChecked()) {
+                    workouts.add(new Workout(WorkoutFragment.getWorkoutData()));
+                }
+            }
+        }
+
+        public void hideCheckBoxes() {
+            CheckBox checkBox;
+            for(View rowView : rowViews) {
+                checkBox = (CheckBox) rowView.findViewById(R.id.blankWorkoutCheckBox);
+                checkBox.setVisibility(View.INVISIBLE);
+            }
         }
 
         private void setListItemView(View rowView,Exercise exercise) {
@@ -155,20 +195,25 @@ public class BlankSubWorkoutFragment extends Fragment {
             setExerciseSets(rowView,exercise);
         }
 
-        private void setExerciseNameTextView(View rowView,Exercise exercise) {
+        private String setExerciseNameTextView(View rowView,Exercise exercise) {
+            String text = exercise.getExerciseName();
             exerciseNameView = (TextView) rowView.findViewById(R.id.nameView);
-            exerciseNameView.setText(exercise.getExerciseName());
+            exerciseNameView.setText(text);
+            return text;
         }
 
-        private void setExerciseRepsTextView(View rowView,Exercise exercise) {
+        private String setExerciseRepsTextView(View rowView,Exercise exercise) {
+            String text = exercise.getExerciseReps();
             TextView repsView = (TextView) rowView.findViewById(R.id.repsView);
-            repsView.setText(exercise.getExerciseReps());
+            repsView.setText(text);
+            return text;
         }
 
-        private void setExerciseSets(View rowView,Exercise exercise) {
+        private String setExerciseSets(View rowView,Exercise exercise) {
+            String text = exercise.getExerciseSets();
             TextView setsView = (TextView) rowView.findViewById(R.id.setsView);
-            setsView.setText(exercise.getExerciseSets());
+            setsView.setText(text);
+            return text;
         }
-
     }
 }

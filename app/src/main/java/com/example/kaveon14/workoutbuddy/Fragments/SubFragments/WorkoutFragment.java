@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-
+//use map with exercise(or string) and list<exercise> to log data
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -15,11 +15,16 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
+//TODO get date and sets to store dta(use adapter to get count)
 //needs more robust features for time intervals
 public class WorkoutFragment extends Fragment {
 
@@ -28,7 +33,7 @@ public class WorkoutFragment extends Fragment {
     private int setCount = 1;//needs more accurate name
     private int partialSetCount = 1;
     private List<String> sets;
-    List<Exercise> exerciseList;
+    private static List<Exercise> exerciseList;//need to check this
 
     public WorkoutFragment() {
         // Required empty public constructor
@@ -173,7 +178,15 @@ public class WorkoutFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                workoutAdapter.getExerciseList();
+                //make sure workout is started
+                try {
+                    exerciseList = workoutAdapter.getExerciseList();
+                    BlankSWPopupMenu.workoutData.addAll(exerciseList);
+                    Toast.makeText(getContext(),"Data Added",Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) {
+                    Toast.makeText(getContext(),"Workout Not Started!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -248,26 +261,21 @@ public class WorkoutFragment extends Fragment {
         editText.setVisibility(View.VISIBLE);
     }
 
-    private void addWorkoutData() {
-        //add nothing to table need to add to a data structure with ine final push that stores
-        //everything at same time
+    public static List<Exercise> getWorkoutData() {
+        return exerciseList;
     }
 
-    private class WorkoutAdapter extends BaseAdapter {//abstract until required methods implemented
+    private class WorkoutAdapter extends BaseAdapter {
 
-        private SubWorkout subWorkout;
         private Exercise exercise;
         private List<String> sets;
-        //set#: reps#/weight#
-        List<Exercise> exerciseList;
-        List<View> rowViews;
-
+        private List<Exercise> exerciseList;
+        private List<View> rowViews;
 
         public WorkoutAdapter(Exercise exercise,List<String> sets,List<Exercise> exerciseList) {
             this.exercise = exercise;
             this.sets = sets;
             this.exerciseList = exerciseList;
-
         }
 
         public int getCount() {
@@ -282,38 +290,29 @@ public class WorkoutFragment extends Fragment {
             return i;
         }
 
-        private void test(View rowView) {
-            for(int x=0;x<getCount();x++) {
-                getExerciseObject(rowView);
-            }
-        }
-
         public Exercise getExerciseObject(View rowView) {
             int actualSets = getCount();
             EditText repsAndWeight_editTextView = (EditText) rowView.findViewById(R.id.repsNweightEditText);
             String repsAndWeight = repsAndWeight_editTextView.getText().toString();
             int index = repsAndWeight.indexOf("/");
-            String reps = repsAndWeight.subSequence(0,index).toString();
-            String weight = repsAndWeight.subSequence(index+1,repsAndWeight.length()).toString();
+            String reps = repsAndWeight.subSequence(0,index).toString().trim();
+            String weight = repsAndWeight.subSequence(index+1,repsAndWeight.length()).toString().trim();
 
             Exercise ex = new Exercise(exercise.getExerciseName(),null);
-            if(!reps.equalsIgnoreCase("reps")) {
+            try {
                 ex.setActualReps(Integer.valueOf(reps));
+            } catch(NumberFormatException e) {
+                e.printStackTrace();
+                ex.setActualReps(0);
             }
             ex.setActualSets(actualSets);
             ex.setActualWeight(weight);
-            System.out.println("wtf");
             return ex;
         }
 
         public List<Exercise> getExerciseList() {
             for(int x=rowViews.size()-1;x>0;x--) {
                 exerciseList.add(getExerciseObject(rowViews.get(x)));
-            }
-            System.out.println("yes: "+exerciseList.size());
-            //exerciseList.remove(0);
-            for(int x=0;x<exerciseList.size();x++) {
-                System.out.println("nice: "+exerciseList.get(x).getActualReps());
             }
             return exerciseList;
         }
@@ -327,7 +326,6 @@ public class WorkoutFragment extends Fragment {
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 rowView = inflater.inflate(R.layout.workout_list_item,null);
                 rowViews.add(position,rowView);
-                //getExerciseObject(rowView);
             }
             String set = sets.get(position);
             setSetsTextView(rowView,set);

@@ -13,7 +13,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.SubWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment.clickedExercise;

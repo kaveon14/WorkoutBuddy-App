@@ -43,7 +43,7 @@ public abstract class TableManager {
         while(cursor.moveToNext()) {
             for(int x=0;x<columnCount;x++) {
                 String columnName = cursor.getColumnName(x);
-                System.out.print(columnName + " : " +
+                System.out.print(" "+columnName + ": " +
                         cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
             }
             System.out.println("");

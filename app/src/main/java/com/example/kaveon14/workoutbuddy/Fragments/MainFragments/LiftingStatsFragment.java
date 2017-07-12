@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.R;
 
@@ -25,7 +27,7 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
 
     public LiftingStatsFragment() {
         // Required empty public constructor
-    }
+    }//working but data screwed up
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,63 +38,38 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_lifting_stats, container, false);
-
+        ListView listView = (ListView) root.findViewById(R.id.liftStats_listView);
+        listView.setAdapter(test());
         return root;
     }
 
-    private LiftingStatsAdapter test(View root){
+    private LiftingStatsAdapter test(){
+        LiftingStatsTable table = new LiftingStatsTable(getContext());
 
-        MainWorkoutTable mt = new MainWorkoutTable(getContext());
-        List<String> m = mt.getSubWorkoutNames("TEST WORKOUT");
-        List<SubWorkout> subWorkouts = new ArrayList<>(15);//better to get specif subWorkouts with exercise and sht alredy done
+        List<SubWorkout> subWorkouts = table.getEx();//better to get specif subWorkouts with exercise and sht alredy done
 
-
-        ExerciseTable et = new ExerciseTable(getContext());
-        List<Exercise> ex = et.getCustomExercises();
-        for(int x=0;x<ex.size();x++) {
-            ex.get(x).setActualReps(x);
-            ex.get(x).setActualReps(x);
-        }
-
-        for(int x=0;x<m.size();x++) {
-            subWorkouts.add(new SubWorkout(m.get(x),ex));
-        }
-
-        // best bet create workout object that extends the subWorkout
-
-
-
-
-
-
-
-
-
-
-
-
-        return liftingStatsAdapter;
+        liftingStatsAdapter = new LiftingStatsAdapter(subWorkouts);
+        return new LiftingStatsAdapter(subWorkouts);
     }
 
     private class LiftingStatsAdapter extends BaseAdapter {
 
-        List<Exercise> exerciseList;//possibly not need subWorkouts contain the exercises
-        List<SubWorkout> subWorkoutList;
+        private List<SubWorkout> subWorkoutList;//ex list needs to come from subWorkouts
 
-        public LiftingStatsAdapter(List<SubWorkout> subWorkoutList) {
+        public LiftingStatsAdapter(List<SubWorkout> subWorkoutList) {//subWorkoutList??
             this.subWorkoutList = subWorkoutList;
         }
 
         public int getCount() {
-          return 0;
+          return subWorkoutList.size();
       }
+
+        public SubWorkout getItem(int i) {
+            return subWorkoutList.get(i);
+        }
 
         public long getItemId(int i) {
-          return i;
-      }
-
-        public String getItem(int i) {
-            return null;
+            return i;
         }
 
         public View getView(int position,View rowView,ViewGroup viewGroup) {
@@ -107,62 +84,50 @@ public class LiftingStatsFragment extends Fragment {//change name to workout sta
         }
 
         private void setListItemView(View rowView,SubWorkout subWorkout) {
-            setDateView();
+            setDateView(rowView,subWorkout);
             setMainWorkoutTextView(rowView,subWorkout);
             setSubWorkoutTextView(rowView,subWorkout);
-            setTotalSetsView(rowView);
-            setTotalRepsView(rowView);
-            setTotalWeightView(rowView);
+            setTotalSetsView(rowView,subWorkout);
+            setTotalRepsView(rowView,subWorkout);
+            setTotalWeightView(rowView,subWorkout);
         }
 
-        private void setDateView() {//not sure how i will log this
-            //possinly add new column to table
-
+        private void setDateView(View rowView,SubWorkout subWorkout) {//not sure how i will log this
+            TextView textView = (TextView)  rowView.findViewById(R.id.liftingStatsDate_textView);
+            String text = "Date -> ";
+            textView.setText(text + subWorkout.getDate());
         }
 
         private void setMainWorkoutTextView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.mainWorkout_textView);
-            String text = textView.getText().toString();
-            textView.setText(text + " " + subWorkout.getMainWorkoutName());
+            String text = "MainWorkout -> ";
+            textView.setText(text+subWorkout.getMainWorkoutName());
         }
 
         private void setSubWorkoutTextView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.subWorkout_textView);
-            String text = textView.getText().toString();
-            textView.setText(text + " " + subWorkout.getSubWorkoutName());
+            String text = "SubWorkout -> ";
+            textView.setText(text + subWorkout.getSubWorkoutName());
         }
 
-        private void setTotalSetsView(View rowView) {
-            int totalSets = 0;
-            for(Exercise exercise : exerciseList) {//will probably be deleted when workout object created
-                totalSets += exercise.getActualSets();
-            }
+        //mostly no longer needed(the algo is not needed)
+        private void setTotalSetsView(View rowView,SubWorkout subWorkout) {//this won't work for now
             TextView textView = (TextView) rowView.findViewById(R.id.sets_textView);
-            String text = textView.getText().toString();
-            textView.setText(text + " " + totalSets);
+            String text = "Total Sets -> ";
+            textView.setText(text + subWorkout.getTotalSets());
         }
 
-        private void setTotalRepsView(View rowView) {
-            int totalReps = 0;
-            for(Exercise exercise : exerciseList) {
-                totalReps += exercise.getActualReps();
-            }
-            TextView textView = (TextView) rowView.findViewById(R.id.sets_textView);
-            String text = textView.getText().toString();
-            textView.setText(text + " " + totalReps);
+        private void setTotalRepsView(View rowView,SubWorkout subWorkout) {
+            System.out.println("please: "+subWorkout.getTotalReps());
+            TextView textView = (TextView) rowView.findViewById(R.id.reps_textView);
+            String text = "Total Reps -> ";
+            textView.setText(text + " " + subWorkout.getTotalReps());
         }
 
-        private void setTotalWeightView(View rowView) {
-            int totalWeight = 0;
-            for(Exercise exercise : exerciseList) {
-                //totalWeight += exercise.getActualWeight();
-            }
+        private void setTotalWeightView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.weight_textView);
-            String text = textView.getText().toString();
-            textView.setText(text + " " + totalWeight);
+            String text = "Total Weight -> ";
+            textView.setText(text +subWorkout.getTotalWeight());
         }
-
-
-
     }
 }

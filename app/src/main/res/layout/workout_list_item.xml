@@ -22,7 +22,7 @@
         android:layout_height="40dp"
         android:ems="10"
         android:inputType="text"
-        android:text="reps/weight lbs/kg"
+        android:text="reps/weight lbs/kgs"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/setsTextView"
         android:layout_marginStart="18dp" />

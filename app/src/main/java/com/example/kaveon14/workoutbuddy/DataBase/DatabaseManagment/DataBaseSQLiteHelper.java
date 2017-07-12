@@ -22,8 +22,6 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_3;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_4;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_5;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_6;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_7;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
@@ -82,12 +80,20 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     }
 
     private String createLiftDataTable() {
-        String columnName = "";
+        String columnPart2;
+        String subColumnName;
+        String repsColumn;
+        String weightColumn;
         for(int x=1;x<=15;x++) {
             String columnPart1 = "Exercise" + x;
             for(int z=1;z<=10;z++) {
-                columnName = columnPart1 + "_Set" + z;
-                DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
+                columnPart2 = columnPart1 + "_Set" + z;
+                subColumnName = columnPart2 + "_Name" + z;
+                repsColumn = columnPart2 + "_Reps" + z;
+                weightColumn = columnPart2 + "_Weight" + z;
+                DataBaseContract.LiftData.createLiftingStatsColumn(subColumnName);
+                DataBaseContract.LiftData.createLiftingStatsColumn(repsColumn);
+                DataBaseContract.LiftData.createLiftingStatsColumn(weightColumn);
             }
         }
         DataBaseContract.LiftData.setColumns();

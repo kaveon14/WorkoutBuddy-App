@@ -118,7 +118,7 @@ public class DataBaseContract {
         public static final String  CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_DATE + " TEXT, " +
+                COLUMN_DATE + " TEXT, " +//update like lifting stats to already be sorted
                 COLUMN_WEIGHT + " TEXT, " +
                 COLUMN_CHEST_SIZE + " TEXT, " +
                 COLUMN_BACK_SIZE + " TEXT, " +
@@ -162,7 +162,7 @@ public class DataBaseContract {
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_MAINWORKOUT + " TEXT, " +
                 COLUMN_SUBWORKOUT + " TEXT, " +
-                COLUMN_DATE + " TEXT, ";
+                COLUMN_DATE + " DATE, ";
 
     }//need to add 10 set columns to the table need to store both weight and reps
 }//Set1_Reps,Set1_Weight

@@ -12,7 +12,7 @@
         android:layout_centerInParent="true"
         android:textSize="15sp"
         android:background="@android:color/white"
-        android:textColor="@color/caldroid_black"/>
+        android:textColor="@color/caldroid_black" />
 
     <Button
         android:id="@+id/bodyStats_yes_popupBtn"
