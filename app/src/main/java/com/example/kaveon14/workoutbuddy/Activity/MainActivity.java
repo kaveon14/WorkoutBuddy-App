@@ -38,6 +38,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragme
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.LiftingStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.WorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity
                 showCaldroidFragment();
                 break;
             case R.id.nav_send:
-                //nothing yet
+                showRealWorkoutFragment();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -214,8 +215,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showRealWorkoutFragment() {
-        WorkoutFragment wf = new WorkoutFragment();
-        addFragmentToStack(getActiveFragment(),wf,R.id.workout_fragment);
+        FullWorkoutFragment fwf = new FullWorkoutFragment();
+        addFragmentToStack(getActiveFragment(),fwf,R.id.fullWorkout_fragment);
     }
 
     private void showBodyStatsFragment() {

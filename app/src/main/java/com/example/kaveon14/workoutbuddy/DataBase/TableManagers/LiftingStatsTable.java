@@ -5,14 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_DATE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_MAINWORKOUT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_SUBWORKOUT;
@@ -55,10 +52,7 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
                 for (int x = index - base; x <= index; x++) {
                     String c2 = columnNamePart1 + "_Set" + set;
                      exercise = exerciseList.get(x);
-                    String nameColumn = c2 + "_Name" + set;
-                    String repsColumn  = c2 + "_Reps" + set;
-                    String weightColumn = c2 + "_Weight" + set;
-                    String[] columns = dd(columnNamePart1,set);
+                    String[] columns = getColumnNames(columnNamePart1,set);
 
                     values.put(columns[NAME_COLUMN],exercise.getExerciseName());
                     values.put(columns[REPS_COLUMN],exercise.getActualReps());
@@ -91,7 +85,7 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
         List<SubWorkout> subWorkoutList = new ArrayList<>(100);
         while (cursor.moveToNext()) {
             int[] data = getExerciseData(cursor,exerciseList);
-            getSubWorkoutData(cursor,subWorkoutList,data);
+            getSubWorkoutData(cursor,subWorkoutList,exerciseList,data);
             exerciseList = new ArrayList<>(100);
         }
         cursor.close();
@@ -103,17 +97,13 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
         int totalSets = 0,totalReps = 0,totalWeight = 0,unitOfMeas = 0,sets = 0;
         for(int z=1;z<=15;z++) {
             String columnNamePart1 = "Exercise" + z;
-            for (int x = 1; x <= 10; x++) {//put column names stuff in function
-                String[] columns = dd(columnNamePart1,x);
-
-                /*String exerciseNameColumn = columnNamePart1 + "_Set" + x + "_Name" + x;
-                String exerciseRepsColumn = columnNamePart1 + "_Set" + x + "_Reps" + x;
-                String exerciseWeightColumn = columnNamePart1 + "_Set" + x + "_Weight" + x;*/
+            for (int x = 1; x <= 10; x++) {
+                String[] columns = getColumnNames(columnNamePart1,x);
                 String exerciseName = cursor.getString(cursor
                         .getColumnIndexOrThrow(columns[NAME_COLUMN]));
                 if (exerciseName != null) {
                     Exercise exercise = getExercise(cursor, columns[REPS_COLUMN],
-                            columns[WEIGHT_COLUMN], exerciseName);
+                            columns[WEIGHT_COLUMN], exerciseName,x);
 
                     totalReps += exercise.getActualReps();
                     int index = exercise.getActualWeight().length();
@@ -132,14 +122,14 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
             sets = 0;
         }
         int[] data = new int[4];
-        data[TOTAL_REPS] = totalSets;
-        data[TOTAL_SETS] = totalReps;
+        data[TOTAL_SETS] = totalSets;
+        data[TOTAL_REPS] = totalReps;
         data[TOTAL_WEIGHT] = totalWeight;
         data[UNIT_OF_MEAS] = unitOfMeas;
         return data;
     }
 
-    private String[] dd(String columnNamePart1,int x) {
+    private String[] getColumnNames(String columnNamePart1, int x) {
         String exerciseNameColumn = columnNamePart1 + "_Set" + x + "_Name" + x;
         String exerciseRepsColumn = columnNamePart1 + "_Set" + x + "_Reps" + x;
         String exerciseWeightColumn = columnNamePart1 + "_Set" + x + "_Weight" + x;
@@ -150,15 +140,16 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
         return columns;
     }
 
-    private void getSubWorkoutData(Cursor cursor, List<SubWorkout> subWorkoutList, int[] data) {
+    private void getSubWorkoutData(Cursor cursor, List<SubWorkout> subWorkoutList
+            ,@Nullable List<Exercise> exerciseList, int[] data) {
         int totalSets,totalReps,totalWeight;
-        totalSets = data[TOTAL_REPS];
-        totalReps = data[TOTAL_SETS];
+        totalSets = data[TOTAL_SETS];
+        totalReps = data[TOTAL_REPS];
         totalWeight = data[TOTAL_WEIGHT];
 
         String subName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SUBWORKOUT));
         if(subName != null) {
-            SubWorkout subWorkout = getSubWorkout(cursor,null,subName);
+            SubWorkout subWorkout = getSubWorkout(cursor,exerciseList,subName);
             subWorkout.setTotalSets(totalSets);
             subWorkout.setTotalReps(totalReps);
             String unitOfMeas = data[UNIT_OF_MEAS] == 1 ? "lbs" : "kgs";
@@ -167,11 +158,13 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
         }
     }
 
-    private Exercise getExercise(Cursor cursor,String repsColumn,String weightColumn,String name) {
+    private Exercise getExercise(Cursor cursor,String repsColumn,String weightColumn,String name,
+                                 int sets) {
         String reps = cursor.getString(cursor.getColumnIndexOrThrow(repsColumn));
         String weight = cursor.getString(cursor.getColumnIndexOrThrow(weightColumn));
 
         Exercise exercise = new Exercise(name,null);
+        exercise.setActualSets(sets);
         exercise.setActualReps(Integer.valueOf(reps));
         exercise.setActualWeight(weight);
         return exercise;

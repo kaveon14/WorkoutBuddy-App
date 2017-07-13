@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 public class LiftingStatsFragment extends Fragment {//change name
 
     private LiftingStatsAdapter liftingStatsAdapter;
+    private List<SubWorkout> subWorkoutList;
 
     public LiftingStatsFragment() {
         // Required empty public constructor
@@ -34,17 +38,47 @@ public class LiftingStatsFragment extends Fragment {//change name
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_lifting_stats, container, false);
         ListView listView = (ListView) root.findViewById(R.id.liftStats_listView);
-        listView.setAdapter(test());//on click view full workout stats
+        listView.setAdapter(setAdapter());//on click view full workout stats
+        setListViewOnClick(listView);
         return root;
     }
 
-    private LiftingStatsAdapter test(){
+    private void setListViewOnClick(ListView listView) {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //need list view to show full workout
+                /*
+                Ex Name
+                load sets dynamically (max 10)
+                set 1 reps/ weight lbs or kgs
+                set 2 same
+                Ex Name
+
+
+                * */
+                //need exercise list
+                showFullWorkoutFragment(subWorkoutList.get(position).getExerciseList());
+            }
+        });
+    }
+
+    private void showFullWorkoutFragment(List<Exercise> exerciseList) {
+        FullWorkoutFragment fw = new FullWorkoutFragment();
+        fw.setExerciseList(exerciseList);
+        getFragmentManager().beginTransaction()
+                .hide(this)
+                .add(R.id.fullWorkout_fragment,fw)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private LiftingStatsAdapter setAdapter(){
         LiftingStatsTable table = new LiftingStatsTable(getContext());
+        subWorkoutList = table.getCompletedWorkouts();
 
-        List<SubWorkout> subWorkouts = table.getCompletedWorkouts();
-
-        liftingStatsAdapter = new LiftingStatsAdapter(subWorkouts);
-        return new LiftingStatsAdapter(subWorkouts);
+        liftingStatsAdapter = new LiftingStatsAdapter(subWorkoutList);
+        return new LiftingStatsAdapter(subWorkoutList);
     }
 
     private class LiftingStatsAdapter extends BaseAdapter {

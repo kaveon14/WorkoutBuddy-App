@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fullWorkoutListItem"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/exerciseNametextView5"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:text="Exercise Name" />
+
+    <TextView
+        android:id="@+id/setsTextView1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="Set 1:" />
+
+    <TextView
+        android:id="@+id/setsTextView2"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="Set 2:" />
+
+    <TextView
+        android:id="@+id/setsTextView3"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="Set 3:" />
+
+    <TextView
+        android:id="@+id/setsTextView4"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="set 4:" />
+
+    <TextView
+        android:id="@+id/setsTextView5"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="set 5:" />
+
+    <TextView
+        android:id="@+id/setsTextView6"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="Set 6:" />
+
+    <TextView
+        android:id="@+id/setsTextView7"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="Set 7:" />
+
+    <TextView
+        android:id="@+id/setsTextView8"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="Set 8:" />
+
+    <TextView
+        android:id="@+id/setsTextView9"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="Set 9:" />
+
+    <TextView
+        android:id="@+id/setsTextView10"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textColor="@android:color/black"
+        android:visibility="invisible"
+        android:text="Set 10:" />
+
+</LinearLayout>
