@@ -164,7 +164,7 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
         String weight = cursor.getString(cursor.getColumnIndexOrThrow(weightColumn));
 
         Exercise exercise = new Exercise(name,null);
-        exercise.setActualSets(sets);
+        exercise.setActualSets(sets);//does not sety the actual sets
         exercise.setActualReps(Integer.valueOf(reps));
         exercise.setActualWeight(weight);
         return exercise;
