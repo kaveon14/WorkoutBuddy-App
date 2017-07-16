@@ -11,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
@@ -57,14 +56,14 @@ public class LiftingStatsFragment extends Fragment {//change name
                 Ex Name
                 * */
                 //need exercise list
-                showFullWorkoutFragment(subWorkoutList.get(position).getExerciseList());
+                showFullWorkoutFragment(subWorkoutList.get(position).getWorkoutData());
             }
         });
     }
 
-    private void showFullWorkoutFragment(List<Exercise> exerciseList) {
+    private void showFullWorkoutFragment(List<WorkoutExercise> workoutData) {
         FullWorkoutFragment fw = new FullWorkoutFragment();
-        fw.setExerciseList(exerciseList);
+        fw.setWorkoutData(workoutData);
         getFragmentManager().beginTransaction()
                 .hide(this)
                 .add(R.id.fullWorkout_fragment,fw)

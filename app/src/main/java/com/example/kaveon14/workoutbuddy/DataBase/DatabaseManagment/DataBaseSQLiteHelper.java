@@ -90,7 +90,6 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             builder = new StringBuilder(columnStart);
             columns[NAME_COL] = builder.append("_Name").toString();
 
-            builder = new StringBuilder(columnStart);
             for(int z=1;z<=10;z++) {
                 builder = new StringBuilder(columnStart);
                 columns[SETS_COL] = builder.append("_Set").append(z).toString();

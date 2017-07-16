@@ -87,15 +87,23 @@ public class MainActivity extends AppCompatActivity
         workoutData.put("Set 2","2/200lbs");
         workoutData.put("Set 3","1/300lbs");
         we.setWorkoutData(workoutData);
+
+        Exercise exercise1 = new Exercise("Squat",null);
+        Map<String,String> map = new Hashtable<>();
+        map.put("Set 1","10/100lbs");
+
+        WorkoutExercise workoutExercise = new WorkoutExercise(exercise1);
+        workoutExercise.setWorkoutData(map);
+
+
+
         LiftingStatsTable table = new LiftingStatsTable(getBaseContext());
         List<WorkoutExercise> workout = new ArrayList<>();
         workout.add(we);
+        workout.add(workoutExercise);
         table.addWorkoutData(workout,subWorkout);
-
-        System.out.println("total s: "+we.getTotalSets());
-        System.out.println("total r: "+we.getTotalReps());
-        System.out.println("total w: "+we.getTotalWeight()[0]);
         table.printTable();
+
 
 
     }
