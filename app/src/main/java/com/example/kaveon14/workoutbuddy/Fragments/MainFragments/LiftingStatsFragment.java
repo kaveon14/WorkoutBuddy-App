@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-// TODO temporary switching focus to the act of doing a workout and storing the results
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,13 +10,11 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.List;
 
 public class LiftingStatsFragment extends Fragment {//change name
@@ -47,15 +45,6 @@ public class LiftingStatsFragment extends Fragment {//change name
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //need list view to show full workout
-                /*
-                Ex Name
-                load sets dynamically (max 10)
-                set 1 reps/ weight lbs or kgs
-                set 2 same
-                Ex Name
-                * */
-                //need exercise list
                 showFullWorkoutFragment(subWorkoutList.get(position).getWorkoutData());
             }
         });
@@ -125,13 +114,13 @@ public class LiftingStatsFragment extends Fragment {//change name
             textView.setText(text + subWorkout.getDate());
         }
 
-        private void setMainWorkoutTextView(View rowView,SubWorkout subWorkout) {//done
+        private void setMainWorkoutTextView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.mainWorkout_textView);
             String text = "MainWorkout -> ";
             textView.setText(text+subWorkout.getMainWorkoutName());
         }
 
-        private void setSubWorkoutTextView(View rowView,SubWorkout subWorkout) {//done
+        private void setSubWorkoutTextView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.subWorkout_textView);
             String text = "SubWorkout -> ";
             textView.setText(text + subWorkout.getSubWorkoutName());
@@ -140,20 +129,20 @@ public class LiftingStatsFragment extends Fragment {//change name
         private void setTotalSetsView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.sets_textView);
             String text = "Total Sets -> ";
-            textView.setText(text + subWorkout.getTotalSets());//change
+            textView.setText(text + subWorkout.getTotalSets());
         }
 
         private void setTotalRepsView(View rowView,SubWorkout subWorkout) {
             System.out.println("please: "+subWorkout.getTotalReps());
             TextView textView = (TextView) rowView.findViewById(R.id.reps_textView);
             String text = "Total Reps -> ";
-            textView.setText(text + " " + subWorkout.getTotalReps());//change
+            textView.setText(text + " " + subWorkout.getTotalReps());
         }
 
         private void setTotalWeightView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.weight_textView);
             String text = "Total Weight -> ";
-            textView.setText(text +subWorkout.getTotalWeight());//change
+            textView.setText(text +subWorkout.getTotalWeight());
         }
     }
 }

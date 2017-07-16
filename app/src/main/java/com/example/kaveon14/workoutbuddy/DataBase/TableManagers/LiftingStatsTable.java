@@ -11,11 +11,9 @@ import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLi
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_DATE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_MAINWORKOUT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_SUBWORKOUT;
@@ -80,7 +78,6 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
             String weight = weightData[WorkoutExercise.WEIGHT] +
                     weightData[WorkoutExercise.UNIT_OF_MEAS];
 
-            //values being overriden
             values.put(columns[NAME_COLUMN], workout.getExerciseName());
             values.put(columns[REPS_COLUMN], reps);
             values.put(columns[WEIGHT_COLUMN], weight);
@@ -135,20 +132,6 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
         Map<String,String> dataMap = new Hashtable<>();
 
         StringBuilder builder;
-        //List<Exercise> exercises = getExerciseData(cursor);
-
-        /*for(int x=0;x<exercises.size();x++) {//needs another loop
-            WorkoutExercise workout = new WorkoutExercise(exercises.get(x));
-            String reps = String.valueOf(exercises.get(x).getActualReps());
-            String weight = exercises.get(x).getActualWeight();
-            builder = new StringBuilder(reps);
-            String data = builder.append("/").append(weight).toString();
-            dataMap.put("Set "+(x+1),data);
-            workout.setWorkoutData(dataMap);
-            workoutData.add(workout);
-        }//load the old way
-        dataMap = new Hashtable<>();*/
-
         WorkoutExercise workout = null;
         for (int z = 1; z <= 15; z++) {
             String columnStart = "Exercise" + z;
@@ -172,31 +155,9 @@ public class LiftingStatsTable extends TableManager {//possibly change actual ta
                 workoutData.add(workout);
                 workout = null;
             }
-
             dataMap = new Hashtable<>();
         }
-        while(workoutData.remove(null));
         return workoutData;
-    }
-
-
-
-    private List<Exercise> getExerciseData(Cursor cursor) {//will not be used in getWorkoutExData
-        List<Exercise> exerciseList = new ArrayList<>();
-        for (int z = 1; z <= 15; z++) {
-            String columnStart = "Exercise" + z;
-            for (int x = 1; x <= 10; x++) {
-                String[] columns = getColumnNames(columnStart, x);
-                String exerciseName = cursor.getString(cursor
-                        .getColumnIndexOrThrow(columns[NAME_COLUMN]));
-                if (exerciseName != null) {
-                    Exercise exercise = getExercise(cursor, columns[REPS_COLUMN]
-                            , columns[WEIGHT_COLUMN], exerciseName, x);
-                    exerciseList.add(exercise);
-                }
-            }
-        }
-        return exerciseList;
     }
 
     private Exercise getExercise(Cursor cursor, String repsCol, String weightCol

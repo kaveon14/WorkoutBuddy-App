@@ -30,28 +30,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
-import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.LiftingStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.WorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -75,37 +65,6 @@ public class MainActivity extends AppCompatActivity
 
         int BENCH_PRESS = 3;
         Exercise exercise = new Exercise("Bench Press",null);
-
-        WorkoutExercise we = new WorkoutExercise(exercise);
-        SubWorkout subWorkout = new SubWorkout("Test Sub",null);
-        subWorkout.setMainWorkoutName("Test Main");
-        subWorkout.setDate("2017-08-23");
-
-
-        Map<String,String> workoutData = new Hashtable<>();
-        workoutData.put("Set 1","3/100lbs");
-        workoutData.put("Set 2","2/200lbs");
-        workoutData.put("Set 3","1/300lbs");
-        we.setWorkoutData(workoutData);
-
-        Exercise exercise1 = new Exercise("Squat",null);
-        Map<String,String> map = new Hashtable<>();
-        map.put("Set 1","10/100lbs");
-
-        WorkoutExercise workoutExercise = new WorkoutExercise(exercise1);
-        workoutExercise.setWorkoutData(map);
-
-
-
-        LiftingStatsTable table = new LiftingStatsTable(getBaseContext());
-        List<WorkoutExercise> workout = new ArrayList<>();
-        workout.add(we);
-        workout.add(workoutExercise);
-        table.addWorkoutData(workout,subWorkout);
-        table.printTable();
-
-
-
     }
 
     @Override

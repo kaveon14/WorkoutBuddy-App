@@ -13,8 +13,6 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.R;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,16 +75,6 @@ public class FullWorkoutFragment extends Fragment {//change name
         }
 
         public View getView(int position,View rowView,ViewGroup viewGroup) {
-            //error here with multiple exercises of the same type
-
-
-           /* Exercise exercise = null;//the sets is being gettin wrong from lkifting stats table
-            if(position < exerciseList.size()) {
-                exercise = exerciseList.get(position);//need to get all ex near with same name
-            }*/
-
-
-
             if(rowView == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext()
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -94,31 +82,7 @@ public class FullWorkoutFragment extends Fragment {//change name
             }
             WorkoutExercise workout = workoutData.get(position);
             setListItemView(rowView,workout);
-            /*List<Exercise> exercises = new ArrayList<>();
-            if(exercise != null) {
-                int index = getExerciseIndex(exerciseList, exercise);
-                int base = getBaseIndex(exercise);
-                for (int x = index - base; x < index; x++) {//error here beacuse of the sets
-                    exercises.add(exerciseList.get(x));
-                }
-                setListItemView(rowView, exercises);
-                exerciseList.removeAll(exercises);
-            }*/
-
-
-
-
             return rowView;
-        }
-
-        private int getExerciseIndex(List<Exercise> exerciseList, Exercise exercise) {//ex list not needed
-            int index = exerciseList.indexOf(exercise);
-            int sets = exercise.getActualSets();
-            return index+sets;
-        }
-
-        private int getBaseIndex(Exercise exercise) {
-            return exercise.getActualSets();
         }
 
         private void setListItemView(View rowView,WorkoutExercise workout) {
@@ -128,16 +92,6 @@ public class FullWorkoutFragment extends Fragment {//change name
             for(int x=1;x<=data.size();x++) {
                 set_SetsTextView(rowView,setsTextViewIds[x-1],x,workout);
             }
-
-           // setExerciseNameView(rowView,exercises.get(0));
-            /*int sets = exercises.get(0).getActualSets();
-            if(sets != 1) {
-                for (int x = 0; x < sets; x++) {
-                    set_SetsTextView(rowView, setsTextViewIds[x], x, exercises.get(x));
-                }
-            } else {
-                set_SetsTextView(rowView,setsTextViewIds[0],0,exercises.get(0));
-            }*/
         }
 
         private void setExerciseNameView(View rowView,String exerciseName) {

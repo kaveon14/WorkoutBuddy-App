@@ -67,8 +67,6 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SUBWORKOUT_3,"Shoulder_Day");
         values.put(COLUMN_SUBWORKOUT_4,"Leg_Day");
         values.put(COLUMN_SUBWORKOUT_5,"Arm_Day");
-        //values.put(COLUMN_SUBWORKOUT_6,"NULL_1");//needs to be deleted
-        //values.put(COLUMN_SUBWORKOUT_7,"NULL_2");
         database.insert(DataBaseContract.MainWorkoutData.TABLE_NAME,null,values);
     }
 
@@ -157,7 +155,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         }
 
         private void setSingleDefaultWorkout(SQLiteDatabase database, String workoutName) throws NoSuchElementException {
-            String data = defaultWorkoutsMap.get(workoutName);//dafuq is data
+            String data = defaultWorkoutsMap.get(workoutName);
             Scanner scanner = new Scanner(data);
             Scanner insertData = new Scanner(data);
             String exercise, sets, reps;
@@ -252,10 +250,4 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             return data;
         }
     }
-}//add max weight lifted to exercise table or totally new table with date
-/*  List<String> exerciseNames = new
-                DefaultExerciseNames(context,"ExerciseNames.txt").readFileSorted();
-        for(String columnName : exerciseNames) {//will most likely delete this columns later
-            columnName = columnName.replace(" ","_").replace("-","_");
-            DataBaseContract.LiftData.createLiftingStatsColumn(columnName);
-        } */
+}
