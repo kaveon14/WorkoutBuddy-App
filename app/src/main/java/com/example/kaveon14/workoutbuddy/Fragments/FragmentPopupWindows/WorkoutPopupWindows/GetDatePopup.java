@@ -47,10 +47,8 @@ public class GetDatePopup extends PopupWindowManager {
                 SubWorkout subWorkout = SubWorkoutFragment.clickedSubWorkout;
                 subWorkout.setDate(date);
 
-                table.addWorkoutData(data,subWorkout);
-
-                //table.addAWorkout(workoutData, subWorkout);//get date from subworkout
-                Toast.makeText(context,"Date Added and Workout Saved",Toast.LENGTH_SHORT).show();
+                table.addWorkoutData(data, subWorkout);
+                Toast.makeText(context, "Date Added and Workout Saved", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
                 workoutData = null;
             }

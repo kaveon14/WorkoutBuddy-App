@@ -19,6 +19,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
 import java.util.ArrayList;
@@ -98,6 +99,7 @@ public class BlankSubWorkoutFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Exercise clickedExercise = exerciseList.get(position);
                 openWorkoutFragment(clickedExercise);
+                ExerciseFragment.clickedExercise = clickedExercise;
             }
         });
     }

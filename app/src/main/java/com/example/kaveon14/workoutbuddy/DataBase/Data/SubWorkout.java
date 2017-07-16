@@ -95,39 +95,6 @@ public class SubWorkout {
         return workoutData;
     }
 
-    public int getTSets() {
-        int totalSets = 0;
-        for(WorkoutExercise workout : workoutData) {
-            totalSets += workout.getTotalSets();
-        }
-        return totalSets;
-    }
-
-    public int getTReps() {
-        int totalReps = 0;
-        for(WorkoutExercise workout : workoutData) {
-            totalReps += workout.getTotalReps();
-        }
-        return totalReps;
-    }
-
-    public String[] getTWeight() {
-        int totalWeight = 0;
-        String uOfm = workoutData.get(0).getWeight("Set 1")[WorkoutExercise.UNIT_OF_MEAS];
-        for(WorkoutExercise workout : workoutData) {
-            totalWeight += Integer.valueOf(workout
-                    .getTotalWeight()[WorkoutExercise.WEIGHT]);
-        }
-        String[] data = new String[2];
-        data[WorkoutExercise.WEIGHT] = String.valueOf(totalWeight);
-        data[WorkoutExercise.UNIT_OF_MEAS] = uOfm;
-        return data;
-    }
-
-
-
-
-
     public List<Exercise> addExercise(Exercise exercise) {
         exerciseList.add(exercise);
         return exerciseList;

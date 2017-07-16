@@ -71,7 +71,7 @@ public class WorkoutExercise extends Exercise {
         return Integer.valueOf(reps);
     }
 
-    public String[] getWeight(String set) {
+    public String[] getWeight(String set) {//delete
         String setData = workoutData.get(set);
         int index = setData.indexOf("/") + 1;
         String uOfm = setData.contains("lbs") ? "lbs" : "kgs";
@@ -83,7 +83,7 @@ public class WorkoutExercise extends Exercise {
         return data;
     }
 
-    public int getTotalReps() {
+    public int getTotalReps() {//delete
         int totalReps = 0;
         for(int x = 1;x<=workoutData.size();x++) {
             String data = workoutData.get("Set "+x);
@@ -94,7 +94,7 @@ public class WorkoutExercise extends Exercise {
         return totalReps;
     }
 
-    public String[]  getTotalWeight() {
+    public String[]  getTotalWeight() {//delete
         int totalWeight = 0;
         String uOfm = workoutData.get("Set 1").contains("lbs") ? "lbs" : "kgs";
         for(int x  = 1;x<=workoutData.size();x++) {

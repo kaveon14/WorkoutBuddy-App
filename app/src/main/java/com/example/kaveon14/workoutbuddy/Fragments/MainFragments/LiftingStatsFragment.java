@@ -138,23 +138,23 @@ public class LiftingStatsFragment extends Fragment {//change name
             textView.setText(text + subWorkout.getSubWorkoutName());
         }
 
-        private void setTotalSetsView(View rowView,SubWorkout subWorkout) {//done
+        private void setTotalSetsView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.sets_textView);
             String text = "Total Sets -> ";
-            textView.setText(text + subWorkout.getTotalSets());
+            textView.setText(text + subWorkout.getTotalSets());//change
         }
 
-        private void setTotalRepsView(View rowView,SubWorkout subWorkout) {//done
+        private void setTotalRepsView(View rowView,SubWorkout subWorkout) {
             System.out.println("please: "+subWorkout.getTotalReps());
             TextView textView = (TextView) rowView.findViewById(R.id.reps_textView);
             String text = "Total Reps -> ";
-            textView.setText(text + " " + subWorkout.getTotalReps());
+            textView.setText(text + " " + subWorkout.getTotalReps());//change
         }
 
-        private void setTotalWeightView(View rowView,SubWorkout subWorkout) {//done
+        private void setTotalWeightView(View rowView,SubWorkout subWorkout) {
             TextView textView = (TextView) rowView.findViewById(R.id.weight_textView);
             String text = "Total Weight -> ";
-            textView.setText(text +subWorkout.getTotalWeight());
+            textView.setText(text +subWorkout.getTotalWeight());//change
         }
     }
 }

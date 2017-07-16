@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.SweepGradient;
+
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseNames;
 import java.io.ByteArrayOutputStream;
@@ -80,21 +82,27 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     }
 
     private String createLiftDataTable() {
-        String columnPart2;
-        String subColumnName;
-        String repsColumn;
-        String weightColumn;
+        int NAME_COL = 0,SETS_COL =1,REPS_COL = 2,WEIGHT_COL = 3;
+        StringBuilder builder;
+        String[] columns = new String[4];
         for(int x=1;x<=15;x++) {
-            String columnPart1 = "Exercise" + x;
+            String columnStart = "Exercise" + x;
+            builder = new StringBuilder(columnStart);
+            columns[NAME_COL] = builder.append("_Name").toString();
+
+            builder = new StringBuilder(columnStart);
             for(int z=1;z<=10;z++) {
-                columnPart2 = columnPart1 + "_Set" + z;
-                subColumnName = columnPart2 + "_Name" + z;
-                repsColumn = columnPart2 + "_Reps" + z;
-                weightColumn = columnPart2 + "_Weight" + z;
-                DataBaseContract.LiftData.createLiftingStatsColumn(subColumnName);
-                DataBaseContract.LiftData.createLiftingStatsColumn(repsColumn);
-                DataBaseContract.LiftData.createLiftingStatsColumn(weightColumn);
+                builder = new StringBuilder(columnStart);
+                columns[SETS_COL] = builder.append("_Set").append(z).toString();
+                builder = new StringBuilder(columns[SETS_COL]);
+                columns[REPS_COL] = builder.append("_Reps").append(z).toString();
+                System.out.println("repsCol: "+columns[REPS_COL]);
+                builder = new StringBuilder(columns[SETS_COL]);
+                columns[WEIGHT_COL] = builder.append("_Weight").append(z).toString();
+                DataBaseContract.LiftData.createLiftingStatsColumn(columns[REPS_COL]);
+                DataBaseContract.LiftData.createLiftingStatsColumn(columns[WEIGHT_COL]);
             }
+            DataBaseContract.LiftData.createLiftingStatsColumn(columns[NAME_COL]);
         }
         DataBaseContract.LiftData.setColumns();
         String createTable  = DataBaseContract.LiftData.CREATE_TABLE +

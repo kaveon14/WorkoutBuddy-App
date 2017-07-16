@@ -108,7 +108,13 @@ public class BlankSWPopupMenu extends PopupWindowManager {
                 }
                 adapter.hideCheckBoxes();
                 popupWindow.dismiss();
-                showGetDatePopup();
+                if(data.size() != 0) {
+                    showGetDatePopup();
+                } else {
+                    Toast.makeText(context,"No data added to Workout"+System.lineSeparator()
+                            +"Push the 'DD WORKOUT DATA BUTTON' and try again! ",Toast.LENGTH_LONG)
+                            .show();
+                }
                 btn.setVisibility(View.INVISIBLE);
             }
         });
