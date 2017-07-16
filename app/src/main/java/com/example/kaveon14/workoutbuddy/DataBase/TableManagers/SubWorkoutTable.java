@@ -38,8 +38,8 @@ public class SubWorkoutTable {
         subWorkoutName = getCorrectTableName(subWorkoutName);
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXERCISE_NAMES,ex.getExerciseName());
-        values.put(COLUMN_EXERCISE_SETS,ex.getExerciseSets());
-        values.put(COLUMN_EXERCISE_REPS,ex.getExerciseReps());
+        values.put(COLUMN_EXERCISE_SETS,ex.getGoalSets());
+        values.put(COLUMN_EXERCISE_REPS,ex.getGoalReps());
         writableDatabase.insert(subWorkoutName,null,values);
         writableDatabase.close();
     }
@@ -101,8 +101,8 @@ public class SubWorkoutTable {
         List<Exercise> exerciselist = new ArrayList<>(10);
         for(int x=0;x<exerciseNames.size();x++) {
             Exercise exercise = new Exercise(exerciseNames.get(x),null);
-            exercise.setExerciseSets(exerciseSets.get(x));
-            exercise.setExerciseReps(exerciseReps.get(x));
+            exercise.setGoalSets(exerciseSets.get(x));
+            exercise.setGoalReps(exerciseReps.get(x));
             exerciselist.add(exercise);
         }
         return exerciselist;

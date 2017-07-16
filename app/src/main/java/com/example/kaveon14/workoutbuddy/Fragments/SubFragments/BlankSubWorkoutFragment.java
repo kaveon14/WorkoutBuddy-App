@@ -18,7 +18,6 @@ import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
 import com.example.kaveon14.workoutbuddy.R;
 
@@ -31,7 +30,6 @@ public class BlankSubWorkoutFragment extends Fragment {
 
     private WorkoutAdapter workoutAdapter;
     private List<Exercise> exerciseList;
-    public static Map<String,Workout> workoutMap;
 
     public BlankSubWorkoutFragment() {
         // Required empty public constructor
@@ -203,14 +201,14 @@ public class BlankSubWorkoutFragment extends Fragment {
         }
 
         private String setExerciseRepsTextView(View rowView,Exercise exercise) {
-            String text = exercise.getExerciseReps();
+            String text = exercise.getGoalReps();
             TextView repsView = (TextView) rowView.findViewById(R.id.repsView);
             repsView.setText(text);
             return text;
         }
 
         private String setExerciseSets(View rowView,Exercise exercise) {
-            String text = exercise.getExerciseSets();
+            String text = exercise.getGoalSets();
             TextView setsView = (TextView) rowView.findViewById(R.id.setsView);
             setsView.setText(text);
             return text;

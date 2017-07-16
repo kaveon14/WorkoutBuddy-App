@@ -147,8 +147,8 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
     }
 
     private void addExerciseToSubWorkout(Exercise exercise,String subWorkoutName) {
-        exercise.setExerciseReps(getExerciseReps());
-        exercise.setExerciseSets(getExerciseSets());
+        exercise.setGoalReps(getExerciseReps());
+        exercise.setGoalSets(getExerciseSets());
 
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
         subWorkoutTable.

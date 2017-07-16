@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -54,8 +55,6 @@ public class LiftingStatsFragment extends Fragment {//change name
                 set 1 reps/ weight lbs or kgs
                 set 2 same
                 Ex Name
-
-
                 * */
                 //need exercise list
                 showFullWorkoutFragment(subWorkoutList.get(position).getExerciseList());
@@ -102,7 +101,7 @@ public class LiftingStatsFragment extends Fragment {//change name
         }
 
         public View getView(int position,View rowView,ViewGroup viewGroup) {
-            SubWorkout subWorkout = subWorkoutList.get(position);
+            SubWorkout subWorkout = subWorkoutList.get(position);//pass in a
             if(rowView == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext()
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -127,32 +126,32 @@ public class LiftingStatsFragment extends Fragment {//change name
             textView.setText(text + subWorkout.getDate());
         }
 
-        private void setMainWorkoutTextView(View rowView,SubWorkout subWorkout) {
+        private void setMainWorkoutTextView(View rowView,SubWorkout subWorkout) {//done
             TextView textView = (TextView) rowView.findViewById(R.id.mainWorkout_textView);
             String text = "MainWorkout -> ";
             textView.setText(text+subWorkout.getMainWorkoutName());
         }
 
-        private void setSubWorkoutTextView(View rowView,SubWorkout subWorkout) {
+        private void setSubWorkoutTextView(View rowView,SubWorkout subWorkout) {//done
             TextView textView = (TextView) rowView.findViewById(R.id.subWorkout_textView);
             String text = "SubWorkout -> ";
             textView.setText(text + subWorkout.getSubWorkoutName());
         }
 
-        private void setTotalSetsView(View rowView,SubWorkout subWorkout) {
+        private void setTotalSetsView(View rowView,SubWorkout subWorkout) {//done
             TextView textView = (TextView) rowView.findViewById(R.id.sets_textView);
             String text = "Total Sets -> ";
             textView.setText(text + subWorkout.getTotalSets());
         }
 
-        private void setTotalRepsView(View rowView,SubWorkout subWorkout) {
+        private void setTotalRepsView(View rowView,SubWorkout subWorkout) {//done
             System.out.println("please: "+subWorkout.getTotalReps());
             TextView textView = (TextView) rowView.findViewById(R.id.reps_textView);
             String text = "Total Reps -> ";
             textView.setText(text + " " + subWorkout.getTotalReps());
         }
 
-        private void setTotalWeightView(View rowView,SubWorkout subWorkout) {
+        private void setTotalWeightView(View rowView,SubWorkout subWorkout) {//done
             TextView textView = (TextView) rowView.findViewById(R.id.weight_textView);
             String text = "Total Weight -> ";
             textView.setText(text +subWorkout.getTotalWeight());

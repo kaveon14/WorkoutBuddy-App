@@ -18,12 +18,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
+import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+
 //TODO get date and sets to store dta(use adapter to get count)
 //needs more robust features for time intervals
 public class WorkoutFragment extends Fragment {
@@ -181,6 +184,11 @@ public class WorkoutFragment extends Fragment {
                 //make sure workout is started
                 try {
                     exerciseList = workoutAdapter.getExerciseList();
+                    Map<String,String> map = workoutAdapter.getWorkoutData();//get the data much better
+                    WorkoutExercise we = new WorkoutExercise(ExerciseFragment.clickedExercise);
+                    we.setWorkoutData(map);
+                    BlankSWPopupMenu.data.add(we);//data now in ther mai list
+
                     BlankSWPopupMenu.workoutData.addAll(exerciseList);
                     Toast.makeText(getContext(),"Data Added",Toast.LENGTH_SHORT).show();
                 } catch (NullPointerException e) {
@@ -218,7 +226,7 @@ public class WorkoutFragment extends Fragment {
     }
 
     private void addSet() {
-        if(setCount<=Integer.valueOf(exercise.getExerciseSets())) {
+        if(setCount<=Integer.valueOf(exercise.getGoalSets())) {
             setCount++;
             sets.add("Set "+setCount);
             partialSetCount = sets.size();
@@ -235,7 +243,7 @@ public class WorkoutFragment extends Fragment {
     }
 
     private void showFullAdapter() {
-        int exerciseSets = Integer.valueOf(exercise.getExerciseSets());
+        int exerciseSets = Integer.valueOf(exercise.getGoalSets());
         if(setCount<exerciseSets) {
             for (int x = setCount; x < exerciseSets; x++) {
                 sets.add("Set " + (x + 1));
@@ -271,6 +279,8 @@ public class WorkoutFragment extends Fragment {
         private List<String> sets;
         private List<Exercise> exerciseList;
         private List<View> rowViews;
+        private Map<String,String> workoutData;
+
 
         public WorkoutAdapter(Exercise exercise,List<String> sets,List<Exercise> exerciseList) {
             this.exercise = exercise;
@@ -310,7 +320,25 @@ public class WorkoutFragment extends Fragment {
             return ex;
         }
 
-        public List<Exercise> getExerciseList() {
+        private String getData(View rowView) {
+            EditText repsAndWeight_editTextView = (EditText) rowView.findViewById(R.id.repsNweightEditText);
+            String repsAndWeight = repsAndWeight_editTextView.getText().toString();
+            return repsAndWeight;
+        }
+
+        public Map<String,String> getWorkoutData() {
+            if(workoutData == null) {
+                workoutData = new Hashtable<>(10);
+            }
+
+            int set = 1;
+            for(int x=rowViews.size()-1;x>0;x--) {
+                workoutData.put("Set "+set,getData(rowViews.get(x)));
+            }
+            return workoutData;
+        }
+
+        public List<Exercise> getExerciseList() {//will be deleted/changed
             for(int x=rowViews.size()-1;x>0;x--) {
                 exerciseList.add(getExerciseObject(rowViews.get(x)));
             }

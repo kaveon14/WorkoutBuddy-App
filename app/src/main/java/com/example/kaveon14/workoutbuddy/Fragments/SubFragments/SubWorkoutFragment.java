@@ -140,8 +140,8 @@ public class SubWorkoutFragment extends Fragment {
 
         for(int x=0;x<exerciseNames.size();x++) {
             Exercise exercise = new Exercise(exerciseNames.get(x),null);
-            exercise.setExerciseSets(exerciseSets.get(x));
-            exercise.setExerciseReps(exerciseReps.get(x));
+            exercise.setGoalSets(exerciseSets.get(x));
+            exercise.setGoalReps(exerciseReps.get(x));
             exerciseList.add(exercise);
         }
         return exerciseList;

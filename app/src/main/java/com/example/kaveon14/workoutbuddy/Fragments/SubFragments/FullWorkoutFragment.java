@@ -74,10 +74,34 @@ public class FullWorkoutFragment extends Fragment {//change name
         }
 
         public View getView(int position,View rowView,ViewGroup viewGroup) {
+            //error here with multiple exercises of the same type
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             Exercise exercise = null;//the sets is being gettin wrong from lkifting stats table
             if(position < exerciseList.size()) {
                 exercise = exerciseList.get(position);//need to get all ex near with same name
             }
+
+
+
             if(rowView == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext()
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -88,13 +112,17 @@ public class FullWorkoutFragment extends Fragment {//change name
                 int index = getExerciseIndex(exerciseList, exercise);
                 int base = getBaseIndex(exercise);
                 int i = 0;
-                for (int x = index - base; x < index; x++) {//error here
+                for (int x = index - base; x < index; x++) {//error here beacuse of the sets
                     exercises.add(exerciseList.get(x));
                     i++;
                 }
                 setListItemView(rowView, exercises);
                 exerciseList.removeAll(exercises);
             }
+
+
+
+
             return rowView;
         }
 

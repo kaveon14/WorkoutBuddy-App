@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
+import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
@@ -22,7 +23,8 @@ public class BlankSWPopupMenu extends PopupWindowManager {
 
     private List<Exercise> exerciseList;
     private BlankSubWorkoutFragment.WorkoutAdapter adapter;
-    public static List<Exercise> workoutData;
+    public static List<Exercise> workoutData;//need to change type of data stored
+    public static List<WorkoutExercise> data = new ArrayList<>(15);
 
     public BlankSWPopupMenu(View root) {
         setRootView(root);
