@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity
         System.out.println("total s: "+we.getTotalSets());
         System.out.println("total r: "+we.getTotalReps());
         System.out.println("total w: "+we.getTotalWeight()[0]);
+        table.printTable();
 
 
     }
