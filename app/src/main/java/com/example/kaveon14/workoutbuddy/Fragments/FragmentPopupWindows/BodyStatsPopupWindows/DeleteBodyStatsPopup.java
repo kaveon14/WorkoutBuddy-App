@@ -22,7 +22,7 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
 
     public DeleteBodyStatsPopup(View root) {
         setRootView(root);
-        setPopupLayout(R.layout.bodystats_popup_layout);
+        setPopupLayout(R.layout.yes_no_popup_layout);
         setPopupViewId(R.id.bodyStats_popupWindow);
     }
 

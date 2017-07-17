@@ -15,12 +15,11 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import java.util.Map;
 
-public class FullWorkoutFragment extends Fragment {//change name
-    static int c = 1;
+public class FullWorkoutStatsFragment extends Fragment {
 
     private List<WorkoutExercise> workoutData;
 
-    public FullWorkoutFragment() {
+    public FullWorkoutStatsFragment() {
         // Required empty public constructor
     }
 
@@ -32,32 +31,32 @@ public class FullWorkoutFragment extends Fragment {//change name
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_full_workout, container, false);
-        ListView listView = (ListView) root.findViewById(R.id.fullWorkoutListView);
+        View root = inflater.inflate(R.layout.fragment_full_workout_stats, container, false);
+        ListView listView = (ListView) root.findViewById(R.id.fullWorkoutStatsListView);
         listView.setAdapter(setAdapter());
         return root;
     }
 
-    private FullWorkoutAdapter setAdapter() {
+    private FullWorkoutStatsAdapter setAdapter() {
 
-        return new FullWorkoutAdapter(workoutData);
+        return new FullWorkoutStatsAdapter(workoutData);
     }
 
     public void setWorkoutData(List<WorkoutExercise> workoutData) {
         this.workoutData = workoutData;
     }
 
-    private class FullWorkoutAdapter extends BaseAdapter {
+    private class FullWorkoutStatsAdapter extends BaseAdapter {
 
         private List<WorkoutExercise> workoutData;
         private int[] setsTextViewIds = {
-                R.id.setsTextView1,R.id.setsTextView2,R.id.setsTextView3,
-                R.id.setsTextView4,R.id.setsTextView5,R.id.setsTextView6,
-                R.id.setsTextView7,R.id.setsTextView8,R.id.setsTextView9,
-                R.id.setsTextView10
+                R.id.set1_TextView,R.id.set2_TextView,R.id.set3_TextView,
+                R.id.set4_TextView,R.id.set5_TextView,R.id.set6_TextView,
+                R.id.set7_TextView,R.id.set8_TextView,R.id.set9_TextView,
+                R.id.set10_TextView
         };
 
-        public FullWorkoutAdapter(List<WorkoutExercise> workoutData) {
+        public FullWorkoutStatsAdapter(List<WorkoutExercise> workoutData) {
             this.workoutData = workoutData;
         }
 
@@ -77,7 +76,7 @@ public class FullWorkoutFragment extends Fragment {//change name
             if(rowView == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext()
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                rowView = inflater.inflate(R.layout.fullworkout_list_item,null);
+                rowView = inflater.inflate(R.layout.fullworkoutstats_list_item,null);
             }
             WorkoutExercise workout = workoutData.get(position);
             setListItemView(rowView,workout);
@@ -94,7 +93,7 @@ public class FullWorkoutFragment extends Fragment {//change name
         }
 
         private void setExerciseNameView(View rowView,String exerciseName) {
-            TextView textView = (TextView) rowView.findViewById(R.id.exerciseNametextView5);
+            TextView textView = (TextView) rowView.findViewById(R.id.fwStats_exerciseNameTextView);
             textView.setText("Exercise: "+exerciseName);
         }
 

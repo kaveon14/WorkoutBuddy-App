@@ -13,16 +13,16 @@ import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
-public class LiftingStatsFragment extends Fragment {//change name
+public class WorkoutStatsFragment extends Fragment {
 
-    private LiftingStatsAdapter liftingStatsAdapter;
+    private WorkoutStatsAdapter workoutStatsAdapter;
     private List<SubWorkout> subWorkoutList;
 
-    public LiftingStatsFragment() {
+    public WorkoutStatsFragment() {
         // Required empty public constructor
     }
 
@@ -34,8 +34,8 @@ public class LiftingStatsFragment extends Fragment {//change name
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_lifting_stats, container, false);
-        ListView listView = (ListView) root.findViewById(R.id.liftStats_listView);
+        View root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
+        ListView listView = (ListView) root.findViewById(R.id.workoutStats_listView);
         listView.setAdapter(setAdapter());//on click view full workout stats
         setListViewOnClick(listView);
         return root;
@@ -45,34 +45,34 @@ public class LiftingStatsFragment extends Fragment {//change name
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showFullWorkoutFragment(subWorkoutList.get(position).getWorkoutData());
+                showFullWorkoutStatsFragment(subWorkoutList.get(position).getWorkoutData());
             }
         });
     }
 
-    private void showFullWorkoutFragment(List<WorkoutExercise> workoutData) {
-        FullWorkoutFragment fw = new FullWorkoutFragment();
+    private void showFullWorkoutStatsFragment(List<WorkoutExercise> workoutData) {
+        FullWorkoutStatsFragment fw = new FullWorkoutStatsFragment();
         fw.setWorkoutData(workoutData);
         getFragmentManager().beginTransaction()
                 .hide(this)
-                .add(R.id.fullWorkout_fragment,fw)
+                .add(R.id.fullWorkoutStats_fragment,fw)
                 .addToBackStack(null)
                 .commit();
     }
 
-    private LiftingStatsAdapter setAdapter(){
+    private WorkoutStatsAdapter setAdapter(){
         LiftingStatsTable table = new LiftingStatsTable(getContext());
         subWorkoutList = table.getCompletedWorkouts();
 
-        liftingStatsAdapter = new LiftingStatsAdapter(subWorkoutList);
-        return new LiftingStatsAdapter(subWorkoutList);
+        workoutStatsAdapter = new WorkoutStatsAdapter(subWorkoutList);
+        return new WorkoutStatsAdapter(subWorkoutList);
     }
 
-    private class LiftingStatsAdapter extends BaseAdapter {
+    private class WorkoutStatsAdapter extends BaseAdapter {
 
         private List<SubWorkout> subWorkoutList;
 
-        public LiftingStatsAdapter(List<SubWorkout> subWorkoutList) {
+        public WorkoutStatsAdapter(List<SubWorkout> subWorkoutList) {
             this.subWorkoutList = subWorkoutList;
         }
 
@@ -93,7 +93,7 @@ public class LiftingStatsFragment extends Fragment {//change name
             if(rowView == null) {
                 LayoutInflater inflater = (LayoutInflater) getContext()
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                rowView = inflater.inflate(R.layout.liftingstats_list_item,null);
+                rowView = inflater.inflate(R.layout.workoutstats_list_item,null);
             }
             setListItemView(rowView,subWorkout);
             return rowView;

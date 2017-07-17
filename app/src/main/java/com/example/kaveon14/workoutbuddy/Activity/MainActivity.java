@@ -34,9 +34,9 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.LiftingStatsFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -62,9 +62,6 @@ public class MainActivity extends AppCompatActivity
         getPermissions();
         preloadExerciseData();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        int BENCH_PRESS = 3;
-        Exercise exercise = new Exercise("Bench Press",null);
     }
 
     @Override
@@ -142,9 +139,7 @@ public class MainActivity extends AppCompatActivity
                 showBodyStatsFragment();
                 break;
             case R.id.lifting_stats:
-                //nothing yet and not sure needed
-                //showRealWorkoutFragment();
-                showLiftingStatsFragment();
+                showWorkoutStatsFragment();
                 break;
             case R.id.workout_menu:
                 showWorkoutFragment();
@@ -202,14 +197,14 @@ public class MainActivity extends AppCompatActivity
         return getSupportFragmentManager().findFragmentById(fragId);
     }
 
-    private void showLiftingStatsFragment() {
-        LiftingStatsFragment liftingStatsFragment = new LiftingStatsFragment();
-        addFragmentToStack(getActiveFragment(),liftingStatsFragment,R.id.liftingStats_fragment);
+    private void showWorkoutStatsFragment() {
+        WorkoutStatsFragment workoutStatsFragment = new WorkoutStatsFragment();
+        addFragmentToStack(getActiveFragment(), workoutStatsFragment,R.id.workoutStats_fragment);
     }
 
     private void showRealWorkoutFragment() {
-        FullWorkoutFragment fwf = new FullWorkoutFragment();
-        addFragmentToStack(getActiveFragment(),fwf,R.id.fullWorkout_fragment);
+        FullWorkoutStatsFragment fwf = new FullWorkoutStatsFragment();
+        addFragmentToStack(getActiveFragment(),fwf,R.id.fullWorkoutStats_fragment);
     }
 
     private void showBodyStatsFragment() {

@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_DATE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_MAINWORKOUT;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_SUBWORKOUT;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_TOTAL_REPS;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_TOTAL_SETS;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.COLUMN_TOTAL_WEIGHT;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.LiftData.TABLE_NAME;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.COLUMN_DATE;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.COLUMN_MAINWORKOUT;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.COLUMN_SUBWORKOUT;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.COLUMN_TOTAL_REPS;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.COLUMN_TOTAL_SETS;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.COLUMN_TOTAL_WEIGHT;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.TABLE_NAME;
 
 public class LiftingStatsTable extends TableManager {//possibly change actual table name
 

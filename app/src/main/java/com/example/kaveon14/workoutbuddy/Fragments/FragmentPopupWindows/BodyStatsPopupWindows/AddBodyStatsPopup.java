@@ -2,20 +2,17 @@ package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodySta
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 
-import org.w3c.dom.Text;
-
 public class AddBodyStatsPopup extends PopupWindowManager {
 
     public AddBodyStatsPopup(View root) {
         setRootView(root);
-        setPopupLayout(R.layout.subworkout_popup_layout);
+        setPopupLayout(R.layout.simple_edittext_button_popup_layout);
         setPopupViewId(R.id.subWorkout_popupWindow);
     }
 

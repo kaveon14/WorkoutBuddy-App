@@ -21,7 +21,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
 
     public CustomSubWorkoutPopup(View root) {
         setRootView(root);
-        setPopupLayout(R.layout.subworkout_popup_layout);
+        setPopupLayout(R.layout.simple_edittext_button_popup_layout);
         setPopupViewId(R.id.subWorkout_popupWindow);
     }
 

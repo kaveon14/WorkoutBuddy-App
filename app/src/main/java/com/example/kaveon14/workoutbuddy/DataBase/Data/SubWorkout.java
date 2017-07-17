@@ -89,7 +89,7 @@ public class SubWorkout {
         return exerciseList;
     }
 
-    public List<WorkoutExercise> addWorkoutExercises(List<Map<String,String>> map) {//this is how workoutData will be gotten
+    public List<WorkoutExercise> addWorkoutExercises(List<Map<String,String>> map) {
         int x = 0;
         for(Exercise e:exerciseList) {
             WorkoutExercise we = new WorkoutExercise(e);

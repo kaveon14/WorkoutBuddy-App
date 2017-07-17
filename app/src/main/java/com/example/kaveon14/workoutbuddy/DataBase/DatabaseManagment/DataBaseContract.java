@@ -129,11 +129,11 @@ public class DataBaseContract {
                 COLUMN_CALF_SIZE + " TEXT" + ")";
     }
 
-    public static final class LiftData implements BaseColumns {//gonna have to expand a lot
+    public static final class WorkoutData implements BaseColumns {//gonna have to expand a lot
 
         private static List<String> columnNames = new LinkedList<>();
 
-        public static final String TABLE_NAME = "Exercise_Stats";
+        public static final String TABLE_NAME = "Workout_Stats";
 
         public static final String COLUMN_MAINWORKOUT = "MainWorkoutName";
 

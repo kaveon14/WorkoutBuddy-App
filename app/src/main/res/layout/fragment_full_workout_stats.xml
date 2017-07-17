@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fullWorkout_fragment"
-    tools:context="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutFragment">
+    android:id="@+id/fullWorkoutStats_fragment"
+    tools:context="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment">
 
     <ListView
-        android:id="@+id/fullWorkoutListView"
+        android:id="@+id/fullWorkoutStatsListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

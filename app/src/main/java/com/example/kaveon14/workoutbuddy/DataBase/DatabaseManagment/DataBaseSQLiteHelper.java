@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.SweepGradient;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseNames;
@@ -56,7 +55,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(DataBaseContract.ExerciseData.CREATE_TABLE);
         new DefaultExercisesExtension().addDefaultExercises(database);
         database.execSQL(DataBaseContract.BodyData.CREATE_TABLE);
-        database.execSQL(createLiftDataTable());
+        database.execSQL(createWorkoutDataTable());
     }
 
     private void testData(SQLiteDatabase database) {
@@ -79,7 +78,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    private String createLiftDataTable() {
+    private String createWorkoutDataTable() {
         int NAME_COL = 0,SETS_COL =1,REPS_COL = 2,WEIGHT_COL = 3;
         StringBuilder builder;
         String[] columns = new String[4];
@@ -96,14 +95,14 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
                 System.out.println("repsCol: "+columns[REPS_COL]);
                 builder = new StringBuilder(columns[SETS_COL]);
                 columns[WEIGHT_COL] = builder.append("_Weight").append(z).toString();
-                DataBaseContract.LiftData.createLiftingStatsColumn(columns[REPS_COL]);
-                DataBaseContract.LiftData.createLiftingStatsColumn(columns[WEIGHT_COL]);
+                DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[REPS_COL]);
+                DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[WEIGHT_COL]);
             }
-            DataBaseContract.LiftData.createLiftingStatsColumn(columns[NAME_COL]);
+            DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[NAME_COL]);
         }
-        DataBaseContract.LiftData.setColumns();
-        String createTable  = DataBaseContract.LiftData.CREATE_TABLE +
-                DataBaseContract.LiftData.setColumns();
+        DataBaseContract.WorkoutData.setColumns();
+        String createTable  = DataBaseContract.WorkoutData.CREATE_TABLE +
+                DataBaseContract.WorkoutData.setColumns();
         return createTable;
     }
 
