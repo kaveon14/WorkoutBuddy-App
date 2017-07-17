@@ -3,28 +3,20 @@ package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.Workout
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.WorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
-// TODO get date
+
 public class BlankSWPopupMenu extends PopupWindowManager {
 
     private List<Exercise> exerciseList;
     private BlankSubWorkoutFragment.WorkoutAdapter adapter;
-    public static List<Exercise> workoutData;//need to change type of data stored
-    public static List<WorkoutExercise> data = new ArrayList<>(15);
+    public static List<WorkoutExercise> workoutData = new ArrayList<>(15);
 
     public BlankSWPopupMenu(View root) {
         setRootView(root);
@@ -87,9 +79,8 @@ public class BlankSWPopupMenu extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // adapter.showCheckBoxes();
+               // adapter.showCheckBoxes();will be deleted
                 popupWindow.dismiss();
-                //start process to get data
                 workoutData = new ArrayList<>(5);
                 Toast.makeText(context, SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName()
                         +" Workout Started",Toast.LENGTH_SHORT).show();
@@ -108,10 +99,10 @@ public class BlankSWPopupMenu extends PopupWindowManager {
                 }
                 adapter.hideCheckBoxes();
                 popupWindow.dismiss();
-                if(data.size() != 0) {
+                if(workoutData.size() != 0) {
                     showGetDatePopup();
                 } else {
-                    Toast.makeText(context,"No data added to Workout"+System.lineSeparator()
+                    Toast.makeText(context,"No workoutData added to Workout"+System.lineSeparator()
                             +"Push the 'DD WORKOUT DATA BUTTON' and try again! ",Toast.LENGTH_LONG)
                             .show();
                 }

@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-//use map with exercise(or string) and list<exercise> to log data
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
@@ -26,8 +25,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
-//TODO get date and sets to store dta(use adapter to get count)
 //needs more robust features for time intervals
 public class WorkoutFragment extends Fragment {
 
@@ -121,7 +118,7 @@ public class WorkoutFragment extends Fragment {
             public void onChronometerTick(Chronometer chronometer) {
                 int time = getTime(chrono.getText().toString());
                 setProgressBarProgress(root,time);
-                if(chronometer.getText().toString().equalsIgnoreCase(timeLimit)) {//this is called again need to reset chrono
+                if(chronometer.getText().toString().equalsIgnoreCase(timeLimit)) {
                     resetChronometer(chronometer);
                     setResetButton(root);
                     addSet();
@@ -130,6 +127,48 @@ public class WorkoutFragment extends Fragment {
         });
     }
 
+    private void setResetButton(View root) {
+        hideChronometer(root);
+        Button btn = (Button) root.findViewById(R.id.button3);
+        btn.setText("Reset");
+        btn.setVisibility(View.VISIBLE);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn.setVisibility(View.INVISIBLE);
+                setProgressBarProgress(root,0);
+                setStartButton(root);
+            }
+        });
+    }
+
+    private void setSaveDataBtn(View root) {
+        if(exerciseList==null) {exerciseList = new ArrayList<>();}
+        Button btn = (Button) root.findViewById(R.id.button4);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //make sure workout is started
+                try {
+                    exerciseList = workoutAdapter.getExerciseList();
+                    Map<String,String> map = workoutAdapter.getWorkoutData();
+                    WorkoutExercise we = new WorkoutExercise(ExerciseFragment.clickedExercise);
+                    we.setWorkoutData(map);
+                    BlankSWPopupMenu.workoutData.add(we);
+
+                    Toast.makeText(getContext(),"Data Added",Toast.LENGTH_SHORT).show();
+                } catch (NullPointerException e) {
+                    Toast.makeText(getContext(),"Workout Not Started!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void hideChronoButton(View root) {
+        Button btn = (Button) root.findViewById(R.id.button3);
+        btn.setVisibility(View.INVISIBLE);
+    }
     private Chronometer setupChronometer(View root,String timeLimit) {
         Chronometer chrono = (Chronometer) root.findViewById(R.id.chronometer2);
         chrono.setFormat("%s");
@@ -158,50 +197,6 @@ public class WorkoutFragment extends Fragment {
             int sec = (mins*60) + Integer.valueOf(seconds);
             return sec;
         }
-    }
-
-    private void setResetButton(View root) {
-        hideChronometer(root);
-        Button btn = (Button) root.findViewById(R.id.button3);
-        btn.setText("Reset");
-        btn.setVisibility(View.VISIBLE);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn.setVisibility(View.INVISIBLE);
-                setProgressBarProgress(root,0);
-                setStartButton(root);
-            }
-        });
-    }
-
-    private void setSaveDataBtn(View root) {
-        if(exerciseList==null) {exerciseList = new ArrayList<>();}
-        Button btn = (Button) root.findViewById(R.id.button4);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //make sure workout is started
-                try {
-                    exerciseList = workoutAdapter.getExerciseList();
-                    Map<String,String> map = workoutAdapter.getWorkoutData();//get the data much better
-                    WorkoutExercise we = new WorkoutExercise(ExerciseFragment.clickedExercise);
-                    we.setWorkoutData(map);
-                    BlankSWPopupMenu.data.add(we);//data now in ther mai list
-
-                    BlankSWPopupMenu.workoutData.addAll(exerciseList);
-                    Toast.makeText(getContext(),"Data Added",Toast.LENGTH_SHORT).show();
-                } catch (NullPointerException e) {
-                    Toast.makeText(getContext(),"Workout Not Started!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    private void hideChronoButton(View root) {
-        Button btn = (Button) root.findViewById(R.id.button3);
-        btn.setVisibility(View.INVISIBLE);
     }
 
     private void hideChronometer(View root) {
@@ -331,14 +326,15 @@ public class WorkoutFragment extends Fragment {
                 workoutData = new Hashtable<>(10);
             }
 
-            int set = 1;
             for(int x=rowViews.size()-1;x>0;x--) {
-                workoutData.put("Set "+set,getData(rowViews.get(x)));
+                View rowView = rowViews.get(x);
+                String set = getTextViewSet(rowView);
+                workoutData.put(set,getData(rowViews.get(x)));
             }
             return workoutData;
         }
 
-        public List<Exercise> getExerciseList() {//will be deleted/changed
+        public List<Exercise> getExerciseList() {
             for(int x=rowViews.size()-1;x>0;x--) {
                 exerciseList.add(getExerciseObject(rowViews.get(x)));
             }
@@ -364,8 +360,10 @@ public class WorkoutFragment extends Fragment {
             TextView setsView = (TextView) rowView.findViewById(R.id.setsTextView);
             setsView.setText(set);
         }
+
+        private String getTextViewSet(View rowView) {
+            TextView setsView = (TextView) rowView.findViewById(R.id.setsTextView);
+            return setsView.getText().toString();
+        }
     }
 }
-//button update text every second with time once time met set text to reset before have button set to start to get data from edit text
-//have check box saying if use time only show new listView item every increment else show all of them
-//make button etc. show or not show based off of check box or just disable the button so it does not look empty

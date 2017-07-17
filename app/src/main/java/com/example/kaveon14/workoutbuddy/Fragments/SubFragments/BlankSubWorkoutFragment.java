@@ -1,6 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-//add checkbox to list view if checked data stored un-check data not stores and load data on click in workout fragment
-// in popup menu have start a workout button that brings up the checkboxes and change floating add extra button to submit data
+//add checkbox to list view if checked workoutData stored un-check workoutData not stores and load workoutData on click in workout fragment
+// in popup menu have start a workout button that brings up the checkboxes and change floating add extra button to submit workoutData
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

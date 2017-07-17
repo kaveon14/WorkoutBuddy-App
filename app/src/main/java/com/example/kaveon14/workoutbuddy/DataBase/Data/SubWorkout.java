@@ -1,10 +1,7 @@
 package com.example.kaveon14.workoutbuddy.DataBase.Data;
 // TODO implement the actual main workout name into this
 import android.support.annotation.Nullable;
-
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
-
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +12,9 @@ public class SubWorkout {
     private String subWorkoutName;
     private String date;
     private List<Exercise> exerciseList;
-    private int totalReps;//delete
-    private int totalSets;//delete
-    private String totalWeight;//delete
+    private int totalReps;
+    private int totalSets;
+    private String totalWeight;
     private List<WorkoutExercise> workoutData;
 
     public SubWorkout() {
@@ -41,27 +38,19 @@ public class SubWorkout {
 
     public void setTotalReps(int totalReps) {
         this.totalReps = totalReps;
-    }//delete
+    }
 
     public void setTotalSets(int totalSets) {
         this.totalSets = totalSets;
-    }//delete
+    }
 
     public void setTotalWeight(String totalWeight) {
         this.totalWeight = totalWeight;
-    }//delete
+    }
 
     public void setWorkoutData(List<WorkoutExercise> workoutData) {
         this.workoutData = workoutData;
     }
-
-
-
-
-
-
-
-
 
     public String getMainWorkoutName() {
         return mainWorkoutName;
@@ -81,15 +70,15 @@ public class SubWorkout {
 
     public int getTotalReps() {
         return totalReps;
-    }//delete
+    }
 
     public int getTotalSets() {//delete
         return totalSets;
-    }//delete
+    }
 
     public String getTotalWeight() {
         return totalWeight;
-    }//delete
+    }
 
     public List<WorkoutExercise> getWorkoutData() {
         return workoutData;
@@ -100,7 +89,7 @@ public class SubWorkout {
         return exerciseList;
     }
 
-    public List<WorkoutExercise> dd(List<Map<String,String>> map) {//this is how workoutData will be gotten
+    public List<WorkoutExercise> addWorkoutExercises(List<Map<String,String>> map) {//this is how workoutData will be gotten
         int x = 0;
         for(Exercise e:exerciseList) {
             WorkoutExercise we = new WorkoutExercise(e);

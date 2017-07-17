@@ -27,7 +27,7 @@ public class AddBodyStatsPopup extends PopupWindowManager {
     }
 
     private void setTextView() {
-        String message = "      Would you like to add new body data??";
+        String message = "      Would you like to add new body workoutData??";
         TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
         textView.setText(message);
     }

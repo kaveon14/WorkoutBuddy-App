@@ -9,7 +9,6 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTabl
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-import static com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu.data;
 import static com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu.workoutData;
 
 public class GetDatePopup extends PopupWindowManager {
@@ -42,7 +41,7 @@ public class GetDatePopup extends PopupWindowManager {
                 SubWorkout subWorkout = SubWorkoutFragment.clickedSubWorkout;
                 subWorkout.setDate(date);
 
-                table.addWorkoutData(data, subWorkout);
+                table.addWorkoutData(workoutData, subWorkout);
                 Toast.makeText(context, "Date Added and Workout Saved", Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
                 workoutData = null;

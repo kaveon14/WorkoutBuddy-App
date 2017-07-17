@@ -151,7 +151,7 @@ public class DataBaseContract {
             columnNames.add(columnName);
         }
 
-        public static String setColumns() {//are the specific exercise columns necessary ????
+        public static String setColumns() {
             String columns = "";
             for(int x=0;x<columnNames.size();x++) {
                 if(x==columnNames.size()-1) {
@@ -172,6 +172,5 @@ public class DataBaseContract {
                 COLUMN_TOTAL_SETS + "   INT, " +
                 COLUMN_TOTAL_REPS + " INT, " +
                 COLUMN_TOTAL_WEIGHT + " TEXT, ";
-
-    }//need to add 10 set columns to the table need to store both weight and reps
-}//Set1_Reps,Set1_Weight
+    }
+}
