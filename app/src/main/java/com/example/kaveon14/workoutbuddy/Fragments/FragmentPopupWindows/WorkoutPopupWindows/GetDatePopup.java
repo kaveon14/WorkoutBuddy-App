@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -36,7 +36,7 @@ public class GetDatePopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LiftingStatsTable table = new LiftingStatsTable(context);
+                WorkoutStatsTable table = new WorkoutStatsTable(context);
                 String date = getDate();
                 SubWorkout subWorkout = SubWorkoutFragment.clickedSubWorkout;
                 subWorkout.setDate(date);

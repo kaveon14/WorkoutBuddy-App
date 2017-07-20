@@ -20,13 +20,13 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.COLUMN_TOTAL_WEIGHT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.TABLE_NAME;
 
-public class LiftingStatsTable extends TableManager {//possibly change actual table name
+public class WorkoutStatsTable extends TableManager {//possibly change actual table name
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
     private final int TOTAL_REPS = 0, TOTAL_WEIGHT = 1, TOTAL_SETS = 2, UNIT_OF_MEAS = 3;
     private final int NAME_COLUMN = 0, REPS_COLUMN = 1, WEIGHT_COLUMN = 2;
 
-    public LiftingStatsTable(Context context) {
+    public WorkoutStatsTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
         setContext(context);
         setTableName(TABLE_NAME);

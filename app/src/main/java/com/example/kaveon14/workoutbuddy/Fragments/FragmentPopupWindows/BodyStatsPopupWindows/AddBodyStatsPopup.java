@@ -12,7 +12,7 @@ public class AddBodyStatsPopup extends PopupWindowManager {
 
     public AddBodyStatsPopup(View root) {
         setRootView(root);
-        setPopupLayout(R.layout.simple_edittext_button_popup_layout);
+        setPopupLayout(R.layout.yes_no_popup_layout);
         setPopupViewId(R.id.subWorkout_popupWindow);
     }
 

@@ -34,6 +34,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.TestCalenderFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
@@ -41,7 +42,13 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFr
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
+
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.util.Calendar;
+import java.util.Date;
+
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -62,7 +69,17 @@ public class MainActivity extends AppCompatActivity
         getPermissions();
         preloadExerciseData();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        //TestCalenderFragment tcf = new TestCalenderFragment();
+        //addFragmentToStack(getActiveFragment(),tcf,R.id.test_fragment);
     }
+
+
+
+
+
+
+
 
     @Override
     public void onStart() {
@@ -237,12 +254,14 @@ public class MainActivity extends AppCompatActivity
         fragId = R.id.calendar_fragment;
         caldroid_frag = new CaldroidFragment();
         setCaldroidFragContent(caldroid_frag);
+        CalenderFragment calender_frag = new CalenderFragment();
+        calender_frag.setCaldroidFragment(caldroid_frag);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if(getActiveFragment() != null) {
             ft.hide(getActiveFragment());
         }
         ft.add(R.id.calendar_fragment,caldroid_frag);
-        ft.add(R.id.calendar_fragment,new CalenderFragment());
+        ft.add(R.id.calendar_fragment,calender_frag);
         ft.addToBackStack(null);
         ft.commit();
     }

@@ -6,11 +6,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.R;
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
+
+import java.util.Date;
 
 public class CalenderFragment extends Fragment {
+
+    private CaldroidFragment caldroidFragment;
 
     public CalenderFragment() {
         // Required empty public constructor
@@ -29,6 +36,7 @@ public class CalenderFragment extends Fragment {
         String temporaryMessage  = "Show MainWorkout -> SubWorkout Name for the Date";
         textView.setText(temporaryMessage);
         setFloatingActionButton();
+        caldroidFragmentOnClick();
         return root;
     }
 
@@ -38,6 +46,10 @@ public class CalenderFragment extends Fragment {
         if(!hidden) {
             setFloatingActionButton();
         }
+    }
+
+    public void setCaldroidFragment(CaldroidFragment caldroidFragment) {
+        this.caldroidFragment = caldroidFragment;
     }
 
     private FloatingActionButton setFloatingActionButton() {
@@ -58,4 +70,15 @@ public class CalenderFragment extends Fragment {
         });
     }
 
+    private void caldroidFragmentOnClick() {
+        final CaldroidListener listener = new CaldroidListener() {
+            @Override
+            public void onSelectDate(Date date, View view) {
+                System.out.println("date: "+date);
+            }
+        };
+        caldroidFragment.setCaldroidListener(listener);
+    }
+
 }
+//date in calfrag = Mon Jul 17 00:00:00 CDT 2017

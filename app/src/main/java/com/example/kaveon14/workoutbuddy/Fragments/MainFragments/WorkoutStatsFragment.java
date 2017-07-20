@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.LiftingStatsTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
@@ -61,7 +61,7 @@ public class WorkoutStatsFragment extends Fragment {
     }
 
     private WorkoutStatsAdapter setAdapter(){
-        LiftingStatsTable table = new LiftingStatsTable(getContext());
+        WorkoutStatsTable table = new WorkoutStatsTable(getContext());
         subWorkoutList = table.getCompletedWorkouts();
 
         workoutStatsAdapter = new WorkoutStatsAdapter(subWorkoutList);
