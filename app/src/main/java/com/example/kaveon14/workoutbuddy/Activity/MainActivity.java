@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         getPermissions();
         preloadExerciseData();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
+        System.out.println("new date: "+new Date("08/23/1997"));
         //TestCalenderFragment tcf = new TestCalenderFragment();
         //addFragmentToStack(getActiveFragment(),tcf,R.id.test_fragment);
     }
