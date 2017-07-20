@@ -6,19 +6,27 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
+import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
+import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.util.Date;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 public class CalenderFragment extends Fragment {
 
     private CaldroidFragment caldroidFragment;
-
+    private static List<SubWorkout> completedWorkoutList = null;
+    private static Map<Date,SubWorkout> workoutMap = null;
     public CalenderFragment() {
         // Required empty public constructor
     }
@@ -37,6 +45,11 @@ public class CalenderFragment extends Fragment {
         textView.setText(temporaryMessage);
         setFloatingActionButton();
         caldroidFragmentOnClick();
+        if(completedWorkoutList == null) {
+            completedWorkoutList = new WorkoutStatsTable(getContext())
+                    .getCompletedWorkouts();
+            workoutMap = getWorkoutDataMap();
+        }
         return root;
     }
 
@@ -74,10 +87,48 @@ public class CalenderFragment extends Fragment {
         final CaldroidListener listener = new CaldroidListener() {
             @Override
             public void onSelectDate(Date date, View view) {
-                System.out.println("date: "+date);
+                openFullWorkoutStatsFragment(date);
             }
         };
         caldroidFragment.setCaldroidListener(listener);
+    }
+
+    private void openFullWorkoutStatsFragment(Date date) {
+        FullWorkoutStatsFragment fw = new FullWorkoutStatsFragment();
+        fw.setWorkoutData(workoutMap.get(date).getWorkoutData());
+        getFragmentManager().beginTransaction()
+                .hide(this)
+                .hide(caldroidFragment)
+                .add(R.id.fullWorkoutStats_fragment,fw)
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    private Map<Date,SubWorkout> getWorkoutDataMap() {
+        Map<Date,SubWorkout> workoutData = new Hashtable<>();
+        Date date;
+        String unParsedDate;
+        String parsedDate;
+        for(SubWorkout subWorkout :completedWorkoutList) {
+            unParsedDate = subWorkout.getDate();
+            parsedDate = getParsedDate(unParsedDate);
+            date = new Date(parsedDate);
+            workoutData.put(date,subWorkout);
+        }
+        return workoutData;
+    }
+
+    private String getParsedDate(String date) {//length will always be the same
+        String year = date.substring(0,date.length()-6);
+        String month = date.substring(5,date.length()-3);
+        String day = date.substring(date.length()-2);
+        return new StringBuilder(month).append("/")
+                .append(day).append("/").append(year).toString();
+    }
+
+    private void loadWorkout(Date date) {
+
     }
 
 }

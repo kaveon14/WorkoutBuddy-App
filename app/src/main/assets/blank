@@ -1,208 +1,23 @@
-/*private void cc(View root,int layout,int id) {//moved
-        View popupLayout = showPopupWindow(root,layout,id).getContentView();
-        ListView popupListView = setPopupListView(popupLayout);
-        handlePopupEvents(popupListView,popupLayout);
-        System.out.println("wtf: "+popupListView.isShown());
-    }*/
+ basic test data
+ /* Exercise exercise = new Exercise("Bench Press",null);
+        MainWorkout mw = new MainWorkout("Test MainWorkout",null);
+        List<Exercise> eList = new ArrayList<>();
+        eList.add(exercise);
+        SubWorkout sw = new SubWorkout("Test Subworkout", eList);
+        sw.setMainWorkoutName("Test MainWorkout");
+        sw.setDate("2017-08-23");
 
- /*private void showPopupButton(View popupLayout) {//moved
-        Button btn = (Button) popupLayout.findViewById(R.id.exercisePopupBtn);
-        btn.setVisibility(View.VISIBLE);
-    }
-
-    private ListView setPopupListView(View popupLayout) {//moved
-        ListView listView = (ListView) popupLayout.findViewById(R.id.exercisePopup_listView);
-        listView.setBackgroundColor(Color.WHITE);
-        listView.setAdapter(getMainWorkoutAdapter());
-        return listView;
-    }
-
-    private void setAndShowPopupEditTextViews(View popupLayout) {//moved
-        EditText setsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_setsTextView);
-        setsView.setBackgroundColor(Color.WHITE);
-        setsView.setVisibility(View.VISIBLE);
+        Map<String,String> data = new Hashtable<>();
+        data.put("Set 1","3/400lbs");
+        data.put("Set 2","4/500lbs");
+        data.put("Set 3","5/600lbs");
 
 
-        if(setsView.isFocused() && setsView.getText().toString().equalsIgnoreCase("Sets:")) {
-            setsView.setText("");
-        }
+        WorkoutExercise sets = new WorkoutExercise(exercise);
+        sets.setWorkoutData(data);
 
-        EditText repsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_repsTextView);
-        repsView.setBackgroundColor(Color.WHITE);
-        repsView.setVisibility(View.VISIBLE);
+        List<WorkoutExercise> weList = new ArrayList<>();
+        weList.add(sets);
 
-        if(repsView.isFocused() && repsView.getText().toString().equalsIgnoreCase("Reps:")) {
-            repsView.setText("");
-        }
-    }
-
-    private void dimBackground(PopupWindow popupWindow) {//moved
-        View container = (View) popupWindow.getContentView().getParent();
-        WindowManager wm = (WindowManager) getActivity().getBaseContext()
-                .getSystemService(Context.WINDOW_SERVICE);
-
-        WindowManager.LayoutParams layoutParams = (WindowManager.LayoutParams) container.getLayoutParams();
-        layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        layoutParams.dimAmount = 0.6f;
-        wm.updateViewLayout(container, layoutParams);
-    }
-
-    private ArrayAdapter getMainWorkoutAdapter() {//moved
-        MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(getContext());
-        List<String> list = mainWorkoutTable.getMainWorkoutNames();
-        ArrayAdapter workoutAdapter = new ArrayAdapter<>(getContext(),
-                R.layout.simple_list_item,list);
-        return workoutAdapter;
-    }
-
-    private ArrayAdapter getSubWorkoutAdapter() {//moved
-        MainWorkoutTable workoutTable = new MainWorkoutTable(getContext());
-        List<String> list = workoutTable.getSubWorkoutNames(clickedMainWorkout);
-        ArrayAdapter<String> workoutAdapter = new ArrayAdapter<String>(getContext(),
-                R.layout.simple_list_item,list);
-        return workoutAdapter;
-    }
-
-    private void handlePopupEvents(ListView listView, View root) {//moved
-        if(!fromSubWorkout) {
-            mainWorkoutClicked(listView,root);
-        } else {
-            listView.setVisibility(View.INVISIBLE);
-            showPartialSubWorkoutPopup(root);
-        }
-    }
-
-    private void mainWorkoutClicked(ListView listView, View root) {//moved
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedMainWorkout = parent.getItemAtPosition(position).toString();
-                listView.setAdapter(getSubWorkoutAdapter());
-                subWorkoutClicked(listView, root);
-            }
-        });
-    }
-
-    private void subWorkoutClicked(ListView listView, View root) {//moved
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                resetSubWorkoutListViewColors(parent);
-                parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
-                showFullSubWorkoutPopup(listView,root,position);
-            }
-        });
-    }
-
-    private void showFullSubWorkoutPopup(AdapterView<?> parent, View root, int position) {//moved
-        String subWorkoutName = parent.getItemAtPosition(position).toString();
-        popupButtonClicked(root, clickedExercise, subWorkoutName);
-        setAndShowPopupEditTextViews(root);
-        showPopupButton(root);
-    }
-
-    private void showPartialSubWorkoutPopup(View root) {//moved
-        setAndShowPopupEditTextViews(root);
-        showPopupButton(root);
-        popupButtonClicked(root,clickedExercise,
-                SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
-    }
-
-    private void resetSubWorkoutListViewColors(AdapterView<?> parent) {//moved
-        for(int x=0;x<parent.getCount();x++) {
-            View view = parent.getChildAt(x);
-            view.setBackgroundColor(Color.WHITE);
-        }
-    }
-
-    private void popupButtonClicked(View root, Exercise exercise, String subWorkoutName) {//moved
-        Button btn = (Button) root.findViewById(R.id.exercisePopupBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addExerciseToSubWorkout(exercise,root,subWorkoutName);
-                Toast.makeText(getContext(),"Exercise Successfully Added!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void addExerciseToSubWorkout(Exercise exercise, View root, String subWorkoutName) {//moved
-        exercise.setExerciseReps(getExerciseReps(root));
-        exercise.setExerciseSets(getExerciseSets(root));
-
-        SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        subWorkoutTable.
-                addExerciseToSubWorkout(clickedMainWorkout,subWorkoutName+"_wk",
-                        exercise);
-    }
-
-    private String getExerciseSets(View popupLayout) {//moved
-        EditText setsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_setsTextView);
-        return setsView.getText().toString();
-    }
-
-    private String getExerciseReps(View popupLayout) {//moved
-        EditText repsView = (EditText) popupLayout.findViewById(R.id.exercisePopup_repsTextView);
-        return repsView.getText().toString();
-    }*/
- /*private void setMainExercisePopupWindow(View root) {//moved
-        PopupWindow pw = showPopupWindow(root,R.layout.popup_window,R.id.popupWin);
-        addExerciseBtn(pw.getContentView(),pw);
-    }
-
-    private void addExerciseBtn(View popupLayout, PopupWindow popupWindow) {//moved
-        Button btn = (Button) popupLayout.findViewById(R.id.button3);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.activity.showAddExercisePopupWindow();
-                popupWindow.dismiss();
-            }
-        });
-    }
-
-    private PopupWindow showPopupWindow(View root,int layout,int id) {//moved
-        int width =  LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        View popupLayout = getPopupLayout(root,layout,id);
-        PopupWindow popupWindow = new PopupWindow(popupLayout,width,height);
-        popupWindow.setFocusable(true);
-        popupWindow.update(0,0,width,height);
-        popupWindow.showAtLocation(root,Gravity.CENTER,0,0);
-        dimBackground(popupWindow);
-        return popupWindow;
-    }
-
-    private View getPopupLayout(View root,int layout,int id) {//moved
-        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        return inflater.inflate(layout,(ViewGroup)
-                root.findViewById(id));
-    }*/
-
-  /* private PopupWindow setUpAndShowPopupWindow(final View root) {
-        int width =  LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.MATCH_PARENT;
-
-        View popupLayout = getPopupLayout(root);
-        PopupWindow popupWindow = new PopupWindow(popupLayout,width,height);
-        popupWindow.setFocusable(true);
-        popupWindow.update(0,0,width,height);
-        popupWindow.showAtLocation(root,Gravity.CENTER,0,0);
-        dimBackground(popupWindow);
-
-        ListView popupListView = setPopupListView(popupLayout);
-        handlePopupEvents(popupListView,popupLayout);
-        return popupWindow;
-    }
-
-    private View getPopupLayout(View root) {
-        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        return inflater.inflate(R.layout.exercise_popup_layout,(ViewGroup)
-                root.findViewById(R.id.exercise_popupWindow));
-    }*/
+        WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
+        table.addWorkoutData(weList,sw);*/

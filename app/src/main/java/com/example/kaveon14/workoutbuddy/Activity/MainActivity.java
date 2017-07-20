@@ -30,11 +30,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
+import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.TestCalenderFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
@@ -43,11 +46,11 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFra
 import com.example.kaveon14.workoutbuddy.R;
 import com.roomorama.caldroid.CaldroidFragment;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 
@@ -69,9 +72,6 @@ public class MainActivity extends AppCompatActivity
         getPermissions();
         preloadExerciseData();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        System.out.println("new date: "+new Date("08/23/1997"));
-        //TestCalenderFragment tcf = new TestCalenderFragment();
-        //addFragmentToStack(getActiveFragment(),tcf,R.id.test_fragment);
     }
 
 
