@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.CalendarManager;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
@@ -189,6 +190,24 @@ public class MainActivity extends AppCompatActivity
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
             }
         }
+
+    }
+
+    private void checkCalendarPermissions() {
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_CALENDAR)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this
+                    ,new String[]{Manifest.permission.WRITE_CALENDAR,Manifest.permission.READ_CALENDAR},
+                    1);
+
+        }
+        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_CALENDAR)
+                == PackageManager.PERMISSION_GRANTED) {
+            System.out.println("YES");
+            CalendarManager.createCalendarOnStart();
+        } else {
+            System.out.println("NO");
+        }
     }
 
     @Override
@@ -254,9 +273,10 @@ public class MainActivity extends AppCompatActivity
             ft.hide(getActiveFragment());
         }
         ft.add(R.id.calendar_fragment,caldroid_frag);
-        ft.add(R.id.calendar_fragment,calender_frag);
+        //ft.add(R.id.calendar_fragment,calender_frag);
         ft.addToBackStack(null);
         ft.commit();
+        checkCalendarPermissions();
     }
 
     public void addFragmentToStack(@Nullable Fragment fragToHide, Fragment fragToShow, int fragId) {
