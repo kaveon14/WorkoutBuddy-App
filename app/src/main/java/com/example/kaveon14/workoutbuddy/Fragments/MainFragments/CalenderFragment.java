@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
+//for calendar events store name of main and sub workout and date with time
 public class CalenderFragment extends Fragment {
 
     private CaldroidFragment caldroidFragment;
@@ -126,10 +126,4 @@ public class CalenderFragment extends Fragment {
         return new StringBuilder(month).append("/")
                 .append(day).append("/").append(year).toString();
     }
-
-    private void loadWorkout(Date date) {
-
-    }
-
 }
-//date in calfrag = Mon Jul 17 00:00:00 CDT 2017

@@ -63,7 +63,7 @@ public class WorkoutStatsTable extends TableManager {//possibly change actual ta
         writableDatabase.close();
     }
 
-    private ContentValues addMainExerciseData(ContentValues values, WorkoutExercise workout, int exNum) {//the new add a workout
+    private ContentValues addMainExerciseData(ContentValues values, WorkoutExercise workout, int exNum) {
         Map<String, String> data = workout.getWorkoutData();
         int setIncrement = 1;
 

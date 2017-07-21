@@ -16,7 +16,8 @@
             android:id="@+id/addCustomExerciseBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add New Exercise" />
+            android:text="Add New Exercise"
+            />
 
         <Button
             android:id="@+id/deleteCustomExerciseBtn"

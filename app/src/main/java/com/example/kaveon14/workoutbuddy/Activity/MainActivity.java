@@ -74,13 +74,6 @@ public class MainActivity extends AppCompatActivity
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
-
-
-
-
-
-
-
     @Override
     public void onStart() {
         super.onStart();
@@ -418,4 +411,4 @@ public class MainActivity extends AppCompatActivity
         }
     }
 }
-// do a-chart engine later for now just figure out how to save workout workoutData and body workoutData
+// do a-chart engine after calendar event are done
