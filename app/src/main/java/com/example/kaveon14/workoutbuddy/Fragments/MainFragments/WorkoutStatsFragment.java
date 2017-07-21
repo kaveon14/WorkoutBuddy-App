@@ -108,10 +108,19 @@ public class WorkoutStatsFragment extends Fragment {
             setTotalWeightView(rowView,subWorkout);
         }
 
-        private void setDateView(View rowView,SubWorkout subWorkout) {
+        private void setDateView(View rowView,SubWorkout subWorkout) {//convert date
             TextView textView = (TextView)  rowView.findViewById(R.id.liftingStatsDate_textView);
             String text = "Date -> ";
-            textView.setText(text + subWorkout.getDate());
+            String date = getParsedDate(subWorkout.getDate());
+            textView.setText(text + date);
+        }
+
+        private String getParsedDate(String date) {//length will always be the same
+            String year = date.substring(0,date.length()-6);
+            String month = date.substring(5,date.length()-3);
+            String day = date.substring(date.length()-2);
+            return new StringBuilder(month).append("/")
+                    .append(day).append("/").append(year).toString();
         }
 
         private void setMainWorkoutTextView(View rowView,SubWorkout subWorkout) {

@@ -6,10 +6,23 @@
     android:orientation="vertical"
     android:visibility="visible"
     tools:context=".Fragments.MainFragments.WorkoutStatsFragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <EditText
+        android:id="@+id/workoutStatsSearchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Search: By Date: yyyy/mm/dd" />
 
     <ListView
         android:id="@+id/workoutStats_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"/>
+        android:visibility="visible" />
+    </LinearLayout>
 </FrameLayout>

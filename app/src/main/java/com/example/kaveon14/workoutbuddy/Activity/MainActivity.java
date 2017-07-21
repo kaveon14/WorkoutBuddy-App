@@ -32,7 +32,6 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.CalendarManager;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
@@ -45,21 +44,16 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStats
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
-import com.roomorama.caldroid.CaldroidFragment;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static int fragId;
-    private CaldroidFragment caldroid_frag;
     public static MainActivity activity;
     private CustomExercisePopup customExercisePopup;
     private static Bitmap bitmap;
@@ -73,6 +67,8 @@ public class MainActivity extends AppCompatActivity
         getPermissions();
         preloadExerciseData();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+
     }
 
     @Override
@@ -159,7 +155,6 @@ public class MainActivity extends AppCompatActivity
                 showExerciseFragment();
                 break;
             case R.id.calenderBtn:
-                showCaldroidFragment();
                 break;
             case R.id.nav_send:
                 showRealWorkoutFragment();
@@ -191,23 +186,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-    }
-
-    private void checkCalendarPermissions() {
-        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_CALENDAR)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this
-                    ,new String[]{Manifest.permission.WRITE_CALENDAR,Manifest.permission.READ_CALENDAR},
-                    1);
-
-        }
-        if(ActivityCompat.checkSelfPermission(this,Manifest.permission.WRITE_CALENDAR)
-                == PackageManager.PERMISSION_GRANTED) {
-            System.out.println("YES");
-            CalendarManager.createCalendarOnStart();
-        } else {
-            System.out.println("NO");
-        }
     }
 
     @Override
@@ -262,28 +240,10 @@ public class MainActivity extends AppCompatActivity
         addFragmentToStack(getActiveFragment(),blankBodyStats_frag,R.id.blankBodyStats_fragment);
     }
 
-    private void showCaldroidFragment() {
-        fragId = R.id.calendar_fragment;
-        caldroid_frag = new CaldroidFragment();
-        setCaldroidFragContent(caldroid_frag);
-        CalenderFragment calender_frag = new CalenderFragment();
-        calender_frag.setCaldroidFragment(caldroid_frag);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if(getActiveFragment() != null) {
-            ft.hide(getActiveFragment());
-        }
-        ft.add(R.id.calendar_fragment,caldroid_frag);
-        //ft.add(R.id.calendar_fragment,calender_frag);
-        ft.addToBackStack(null);
-        ft.commit();
-        checkCalendarPermissions();
-    }
-
     public void addFragmentToStack(@Nullable Fragment fragToHide, Fragment fragToShow, int fragId) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         this.fragId = fragId;
         if(fragToHide != null) {fragmentTransaction.hide(fragToHide);}
-        if(caldroid_frag!=null && caldroid_frag.isVisible()) {fragmentTransaction.hide(caldroid_frag);}
         fragmentTransaction.add(fragId, fragToShow);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
@@ -313,14 +273,6 @@ public class MainActivity extends AppCompatActivity
     private void setNaviagtionView() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void setCaldroidFragContent(CaldroidFragment caldroid_frag) {
-        Calendar cal = Calendar.getInstance();
-        Bundle args = new Bundle();
-        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-        caldroid_frag.setArguments(args);
     }
 
     public void showAddExercisePopupWindow() {
