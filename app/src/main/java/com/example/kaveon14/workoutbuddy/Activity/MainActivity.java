@@ -71,7 +71,31 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         preloadExerciseData();
+        Exercise exercise = new Exercise("Bench Press",null);
+        MainWorkout mw = new MainWorkout("Test MainWorkout",null);
+        List<Exercise> eList = new ArrayList<>();
+        eList.add(exercise);
+        SubWorkout sw = new SubWorkout("Test Subworkout", eList);
+        sw.setMainWorkoutName("Test MainWorkout");
+        sw.setDate("2017-08-23");
+
+        Map<String,String> data = new Hashtable<>();
+        data.put("Set 1","3/400lbs");
+        data.put("Set 2","4/500lbs");
+        data.put("Set 3","5/600lbs");
+
+
+        WorkoutExercise sets = new WorkoutExercise(exercise);
+        sets.setWorkoutData(data);
+
+        List<WorkoutExercise> weList = new ArrayList<>();
+        weList.add(sets);
+
+        WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
+        table.addWorkoutData(weList,sw);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        WorkoutStatsTable wt = new WorkoutStatsTable(getBaseContext());
+        wt.printTable();
     }
 
     @Override

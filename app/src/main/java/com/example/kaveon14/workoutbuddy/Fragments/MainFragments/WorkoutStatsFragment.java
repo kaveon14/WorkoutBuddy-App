@@ -26,7 +26,8 @@ import java.util.List;
 public class WorkoutStatsFragment extends Fragment {
 
     private WorkoutStatsAdapter workoutStatsAdapter;
-    private List<SubWorkout> subWorkoutList;
+    private List<SubWorkout> subWorkoutList;//possibly create another list with same i
+    // ndex for loading stuff from search bar
 
     public WorkoutStatsFragment() {
         // Required empty public constructor

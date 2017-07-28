@@ -20,7 +20,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.COLUMN_TOTAL_WEIGHT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.WorkoutData.TABLE_NAME;
 
-public class WorkoutStatsTable extends TableManager {//possibly change actual table name
+public class WorkoutStatsTable extends TableManager {
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
     private final int TOTAL_REPS = 0, TOTAL_WEIGHT = 1, TOTAL_SETS = 2, UNIT_OF_MEAS = 3;
@@ -64,7 +64,8 @@ public class WorkoutStatsTable extends TableManager {//possibly change actual ta
         writableDatabase.close();
     }
 
-    private ContentValues addMainExerciseData(ContentValues values, WorkoutExercise workout, int exNum) {
+    private ContentValues addMainExerciseData(ContentValues values, WorkoutExercise workout,
+                                              int exNum) {
         Map<String, String> data = workout.getWorkoutData();
         int setIncrement = 1;
 
@@ -94,7 +95,6 @@ public class WorkoutStatsTable extends TableManager {//possibly change actual ta
             int[] data = getTotalsData(cursor);
             workoutData = getWorkoutExerciseData(cursor);
             getSubWorkoutData(cursor, subWorkoutList, workoutData, data);
-            workoutData = new ArrayList<>();
         }
         cursor.close();
         readableDatabase.close();
@@ -117,7 +117,6 @@ public class WorkoutStatsTable extends TableManager {//possibly change actual ta
             String unitOfMeasurement = substring.equalsIgnoreCase("lbs") ? "lbs" : "kgs";
             unitOfMeas = unitOfMeasurement.equalsIgnoreCase("lbs") ? 1 : 0;
 
-
             data[TOTAL_SETS] = totalSets;
             data[TOTAL_REPS] = totalReps;
             data[TOTAL_WEIGHT] = Integer.valueOf(totalWeight.substring(0, index - 3));
@@ -132,7 +131,7 @@ public class WorkoutStatsTable extends TableManager {//possibly change actual ta
 
         StringBuilder builder;
         WorkoutExercise workout = null;
-        for (int z = 1; z <= 15; z++) {
+        for (int z = 1; z <= 15; z++) {//shorten this by store all columns in a text file and loading ds from there
             String columnStart = "Exercise" + z;
             for (int x = 1; x <= 10; x++) {
                 String[] columns = getColumnNames(columnStart, x);
@@ -183,12 +182,12 @@ public class WorkoutStatsTable extends TableManager {//possibly change actual ta
         builder = new StringBuilder(columnStart);
 
 
-        String exerciseRepsColumn = builder.append("_Set").append(x).append("_Reps")
-                .append(x).toString();
+        String exerciseRepsColumn = builder.append("_Set").append(x)
+                .append("_Reps").toString();
         builder = new StringBuilder(columnStart);
 
-        String exerciseWeightColumn = builder.append("_Set").append(x).append("_Weight")
-                .append(x).toString();
+        String exerciseWeightColumn = builder.append("_Set").append(x)
+                .append("_Weight").toString();
 
         String[] columns = new String[3];
         columns[NAME_COLUMN] = exerciseNameColumn;

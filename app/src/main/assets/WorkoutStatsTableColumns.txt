@@ -1,0 +1,8 @@
+MainWorkoutName
+SubWorkoutName
+Total_Sets
+Total_Reps
+Total_Weight
+
+Exercise1_Name
+Exercise1_Set1

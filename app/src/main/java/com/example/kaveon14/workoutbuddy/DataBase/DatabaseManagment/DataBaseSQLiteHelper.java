@@ -87,18 +87,19 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             builder = new StringBuilder(columnStart);
             columns[NAME_COL] = builder.append("_Name").toString();
 
-            for(int z=1;z<=10;z++) {
+            DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[NAME_COL]);//moved from bottom so name is first
+            for(int z=1;z<=10;z++) {//delete weight and reps num Exercise1_Sets1_Reps1
                 builder = new StringBuilder(columnStart);
                 columns[SETS_COL] = builder.append("_Set").append(z).toString();
                 builder = new StringBuilder(columns[SETS_COL]);
-                columns[REPS_COL] = builder.append("_Reps").append(z).toString();
+                columns[REPS_COL] = builder.append("_Reps").toString();
                 System.out.println("repsCol: "+columns[REPS_COL]);
                 builder = new StringBuilder(columns[SETS_COL]);
-                columns[WEIGHT_COL] = builder.append("_Weight").append(z).toString();
+                columns[WEIGHT_COL] = builder.append("_Weight").toString();
                 DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[REPS_COL]);
                 DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[WEIGHT_COL]);
             }
-            DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[NAME_COL]);
+
         }
         DataBaseContract.WorkoutData.setColumns();
         String createTable  = DataBaseContract.WorkoutData.CREATE_TABLE +
