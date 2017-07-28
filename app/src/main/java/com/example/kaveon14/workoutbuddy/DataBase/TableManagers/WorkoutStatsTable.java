@@ -30,6 +30,7 @@ public class WorkoutStatsTable extends TableManager {//possibly change actual ta
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
         setContext(context);
         setTableName(TABLE_NAME);
+        setSearchableColumns(new String[] {COLUMN_MAINWORKOUT,COLUMN_SUBWORKOUT,COLUMN_DATE});
     }
 
     public void addWorkoutData(List<WorkoutExercise> workouts, SubWorkout subWorkout) {

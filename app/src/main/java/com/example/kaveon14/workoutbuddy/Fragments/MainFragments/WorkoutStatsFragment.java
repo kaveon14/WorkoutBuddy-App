@@ -1,9 +1,15 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,6 +35,7 @@ public class WorkoutStatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -59,6 +66,7 @@ public class WorkoutStatsFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
 
     private WorkoutStatsAdapter setAdapter(){
         WorkoutStatsTable table = new WorkoutStatsTable(getContext());
