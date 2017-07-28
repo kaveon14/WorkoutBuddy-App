@@ -1,24 +1,28 @@
 package com.example.kaveon14.workoutbuddy.DataBase.DefaultData;
 
 import android.content.Context;
+
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class DefaultWorkouts {
 
     private String fileName;
-    private Context myContext;
+    private Context context;
 
     public DefaultWorkouts(Context context, String fileName) {
-        myContext = context;
+        this.context = context;
         this.fileName = fileName;
     }
 
     private Scanner openFileWithScanner(String fileName) throws IOException {
-        return new Scanner(new DataInputStream(myContext.getAssets().open(fileName)));
+        return new Scanner(new DataInputStream(context.getAssets().open(fileName)));
     }
 // TODO parse the workout names
     public Map<String,String> getSubWorkoutData() throws IOException {
@@ -39,5 +43,16 @@ public class DefaultWorkouts {
         }
         scan.close();
         return defaultWorkouts;
+    }
+
+    public List<String> getWorkoutStatsColumns() throws IOException {
+        List<String> columns = new ArrayList<>();
+
+       Scanner scan = openFileWithScanner("WorkoutStatsTableColumns.txt");
+        while(scan.hasNext()) {
+            columns.add(scan.next());
+        }
+
+        return columns;
     }
 }

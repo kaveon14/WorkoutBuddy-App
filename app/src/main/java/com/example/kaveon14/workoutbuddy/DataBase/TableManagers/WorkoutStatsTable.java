@@ -133,7 +133,7 @@ public class WorkoutStatsTable extends TableManager {
         WorkoutExercise workout = null;
         for (int z = 1; z <= 15; z++) {//shorten this by store all columns in a text file and loading ds from there
             String columnStart = "Exercise" + z;
-            for (int x = 1; x <= 10; x++) {
+            for (int x = 1; x <= 10; x++) {//need to replace with list containing needed columns
                 String[] columns = getColumnNames(columnStart, x);
                 String exerciseName = cursor.getString(cursor
                         .getColumnIndexOrThrow(columns[NAME_COLUMN]));
