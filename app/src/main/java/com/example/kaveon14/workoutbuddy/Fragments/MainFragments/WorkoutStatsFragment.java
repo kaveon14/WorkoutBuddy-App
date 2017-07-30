@@ -210,7 +210,6 @@ public class WorkoutStatsFragment extends Fragment {
         }
 
         private void setTotalRepsView(View rowView,SubWorkout subWorkout) {
-            System.out.println("please: "+subWorkout.getTotalReps());
             TextView textView = (TextView) rowView.findViewById(R.id.reps_textView);
             String text = "Total Reps -> ";
             textView.setText(text + " " + subWorkout.getTotalReps());

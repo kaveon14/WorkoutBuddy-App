@@ -27,6 +27,7 @@ public class ExerciseTable extends TableManager {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
         setContext(context);
         setTableName(TABLE_NAME);
+        setSearchableColumns(new String[]{COLUMN_EXERCISES});
     }
 
     public void setDefaultExerciseCount() {
