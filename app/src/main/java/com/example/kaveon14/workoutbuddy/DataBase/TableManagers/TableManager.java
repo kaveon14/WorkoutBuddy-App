@@ -46,8 +46,8 @@ public abstract class TableManager {
         cursor.close();
         return columnList;
     }
-//jusat make more dynamic for the array
-    public Map<String,List<String>> searchTable(String searchedItem) {//will be more complex soon
+
+    public Map<String,List<String>> searchTable(String searchedItem) {
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.rawQuery(getSearchQueryStatement(searchedItem),null);
         if (cursor == null) {
@@ -73,7 +73,7 @@ public abstract class TableManager {
     }
 
 
-    private Map<String,List<String>> convertCursorToMap(Cursor cursor) {//wil be converted to map<list>to get a certain column
+    private Map<String,List<String>> convertCursorToMap(Cursor cursor) {
         int count = cursor.getCount();
         Map<String,List<String>> queriedData = new Hashtable<>();
         for(int x=0;x<SEARCHABLE_COLUMNS.length;x++) {

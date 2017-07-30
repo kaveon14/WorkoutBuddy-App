@@ -2,8 +2,6 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -17,17 +15,28 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
+import java.util.ArrayList;
 import java.util.List;
-// search by date,mainworkout,subworkout name
+import java.util.Map;
+// use floating action button to reset list
+import static android.content.Context.SEARCH_SERVICE;
+//possily create binary search tree to speedup matching searched item times
 public class WorkoutStatsFragment extends Fragment {
 
     private WorkoutStatsAdapter workoutStatsAdapter;
-    private List<SubWorkout> subWorkoutList;//possibly create another list with same i
-    // ndex for loading stuff from search bar
+    private List<SubWorkout> subWorkoutList;
+    public static Map<String,List<String>> queriedData;
+    private Menu menu;
+    private ListView listView;
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
 
     public WorkoutStatsFragment() {
         // Required empty public constructor
@@ -43,10 +52,31 @@ public class WorkoutStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
-        ListView listView = (ListView) root.findViewById(R.id.workoutStats_listView);
-        listView.setAdapter(setAdapter());//on click view full workout stats
+        listView = (ListView) root.findViewById(R.id.workoutStats_listView);
+        listView.setAdapter(setAdapter());
         setListViewOnClick(listView);
+        setSearchViewOnClick();
         return root;
+    }
+
+    private void setSearchViewOnClick() {
+        SearchView searchView =
+                (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                WorkoutStatsTable table = new WorkoutStatsTable(getContext());
+                loadSearchedItems(table.searchTable(query));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void setListViewOnClick(ListView listView) {
@@ -75,6 +105,35 @@ public class WorkoutStatsFragment extends Fragment {
 
         workoutStatsAdapter = new WorkoutStatsAdapter(subWorkoutList);
         return new WorkoutStatsAdapter(subWorkoutList);
+    }
+
+    public List<SubWorkout> loadSearchedItems(Map<String,List<String>> queriedData) {
+        List<SubWorkout> list = new ArrayList<>();
+        if(queriedData!=null) {
+            List<String> mainWorkoutNames = queriedData.get(DataBaseContract.WorkoutData.COLUMN_MAINWORKOUT);
+            List<String> subWorkoutNames = queriedData.get(DataBaseContract.WorkoutData.COLUMN_SUBWORKOUT);
+            List<String> dates = queriedData.get(DataBaseContract.WorkoutData.COLUMN_DATE);
+
+            for (int x = 0; x < mainWorkoutNames.size(); x++) {
+                String mainWorkoutName = mainWorkoutNames.get(x);
+                String subWorkoutName = subWorkoutNames.get(x);
+                String date = dates.get(x);
+
+                for (int i = 0; i < subWorkoutList.size(); i++) {
+                    SubWorkout subWorkout = subWorkoutList.get(i);
+                    String mainName = subWorkout.getMainWorkoutName();
+                    String subName = subWorkout.getSubWorkoutName();
+                    String dateSubWorkoutList = subWorkout.getDate();
+
+                    if(mainWorkoutName.equals(mainName) && subWorkoutName.equals(subName)
+                            && date.equals(dateSubWorkoutList)) {
+                        list.add(subWorkout);
+                    }
+                }
+            }
+        }
+        listView.setAdapter(new WorkoutStatsAdapter(list));
+        return list;
     }
 
     private class WorkoutStatsAdapter extends BaseAdapter {

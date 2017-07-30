@@ -1,7 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Activity;
 
 import android.Manifest;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -18,11 +17,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,11 +29,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
-import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -47,11 +40,6 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFr
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -60,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     private CustomExercisePopup customExercisePopup;
     private static Bitmap bitmap;
     private int RESULT_LOAD_IMAGE = 1;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,31 +57,6 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         preloadData();
-        /*Exercise exercise = new Exercise("Bench Press",null);
-        MainWorkout mw = new MainWorkout("Test MainWorkout",null);
-        List<Exercise> eList = new ArrayList<>();
-        eList.add(exercise);
-        SubWorkout sw = new SubWorkout("Test Subworkout", eList);
-        sw.setMainWorkoutName("Test Test Test");
-        sw.setDate("2012-08-23");
-
-        Map<String,String> data = new Hashtable<>();
-        data.put("Set 1","3/400lbs");
-        data.put("Set 2","4/500lbs");
-        data.put("Set 3","5/600lbs");
-
-
-        WorkoutExercise sets = new WorkoutExercise(exercise);
-        sets.setWorkoutData(data);
-
-        List<WorkoutExercise> weList = new ArrayList<>();
-        weList.add(sets);
-
-*/
-        WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
-        //table.addWorkoutData(weList,sw);
-        table.printTable();
-
     }
 
     @Override
@@ -149,25 +113,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu
-                .findItem(R.id.action_search));
-
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                WorkoutStatsTable wt = new WorkoutStatsTable(getBaseContext());
-                wt.searchTable(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        this.menu = menu;
         return true;
     }
 
@@ -249,6 +195,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showWorkoutStatsFragment() {
         WorkoutStatsFragment workoutStatsFragment = new WorkoutStatsFragment();
+        workoutStatsFragment.setMenu(menu);
         addFragmentToStack(getActiveFragment(), workoutStatsFragment,R.id.workoutStats_fragment);
     }
 
