@@ -24,11 +24,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,7 +34,6 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultWorkouts;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
@@ -50,12 +47,10 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFr
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -72,15 +67,32 @@ public class MainActivity extends AppCompatActivity
         activity =  this;
         setBaseContent();
         getPermissions();
-        preloadExerciseData();
+        preloadData();
+        /*Exercise exercise = new Exercise("Bench Press",null);
+        MainWorkout mw = new MainWorkout("Test MainWorkout",null);
+        List<Exercise> eList = new ArrayList<>();
+        eList.add(exercise);
+        SubWorkout sw = new SubWorkout("Test Subworkout", eList);
+        sw.setMainWorkoutName("Test Test Test");
+        sw.setDate("2012-08-23");
+
+        Map<String,String> data = new Hashtable<>();
+        data.put("Set 1","3/400lbs");
+        data.put("Set 2","4/500lbs");
+        data.put("Set 3","5/600lbs");
 
 
-        DefaultWorkouts dw = new DefaultWorkouts(getBaseContext(),"");
-        try {
-            dw.getWorkoutStatsColumns();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        WorkoutExercise sets = new WorkoutExercise(exercise);
+        sets.setWorkoutData(data);
+
+        List<WorkoutExercise> weList = new ArrayList<>();
+        weList.add(sets);
+
+*/
+        WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
+        //table.addWorkoutData(weList,sw);
+        table.printTable();
+
     }
 
     @Override
@@ -196,7 +208,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void preloadExerciseData() {
+    private void preloadData() {
         ExerciseFragment exerciseFragment = new ExerciseFragment();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.exercise_fragment,exerciseFragment)

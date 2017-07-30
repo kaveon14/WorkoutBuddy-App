@@ -4,9 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
+import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultWorkouts;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -30,7 +33,7 @@ public class WorkoutStatsTable extends TableManager {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
         setContext(context);
         setTableName(TABLE_NAME);
-        setSearchableColumns(new String[] {COLUMN_MAINWORKOUT,COLUMN_SUBWORKOUT,COLUMN_DATE});
+        setSearchableColumns(new String[]{COLUMN_MAINWORKOUT, COLUMN_SUBWORKOUT, COLUMN_DATE});
     }
 
     public void addWorkoutData(List<WorkoutExercise> workouts, SubWorkout subWorkout) {
@@ -43,6 +46,7 @@ public class WorkoutStatsTable extends TableManager {
         values.put(COLUMN_SUBWORKOUT, subWorkoutName);
         values.put(COLUMN_DATE, subWorkout.getDate());
 
+        //change to array
         int exNum = 1;
         int totalReps = 0;
         int totalSets = 0;
@@ -127,28 +131,29 @@ public class WorkoutStatsTable extends TableManager {
 
     private List<WorkoutExercise> getWorkoutExerciseData(Cursor cursor) {
         List<WorkoutExercise> workoutData = new ArrayList<>();
-        Map<String,String> dataMap = new Hashtable<>();
+        Map<String, String> dataMap = new Hashtable<>();
 
         StringBuilder builder;
         WorkoutExercise workout = null;
-        for (int z = 1; z <= 15; z++) {//shorten this by store all columns in a text file and loading ds from there
+        for (int z = 1; z <= 15; z++) {
             String columnStart = "Exercise" + z;
-            for (int x = 1; x <= 10; x++) {//need to replace with list containing needed columns
+            for (int x = 1; x <= 10; x++) {
                 String[] columns = getColumnNames(columnStart, x);
                 String exerciseName = cursor.getString(cursor
                         .getColumnIndexOrThrow(columns[NAME_COLUMN]));
                 String reps = cursor.getString(cursor
                         .getColumnIndexOrThrow(columns[REPS_COLUMN]));
                 if (exerciseName != null && reps != null) {
-                    Exercise exercise = new Exercise(exerciseName,null);
+                    Exercise exercise = new Exercise(exerciseName, null);
                     String weight = cursor.getString(cursor
                             .getColumnIndexOrThrow(columns[WEIGHT_COLUMN]));
                     workout = new WorkoutExercise(exercise);
                     builder = new StringBuilder(reps);
                     String data = builder.append("/").append(weight).toString();
-                    dataMap.put("Set "+x,data);
+                    dataMap.put("Set " + x, data);
                 }
-            }if (workout != null) {
+            }
+            if (workout != null) {
                 workout.setWorkoutData(dataMap);
                 workoutData.add(workout);
                 workout = null;
@@ -156,23 +161,6 @@ public class WorkoutStatsTable extends TableManager {
             dataMap = new Hashtable<>();
         }
         return workoutData;
-    }
-
-    private Exercise getExercise(Cursor cursor, String repsCol, String weightCol
-            , String name, int sets) {
-
-        String reps = cursor.getString(cursor.getColumnIndexOrThrow(repsCol));
-        String weight = cursor.getString(cursor.getColumnIndexOrThrow(weightCol));
-
-        if (reps != null) {
-            Exercise exercise = new Exercise(name, null);
-            exercise.setActualSets(sets);
-            exercise.setActualReps(Integer.valueOf(reps));
-            exercise.setActualWeight(weight);
-            return exercise;
-        } else {
-            return null;
-        }
     }
 
     private String[] getColumnNames(String columnStart, int x) {
@@ -205,7 +193,7 @@ public class WorkoutStatsTable extends TableManager {
 
         String subName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SUBWORKOUT));
         if (subName != null) {
-            SubWorkout subWorkout = new SubWorkout(subName,null);
+            SubWorkout subWorkout = new SubWorkout(subName, null);
             subWorkout.setWorkoutData(workoutData);
             subWorkout = getPartialSubWorkout(cursor, subWorkout);
             subWorkout.setTotalSets(totalSets);

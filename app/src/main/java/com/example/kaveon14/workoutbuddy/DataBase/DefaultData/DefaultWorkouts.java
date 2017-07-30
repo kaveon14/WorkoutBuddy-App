@@ -45,14 +45,19 @@ public class DefaultWorkouts {
         return defaultWorkouts;
     }
 
-    public List<String> getWorkoutStatsColumns() throws IOException {
+    public List<String> getWorkoutStatsColumns() {
         List<String> columns = new ArrayList<>();
 
-       Scanner scan = openFileWithScanner("WorkoutStatsTableColumns.txt");
-        while(scan.hasNext()) {
-            columns.add(scan.next());
-        }
+        try {
+            Scanner scan = openFileWithScanner("WorkoutStatsTableColumns.txt");
+            while (scan.hasNext()) {
+                columns.add(scan.next());
+            }
 
+            return columns;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return columns;
     }
 }

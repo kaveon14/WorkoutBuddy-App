@@ -3,19 +3,19 @@ package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 
-import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 public abstract class TableManager {
 
     public Context context;
     private String tableName;
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
-    private String[] SEARCHABLE_COLUMN;
+    private String[] SEARCHABLE_COLUMNS;
 
     public void setContext(Context context) {
         this.context = context;
@@ -27,10 +27,10 @@ public abstract class TableManager {
     }
 
     protected void setSearchableColumns(String[] searchableColumns) {
-        if(SEARCHABLE_COLUMN == null || SEARCHABLE_COLUMN.length == 0) {
-            SEARCHABLE_COLUMN = new String[10];
+        if(SEARCHABLE_COLUMNS == null || SEARCHABLE_COLUMNS.length == 0) {
+            SEARCHABLE_COLUMNS = new String[10];
         }
-        this.SEARCHABLE_COLUMN = searchableColumns;
+        this.SEARCHABLE_COLUMNS = searchableColumns;
     }
 
     public List<String> getColumn(String columnName) {
@@ -46,37 +46,54 @@ public abstract class TableManager {
         cursor.close();
         return columnList;
     }
-
-    public List<String> searchTable(String searchedItem) {
+//jusat make more dynamic for the array
+    public Map<String,List<String>> searchTable(String searchedItem) {//will be more complex soon
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        String query = new StringBuilder("SELECT * FROM ").append(tableName)
-                .append(" WHERE ").append(SEARCHABLE_COLUMN[0]).append(" LIKE ").append("'")
-                .append(searchedItem).append('%').append("'").toString();
-        Cursor cursor = readableDatabase.rawQuery(query,null);
-
-
+        Cursor cursor = readableDatabase.rawQuery(getSearchQueryStatement(searchedItem),null);
         if (cursor == null) {
             return null;
         } else if (!cursor.moveToFirst()) {
             cursor.close();
             return null;
         }
-
-        return convertCursorToList(cursor);
+        return convertCursorToMap(cursor);
     }
 
-    private List<String> convertCursorToList(Cursor cursor) {
-        int count = cursor.getCount();
-        List<String> list = new ArrayList<>();
-        while(count>0) {
-            list.add(cursor.getString(cursor
-                    .getColumnIndexOrThrow(SEARCHABLE_COLUMN[0])));
-            count--;
+    private String getSearchQueryStatement(String searchedItem) {
+        StringBuilder builder = new StringBuilder("SELECT * FROM ")
+                .append(tableName).append(" WHERE ");
+        int x=0;
+        for(;x<SEARCHABLE_COLUMNS.length-1;x++) {
+            builder.append(SEARCHABLE_COLUMNS[x])
+                    .append(" LIKE '%").append(searchedItem).append("%' OR ");
+        }
+        builder.append(SEARCHABLE_COLUMNS[x])
+                .append(" LIKE '%").append(searchedItem).append("%'");
+        return builder.toString();
+    }
 
+
+    private Map<String,List<String>> convertCursorToMap(Cursor cursor) {//wil be converted to map<list>to get a certain column
+        int count = cursor.getCount();
+        Map<String,List<String>> queriedData = new Hashtable<>();
+        for(int x=0;x<SEARCHABLE_COLUMNS.length;x++) {
+            queriedData.put(SEARCHABLE_COLUMNS[x],new ArrayList<String>());
         }
 
-        return list;
+        while(count>0) {
+            for(int x=0;x<SEARCHABLE_COLUMNS.length;x++) {
+                queriedData.get(SEARCHABLE_COLUMNS[x]).add(getCursorString(cursor,x));
+            }
+            cursor.moveToNext();
+            count--;
+        }
+        return queriedData;
     }
+
+    private String getCursorString(Cursor cursor,int x) {
+        return cursor.getString(cursor.getColumnIndexOrThrow(SEARCHABLE_COLUMNS[x]));
+    }
+
 
     public void printTable() {
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();

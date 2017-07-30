@@ -22,7 +22,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTabl
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-
+// search by date,mainworkout,subworkout name
 public class WorkoutStatsFragment extends Fragment {
 
     private WorkoutStatsAdapter workoutStatsAdapter;
