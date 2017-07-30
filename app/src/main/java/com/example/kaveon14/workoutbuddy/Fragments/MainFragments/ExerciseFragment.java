@@ -1,8 +1,12 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
+import android.app.SearchManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -10,7 +14,9 @@ import android.widget.ArrayAdapter;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.ExerciseToWorkoutPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.ExercisePopupMenu;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
@@ -19,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+
+import static android.content.Context.SEARCH_SERVICE;
 
 public class ExerciseFragment extends Fragment {
 
@@ -28,6 +37,8 @@ public class ExerciseFragment extends Fragment {
     public static List<Exercise> customExerciseList;
     private static List<String> exerciseNames;
     private boolean fromSubWorkout = false;
+    private ListView listView;
+    private Menu menu;
 
     public ExerciseFragment() {
 
@@ -53,6 +64,7 @@ public class ExerciseFragment extends Fragment {
         setExerciseAdapter();
         setListView(root,exerciseAdapter);
         setFloatingActionButton();
+        setSearchViewOnClick();
         return root;
     }
 
@@ -90,13 +102,13 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void setListView(View root,ArrayAdapter adapter) {
-        ListView listView = (ListView) root.findViewById(R.id.exercise_listView);
+        listView = (ListView) root.findViewById(R.id.exercise_listView);
         listView.setAdapter(adapter);
-        listViewonClick(listView,root);
+        setListViewOnClick(listView,root);
         listViewOnLongClick(listView,root);
     }
 
-    private void listViewonClick(ListView listView,View root) {
+    private void setListViewOnClick(ListView listView, View root) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -200,6 +212,50 @@ public class ExerciseFragment extends Fragment {
                 return exercise1.getExerciseName().compareToIgnoreCase(exercise2.getExerciseName());
             }
         });
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    private void setSearchViewOnClick() {
+        SearchView searchView =
+                (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ExerciseTable table = new ExerciseTable(getContext());
+                loadSearchedItems(table.searchTable(query));
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+    private List<String> loadSearchedItems(Map<String,List<String>> queriedData) {
+        List<String> list = new ArrayList<>();
+        if (queriedData != null) {
+            List<String> exerciseNames = queriedData.
+                    get(DataBaseContract.ExerciseData.COLUMN_EXERCISES);
+            for(int x=0;x<exerciseNames.size();x++) {
+                String exerciseName = exerciseNames.get(x);
+                for(int i=0;i<exerciseList.size();i++) {
+                    String exerciseListName = exerciseList.get(i).getExerciseName();
+                    if(exerciseName.equals(exerciseListName)) {
+                        list.add(exerciseListName);
+                    }
+                }
+            }
+        }
+        ArrayAdapter adapter = new ArrayAdapter(getContext(),R.layout.simple_list_item,list);
+        listView.setAdapter(adapter);
+        return list;
     }
 }
 //no need to change the custom image name because it is tied and retrieved by an exercise object

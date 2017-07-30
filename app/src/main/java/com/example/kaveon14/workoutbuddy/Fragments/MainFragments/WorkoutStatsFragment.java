@@ -34,9 +34,6 @@ public class WorkoutStatsFragment extends Fragment {
     private Menu menu;
     private ListView listView;
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
 
     public WorkoutStatsFragment() {
         // Required empty public constructor
@@ -57,6 +54,10 @@ public class WorkoutStatsFragment extends Fragment {
         setListViewOnClick(listView);
         setSearchViewOnClick();
         return root;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
     private void setSearchViewOnClick() {
