@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         activity =  this;
         setBaseContent();
         getPermissions();
-        //preloadData();
+        preloadData();
     }
 
     @Override
@@ -155,11 +155,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void preloadData() {
-        ExerciseFragment exerciseFragment = new ExerciseFragment();
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.exercise_fragment,exerciseFragment)
-                .hide(exerciseFragment)
-                .commit();
+        ExerciseFragment.setAllExerciseLists();
     }
 
     private void getPermissions() {

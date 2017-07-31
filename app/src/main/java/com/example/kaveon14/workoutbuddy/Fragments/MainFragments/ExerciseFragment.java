@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
+
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
@@ -42,10 +44,6 @@ public class ExerciseFragment extends Fragment {
 
     public ExerciseFragment() {
 
-    }
-
-    public static Exercise getClickedExercise() {
-        return clickedExercise;
     }
 
     public void addExerciseFromSubWorkout(boolean fromSubWorkout) {
@@ -160,8 +158,8 @@ public class ExerciseFragment extends Fragment {
         exerciseAdapter = new ArrayAdapter(getContext(),R.layout.simple_list_item,exerciseNames);
     }
 
-    private void setAllExerciseLists() {
-        ExerciseTable exerciseTable = new ExerciseTable(getContext());
+    public static void setAllExerciseLists() {
+        ExerciseTable exerciseTable = new ExerciseTable(MainActivity.activity.getBaseContext());
         if (exerciseList == null) {
             exerciseList = exerciseTable.getExercises();
             sortExerciseListByName();
