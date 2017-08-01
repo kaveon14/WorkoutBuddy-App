@@ -18,6 +18,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter adapter;
     private List<String> subWorkoutNames;
+    private String clkickedMainWorkoutName;
 
     public CustomSubWorkoutPopup(View root) {
         setRootView(root);
@@ -35,6 +36,10 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
         this.adapter = adapter;
     }
 
+    public void setClickedMainWorkout(String clickedMainWorkoutName) {
+        this.clkickedMainWorkoutName = clickedMainWorkoutName;
+    }
+
     public void subWorkoutNamesList(List<String> subWorkoutNames) {
         this.subWorkoutNames = subWorkoutNames;
     }
@@ -47,6 +52,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
 
     private void setAddSubWorkoutBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.subWorkoutPopupBtn);
+        btn.setText("Add SubWorkout");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +73,10 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
 
     private void addSubWorkoutToDatatable(String subWorkoutName) {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
-        subWorkoutTable.addSubWorkoutTable(subWorkoutName);
+        String tableName = subWorkoutTable.getCorrectTableName(clkickedMainWorkoutName
+                ,subWorkoutName);
+
+        subWorkoutTable.addSubWorkoutTable(tableName);
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
         mainWorkoutTable.addSubWorkout(MainWorkoutFragment.clickedMainWorkoutName

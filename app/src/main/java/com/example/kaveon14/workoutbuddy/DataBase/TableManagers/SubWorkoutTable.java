@@ -8,9 +8,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
@@ -18,7 +16,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.createWorkoutTable;
 //not possible to extend table manager class because this class handles multiple tables
 public class SubWorkoutTable {
-
+// _wk is used to identify workout tables
     private Context context;
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
 
@@ -28,7 +26,7 @@ public class SubWorkoutTable {
     }
 
     public void addSubWorkoutTable(String tableName) {
-        tableName = getCorrectTableName(tableName);
+        tableName = getCorrectSubWorkoutName(tableName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         createWorkoutTable(tableName);
         writableDatabase.execSQL(createWorkoutTable(tableName));
@@ -37,18 +35,19 @@ public class SubWorkoutTable {
 
     public void addExerciseToSubWorkout(String mainWorkoutName,String subWorkoutName,Exercise ex) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
-        // TODO make function require the main workout name //might have two subWorkouts with same name
-        subWorkoutName = getCorrectTableName(subWorkoutName);
+        String tableName = getCorrectTableName(mainWorkoutName,subWorkoutName);
+
+
         ContentValues values = new ContentValues();
         values.put(COLUMN_EXERCISE_NAMES,ex.getExerciseName());
         values.put(COLUMN_EXERCISE_SETS,ex.getGoalSets());
         values.put(COLUMN_EXERCISE_REPS,ex.getGoalReps());
-        writableDatabase.insert(subWorkoutName,null,values);
+        writableDatabase.insert(tableName,null,values);
         writableDatabase.close();
     }
 
     public void deleteExerciseFromSubWorkout(Exercise exercise,String tableName) {
-        tableName = getCorrectTableName(tableName);
+        tableName = getCorrectSubWorkoutName(tableName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         String[] data = new String[] {
                 exercise.getExerciseName()
@@ -58,7 +57,6 @@ public class SubWorkoutTable {
     }
 
     public List<String> getColumn(String tableName,String columnName) {
-        tableName = getCorrectTableName(tableName);
         List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
@@ -96,7 +94,6 @@ public class SubWorkoutTable {
     }
 
     public List<Exercise> getSubWorkoutExercises(String tableName) {
-        tableName = getCorrectTableName(tableName);
         List<String> exerciseNames = getColumn(tableName,COLUMN_EXERCISE_NAMES);
         List<String> exerciseSets = getColumn(tableName,COLUMN_EXERCISE_SETS);
         List<String> exerciseReps = getColumn(tableName,COLUMN_EXERCISE_REPS);
@@ -112,13 +109,12 @@ public class SubWorkoutTable {
     }
 
     public void deleteSubWorkoutTable(String tableName) {
-        tableName = getCorrectTableName(tableName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         writableDatabase.execSQL("DROP TABLE IF EXISTS "+tableName);
     }
 
     public void printSubWorkoutTable(String tableName) {
-        tableName = getCorrectTableName(tableName);
+        tableName = getCorrectSubWorkoutName(tableName);
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
         while(cursor.moveToNext()) {
@@ -129,15 +125,23 @@ public class SubWorkoutTable {
         cursor.close();
     }
 
-    private String getCorrectTableName(String tableName) {
-        if(isTableNameCorrect(tableName)) {
+    public String getCorrectTableName(String mainWorkoutName,String subWorkoutName) {
+        subWorkoutName = getCorrectSubWorkoutName(subWorkoutName);
+        mainWorkoutName = mainWorkoutName.replace(" ","_");
+        return new StringBuilder(mainWorkoutName).append("_").append(subWorkoutName).toString();
+    }
+
+    private String getCorrectSubWorkoutName(String tableName) {
+        if(isSubWorkoutNameCorrect(tableName)) {
             return tableName;
+        } else if(tableName.contains(" ")) {
+            return new StringBuilder(tableName.replace(" ","_")).append("_wk").toString();
         } else {
-            return tableName + "_wk";
+            return new StringBuilder(tableName).append("_wk").toString();
         }
     }
 
-    private boolean isTableNameCorrect(String tableName) {
+    private boolean isSubWorkoutNameCorrect(String tableName) {
         int length = tableName.length();
         if(tableName.substring(length-3,length).equalsIgnoreCase("_wk")) {
             return true;

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
@@ -31,9 +32,14 @@ public class BlankSubWorkoutFragment extends Fragment {
 
     private WorkoutAdapter workoutAdapter;
     private List<Exercise> exerciseList;
+    private SubWorkout clickedSubWorkout;
 
     public BlankSubWorkoutFragment() {
         // Required empty public constructor
+    }
+
+    public void setClickedSubWorkout(SubWorkout clickedSubWorkout) {
+        this.clickedSubWorkout = clickedSubWorkout;
     }
 
     @Override
@@ -116,7 +122,8 @@ public class BlankSubWorkoutFragment extends Fragment {
 
     private WorkoutAdapter setWorkoutAdapter() {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName() + "_wk";
+        String tableName = subWorkoutTable.getCorrectTableName(clickedSubWorkout.getMainWorkoutName()
+                ,clickedSubWorkout.getSubWorkoutName());
         exerciseList = subWorkoutTable.getSubWorkoutExercises(tableName);
         workoutAdapter = new WorkoutAdapter(getContext(),exerciseList);
         return workoutAdapter;
@@ -161,32 +168,6 @@ public class BlankSubWorkoutFragment extends Fragment {
             }
             setListItemView(rowView,exercise);
             return rowView;
-        }
-
-        public void showCheckBoxes() {
-            CheckBox checkBox;
-            for(View rowView : rowViews) {
-                checkBox = (CheckBox) rowView.findViewById(R.id.blankWorkoutCheckBox);
-                checkBox.setVisibility(View.VISIBLE);
-            }
-        }
-
-        public void onCheckedBox() {
-            CheckBox checkBox;
-            for (View rowView : rowViews) {
-                checkBox = (CheckBox) rowView.findViewById(R.id.blankWorkoutCheckBox);
-                if (checkBox.isChecked()) {
-                    workouts.add(new Workout(WorkoutFragment.getWorkoutData()));
-                }
-            }
-        }
-
-        public void hideCheckBoxes() {
-            CheckBox checkBox;
-            for(View rowView : rowViews) {
-                checkBox = (CheckBox) rowView.findViewById(R.id.blankWorkoutCheckBox);
-                checkBox.setVisibility(View.INVISIBLE);
-            }
         }
 
         private void setListItemView(View rowView,Exercise exercise) {

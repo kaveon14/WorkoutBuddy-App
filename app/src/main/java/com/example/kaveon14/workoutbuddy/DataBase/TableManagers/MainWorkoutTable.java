@@ -80,7 +80,8 @@ public class MainWorkoutTable extends TableManager {
         return rowData;
     }
 
-    public void deleteMainWorkout(String mainWorkoutName) {
+    public void deleteMainWorkout(String mainWorkoutName) {//also need to delete the subWorkout tables
+        //but not yet setup for searching
         deleteRow(mainWorkoutName);
     }
 

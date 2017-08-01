@@ -97,7 +97,6 @@ public class BlankSWPopupMenu extends PopupWindowManager {
                 if(workoutData == null) {
                     workoutData = new ArrayList<>(5);
                 }
-                adapter.hideCheckBoxes();
                 popupWindow.dismiss();
                 if(workoutData.size() != 0) {
                     showGetDatePopup();

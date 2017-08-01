@@ -40,16 +40,17 @@ public class DataBaseContract {
     }
 
     public static class SubWorkoutData implements BaseColumns {
+        // TODO add mainWorkout Column(and add part of it to table name)
+        //example Test_Workout_Chest_Day_wk(is wk needed anymore)
+        public static final String TABLE_NAME_WK1 = "Default_Workouts_Chest_Day_wk";
 
-        public static final String TABLE_NAME_WK1 = "Chest_Day_wk";
+        public static final String TABLE_NAME_WK2 = "Default_Workouts_Back_Day_wk";
 
-        public static final String TABLE_NAME_WK2 = "Back_Day_wk";
+        public static final String TABLE_NAME_WK3 = "Default_Workouts_Leg_Day_wk";
 
-        public static final String TABLE_NAME_WK3 = "Leg_Day_wk";
+        public static final String TABLE_NAME_WK4 = "Default_Workoust_Arm_Day_wk";
 
-        public static final String TABLE_NAME_WK4 = "Arm_Day_wk";
-
-        public static final String TABLE_NAME_WK5 = "Shoulder_Day_wk";
+        public static final String TABLE_NAME_WK5 = "Default_Workouts_Shoulder_Day_wk";
 
         public static final String COLUMN_EXERCISE_NAMES = "Exercise_Names";
 

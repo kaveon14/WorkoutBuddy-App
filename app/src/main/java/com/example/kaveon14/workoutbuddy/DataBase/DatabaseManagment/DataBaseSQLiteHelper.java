@@ -60,12 +60,12 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
     private void testData(SQLiteDatabase database) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_MAINWORKOUT,"TEST WORKOUT");
-        values.put(COLUMN_SUBWORKOUT_1,"Chest_Day");
-        values.put(COLUMN_SUBWORKOUT_2,"Back_Day");
-        values.put(COLUMN_SUBWORKOUT_3,"Shoulder_Day");
-        values.put(COLUMN_SUBWORKOUT_4,"Leg_Day");
-        values.put(COLUMN_SUBWORKOUT_5,"Arm_Day");
+        values.put(COLUMN_MAINWORKOUT,"Default Workouts");
+        values.put(COLUMN_SUBWORKOUT_1,"Chest Day");
+        values.put(COLUMN_SUBWORKOUT_2,"Back Day");
+        values.put(COLUMN_SUBWORKOUT_3,"Shoulder Day");
+        values.put(COLUMN_SUBWORKOUT_4,"Leg Day");
+        values.put(COLUMN_SUBWORKOUT_5,"Arm Day");
         database.insert(DataBaseContract.MainWorkoutData.TABLE_NAME,null,values);
     }
 
@@ -132,7 +132,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             DefaultWorkouts fileReader = new DefaultWorkouts(context, "DefaultWorkoutValues.txt");
             try {
                 defaultWorkoutsMap = fileReader.getSubWorkoutData();
-                defaultWorkoutNames = new ArrayList<>(5);
+                defaultWorkoutNames = new ArrayList<>(5);//these are wrong fool
                 defaultWorkoutNames.add("Chest_Day");
                 defaultWorkoutNames.add("Back_Day");
                 defaultWorkoutNames.add("Shoulder_Day");
@@ -147,15 +147,15 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             setDefaultWorkoutsMap();
             for(String workoutName : defaultWorkoutNames) {
                 try {
-                    setSingleDefaultWorkout(database,workoutName+"_wk");
+                    setSingleDefaultWorkout(database,"Default_Workouts_"+workoutName+"_wk");
                 } catch (NoSuchElementException e) {
                     //scanner has reached end of string and throws an error
                 }
             }
         }
 
-        private void setSingleDefaultWorkout(SQLiteDatabase database, String workoutName) throws NoSuchElementException {
-            String data = defaultWorkoutsMap.get(workoutName);
+        private void setSingleDefaultWorkout(SQLiteDatabase database, String tableName) throws NoSuchElementException {
+            String data = defaultWorkoutsMap.get(tableName);
             Scanner scanner = new Scanner(data);
             Scanner insertData = new Scanner(data);
             String exercise, sets, reps;
@@ -164,19 +164,19 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
                 exercise = getExerciseName(insertData);
                 sets = getSetsForExercise(insertData);
                 reps = getRepsForExercise(insertData);
-                addDefaultExerciseToWorkout(database, workoutName, exercise, sets, reps);
+                addDefaultExerciseToWorkout(database, tableName, exercise, sets, reps);
             }
             scanner.close();
             insertData.close();
         }
 
-        private void addDefaultExerciseToWorkout(SQLiteDatabase database, String workoutName, String exerciseName,
+        private void addDefaultExerciseToWorkout(SQLiteDatabase database, String tableName, String exerciseName,
                                                  String sets, String reps) {
             ContentValues values = new ContentValues();
             values.put(COLUMN_EXERCISE_NAMES, exerciseName);
             values.put(COLUMN_EXERCISE_SETS, sets);
             values.put(COLUMN_EXERCISE_REPS, reps);
-            database.insert(workoutName, null, values);
+            database.insert(tableName, null, values);
         }
 
         private String getExerciseName(Scanner scan) {

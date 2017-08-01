@@ -1,11 +1,8 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
 // TODO put cap to max sets to 10 and to max exercises at 15 and max 15 subWorkouts(no searching)
-import android.app.SearchManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -13,26 +10,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.SubWorkoutMenuPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
-import static android.content.Context.SEARCH_SERVICE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_NAMES;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_REPS;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.SubWorkoutData.COLUMN_EXERCISE_SETS;
-import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkoutName;
 
 public class SubWorkoutFragment extends Fragment {
 
@@ -41,9 +26,14 @@ public class SubWorkoutFragment extends Fragment {
     private List<String> subWorkoutNames;
     private Menu menu;
     private ListView listView;
+    private String clickedMainWorkoutName;
 
     public SubWorkoutFragment() {
         // Required empty public constructor
+    }
+
+    public void setClickedMainWorkout(String clickedMainWorkoutName) {
+        this.clickedMainWorkoutName = clickedMainWorkoutName;
     }
 
     @Override
@@ -99,6 +89,7 @@ public class SubWorkoutFragment extends Fragment {
         SubWorkoutMenuPopup popup = new SubWorkoutMenuPopup(getView());
         popup.setSubWorkoutAdapter(subWorkoutAdapter);
         popup.setSubWorkoutNames(subWorkoutNames);
+        popup.setClickedMainWorkoutName(clickedMainWorkoutName);
         popup.showPopupWindow();
     }
 
@@ -121,6 +112,7 @@ public class SubWorkoutFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String subWorkoutName = parent.getItemAtPosition(position).toString();
                 clickedSubWorkout = getSubWorkout(subWorkoutName);
+                clickedSubWorkout.setMainWorkoutName(clickedMainWorkoutName);
                 showBlankWorkoutFragment();
             }
         });
@@ -148,26 +140,16 @@ public class SubWorkoutFragment extends Fragment {
 
     private List<Exercise> getExercisesForClickedSubWorkout(String subWorkoutName) {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = subWorkoutName +"_wk";
-        List<Exercise> exerciseList = new LinkedList<>();
-        List<String> exerciseNames = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_NAMES);
-        List<String> exerciseSets = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_SETS);
-        List<String> exerciseReps = subWorkoutTable.getColumn(tableName,COLUMN_EXERCISE_REPS);
-
-        for(int x=0;x<exerciseNames.size();x++) {
-            Exercise exercise = new Exercise(exerciseNames.get(x),null);
-            exercise.setGoalSets(exerciseSets.get(x));
-            exercise.setGoalReps(exerciseReps.get(x));
-            exerciseList.add(exercise);
-        }
-        return exerciseList;
+        String tableName = subWorkoutTable.getCorrectTableName(clickedMainWorkoutName
+                ,subWorkoutName);
+        return subWorkoutTable.getSubWorkoutExercises(tableName);
     }
 
     private void showBlankWorkoutFragment() {
         BlankSubWorkoutFragment blankSubWorkoutFragment = new BlankSubWorkoutFragment();
-        SubWorkoutFragment subWorkoutFragment = this;
+        blankSubWorkoutFragment.setClickedSubWorkout(clickedSubWorkout);
         getFragmentManager().beginTransaction()
-                .hide(subWorkoutFragment)
+                .hide(this)
                 .add(R.id.blankWorkout_fragment, blankSubWorkoutFragment)
                 .addToBackStack(null)
                 .commit();
@@ -175,6 +157,7 @@ public class SubWorkoutFragment extends Fragment {
 
     private ExerciseFragment showExercisefragment() {
         ExerciseFragment exerciseFragment = new ExerciseFragment();
+        exerciseFragment.setMenu(menu);
         getFragmentManager().beginTransaction()
                 .hide(this)
                 .add(R.id.exercise_fragment,exerciseFragment)

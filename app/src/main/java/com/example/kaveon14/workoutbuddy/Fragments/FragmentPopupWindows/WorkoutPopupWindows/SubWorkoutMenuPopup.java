@@ -11,6 +11,7 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
 
     private ArrayAdapter subWorkoutAdapter;
     private List<String> subWorkoutNames;
+    private String clickedMainWorkoutName;
 
     public SubWorkoutMenuPopup(View root) {
         setRootView(root);
@@ -23,6 +24,10 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
         hidePopupBtn();
         setAddCustomSubWorkoutBtn();
         setDeleteSubWorkoutBtn();
+    }
+
+    public void setClickedMainWorkoutName(String clickedMainWorkoutName) {
+        this.clickedMainWorkoutName = clickedMainWorkoutName;
     }
 
     public void setSubWorkoutAdapter(ArrayAdapter subWorkoutAdapter) {
@@ -51,6 +56,7 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
 
     private void showCustomSubWorkoutPopup() {
         CustomSubWorkoutPopup pop = new CustomSubWorkoutPopup(getRootView());
+        pop.setClickedMainWorkout(clickedMainWorkoutName);
         pop.subWorkoutNamesList(subWorkoutNames);
         pop.setAdapter(subWorkoutAdapter);
         pop.showPopupWindow();

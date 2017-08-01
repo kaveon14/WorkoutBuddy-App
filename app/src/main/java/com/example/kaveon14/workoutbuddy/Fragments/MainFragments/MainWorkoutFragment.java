@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-// TODO allow deletion of mainworkouts like bodystats
+
 import android.app.SearchManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteMainWorkoutPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.MainWorkoutPopupMenu;
@@ -30,7 +28,7 @@ import static android.content.Context.SEARCH_SERVICE;
 
 public class MainWorkoutFragment extends Fragment {
 
-    public static String clickedMainWorkoutName;
+    public static String clickedMainWorkoutName;//no longer needed
     private List<String> mainWorkoutNames;
     private ArrayAdapter adapter;
     private ListView listView;
@@ -113,13 +111,15 @@ public class MainWorkoutFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 clickedMainWorkoutName = parent.getItemAtPosition(position).toString();
-                showSubWorkoutfragment();
+                showSubWorkoutfragment(clickedMainWorkoutName);
             }
         });
     }
 
-    private void showSubWorkoutfragment() {
+    private void showSubWorkoutfragment(String clickedMainWorkoutName) {
         SubWorkoutFragment subWorkoutFragment = new SubWorkoutFragment();
+        subWorkoutFragment.setClickedMainWorkout(clickedMainWorkoutName);
+        subWorkoutFragment.setMenu(menu);
         getFragmentManager().beginTransaction()
                 .hide(this)
                 .add(R.id.subWorkout_fragment,subWorkoutFragment)
