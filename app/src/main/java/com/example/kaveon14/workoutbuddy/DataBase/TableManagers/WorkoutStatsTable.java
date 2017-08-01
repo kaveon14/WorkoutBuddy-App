@@ -46,22 +46,19 @@ public class WorkoutStatsTable extends TableManager {
         values.put(COLUMN_SUBWORKOUT, subWorkoutName);
         values.put(COLUMN_DATE, subWorkout.getDate());
 
-        //change to array
-        int exNum = 1;
-        int totalReps = 0;
-        int totalSets = 0;
-        int totalWeight = 0;
-        for (WorkoutExercise w : workouts) {
-            totalReps += w.getTotalReps();
-            totalSets += w.getTotalSets();
-            totalWeight += Integer.valueOf(w.getTotalWeight()[WorkoutExercise.WEIGHT]);
+        int currentExerciseIndex = 1;
+        int totalsData[] = new int[3];
 
-            values = addMainExerciseData(values, w, exNum);
-            exNum++;
+        for (WorkoutExercise w : workouts) {
+            totalsData[TOTAL_REPS] += w.getTotalReps();
+            totalsData[TOTAL_SETS] += w.getTotalSets();
+            totalsData[TOTAL_WEIGHT] += Integer.valueOf(w.getTotalWeight()[WorkoutExercise.WEIGHT]);
+            values = addMainExerciseData(values, w, currentExerciseIndex);
+            currentExerciseIndex++;
         }
-        values.put(COLUMN_TOTAL_REPS, totalReps);
-        values.put(COLUMN_TOTAL_SETS, totalSets);
-        values.put(COLUMN_TOTAL_WEIGHT, totalWeight +
+        values.put(COLUMN_TOTAL_REPS, totalsData[TOTAL_REPS]);
+        values.put(COLUMN_TOTAL_SETS, totalsData[TOTAL_SETS]);
+        values.put(COLUMN_TOTAL_WEIGHT, totalsData[TOTAL_WEIGHT] +
                 workouts.get(0).getWeight("Set 1")[WorkoutExercise.UNIT_OF_MEAS]);
 
         writableDatabase.insert(TABLE_NAME, null, values);
@@ -69,11 +66,11 @@ public class WorkoutStatsTable extends TableManager {
     }
 
     private ContentValues addMainExerciseData(ContentValues values, WorkoutExercise workout,
-                                              int exNum) {
+                                              int currentExerciseIndex) {
         Map<String, String> data = workout.getWorkoutData();
         int setIncrement = 1;
 
-        String exCol = "Exercise" + exNum;
+        String exCol = "Exercise" + currentExerciseIndex;
         for (int x = 0; x < data.size(); x++) {
             String[] columns = getColumnNames(exCol, setIncrement);
             String SET = "Set " + (x + 1);

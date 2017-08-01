@@ -1,9 +1,9 @@
 package com.example.kaveon14.workoutbuddy.DataBase;
-//implement were nessaccry
-// Todo possibly change workourtData to a list
+
 import android.graphics.Bitmap;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 
+import java.util.List;
 import java.util.Map;
 
 public class WorkoutExercise extends Exercise {

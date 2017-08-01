@@ -13,22 +13,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteMainWorkoutPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.MainWorkoutPopupMenu;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import static android.content.Context.SEARCH_SERVICE;
 
 public class MainWorkoutFragment extends Fragment {
 
-    public static String clickedMainWorkoutName;//no longer needed
+    public static String clickedMainWorkoutName;//change to mainWorkout
     private List<String> mainWorkoutNames;
     private ArrayAdapter adapter;
     private ListView listView;
@@ -160,7 +160,6 @@ public class MainWorkoutFragment extends Fragment {
                        list.add(mainWorkoutListName);
                    }
                }
-
            }
 
         }

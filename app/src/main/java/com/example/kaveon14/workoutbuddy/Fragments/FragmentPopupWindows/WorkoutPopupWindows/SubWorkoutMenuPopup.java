@@ -3,6 +3,8 @@ package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.Workout
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Toast;
+
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
@@ -12,6 +14,7 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
     private ArrayAdapter subWorkoutAdapter;
     private List<String> subWorkoutNames;
     private String clickedMainWorkoutName;
+    private int subWorkoutCount;
 
     public SubWorkoutMenuPopup(View root) {
         setRootView(root);
@@ -38,6 +41,10 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
         this.subWorkoutNames = subWorkoutNames;
     }
 
+    public void setCurrentSubWorkoutCount(int subWorkoutCount) {
+        this.subWorkoutCount = subWorkoutCount;
+    }
+
     private void hidePopupBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.addCustomExerciseBtn);
         btn.setVisibility(View.INVISIBLE);
@@ -49,13 +56,19 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCustomSubWorkoutPopup();
+                if(subWorkoutCount<10) {
+                    showCustomSubWorkoutPopup();
+                } else {
+                    Toast.makeText(context,"Maximum of ten subWorkouts allowed,please delete one!"
+                            ,Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
 
     private void showCustomSubWorkoutPopup() {
         CustomSubWorkoutPopup pop = new CustomSubWorkoutPopup(getRootView());
+        pop.setSubWorkoutCount(subWorkoutCount);
         pop.setClickedMainWorkout(clickedMainWorkoutName);
         pop.subWorkoutNamesList(subWorkoutNames);
         pop.setAdapter(subWorkoutAdapter);
@@ -74,6 +87,7 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
     }
     private void showDeleteSubWorkoutPopup() {
         DeleteSubWorkoutPopup popup = new DeleteSubWorkoutPopup(getRootView());
+        popup.setCurrentSubWorkoutCount(subWorkoutCount);
         popup.setSubWorkoutAdapter(subWorkoutAdapter);
         popup.setSubWorkoutNames(subWorkoutNames);
         popup.showPopupWindow();

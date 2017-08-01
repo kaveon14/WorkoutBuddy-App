@@ -31,6 +31,10 @@ public class MainWorkout {
         return subWorkouts;
     }
 
+    public int getAmountOfSubWorkouts() {
+        return subWorkouts.size();
+    }
+
     public Map<String,SubWorkout> getSubWorkoutMap() {
         Map<String,SubWorkout> subWorkoutMap = new Hashtable<>();
         for(SubWorkout subWorkout : subWorkouts) {

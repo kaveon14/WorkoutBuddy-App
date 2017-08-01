@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
-// TODO change all string addition to use String builder to valsy increase speed
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;

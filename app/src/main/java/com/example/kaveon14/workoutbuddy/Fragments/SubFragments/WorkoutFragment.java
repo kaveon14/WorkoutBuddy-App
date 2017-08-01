@@ -30,10 +30,10 @@ public class WorkoutFragment extends Fragment {
 
     private Exercise exercise;
     private WorkoutAdapter workoutAdapter;
-    private int setCount = 1;//needs more accurate name
+    private int currentSet = 1;
     private int partialSetCount = 1;
     private List<String> sets;
-    private static List<Exercise> exerciseList;//need to check this
+    private static List<Exercise> exerciseList;
 
     public WorkoutFragment() {
         // Required empty public constructor
@@ -221,9 +221,9 @@ public class WorkoutFragment extends Fragment {
     }
 
     private void addSet() {
-        if(setCount<=Integer.valueOf(exercise.getGoalSets())) {
-            setCount++;
-            sets.add("Set "+setCount);
+        if(currentSet <=Integer.valueOf(exercise.getGoalSets())) {
+            currentSet++;
+            sets.add("Set "+ currentSet);
             partialSetCount = sets.size();
             workoutAdapter.notifyDataSetChanged();
         }
@@ -239,8 +239,8 @@ public class WorkoutFragment extends Fragment {
 
     private void showFullAdapter() {
         int exerciseSets = Integer.valueOf(exercise.getGoalSets());
-        if(setCount<exerciseSets) {
-            for (int x = setCount; x < exerciseSets; x++) {
+        if(currentSet <exerciseSets) {
+            for (int x = currentSet; x < exerciseSets; x++) {
                 sets.add("Set " + (x + 1));
             }
             workoutAdapter.notifyDataSetChanged();
@@ -262,10 +262,6 @@ public class WorkoutFragment extends Fragment {
     private void showEditText(View root) {
         EditText editText = (EditText) root.findViewById(R.id.textView2);
         editText.setVisibility(View.VISIBLE);
-    }
-
-    public static List<Exercise> getWorkoutData() {
-        return exerciseList;
     }
 
     private class WorkoutAdapter extends BaseAdapter {

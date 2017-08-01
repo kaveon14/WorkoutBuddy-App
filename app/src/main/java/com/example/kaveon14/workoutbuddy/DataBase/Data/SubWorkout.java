@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.DataBase.Data;
-// TODO implement the actual main workout name into this
+
 import android.support.annotation.Nullable;
 import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import java.util.Hashtable;

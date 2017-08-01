@@ -27,6 +27,8 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
     public void showPopupWindow() {
         displayPopupWindow();
         setMainWorkoutListView();
+        Button btn = (Button) popupLayout.findViewById(R.id.button);
+        btn.setText("Delete MainWorkout");
     }
 
     public void setMainWorkoutAdapter(ArrayAdapter mainWorkoutAdapter) {
@@ -57,7 +59,6 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private void setDeleteButton(String mainWorkoutName) {
         Button btn = (Button) popupLayout.findViewById(R.id.button);
-        btn.setText("Delete MainWorkout");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

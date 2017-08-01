@@ -129,18 +129,16 @@ public class BlankSubWorkoutFragment extends Fragment {
         return workoutAdapter;
     }
 
-    public static class WorkoutAdapter extends BaseAdapter  {//workout object needs tocome in to play
+    public static class WorkoutAdapter extends BaseAdapter  {
 
         private List<Exercise> exerciseList;
         private Context context;
         private TextView exerciseNameView;
         private List<View> rowViews;
-        private List<Workout> workouts;
 
         public WorkoutAdapter(Context context,List<Exercise> exercises) {
             this.context = context;
             this.exerciseList = exercises;
-            workouts = new ArrayList<>(10);
         }
 
         public int getCount() {

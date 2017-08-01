@@ -24,6 +24,7 @@ public class SubWorkoutFragment extends Fragment {
     public static SubWorkout clickedSubWorkout;
     private ArrayAdapter subWorkoutAdapter;
     private List<String> subWorkoutNames;
+    private int subWorkoutCount;
     private Menu menu;
     private ListView listView;
     private String clickedMainWorkoutName;
@@ -48,6 +49,7 @@ public class SubWorkoutFragment extends Fragment {
         listView = (ListView) view.findViewById(R.id.subWokoutListView);
         if(getAdapter() != null) {
             listView.setAdapter(getAdapter());
+            subWorkoutCount = listView.getCount();
         }
         openWorkoutOnClick(listView);
         addExerciseToSubWorkout(listView);
@@ -90,6 +92,7 @@ public class SubWorkoutFragment extends Fragment {
         popup.setSubWorkoutAdapter(subWorkoutAdapter);
         popup.setSubWorkoutNames(subWorkoutNames);
         popup.setClickedMainWorkoutName(clickedMainWorkoutName);
+        popup.setCurrentSubWorkoutCount(subWorkoutCount);
         popup.showPopupWindow();
     }
 

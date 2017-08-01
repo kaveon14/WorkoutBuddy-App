@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
-        // TODO move this or think if better method
+        // TODO move this or think of better method
         boolean inActivity = true;
         if(getActiveFragment() == null || fragId == 0) {
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

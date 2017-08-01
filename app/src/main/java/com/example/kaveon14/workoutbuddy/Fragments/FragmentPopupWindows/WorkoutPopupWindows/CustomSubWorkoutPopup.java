@@ -19,6 +19,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
     private ArrayAdapter adapter;
     private List<String> subWorkoutNames;
     private String clkickedMainWorkoutName;
+    private int subWorkoutCount;
 
     public CustomSubWorkoutPopup(View root) {
         setRootView(root);
@@ -30,6 +31,10 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
         displayPopupWindow();
         setTextView();
         setAddSubWorkoutBtn();
+    }
+
+    public void setSubWorkoutCount(int subWorkoutCount) {
+        this.subWorkoutCount = subWorkoutCount;
     }
 
     public void setAdapter(ArrayAdapter adapter) {
@@ -56,8 +61,13 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNewSubWorkoutOnClick();
-                Toast.makeText(context,"SubWorkout Successfully Created!",Toast.LENGTH_LONG).show();
+                if(subWorkoutCount<10) {
+                    addNewSubWorkoutOnClick();
+                    Toast.makeText(context, "SubWorkout Successfully Created!", Toast.LENGTH_LONG).show();
+                } else {
+                    popupWindow.dismiss();
+                    Toast.makeText(context, "Maximum of Ten SubWorkouts Allowed!", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -66,6 +76,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
         String subWorkoutName = getSubWorkoutName();
         addSubWorkoutToDatatable(subWorkoutName);
         subWorkoutNames.add(subWorkoutName);
+        subWorkoutCount++;
         if(adapter != null) {
             adapter.notifyDataSetChanged();
         }

@@ -18,6 +18,7 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter subWorkoutAdapter;
     private List<String> subWorkoutNames;
+    private int subWorkoutCount;
 
     public DeleteSubWorkoutPopup(View root) {
         setRootView(root);
@@ -28,6 +29,10 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
     public void showPopupWindow() {
         displayPopupWindow();
         setSubWorkoutListView();
+    }
+
+    public void setCurrentSubWorkoutCount(int subWorkoutCount) {
+        this.subWorkoutCount = subWorkoutCount;
     }
 
     public void setSubWorkoutAdapter(ArrayAdapter subWorkoutAdapter) {
@@ -58,6 +63,7 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
             @Override
             public void onClick(View v) {
                 deleteSubWorkout(subWorkoutName);
+                subWorkoutCount--;
                 Toast.makeText(context,"SubWorkout Successfully Deleted!"
                         ,Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();

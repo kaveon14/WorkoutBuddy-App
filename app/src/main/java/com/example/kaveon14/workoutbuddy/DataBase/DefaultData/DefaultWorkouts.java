@@ -24,7 +24,7 @@ public class DefaultWorkouts {
     private Scanner openFileWithScanner(String fileName) throws IOException {
         return new Scanner(new DataInputStream(context.getAssets().open(fileName)));
     }
-// TODO parse the workout names
+
     public Map<String,String> getSubWorkoutData() throws IOException {
         Map<String,String> defaultWorkouts = new Hashtable<>();
         String line = "";String scannerLine;
@@ -45,7 +45,7 @@ public class DefaultWorkouts {
         return defaultWorkouts;
     }
 
-    public List<String> getWorkoutStatsColumns() {
+    public List<String> getWorkoutStatsColumns() {//not used yet but will be
         List<String> columns = new ArrayList<>();
 
         try {
