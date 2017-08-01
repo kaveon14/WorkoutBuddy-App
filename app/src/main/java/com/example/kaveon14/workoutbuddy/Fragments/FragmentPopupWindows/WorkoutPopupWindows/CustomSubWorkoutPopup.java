@@ -61,12 +61,12 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(subWorkoutCount<10) {
+                if(subWorkoutCount<15) {
                     addNewSubWorkoutOnClick();
                     Toast.makeText(context, "SubWorkout Successfully Created!", Toast.LENGTH_LONG).show();
                 } else {
                     popupWindow.dismiss();
-                    Toast.makeText(context, "Maximum of Ten SubWorkouts Allowed!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Maximum of 15 SubWorkouts Allowed!", Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -147,13 +147,27 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
     }
 
     private void addExerciseToSubWorkout(Exercise exercise,String subWorkoutName) {
-        exercise.setGoalReps(getExerciseReps());
-        exercise.setGoalSets(getExerciseSets());
+        String sets = getExerciseSets();
+        int[] exerciseSets;
+        if(sets.contains("-")) {
+            int index = sets.indexOf("-");
 
-        SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
-        subWorkoutTable.
-                addExerciseToSubWorkout(clickedMainWorkoutName,subWorkoutName+"_wk",
-                        exercise);
+            exerciseSets = new int[2];
+            exerciseSets[0] = Integer.valueOf(sets.substring(0,index));
+            exerciseSets[1] = Integer.valueOf(sets.substring(index+1,sets.length()));
+            if(exerciseSets[0] > 10 || exerciseSets[1] >10) {
+                Toast.makeText(context,"Maximum of 10 sets allowed for an exercise!"
+                        ,Toast.LENGTH_LONG).show();
+            } else {
+                exercise.setGoalReps(getExerciseReps());
+                exercise.setGoalSets(sets);
+
+                SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
+                subWorkoutTable.
+                        addExerciseToSubWorkout(clickedMainWorkoutName,subWorkoutName+"_wk",
+                                exercise);
+            }
+        }
     }
 
     private String getExerciseSets() {
