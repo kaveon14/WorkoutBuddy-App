@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity
         addFragmentToStack(getActiveFragment(), workoutStatsFragment,R.id.workoutStats_fragment);
     }
 
-    private void showRealWorkoutFragment() {
+    private void showRealWorkoutFragment() {//needs to be deleted
         FullWorkoutStatsFragment fwf = new FullWorkoutStatsFragment();
         addFragmentToStack(getActiveFragment(),fwf,R.id.fullWorkoutStats_fragment);
     }
@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showWorkoutFragment() {
         MainWorkoutFragment mainWorkout_frag = new MainWorkoutFragment();
+        mainWorkout_frag.setMenu(menu);
         addFragmentToStack(getActiveFragment(),mainWorkout_frag,R.id.mainWorkout_fragment);
     }
 

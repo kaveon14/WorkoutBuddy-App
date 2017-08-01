@@ -40,7 +40,7 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
 
     private void setAddCustomMainWorkoutBtn() {
         Button btn = (Button) popupLayout.findViewById(R.id.deleteCustomExerciseBtn);
-        btn.setText("Add Custom SubWorkout");
+        btn.setText("Add Custom MainWorkout");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

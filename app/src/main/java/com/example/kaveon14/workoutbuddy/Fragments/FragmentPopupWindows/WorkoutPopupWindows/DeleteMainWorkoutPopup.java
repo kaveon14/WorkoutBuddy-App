@@ -16,6 +16,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter mainWorkoutAdapter;
     private List<String> mainWorkoutNames;
+    private int position;
 
     public DeleteMainWorkoutPopup(View root) {
         setRootView(root);
@@ -36,6 +37,10 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         this.mainWorkoutNames = mainWorkoutNames;
     }
 
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     private void setMainWorkoutListView() {
         ListView listView = (ListView) popupLayout.findViewById(R.id.deleteSubWorkoutPopup_listView);
         listView.setAdapter(mainWorkoutAdapter);
@@ -52,6 +57,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private void setDeleteButton(String mainWorkoutName) {
         Button btn = (Button) popupLayout.findViewById(R.id.button);
+        btn.setText("Delete MainWorkout");
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +70,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
     }
 
     private void deleteMainWorkout(String mainWorkoutName) {
-        mainWorkoutNames.remove(mainWorkoutName);
+        mainWorkoutNames.remove(position);
         mainWorkoutAdapter.notifyDataSetChanged();
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);

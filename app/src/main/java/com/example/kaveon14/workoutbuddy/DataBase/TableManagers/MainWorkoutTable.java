@@ -19,6 +19,7 @@ public class MainWorkoutTable extends TableManager {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
         setContext(context);
         setTableName(TABLE_NAME);
+        setSearchableColumns(new String[]{COLUMN_MAINWORKOUT});
     }
 
     public void addMainWorkout(String workoutName) {
