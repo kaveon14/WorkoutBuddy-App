@@ -30,7 +30,7 @@ public class MainWorkoutTable extends TableManager {
         writableDatabase.close();
     }
 
-    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames) {
+    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames) {//error here
         List<String> rowValues = getSubWorkoutNames(mainWorkoutName);
         deleteRow(mainWorkoutName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
@@ -61,7 +61,7 @@ public class MainWorkoutTable extends TableManager {
         return columnData;
     }
 
-    public List<String> getSubWorkoutNames(String mainWorkout) {
+    public List<String> getSubWorkoutNames(String mainWorkout) {//error here
         SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = database.query(DataBaseContract.MainWorkoutData.TABLE_NAME,
                 null,null,null,null,null,null);

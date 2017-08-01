@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-// TODO put cap to max sets to 10 and to max exercises at 15
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
