@@ -68,7 +68,7 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         List<String> rowData = new ArrayList<>();
         while(cursor.moveToNext()) {
             if(cursor.getString(1).equalsIgnoreCase(mainWorkout)) {
-                for(int x=2;x<=15;x++) {
+                for(int x=2;x<=16;x++) {
                     rowData.add(cursor.getString(x));
                 }
                 break;

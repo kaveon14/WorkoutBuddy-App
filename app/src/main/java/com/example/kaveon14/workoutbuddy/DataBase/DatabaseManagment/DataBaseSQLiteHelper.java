@@ -72,7 +72,6 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         new DefaultWorkoutsExtension().addDefaultWorkoutsOnUpgrade(database);
-        //database.execSQL("DROP TABLE IF EXISTS "+ DataBaseContract.BodyData.TABLE_NAME);//not yet created
         database.execSQL("DROP TABLE IF EXISTS " + DataBaseContract.ExerciseData.TABLE_NAME);
         database.execSQL("DROP TABLE IF EXISTS " + DataBaseContract.BodyData.TABLE_NAME);
         onCreate(database);
