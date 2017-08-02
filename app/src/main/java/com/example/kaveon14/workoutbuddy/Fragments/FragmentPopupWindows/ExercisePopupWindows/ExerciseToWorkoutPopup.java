@@ -158,16 +158,16 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
             if(exerciseSets[0] > 10 || exerciseSets[1] >10) {
                 Toast.makeText(context,"Maximum of 10 sets allowed for an exercise!"
                         ,Toast.LENGTH_LONG).show();
-            } else {
-                exercise.setGoalReps(getExerciseReps());
-                exercise.setGoalSets(sets);
-
-                SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
-                subWorkoutTable.
-                        addExerciseToSubWorkout(clickedMainWorkoutName,subWorkoutName+"_wk",
-                                exercise);
+                return;
             }
         }
+        exercise.setGoalReps(getExerciseReps());
+        exercise.setGoalSets(sets);
+
+        SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
+        subWorkoutTable.
+                addExerciseToSubWorkout(clickedMainWorkoutName,subWorkoutName+"_wk",
+                        exercise);
     }
 
     private String getExerciseSets() {

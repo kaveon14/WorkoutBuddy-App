@@ -51,7 +51,8 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 resetSubWorkoutListViewColors(parent);
-                parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
+                parent.getChildAt(position -
+                        parent.getFirstVisiblePosition()).setBackgroundColor(Color.LTGRAY);//here
                 setDeleteBtn(parent.getItemAtPosition(position).toString());
             }
         });
@@ -80,13 +81,15 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
                 subWorkoutName);
 
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
-        subWorkoutTable.deleteSubWorkoutTable(subWorkoutName);
+        String tableName = subWorkoutTable.getCorrectTableName(MainWorkoutFragment
+                .clickedMainWorkoutName,subWorkoutName);
+
+          subWorkoutTable.deleteSubWorkoutTable(tableName);
     }
 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {
-        for(int x=0;x<parent.getCount();x++) {
-            View view = parent.getChildAt(x);
-            view.setBackgroundColor(Color.WHITE);
+        for(int x=0;x <= parent.getLastVisiblePosition() - parent.getFirstVisiblePosition();x++) {
+            parent.getChildAt(x).setBackgroundColor(Color.WHITE);
         }
     }
 

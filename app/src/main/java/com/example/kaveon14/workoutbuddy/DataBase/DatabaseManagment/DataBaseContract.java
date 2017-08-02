@@ -26,6 +26,12 @@ public class DataBaseContract {
 
         public static final String COLUMN_SUBWORKOUT_7 = "Day7_Workout7";
 
+        public static final String COLUMN_SUBWORKOUT_8 = "Day8_Workout8";
+
+        public static final String COLUMN_SUBWORKOUT_9 = "Day9_Workout9";
+
+        public static final String COLUMN_SUBWORKOUT_10 = "Day10_Workout10";
+
         public static final String CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -36,7 +42,10 @@ public class DataBaseContract {
                 COLUMN_SUBWORKOUT_4 + " TEXT, " +
                 COLUMN_SUBWORKOUT_5 + " TEXT, " +
                 COLUMN_SUBWORKOUT_6 + " TEXT, " +
-                COLUMN_SUBWORKOUT_7 + " TEXT" + ")";
+                COLUMN_SUBWORKOUT_7 + " TEXT, " +
+                COLUMN_SUBWORKOUT_8 + " TEXT, " +
+                COLUMN_SUBWORKOUT_9 + " TEXT, " +
+                COLUMN_SUBWORKOUT_10 + " TEXT"+ ")";
     }
 
     public static class SubWorkoutData implements BaseColumns {

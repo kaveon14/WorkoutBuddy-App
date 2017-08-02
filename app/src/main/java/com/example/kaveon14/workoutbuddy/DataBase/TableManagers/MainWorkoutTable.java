@@ -11,7 +11,7 @@ import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.TABLE_NAME;
 
-public class MainWorkoutTable extends TableManager {
+public class MainWorkoutTable extends TableManager {//need to increase table columns to 10(days)
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
 
@@ -68,7 +68,7 @@ public class MainWorkoutTable extends TableManager {
         List<String> rowData = new ArrayList<>();
         while(cursor.moveToNext()) {
             if(cursor.getString(1).equalsIgnoreCase(mainWorkout)) {
-                for(int x=2;x<=8;x++) {
+                for(int x=2;x<=10;x++) {
                     rowData.add(cursor.getString(x));
                 }
                 break;
