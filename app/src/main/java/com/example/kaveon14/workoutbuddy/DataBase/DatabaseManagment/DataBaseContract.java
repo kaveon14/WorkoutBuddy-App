@@ -12,35 +12,35 @@ public class DataBaseContract {
 
         public static final String COLUMN_MAINWORKOUT = "Main_Workout_Names";
 
-        public static final String COLUMN_SUBWORKOUT_1 = "Day1_Workout1";
+        public static final String COLUMN_SUBWORKOUT_1 = "Workout1";
 
-        public static final String COLUMN_SUBWORKOUT_2 = "Day2_Workout2";
+        public static final String COLUMN_SUBWORKOUT_2 = "Workout2";
 
-        public static final String COLUMN_SUBWORKOUT_3 = "Day3_Workout3";
+        public static final String COLUMN_SUBWORKOUT_3 = "Workout3";
 
-        public static final String COLUMN_SUBWORKOUT_4 = "Day4_Workout4";
+        public static final String COLUMN_SUBWORKOUT_4 = "Workout4";
 
-        public static final String COLUMN_SUBWORKOUT_5 = "Day5_Workout5";
+        public static final String COLUMN_SUBWORKOUT_5 = "Workout5";
 
-        public static final String COLUMN_SUBWORKOUT_6 = "Day6_Workout6";
+        public static final String COLUMN_SUBWORKOUT_6 = "Workout6";
 
-        public static final String COLUMN_SUBWORKOUT_7 = "Day7_Workout7";
+        public static final String COLUMN_SUBWORKOUT_7 = "Workout7";
 
-        public static final String COLUMN_SUBWORKOUT_8 = "Day8_Workout8";
+        public static final String COLUMN_SUBWORKOUT_8 = "Workout8";
 
-        public static final String COLUMN_SUBWORKOUT_9 = "Day9_Workout9";
+        public static final String COLUMN_SUBWORKOUT_9 = "Workout9";
 
-        public static final String COLUMN_SUBWORKOUT_10 = "Day10_Workout10";
+        public static final String COLUMN_SUBWORKOUT_10 = "Workout10";
 
-        public static final String COLUMN_SUBWORKOUT_11 = "Day11_Workout11";
+        public static final String COLUMN_SUBWORKOUT_11 = "Workout11";
 
-        public static final String COLUMN_SUBWORKOUT_12 = "Day12_Workout12";
+        public static final String COLUMN_SUBWORKOUT_12 = "Workout12";
 
-        public static final String COLUMN_SUBWORKOUT_13 = "Day13_Workout13";
+        public static final String COLUMN_SUBWORKOUT_13 = "Workout13";
 
-        public static final String COLUMN_SUBWORKOUT_14 = "Day14_Workout14";
+        public static final String COLUMN_SUBWORKOUT_14 = "Workout14";
 
-        public static final String COLUMN_SUBWORKOUT_15 = "Day15_Workout15";
+        public static final String COLUMN_SUBWORKOUT_15 = "Workout15";
 
         public static final String CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +

@@ -12,7 +12,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWin
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-// TODO DELETE the day part of the mainWorkout table and instead tell user to delete a subWorkout first if limit is at 7
+
 // and don't allow editing of mainWorkout after done testing
 public class CustomSubWorkoutPopup extends PopupWindowManager {
 

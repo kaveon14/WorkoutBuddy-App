@@ -65,6 +65,24 @@ public class SubWorkoutFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        resetFloatingActionButton();
+    }
+
+    private void resetFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //do nothing
+                }
+            });
+        }
+    }
+
     public void setMenu(Menu menu) {
         this.menu = menu;
     }

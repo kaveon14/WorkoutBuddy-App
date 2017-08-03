@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteMainWorkoutPopup;
@@ -58,6 +57,24 @@ public class MainWorkoutFragment extends Fragment {
         super.onHiddenChanged(hidden);
         if(!hidden) {
             setFloatingActionButton(getView());
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        resetFloatingActionButton();
+    }
+
+    private void resetFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //do nothing
+                }
+            });
         }
     }
 

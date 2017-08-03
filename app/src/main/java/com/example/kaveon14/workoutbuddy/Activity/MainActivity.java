@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity
         table.printTable();
     }
 
+
+
     @Override
     public void onStart() {
         super.onStart();
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
+    /*@Override
     public void onUserInteraction() {
         super.onUserInteraction();
         // TODO move this or think of better method
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         } else {
             inActivity = false;
         }
-    }
+    }*/
 
     private void setFloatingActionButtonImage(FloatingActionButton fab, boolean onActivity) {
         if(onActivity) {
