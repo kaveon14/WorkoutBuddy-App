@@ -13,6 +13,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 // TODO if no workoutData added change workoutData added to all zeros and throw error requesting a date
+//if no data aded dont save but still do date check
 public class BlankBodyStatsFragment extends Fragment {
 
     private boolean updatingRow = false;
@@ -68,13 +69,15 @@ public class BlankBodyStatsFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addBodyStatsData();
-                BodyStatsFragment.bodyObject = new BodyStatsExtension()
+                Body body = new BodyStatsExtension()
                         .getBodyStatsObject(root);
-                Toast.makeText(getContext(),"Stats Successfully Added!",
-                        Toast.LENGTH_SHORT).show();
-                getActivity().getSupportFragmentManager().popBackStack();
-
+                if(body != null) {
+                    addBodyStatsData();
+                    BodyStatsFragment.bodyObject = body;
+                    Toast.makeText(getContext(), "Stats Successfully Added!",
+                            Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager().popBackStack();
+                }
             }
         });
     }
@@ -86,11 +89,22 @@ public class BlankBodyStatsFragment extends Fragment {
         }
 
         private Body getBodyStatsObject(View root) {
-            return new Body().setDate(getDate(root)).setWeight(getWeight(root))
+            Body body = new Body().setWeight(getWeight(root))
                     .setChestSize(getChestSize(root)).setBackSize(getBackSize(root))
                     .setArmSize(getArmSize(root)).setForearmSize(getForearmSize(root))
                     .setWaistSize(getWaistSize(root)).setQuadSize(getQuadSize(root))
                     .setCalfSize(getCalfSize(root));
+            String date = getDate(root);
+            try {
+                body.setDate(date);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Caught");
+                Toast.makeText(getContext(),"Date Not Entered Properly" +
+                        ", Data NOT Saved!!",Toast.LENGTH_LONG).show();
+                return null;
+            }
+
+            return body;
         }
 
         private String getDate(View root) {
