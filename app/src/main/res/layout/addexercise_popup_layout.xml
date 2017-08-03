@@ -30,7 +30,7 @@
         android:id="@+id/addExercisePopupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Exercise"
+        android:text="@string/addExercise"
         android:layout_below="@+id/addExercisePopup_DescriptionEditText"
         android:layout_centerHorizontal="true" />
 
@@ -43,6 +43,6 @@
         android:ems="10"
         android:background="@android:color/white"
         android:inputType="textPersonName"
-        android:text="Exercise Name:" />
+        android:text="@string/exerciseName" />
 
 </RelativeLayout>

@@ -84,7 +84,6 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               v.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK);
                 Toast.makeText(context,"Can Not Delete This MainWorkout!"
                         ,Toast.LENGTH_SHORT).show();
             }

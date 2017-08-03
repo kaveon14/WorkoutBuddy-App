@@ -8,7 +8,7 @@
             android:id="@+id/liftingStatsDate_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="Date -> "
+            android:text="@string/datePointer"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
@@ -16,7 +16,7 @@
             android:id="@+id/mainWorkout_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="MainWorkout ->"
+            android:text="@string/mainWorkoutPointer"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
@@ -24,7 +24,7 @@
             android:id="@+id/subWorkout_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="SubWorkout ->"
+            android:text="@string/subWorkoutpointer"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
@@ -32,7 +32,7 @@
             android:id="@+id/sets_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="Total Sets ->"
+            android:text="@string/totalSets"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
@@ -40,7 +40,7 @@
             android:id="@+id/reps_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="Total Reps -> "
+            android:text="@string/totalReps"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
@@ -48,7 +48,7 @@
             android:id="@+id/weight_textView"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="Total Weight ->"
+            android:text="@string/totalWeight"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 

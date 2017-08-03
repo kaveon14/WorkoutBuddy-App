@@ -11,7 +11,7 @@
         android:textColor="@android:color/black"
         android:textSize="15sp"
         android:textAlignment="viewEnd"
-        android:text="Set#"
+        android:text="@string/set"
         android:layout_alignBaseline="@+id/repsNweightEditText"
         android:layout_alignBottom="@+id/repsNweightEditText"
         android:layout_alignParentStart="true" />
@@ -22,7 +22,7 @@
         android:layout_height="40dp"
         android:ems="10"
         android:inputType="text"
-        android:text="reps/weight lbs/kgs"
+        android:text="@string/repsWeightFormat"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/setsTextView"
         android:layout_marginStart="18dp" />

@@ -101,4 +101,82 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="addExercise">Add Exercise</string>
+    <string name="exerciseName">Exercise Name:</string>
+    <string name="sets">Sets:</string>
+    <string name="reps">Reps:</string>
+
+    <string name="deleteSubWorkout">Delete SubWorkout</string>
+    <string name="date">Date: </string>
+    <string name="weight">Weight:</string>
+    <string name="chest">Chest:</string>
+    <string name="back">Back:</string>
+    <string name="arms">Arms:</string>
+    <string name="forearms">Forearms:</string>
+    <string name="waist">Waist:</string>
+    <string name="quads">Quads:</string>
+    <string name="calves">Calves:</string>
+
+    <string name="dateFormat">Date mm/dd/yyyy</string>
+    <string name="weightFormat">Weight kg/lb</string>
+    <string name="chestFormat">Chest in/cm</string>
+    <string name="backFormat">Back in/cm</string>
+    <string name="armsFormat">Arms in/cm</string>
+    <string name="forearmsFormat">Forearms in/cm</string>
+    <string name="waistFormat">Waist in/cm</string>
+    <string name="quadsFormat">Quads in/cm</string>
+    <string name="calvesFormat">Calves in/cm</string>
+    <string name="addStats">Add Stats</string>
+
+    <string name="noExercises">No Exercises Added Yet!</string>
+    <string name="noBodyStats">No BodyStats Logged Yet!</string>
+    <string name="noSubWorkouts">No SubWorkouts Added Yet!</string>
+
+    <string name="start">Start</string>
+    <string name="baseTime">00:00</string>
+    <string name="hideTimeIntervals">Hide Time Intervals</string>
+    <string name="addWorkoutData">Add Workout Data</string>
+
+    <string name="noWorkoutStats">No WorkoutStats Logged Yet!</string>
+
+    <string name="set1">Set 1:</string>
+    <string name="set2">Set 2:</string>
+    <string name="set3">Set 3:</string>
+    <string name="set4">Set 4:</string>
+    <string name="set5">Set 5:</string>
+    <string name="set6">Set 6:</string>
+    <string name="set7">Set 7:</string>
+    <string name="set8">Set 8:</string>
+    <string name="set9">Set 9:</string>
+    <string name="set10">Set 10:</string>
+
+    <string name="mainWorkoutName">MainWorkout Name:</string>
+    <string name="addMainWorkout">Add MainWorkout</string>
+
+    <string name="addNewExercise">Add New Exercise</string>
+    <string name="deleteAnExercise">Delete an Exercise</string>
+    <string name="viewCustomExercise">View Custom Exercises</string>
+
+    <string name="subWorkoutName">SubWorkout Name:</string>
+
+    <string name="deleteExercise">Delete Exercise</string>
+
+    <string name="set">Set#</string>
+    <string name="repsWeightFormat">reps/weight lbs/kgs</string>
+
+    <string name="viewExercise">View Exercise Content</string>
+    <string name="deleteSubWorkoutExercise">Delete Exercise from SubWorkout</string>
+    <string name="startWorkout">Start Workout</string>
+    <string name="saveWorkout">Save Workout Data</string>
+
+    <string name="datePointer">Date -></string>
+    <string name="mainWorkoutPointer">MainWorkout -></string>
+    <string name="subWorkoutpointer">SubWorkout -></string>
+    <string name="totalSets">Total Sets -></string>
+    <string name="totalReps">Total Reps -></string>
+    <string name="totalWeight">Total Weight -></string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
 </resources>

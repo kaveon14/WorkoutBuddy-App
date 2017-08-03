@@ -17,25 +17,25 @@
             android:id="@+id/viewExerciseButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View Exercise Content" />
+            android:text="@string/viewExercise" />
 
         <Button
             android:id="@+id/deleteExerciseButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete Exercise from SubWorkout" />
+            android:text="@string/deleteSubWorkoutExercise" />
 
         <Button
             android:id="@+id/startWorkoutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start Workout" />
+            android:text="@string/startWorkout" />
 
         <Button
             android:id="@+id/saveWorkoutButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Workout Data"
+            android:text="@string/saveWorkout"
             android:visibility="invisible" />
     </LinearLayout>
 </RelativeLayout>

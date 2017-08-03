@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:text="Exercise Name" />
+        android:text="@string/exerciseName" />
 
     <TextView
         android:id="@+id/set1_TextView"
@@ -18,7 +18,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="Set 1:" />
+        android:text="@string/set1" />
 
     <TextView
         android:id="@+id/set2_TextView"
@@ -26,7 +26,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="Set 2:" />
+        android:text="@string/set2" />
 
     <TextView
         android:id="@+id/set3_TextView"
@@ -34,7 +34,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="Set 3:" />
+        android:text="@string/set3" />
 
     <TextView
         android:id="@+id/set4_TextView"
@@ -42,7 +42,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="set 4:" />
+        android:text="@string/set4" />
 
     <TextView
         android:id="@+id/set5_TextView"
@@ -50,7 +50,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="set 5:" />
+        android:text="@string/set5" />
 
     <TextView
         android:id="@+id/set6_TextView"
@@ -58,7 +58,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="Set 6:" />
+        android:text="@string/set6" />
 
     <TextView
         android:id="@+id/set7_TextView"
@@ -66,7 +66,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="Set 7:" />
+        android:text="@string/set7" />
 
     <TextView
         android:id="@+id/set8_TextView"
@@ -74,7 +74,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="Set 8:" />
+        android:text="@string/set8" />
 
     <TextView
         android:id="@+id/set9_TextView"
@@ -82,7 +82,7 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="Set 9:" />
+        android:text="@string/set9" />
 
     <TextView
         android:id="@+id/set10_TextView"
@@ -90,6 +90,6 @@
         android:layout_height="30dp"
         android:textColor="@android:color/black"
         android:visibility="invisible"
-        android:text="Set 10:" />
+        android:text="@string/set10" />
 
 </LinearLayout>

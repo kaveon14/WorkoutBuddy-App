@@ -12,14 +12,14 @@
         android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
         android:inputType="textPersonName"
-        android:text="MainWorkout Name:"
+        android:text="@string/mainWorkoutName"
         android:background="@android:color/white"/>
 
     <Button
         android:id="@+id/mainWorkoutPopupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add MainWorkout"
+        android:text="@string/addMainWorkout"
         android:layout_below="@+id/mainWorkoutPopup_editText"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

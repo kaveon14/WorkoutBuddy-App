@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:textColor="@color/caldroid_black"
-        android:text="No BodyStats Logged Yet!" >
+        android:text="@string/noBodyStats" >
     </TextView>
 
 

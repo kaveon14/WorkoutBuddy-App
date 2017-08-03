@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:visibility="gone"
         android:textColor="@color/caldroid_black"
-        android:text="No SubWorkouts Added Yet!" >
+        android:text="@string/noSubWorkouts" >
     </TextView>
 
 </LinearLayout>

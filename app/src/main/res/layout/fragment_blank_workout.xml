@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:visibility="gone"
             android:textColor="@color/caldroid_black"
-            android:text="No Exercises Added Yet!" >
+            android:text="@string/noExercises">
         </TextView>
 
     </LinearLayout>

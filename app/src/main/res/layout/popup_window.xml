@@ -16,20 +16,20 @@
             android:id="@+id/addCustomExerciseBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add New Exercise"
+            android:text="@string/addNewExercise"
             />
 
         <Button
             android:id="@+id/deleteCustomExerciseBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete an Exercise" />
+            android:text="@string/deleteAnExercise" />
 
         <Button
             android:id="@+id/showCustomExercisesBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View Custom Exercises" />
+            android:text="@string/viewCustomExercise" />
 
     </LinearLayout>
 
