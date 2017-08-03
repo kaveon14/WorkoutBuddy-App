@@ -1,4 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
+
 import android.app.SearchManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

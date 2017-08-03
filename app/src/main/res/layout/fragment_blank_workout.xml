@@ -12,12 +12,23 @@
         <TextView
             android:id="@+id/workoutNameView"
             android:layout_width="match_parent"
+            android:textColor="@color/caldroid_black"
             android:layout_height="25dp" />
 
         <ListView
             android:id="@+id/blankWorkout_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/blankSubWorkoutEmptyListItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:textColor="@color/caldroid_black"
+            android:text="No Exercises Added Yet!" >
+        </TextView>
+
     </LinearLayout>
 
 </FrameLayout>

@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
@@ -77,31 +78,6 @@ public class MainActivity extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(customExercisePopup != null) {
             bitmap = customExercisePopup.getGalleryImage(requestCode, resultCode, data);
-        }
-    }
-
-    /*@Override
-    public void onUserInteraction() {
-        super.onUserInteraction();
-        // TODO move this or think of better method
-        boolean inActivity = true;
-        if(getActiveFragment() == null || fragId == 0) {
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-            setFloatingActionButtonImage(fab,inActivity);
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //do nothing
-                }
-            });
-        } else {
-            inActivity = false;
-        }
-    }*/
-
-    private void setFloatingActionButtonImage(FloatingActionButton fab, boolean onActivity) {
-        if(onActivity) {
-            fab.setImageResource(R.drawable.ic_menu_camera);
         }
     }
 

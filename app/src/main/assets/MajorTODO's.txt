@@ -1,2 +1,1 @@
 // TODO change ui to material theme in august
-// TODO crete methods "edit a listview" on long click

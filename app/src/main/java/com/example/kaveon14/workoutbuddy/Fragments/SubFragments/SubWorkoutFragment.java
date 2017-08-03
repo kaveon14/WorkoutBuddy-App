@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-
+// TODO do xml String correctly
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -45,16 +45,12 @@ public class SubWorkoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subworkout, container, false);
-        listView = (ListView) view.findViewById(R.id.subWokoutListView);
-        if(getAdapter() != null) {
-            listView.setAdapter(getAdapter());
-            subWorkoutCount = listView.getCount();
-        }
+        View root = inflater.inflate(R.layout.fragment_subworkout, container, false);
+        setListView(root);
         openWorkoutOnClick(listView);
         addExerciseToSubWorkout(listView);
         setFloatingActionButton();
-        return view;
+        return root;
     }
 
     @Override
@@ -69,6 +65,17 @@ public class SubWorkoutFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         resetFloatingActionButton();
+    }
+
+    private void setListView(View root) {
+        listView = (ListView) root.findViewById(R.id.subWokoutListView);
+        if(getAdapter() != null) {
+            listView.setAdapter(getAdapter());
+            subWorkoutCount = listView.getCount();
+        }
+        if(subWorkoutAdapter.isEmpty()) {
+            listView.setEmptyView(root.findViewById(R.id.subWorkoutEmptyListItem));
+        }
     }
 
     private void resetFloatingActionButton() {

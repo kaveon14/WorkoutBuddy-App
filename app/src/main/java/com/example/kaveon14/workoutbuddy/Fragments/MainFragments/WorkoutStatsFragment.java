@@ -28,11 +28,10 @@ import static android.content.Context.SEARCH_SERVICE;
 //possily create binary search tree to speedup matching searched item times
 public class WorkoutStatsFragment extends Fragment {
 
-    private WorkoutStatsAdapter workoutStatsAdapter;
     private List<SubWorkout> subWorkoutList;
-    public static Map<String,List<String>> queriedData;
     private Menu menu;
     private ListView listView;
+    private WorkoutStatsAdapter workoutStatsAdapter;
 
 
     public WorkoutStatsFragment() {
@@ -49,15 +48,22 @@ public class WorkoutStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
-        listView = (ListView) root.findViewById(R.id.workoutStats_listView);
-        listView.setAdapter(setAdapter());
-        setListViewOnClick(listView);
+        setListView(root);
         setSearchViewOnClick();
         return root;
     }
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    private void setListView(View root) {
+        listView = (ListView) root.findViewById(R.id.workoutStats_listView);
+        listView.setAdapter(setAdapter());
+        if(workoutStatsAdapter.isEmpty()) {
+            listView.setEmptyView(root.findViewById(R.id.workoutStatsEmptyListItem));
+        }
+        setListViewOnClick(listView);
     }
 
     private void setSearchViewOnClick() {
@@ -103,9 +109,8 @@ public class WorkoutStatsFragment extends Fragment {
     private WorkoutStatsAdapter setAdapter(){
         WorkoutStatsTable table = new WorkoutStatsTable(getContext());
         subWorkoutList = table.getCompletedWorkouts();
-
         workoutStatsAdapter = new WorkoutStatsAdapter(subWorkoutList);
-        return new WorkoutStatsAdapter(subWorkoutList);
+        return workoutStatsAdapter;
     }
 
     public List<SubWorkout> loadSearchedItems(Map<String,List<String>> queriedData) {

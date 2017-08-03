@@ -10,4 +10,14 @@
         android:id="@+id/subWokoutListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/subWorkoutEmptyListItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:textColor="@color/caldroid_black"
+        android:text="No SubWorkouts Added Yet!" >
+    </TextView>
+
 </LinearLayout>

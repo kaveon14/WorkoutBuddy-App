@@ -107,6 +107,9 @@ public class BodyStatsFragment extends Fragment {
         ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
         listView.setAdapter(getAdapter());
         handleListViewClicks(listView);
+        if(bodyStatsAdapter.isEmpty()) {
+            listView.setEmptyView(root.findViewById(R.id.bodyStatsEmptyListItem));
+        }
     }
 
     private void handleListViewClicks(ListView listView) {

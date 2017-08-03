@@ -50,12 +50,12 @@ public class BlankSubWorkoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_blank_workout, container, false);
-        setTextView(rootView);
-        setListView(rootView);
+        View root = inflater.inflate(R.layout.fragment_blank_workout, container, false);
+        setTextView(root);
+        setListView(root);
         MainActivity.fragId = R.id.blankWorkout_fragment;
         setFloatingActionButton();
-        return rootView;
+        return root;
     }
 
     @Override
@@ -107,14 +107,17 @@ public class BlankSubWorkoutFragment extends Fragment {
         textView.setText(SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
     }
 
-    private void setListView(View rootView) {
-        ListView listView = (ListView) rootView.findViewById(R.id.blankWorkout_listView);
+    private void setListView(View root) {
+        ListView listView = (ListView) root.findViewById(R.id.blankWorkout_listView);
         if(workoutAdapter != null) {
             listView.setAdapter(workoutAdapter);
         } else {
             listView.setAdapter(setWorkoutAdapter());
         }
         openWorkoutOnClick(listView);
+        if(workoutAdapter.isEmpty()) {
+            listView.setEmptyView(root.findViewById(R.id.blankSubWorkoutEmptyListItem));
+        }
     }
 
     private void openWorkoutOnClick(ListView listView) {
