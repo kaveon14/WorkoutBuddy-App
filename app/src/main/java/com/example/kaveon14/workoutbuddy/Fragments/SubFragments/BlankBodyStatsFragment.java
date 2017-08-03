@@ -12,8 +12,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
-// TODO if no workoutData added change workoutData added to all zeros and throw error requesting a date
-//if no data aded dont save but still do date check
+
 public class BlankBodyStatsFragment extends Fragment {
 
     private boolean updatingRow = false;

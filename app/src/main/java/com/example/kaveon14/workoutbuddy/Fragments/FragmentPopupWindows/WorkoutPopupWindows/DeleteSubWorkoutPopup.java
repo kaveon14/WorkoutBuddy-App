@@ -52,8 +52,14 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 resetSubWorkoutListViewColors(parent);
                 parent.getChildAt(position -
-                        parent.getFirstVisiblePosition()).setBackgroundColor(Color.LTGRAY);//here
-                setDeleteBtn(parent.getItemAtPosition(position).toString());
+                        parent.getFirstVisiblePosition()).setBackgroundColor(Color.LTGRAY);
+                if(position>=5) {
+                    setDeleteBtn(parent.getItemAtPosition(position).toString());
+                } else {
+                    resetDeleteButton();
+                    Toast.makeText(context,"Can Not Delete This SubWorkout!"
+                            ,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -68,6 +74,18 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
                 Toast.makeText(context,"SubWorkout Successfully Deleted!"
                         ,Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
+            }
+        });
+    }
+
+    private void resetDeleteButton() {
+        Button btn = (Button) popupLayout.findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setHapticFeedbackEnabled(true);
+                Toast.makeText(context,"Can Not Delete This SubWWorkout!"
+                        ,Toast.LENGTH_SHORT).show();
             }
         });
     }

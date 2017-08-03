@@ -1,6 +1,7 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
 import android.graphics.Color;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteMainWorkoutPopup extends PopupWindowManager {
@@ -50,9 +53,15 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                resetSubWorkoutListViewColors(parent);
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
-                setDeleteButton(parent.getItemAtPosition(position).toString());
+                if(position != 0) {
+                    resetSubWorkoutListViewColors(parent);
+                    setDeleteButton(parent.getItemAtPosition(position).toString());
+                } else {
+                    resetDeleteButton();
+                    Toast.makeText(context,"Can Not Delete This MainWorkout!"
+                            ,Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -66,6 +75,18 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
                 Toast.makeText(context,"MainWorkout Successfully Deleted!"
                         ,Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
+            }
+        });
+    }
+
+    private void resetDeleteButton() {
+        Button btn = (Button) popupLayout.findViewById(R.id.button);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               v.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK);
+                Toast.makeText(context,"Can Not Delete This MainWorkout!"
+                        ,Toast.LENGTH_SHORT).show();
             }
         });
     }
