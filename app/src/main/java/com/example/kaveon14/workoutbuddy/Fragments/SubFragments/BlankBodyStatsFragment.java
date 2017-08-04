@@ -43,7 +43,7 @@ public class BlankBodyStatsFragment extends Fragment {
 
     private void setEditTextView(View root) {
         BodyStatsExtension bodyStatsExtension = new BodyStatsExtension();
-        Body body = BodyStatsFragment.clickedBodyStatsItem;
+        Body body = BodyStatsFragment.getClickedBodyStatsItem();
 
         bodyStatsExtension.setDate(body.getStringDate(),root);
         bodyStatsExtension.setWeight(body.getWeight(),root);
@@ -72,7 +72,7 @@ public class BlankBodyStatsFragment extends Fragment {
                         .getBodyStatsObject(root);
                 if(body != null) {
                     addBodyStatsData();
-                    BodyStatsFragment.bodyObject = body;
+                    BodyStatsFragment.setNewBodyStats(body);
                     Toast.makeText(getContext(), "Stats Successfully Added!",
                             Toast.LENGTH_SHORT).show();
                     getActivity().getSupportFragmentManager().popBackStack();

@@ -35,8 +35,8 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 
 public class BodyStatsFragment extends Fragment {
 
-    public static Body clickedBodyStatsItem;
-    public static Body bodyObject;
+    private static Body clickedBodyStatsItem;
+    private static Body newBodyStats;
     private View root;
     private List<Body> bodyStats;
     private BodyStatsAdapter bodyStatsAdapter;
@@ -44,6 +44,18 @@ public class BodyStatsFragment extends Fragment {
 
     public BodyStatsFragment() {
         // Required empty public constructor
+    }
+
+    public static void setClickedBodyStatsItem(Body clickedBodyStatsItem) {
+        BodyStatsFragment.clickedBodyStatsItem = clickedBodyStatsItem;
+    }
+
+    public static Body getClickedBodyStatsItem() {
+        return clickedBodyStatsItem;
+    }
+
+    public static void setNewBodyStats(Body newBodyStats) {
+        BodyStatsFragment.newBodyStats = newBodyStats;
     }
 
     public void setMainActivity(MainActivity mainActivity) {
@@ -129,7 +141,7 @@ public class BodyStatsFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedBodyStatsItem = getBodyStats(position);
+                setClickedBodyStatsItem(getBodyStats(position));
                 BlankBodyStatsFragment blankBodyStatsFragment = showBlankBodyStatsfragment();
                 blankBodyStatsFragment.isUpdatingRow(true) ;
             }
@@ -137,8 +149,8 @@ public class BodyStatsFragment extends Fragment {
     }
 
     private void updateListViewForNewBodyStats() {
-        if (bodyObject != null) {
-            bodyStats.add(bodyObject);
+        if (newBodyStats != null) {
+            bodyStats.add(newBodyStats);
             bodyStatsAdapter.notifyDataSetChanged();
             bodyStatsAdapter.sortByDate();
         }

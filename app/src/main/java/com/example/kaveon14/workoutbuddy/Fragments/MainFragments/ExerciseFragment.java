@@ -35,9 +35,9 @@ import static android.content.Context.SEARCH_SERVICE;
 public class ExerciseFragment extends Fragment {
 
     private static ArrayAdapter exerciseAdapter;
-    private static Exercise clickedExercise;//make private and use getter and setter
-    public static List<Exercise> exerciseList;//see if public needed
-    public static List<Exercise> customExerciseList;//see if public needed
+    private static Exercise clickedExercise;
+    private static List<Exercise> exerciseList;//see if public needed
+    private static List<Exercise> customExerciseList;//see if public needed
     private static List<String> exerciseNames;
     private boolean fromSubWorkout = false;
     private ListView listView;
