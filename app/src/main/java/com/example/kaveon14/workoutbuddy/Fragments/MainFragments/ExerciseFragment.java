@@ -112,7 +112,7 @@ public class ExerciseFragment extends Fragment {
     }
 
     private void showExercisePopupMenu() {
-        ExercisePopupMenu popup = new ExercisePopupMenu(getView());
+        ExercisePopupMenu popup = new ExercisePopupMenu(getView(),getContext());
         popup.setCustomExerciseList(customExerciseList);
         popup.setFromSubWorkout(fromSubWorkout);
         popup.showPopupWindow();
@@ -140,7 +140,8 @@ public class ExerciseFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 clickedExercise = exerciseList.get(position);
-                ExerciseToWorkoutPopup popup = new ExerciseToWorkoutPopup(root,fromSubWorkout);
+                ExerciseToWorkoutPopup popup = new ExerciseToWorkoutPopup(root,getContext()
+                        ,fromSubWorkout);
                 popup.showPopupWindow();
                 return true;
             }

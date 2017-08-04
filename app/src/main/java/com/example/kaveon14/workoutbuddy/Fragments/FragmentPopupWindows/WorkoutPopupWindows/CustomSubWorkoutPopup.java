@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 // create class before that asks if they want to add a new subworkout like exercise fragmenent
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,8 +22,9 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
     private String clkickedMainWorkoutName;
     private int subWorkoutCount;
 
-    public CustomSubWorkoutPopup(View root) {
+    public CustomSubWorkoutPopup(View root, Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.simple_edittext_button_popup_layout);
         setPopupViewId(R.id.subWorkout_popupWindow);
     }

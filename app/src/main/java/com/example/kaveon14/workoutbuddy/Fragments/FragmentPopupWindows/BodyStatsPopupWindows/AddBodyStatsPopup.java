@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,8 +11,9 @@ import com.example.kaveon14.workoutbuddy.R;
 
 public class AddBodyStatsPopup extends PopupWindowManager {
 
-    public AddBodyStatsPopup(View root) {
+    public AddBodyStatsPopup(View root, Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.yes_no_popup_layout);
         setPopupViewId(R.id.subWorkout_popupWindow);
     }

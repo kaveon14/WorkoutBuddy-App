@@ -10,14 +10,14 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 
-public abstract class PopupWindowManager {
+public abstract class PopupWindowManager  {
 
     private int id;
     private View root;
     protected int layout;
     protected View popupLayout = null;
     protected PopupWindow popupWindow = null;
-    protected Context context = MainActivity.activity.getBaseContext();
+    protected Context context;
 
     protected void displayPopupWindow() {
         if(popupLayout == null)
@@ -38,6 +38,10 @@ public abstract class PopupWindowManager {
 
     protected void setRootView(View root) {
         this.root = root;
+    }
+
+    protected void setWindowManagerContext(Context context) {
+        this.context = context;
     }
 
     private void setPopupLayout() {

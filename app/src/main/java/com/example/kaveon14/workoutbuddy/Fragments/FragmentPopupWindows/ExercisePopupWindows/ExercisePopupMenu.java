@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
@@ -13,8 +14,9 @@ public class ExercisePopupMenu extends PopupWindowManager {
     private List<Exercise> customExerciseList;
     private boolean fromSubWorkout;
 
-    public ExercisePopupMenu(View root) {
+    public ExercisePopupMenu(View root, Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.popup_window);
         setPopupViewId(R.id.popupWin);
     }
@@ -55,7 +57,7 @@ public class ExercisePopupMenu extends PopupWindowManager {
     }
 
     private void showCustomExercisePopupWindow() {
-        ViewCustomExercisesPopup popup = new ViewCustomExercisesPopup(getRootView());
+        ViewCustomExercisesPopup popup = new ViewCustomExercisesPopup(getRootView(),context);
         popup.setCustomExerciseList(customExerciseList);
         popup.setMainPopupWindow(popupWindow);
         popup.setFromSubWorkout(fromSubWorkout);
@@ -73,7 +75,7 @@ public class ExercisePopupMenu extends PopupWindowManager {
     }
 
     private void showDeleteExercisePopupWindow() {
-        DeleteExercisesPopup popup = new DeleteExercisesPopup(getRootView());
+        DeleteExercisesPopup popup = new DeleteExercisesPopup(getRootView(),context);
         popup.setCustomExerciseList(customExerciseList);
         popup.showPopupWindow();
     }

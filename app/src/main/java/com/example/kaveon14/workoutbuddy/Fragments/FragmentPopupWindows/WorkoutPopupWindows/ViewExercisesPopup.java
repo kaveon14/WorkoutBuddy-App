@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,10 +19,11 @@ public class ViewExercisesPopup extends PopupWindowManager {
 
     private List<Exercise> exerciseList;
     private ArrayAdapter exerciseAdapter;
-    private PopupWindow mainPoopupWindow;
+    private PopupWindow mainPopupWindow;
 
-    public ViewExercisesPopup(View root) {
+    public ViewExercisesPopup(View root, Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.view_exercise_popup);
         setPopupViewId(R.id.viewExercisesPopup);
     }
@@ -37,7 +39,7 @@ public class ViewExercisesPopup extends PopupWindowManager {
     }
 
     public void setMainPopupWindow(PopupWindow mainPopupWindow) {
-        this.mainPoopupWindow = mainPopupWindow;
+        this.mainPopupWindow = mainPopupWindow;
     }
 
     private void setListView() {
@@ -58,7 +60,7 @@ public class ViewExercisesPopup extends PopupWindowManager {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ExerciseFragment.clickedExercise = exerciseList.get(position);
                 MainActivity.activity.showBlankExerciseFragment();
-                mainPoopupWindow.dismiss();
+                mainPopupWindow.dismiss();
                 popupWindow.dismiss();
             }
         });

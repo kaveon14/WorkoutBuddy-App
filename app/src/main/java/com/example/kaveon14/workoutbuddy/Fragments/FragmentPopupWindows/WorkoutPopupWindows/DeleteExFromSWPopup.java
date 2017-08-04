@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 //dont allow in default default workouts
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,8 +24,9 @@ public class DeleteExFromSWPopup extends PopupWindowManager {
     private  List<String> exerciseNames;
     private BlankSubWorkoutFragment.WorkoutAdapter workoutAdapter;
 
-    public DeleteExFromSWPopup(View root) {
+    public DeleteExFromSWPopup(View root, Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.view_exercise_popup);
         setPopupViewId(R.id.viewExercisesPopup);
     }

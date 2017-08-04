@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
@@ -14,17 +15,18 @@ import com.example.kaveon14.workoutbuddy.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// TODO put context in constructor for all pw's
 public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter mainWorkoutAdapter;
     private List<String> mainWorkoutNames;
     private int position;
 
-    public DeleteMainWorkoutPopup(View root) {
+    public DeleteMainWorkoutPopup(View root,Context context) {
         setRootView(root);
-        setPopupLayout(R.layout.deletesubworkout_popup_layout);
         setPopupViewId(R.id.deleteSubWorkoutPopup);
+        setWindowManagerContext(context);
+        setPopupLayout(R.layout.deletesubworkout_popup_layout);
     }
 
     public void showPopupWindow() {

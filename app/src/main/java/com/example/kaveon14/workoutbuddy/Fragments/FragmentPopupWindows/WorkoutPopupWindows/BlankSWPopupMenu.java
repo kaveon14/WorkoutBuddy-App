@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,8 +19,9 @@ public class BlankSWPopupMenu extends PopupWindowManager {
     private BlankSubWorkoutFragment.WorkoutAdapter adapter;
     public static List<WorkoutExercise> workoutData = new ArrayList<>(15);
 
-    public BlankSWPopupMenu(View root) {
+    public BlankSWPopupMenu(View root, Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.workout_popup_menu);
         setPopupViewId(R.id.workoutPopupMenu);
     }
@@ -51,7 +53,7 @@ public class BlankSWPopupMenu extends PopupWindowManager {
     }
 
     private void showViewExercisesPopup() {
-        ViewExercisesPopup popup = new ViewExercisesPopup(getRootView());
+        ViewExercisesPopup popup = new ViewExercisesPopup(getRootView(),context);
         popup.setMainPopupWindow(popupWindow);
         popup.setExerciseList(exerciseList);
         popup.showPopupWindow();
@@ -68,7 +70,7 @@ public class BlankSWPopupMenu extends PopupWindowManager {
     }
 
     private void showDeleteExercisePopup() {
-        DeleteExFromSWPopup popup = new DeleteExFromSWPopup(getRootView());
+        DeleteExFromSWPopup popup = new DeleteExFromSWPopup(getRootView(),context);
         popup.setWorkoutAdapter(adapter);
         popup.setExerciseList(exerciseList);
         popup.showPopupWindow();
@@ -111,7 +113,7 @@ public class BlankSWPopupMenu extends PopupWindowManager {
     }
 
     private void showGetDatePopup() {
-        GetDatePopup popup = new GetDatePopup(getRootView());
+        GetDatePopup popup = new GetDatePopup(getRootView(),context);
         popup.showPopupWindow();
     }
 }

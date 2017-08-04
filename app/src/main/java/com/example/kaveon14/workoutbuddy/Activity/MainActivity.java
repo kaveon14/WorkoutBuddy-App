@@ -1,6 +1,7 @@
 package com.example.kaveon14.workoutbuddy.Activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -59,8 +60,6 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         preloadData();
-        MainWorkoutTable table = new MainWorkoutTable(getBaseContext());
-        table.printTable();
     }
 
 
@@ -253,6 +252,7 @@ public class MainActivity extends AppCompatActivity
 
         public CustomExercisePopup(View root) {
             setRootView(root);
+            setWindowManagerContext(getBaseContext());
             setPopupLayout(R.layout.addexercise_popup_layout);
             setPopupViewId(R.id.addExercise_PopupWindow);
         }
@@ -297,7 +297,8 @@ public class MainActivity extends AppCompatActivity
         private void openExternalImageGallery() {
             Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickIntent.setType("image/*");
-            MainActivity.activity.startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
+            //MainActivity.activity.startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
+            startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
         }
 
         private void setImageViewWithGalleryImage() {

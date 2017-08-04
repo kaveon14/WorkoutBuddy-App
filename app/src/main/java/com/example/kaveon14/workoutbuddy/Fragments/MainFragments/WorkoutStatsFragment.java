@@ -3,6 +3,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -51,6 +52,24 @@ public class WorkoutStatsFragment extends Fragment {
         setListView(root);
         setSearchViewOnClick();
         return root;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        resetFloatingActionButton();
+    }
+
+    private void resetFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //do nothing
+                }
+            });
+        }
     }
 
     public void setMenu(Menu menu) {

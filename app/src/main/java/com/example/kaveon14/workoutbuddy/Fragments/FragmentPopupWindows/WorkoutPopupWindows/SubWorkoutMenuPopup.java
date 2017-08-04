@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,8 +17,9 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
     private String clickedMainWorkoutName;
     private int subWorkoutCount;
 
-    public SubWorkoutMenuPopup(View root) {
+    public SubWorkoutMenuPopup(View root,Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.popup_window);
         setPopupViewId(R.id.popupWin);
     }
@@ -62,7 +64,7 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
     }
 
     private void showCustomSubWorkoutPopup() {
-        CustomSubWorkoutPopup pop = new CustomSubWorkoutPopup(getRootView());
+        CustomSubWorkoutPopup pop = new CustomSubWorkoutPopup(getRootView(),context);
         pop.setSubWorkoutCount(subWorkoutCount);
         pop.setClickedMainWorkout(clickedMainWorkoutName);
         pop.subWorkoutNamesList(subWorkoutNames);
@@ -81,7 +83,7 @@ public class SubWorkoutMenuPopup extends PopupWindowManager {
         });
     }
     private void showDeleteSubWorkoutPopup() {
-        DeleteSubWorkoutPopup popup = new DeleteSubWorkoutPopup(getRootView());
+        DeleteSubWorkoutPopup popup = new DeleteSubWorkoutPopup(getRootView(),context);
         popup.setCurrentSubWorkoutCount(subWorkoutCount);
         popup.setSubWorkoutAdapter(subWorkoutAdapter);
         popup.setSubWorkoutNames(subWorkoutNames);

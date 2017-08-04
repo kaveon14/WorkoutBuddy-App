@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,8 +13,10 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
     private ArrayAdapter mainWorkoutAdapter;
     private List<String> mainWorkoutNames;
 
-    public MainWorkoutPopupMenu(View root) {
+
+    public MainWorkoutPopupMenu(View root,Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.popup_window);
         setPopupViewId(R.id.popupWin);
     }
@@ -50,7 +53,7 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
     }
 
     private void showCustomMainWorkoutPopup() {
-        CustomMainWorkoutPopup pop = new CustomMainWorkoutPopup(getRootView());
+        CustomMainWorkoutPopup pop = new CustomMainWorkoutPopup(getRootView(),context);
         pop.setMainWorkoutList(mainWorkoutNames);
         pop.setAdapter(mainWorkoutAdapter);
         pop.showPopupWindow();
@@ -67,7 +70,7 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
         });
     }
     private void showDeleteMainWorkoutPopup() {
-       DeleteMainWorkoutPopup popup = new DeleteMainWorkoutPopup(getRootView());
+       DeleteMainWorkoutPopup popup = new DeleteMainWorkoutPopup(getRootView(),context);
         popup.setMainWorkoutAdapter(mainWorkoutAdapter);
         popup.setMainWorkoutNames(mainWorkoutNames);
         popup.showPopupWindow();

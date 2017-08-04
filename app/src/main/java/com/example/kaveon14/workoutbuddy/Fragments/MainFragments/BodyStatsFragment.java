@@ -97,7 +97,7 @@ public class BodyStatsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddBodyStatsPopup bt = new AddBodyStatsPopup(getView());
+                AddBodyStatsPopup bt = new AddBodyStatsPopup(getView(),getContext());
                 bt.showPopupWindow();
             }
         });
@@ -158,7 +158,7 @@ public class BodyStatsFragment extends Fragment {
     }
 
     private void showDeleteBodyStatsPopup(ListView listView,int position) {
-        DeleteBodyStatsPopup popup = new DeleteBodyStatsPopup(getView());
+        DeleteBodyStatsPopup popup = new DeleteBodyStatsPopup(getView(),getContext());
         popup.setAdapter(bodyStatsAdapter);
         popup.setListView(listView);
         popup.setBodyStatsList(bodyStats);

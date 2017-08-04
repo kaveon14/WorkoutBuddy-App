@@ -96,7 +96,7 @@ public class BlankSubWorkoutFragment extends Fragment {
     }
 
     private void showPopupMenu() {
-        BlankSWPopupMenu popup = new BlankSWPopupMenu(getView());
+        BlankSWPopupMenu popup = new BlankSWPopupMenu(getView(),getContext());
         popup.setExerciseList(exerciseList);
         popup.setAdapter(workoutAdapter);
         popup.showPopupWindow();

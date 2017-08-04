@@ -101,7 +101,7 @@ public class MainWorkoutFragment extends Fragment {
     }
 
     private void showMainWorkoutPopupMenu() {
-        MainWorkoutPopupMenu popup = new MainWorkoutPopupMenu(getView());
+        MainWorkoutPopupMenu popup = new MainWorkoutPopupMenu(getView(),getContext());
         popup.setMainWorkoutAdapter(adapter);
         popup.setMainWorkoutNames(mainWorkoutNames);
         popup.showPopupWindow();
@@ -197,7 +197,7 @@ public class MainWorkoutFragment extends Fragment {
     }
 
     private void showDeleteMainWorkoutPopup(int position) {
-        DeleteMainWorkoutPopup popup = new DeleteMainWorkoutPopup(getView());
+        DeleteMainWorkoutPopup popup = new DeleteMainWorkoutPopup(getView(),getContext());
         popup.setMainWorkoutAdapter(adapter);
         popup.setMainWorkoutNames(mainWorkoutNames);
         popup.setPosition(position);

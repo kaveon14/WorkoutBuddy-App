@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,8 +23,9 @@ public class ViewCustomExercisesPopup extends PopupWindowManager {
     private ArrayAdapter customExerciseAdapter;
     private List<Exercise> customExerciseList;
 
-    public ViewCustomExercisesPopup(View root) {
+    public ViewCustomExercisesPopup(View root, Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.deletesubworkout_popup_layout);
         setPopupViewId(R.id.deleteSubWorkoutPopup);
     }
@@ -85,7 +87,8 @@ public class ViewCustomExercisesPopup extends PopupWindowManager {
                 ExerciseFragment.clickedExercise = customExerciseList.get(position);
                 mainPopupWindow.dismiss();
                 popupWindow.dismiss();
-                ExerciseToWorkoutPopup popup = new ExerciseToWorkoutPopup(popupLayout,fromSubWorkout);
+                ExerciseToWorkoutPopup popup = new ExerciseToWorkoutPopup(popupLayout,context,
+                        fromSubWorkout);
                 popup.showPopupWindow();
                 return true;
             }

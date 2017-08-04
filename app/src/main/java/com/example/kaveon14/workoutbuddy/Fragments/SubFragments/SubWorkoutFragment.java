@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-
+// TODO phase out static variables(such as activity etc.)
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -113,7 +113,7 @@ public class SubWorkoutFragment extends Fragment {
     }
 
     private void showSubWorkoutPopupMenu() {
-        SubWorkoutMenuPopup popup = new SubWorkoutMenuPopup(getView());
+        SubWorkoutMenuPopup popup = new SubWorkoutMenuPopup(getView(),getContext());
         popup.setSubWorkoutAdapter(subWorkoutAdapter);
         popup.setSubWorkoutNames(subWorkoutNames);
         popup.setClickedMainWorkoutName(clickedMainWorkoutName);

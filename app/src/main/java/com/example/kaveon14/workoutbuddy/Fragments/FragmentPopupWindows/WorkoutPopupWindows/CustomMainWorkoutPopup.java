@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,10 +17,11 @@ public class CustomMainWorkoutPopup extends PopupWindowManager {
     private List<String> mainWorkoutNames;
     private ArrayAdapter adapter;
 
-    public CustomMainWorkoutPopup(View root) {
+    public CustomMainWorkoutPopup(View root,Context context) {
         setRootView(root);
-        setPopupLayout(R.layout.mainworkout_popup_layout);
         setPopupViewId(R.id.mainWorkout_popupWindow);
+        setWindowManagerContext(context);
+        setPopupLayout(R.layout.mainworkout_popup_layout);
     }
 
     public void showPopupWindow() {

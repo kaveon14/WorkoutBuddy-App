@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +14,9 @@ import static com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.W
 
 public class GetDatePopup extends PopupWindowManager {
 
-    public GetDatePopup(View root) {
+    public GetDatePopup(View root, Context context) {
         setRootView(root);
+        setWindowManagerContext(context);
         setPopupLayout(R.layout.simple_edittext_button_popup_layout);
         setPopupViewId(R.id.subWorkout_popupWindow);
     }
