@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +75,12 @@ public class BodyStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_body_stats, container, false);
         setUpListView();
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recylerView);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(new AAdapter(getContext(),bodyStats));
+
         setFloatingActionButton();
         return root;
     }
@@ -127,9 +136,9 @@ public class BodyStatsFragment extends Fragment {
         ListView listView = (ListView) root.findViewById(R.id.bodyStats_listView);
         listView.setAdapter(getAdapter());
         handleListViewClicks(listView);
-        if(bodyStatsAdapter.isEmpty()) {
+        /*if(bodyStatsAdapter.isEmpty()) {deleted file by accident
             listView.setEmptyView(root.findViewById(R.id.bodyStatsEmptyListItem));
-        }
+        }*/
     }
 
     private void handleListViewClicks(ListView listView) {
@@ -239,9 +248,9 @@ public class BodyStatsFragment extends Fragment {
             if(rowView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                rowView = inflater.inflate(R.layout.body_list_item,null);
+                rowView = inflater.inflate(R.layout.simple_cardview,null);
             }
-            setListItemView(rowView,bodyStats);
+            //setListItemView(rowView,bodyStats);
             return rowView;
         }
 
@@ -320,6 +329,93 @@ public class BodyStatsFragment extends Fragment {
                     return object2.getDateForSorting().compareTo(object1.getDateForSorting());
                 }
             });
+        }
+    }
+
+    public class AAdapter extends RecyclerView.Adapter<AAdapter.CustomViewHolder> {
+
+        private List<Body> bodyStats;
+        private Context context;
+
+        public AAdapter(Context context,List<Body> bodyStats) {
+            this.context = context;
+            this.bodyStats = bodyStats;
+        }
+
+        @Override
+        public int getItemCount() {
+            return (null != bodyStats ? bodyStats.size() : 0);
+        }
+
+        @Override
+        public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+            View view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.simple_cardview,null);
+            return new CustomViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
+            Body body = bodyStats.get(i);
+            customViewHolder.dateTextView.setText(customViewHolder.dateTextView.getText()+" "+
+                    body.getStringDate());
+            customViewHolder.weightView.setText(customViewHolder.weightView.getText()+" "
+                    +body.getWeight());
+            customViewHolder.chestSizeView.setText(customViewHolder.chestSizeView.getText()+" "
+                    +body.getChestSize());
+            customViewHolder.backSizeView.setText(customViewHolder.backSizeView.getText()+" "
+                    +body.getBackSize());
+            customViewHolder.armSizeView.setText(customViewHolder.armSizeView.getText()+" "
+                    +body.getArmSize());
+            customViewHolder.forearmSizeView.setText(customViewHolder.forearmSizeView.getText()+" "
+                    +body.getForearmSize());
+            customViewHolder.waistSizeView.setText(customViewHolder.waistSizeView.getText()+" "
+                    +body.getWaistSize());
+            customViewHolder.quadSizeView.setText(customViewHolder.quadSizeView.getText()+" "
+                    +body.getQuadSize());
+            customViewHolder.calfSizeView.setText(customViewHolder.calfSizeView.getText()+" "
+                    +body.getCalfSize());
+        }
+
+        class CustomViewHolder extends RecyclerView.ViewHolder {
+
+            protected CardView cardView;
+            protected TextView dateTextView;
+            protected TextView weightView;
+            protected TextView chestSizeView;
+            protected  TextView backSizeView;
+            protected TextView armSizeView;
+            protected TextView forearmSizeView;
+            protected TextView waistSizeView;
+            protected  TextView quadSizeView;
+            protected TextView calfSizeView;
+
+            public CustomViewHolder(View rowView) {
+                super(rowView);
+                onItemClickListener(rowView);
+                dateTextView = (TextView) rowView.findViewById(R.id.date_textView);
+                weightView = (TextView) rowView.findViewById(R.id.weight_textView);
+                chestSizeView = (TextView) rowView.findViewById(R.id.chestSize_textView);
+                backSizeView = (TextView) rowView.findViewById(R.id.backSize_textView);
+                armSizeView = (TextView) rowView.findViewById(R.id.armSize_textView);
+                forearmSizeView = (TextView) rowView.findViewById(R.id.forearmSize_textView);
+                waistSizeView = (TextView) rowView.findViewById(R.id.waistSize_textView);
+                quadSizeView = (TextView) rowView.findViewById(R.id.quadSize_textView);
+                calfSizeView = (TextView) rowView.findViewById(R.id.calfSize_textView);
+            }
+
+            private void onItemClickListener(View rowView) {
+                cardView = (CardView) rowView.findViewById(R.id.card_view);
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int i = getLayoutPosition();
+                        setClickedBodyStatsItem(bodyStats.get(i));
+                        BlankBodyStatsFragment blankBodyStatsFragment = showBlankBodyStatsfragment();
+                        blankBodyStatsFragment.isUpdatingRow(true) ;
+                    }
+                });
+            }
         }
     }
 }

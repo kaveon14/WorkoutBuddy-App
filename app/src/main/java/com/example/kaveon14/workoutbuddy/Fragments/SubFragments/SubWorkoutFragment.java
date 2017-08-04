@@ -23,7 +23,7 @@ import java.util.List;
 
 public class SubWorkoutFragment extends Fragment {
 
-    public static SubWorkout clickedSubWorkout;
+    private static SubWorkout clickedSubWorkout;
     private ArrayAdapter subWorkoutAdapter;
     private List<String> subWorkoutNames;
     private int subWorkoutCount;

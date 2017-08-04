@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showBodyStatsFragment() {
         BodyStatsFragment bodyStats_fragment = new BodyStatsFragment();
+        bodyStats_fragment.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),bodyStats_fragment,R.id.bodyStats_fragment);
     }
 
