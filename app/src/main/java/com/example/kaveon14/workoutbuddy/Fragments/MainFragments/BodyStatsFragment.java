@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.DeleteBodyStatsPopup;
@@ -38,9 +40,14 @@ public class BodyStatsFragment extends Fragment {
     private View root;
     private List<Body> bodyStats;
     private BodyStatsAdapter bodyStatsAdapter;
+    private MainActivity mainActivity;
 
     public BodyStatsFragment() {
         // Required empty public constructor
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -98,6 +105,7 @@ public class BodyStatsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AddBodyStatsPopup bt = new AddBodyStatsPopup(getView(),getContext());
+                bt.setMainActivity(mainActivity);
                 bt.showPopupWindow();
             }
         });

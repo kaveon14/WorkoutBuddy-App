@@ -48,18 +48,18 @@ public class MainActivity extends AppCompatActivity
 
     public static int fragId;
     public static MainActivity activity;
+    public MainActivity mainActivity = this;
     private CustomExercisePopup customExercisePopup;
-    private static Bitmap bitmap;
-    private int RESULT_LOAD_IMAGE = 1;
+    public static Bitmap bitmap;
+    public int RESULT_LOAD_IMAGE = 1;
     private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity =  this;
         setBaseContent();
         getPermissions();
-        preloadData();
+        //preloadData();
     }
 
 
@@ -126,7 +126,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.calenderBtn:
                 break;
             case R.id.nav_send:
-                showRealWorkoutFragment();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -135,7 +134,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void preloadData() {
-        ExerciseFragment.setAllExerciseLists();
+        ExerciseFragment exerciseFragment = new ExerciseFragment();
+        exerciseFragment.setMainActivity(mainActivity);
+        exerciseFragment.setAllExerciseLists();
     }
 
     private void getPermissions() {
@@ -175,11 +176,6 @@ public class MainActivity extends AppCompatActivity
         addFragmentToStack(getActiveFragment(), workoutStatsFragment,R.id.workoutStats_fragment);
     }
 
-    private void showRealWorkoutFragment() {//needs to be deleted
-        FullWorkoutStatsFragment fwf = new FullWorkoutStatsFragment();
-        addFragmentToStack(getActiveFragment(),fwf,R.id.fullWorkoutStats_fragment);
-    }
-
     private void showBodyStatsFragment() {
         BodyStatsFragment bodyStats_fragment = new BodyStatsFragment();
         addFragmentToStack(getActiveFragment(),bodyStats_fragment,R.id.bodyStats_fragment);
@@ -188,6 +184,7 @@ public class MainActivity extends AppCompatActivity
     private void showExerciseFragment() {
         ExerciseFragment exercise_frag = new ExerciseFragment();
         exercise_frag.setMenu(menu);
+        exercise_frag.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),exercise_frag,R.id.exercise_fragment);
     }
 
@@ -200,6 +197,7 @@ public class MainActivity extends AppCompatActivity
     private void showWorkoutFragment() {
         MainWorkoutFragment mainWorkout_frag = new MainWorkoutFragment();
         mainWorkout_frag.setMenu(menu);
+        mainWorkout_frag.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),mainWorkout_frag,R.id.mainWorkout_fragment);
     }
 
@@ -248,7 +246,8 @@ public class MainActivity extends AppCompatActivity
         customExercisePopup.showPopupWindow();
     }
 
-    private class CustomExercisePopup extends PopupWindowManager {
+    private class CustomExercisePopup extends PopupWindowManager {//must put this in
+        // different class this
 
         public CustomExercisePopup(View root) {
             setRootView(root);

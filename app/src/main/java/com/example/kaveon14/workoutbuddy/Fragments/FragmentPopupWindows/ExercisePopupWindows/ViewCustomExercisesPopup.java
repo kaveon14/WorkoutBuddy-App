@@ -22,12 +22,17 @@ public class ViewCustomExercisesPopup extends PopupWindowManager {
     private PopupWindow mainPopupWindow;
     private ArrayAdapter customExerciseAdapter;
     private List<Exercise> customExerciseList;
+    private MainActivity mainActivity;
 
     public ViewCustomExercisesPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
         setPopupLayout(R.layout.deletesubworkout_popup_layout);
         setPopupViewId(R.id.deleteSubWorkoutPopup);
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     public void showPopupWindow() {
@@ -75,7 +80,7 @@ public class ViewCustomExercisesPopup extends PopupWindowManager {
                 ExerciseFragment.clickedExercise = customExerciseList.get(position);
                 mainPopupWindow.dismiss();
                 popupWindow.dismiss();
-                MainActivity.activity.showBlankExerciseFragment();
+                mainActivity.showBlankExerciseFragment();
             }
         });
     }

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteMainWorkoutPopup;
@@ -31,10 +32,15 @@ public class MainWorkoutFragment extends Fragment {
     private List<String> mainWorkoutNames;
     private ArrayAdapter adapter;
     private ListView listView;
+    private MainActivity mainActivity;
     private Menu menu;
 
     public MainWorkoutFragment() {
         // Required empty public constructor
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -137,6 +143,7 @@ public class MainWorkoutFragment extends Fragment {
         SubWorkoutFragment subWorkoutFragment = new SubWorkoutFragment();
         subWorkoutFragment.setClickedMainWorkout(clickedMainWorkoutName);
         subWorkoutFragment.setMenu(menu);
+        subWorkoutFragment.setMainActivity(mainActivity);
         getFragmentManager().beginTransaction()
                 .hide(this)
                 .add(R.id.subWorkout_fragment,subWorkoutFragment)

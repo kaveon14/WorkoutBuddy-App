@@ -33,9 +33,14 @@ public class BlankSubWorkoutFragment extends Fragment {
     private WorkoutAdapter workoutAdapter;
     private List<Exercise> exerciseList;
     private SubWorkout clickedSubWorkout;
+    private MainActivity mainActivity;
 
     public BlankSubWorkoutFragment() {
         // Required empty public constructor
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     public void setClickedSubWorkout(SubWorkout clickedSubWorkout) {
@@ -99,6 +104,7 @@ public class BlankSubWorkoutFragment extends Fragment {
         BlankSWPopupMenu popup = new BlankSWPopupMenu(getView(),getContext());
         popup.setExerciseList(exerciseList);
         popup.setAdapter(workoutAdapter);
+        popup.setMainActivity(mainActivity);
         popup.showPopupWindow();
     }
 

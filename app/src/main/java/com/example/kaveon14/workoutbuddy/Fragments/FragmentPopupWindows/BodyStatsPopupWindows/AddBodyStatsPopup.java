@@ -11,6 +11,8 @@ import com.example.kaveon14.workoutbuddy.R;
 
 public class AddBodyStatsPopup extends PopupWindowManager {
 
+    private MainActivity mainActivity;
+
     public AddBodyStatsPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
@@ -25,6 +27,10 @@ public class AddBodyStatsPopup extends PopupWindowManager {
         setNoPopupButton();
     }
 
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
+
     private void setTextView() {
         String message = "      Would you like to add new body workout data??";
         TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
@@ -36,7 +42,7 @@ public class AddBodyStatsPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.activity.showBlankBodyStatsFragment();
+                mainActivity.showBlankBodyStatsFragment();
                 popupWindow.dismiss();
             }
         });

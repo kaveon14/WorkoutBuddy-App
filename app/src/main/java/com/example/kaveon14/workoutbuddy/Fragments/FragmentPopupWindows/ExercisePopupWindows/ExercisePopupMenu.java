@@ -13,6 +13,7 @@ public class ExercisePopupMenu extends PopupWindowManager {
 
     private List<Exercise> customExerciseList;
     private boolean fromSubWorkout;
+    private MainActivity mainActivity;
 
     public ExercisePopupMenu(View root, Context context) {
         setRootView(root);
@@ -28,6 +29,10 @@ public class ExercisePopupMenu extends PopupWindowManager {
         deleteCustomExercisesBtn();
     }
 
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
+
     public void setCustomExerciseList(List<Exercise> customExerciseList) {
         this.customExerciseList = customExerciseList;
     }
@@ -41,7 +46,7 @@ public class ExercisePopupMenu extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.activity.showAddExercisePopupWindow();
+                mainActivity.showAddExercisePopupWindow();
             }
         });
     }
@@ -60,6 +65,7 @@ public class ExercisePopupMenu extends PopupWindowManager {
         ViewCustomExercisesPopup popup = new ViewCustomExercisesPopup(getRootView(),context);
         popup.setCustomExerciseList(customExerciseList);
         popup.setMainPopupWindow(popupWindow);
+        popup.setMainActivity(mainActivity);
         popup.setFromSubWorkout(fromSubWorkout);
         popup.showPopupWindow();
     }

@@ -42,6 +42,7 @@ public class ExerciseFragment extends Fragment {
     private boolean fromSubWorkout = false;
     private ListView listView;
     private Menu menu;
+    private MainActivity mainActivity;
 
     public ExerciseFragment() {
 
@@ -49,6 +50,10 @@ public class ExerciseFragment extends Fragment {
 
     public void addExerciseFromSubWorkout(boolean fromSubWorkout) {
         this.fromSubWorkout = fromSubWorkout;
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -113,6 +118,7 @@ public class ExerciseFragment extends Fragment {
 
     private void showExercisePopupMenu() {
         ExercisePopupMenu popup = new ExercisePopupMenu(getView(),getContext());
+        popup.setMainActivity(mainActivity);
         popup.setCustomExerciseList(customExerciseList);
         popup.setFromSubWorkout(fromSubWorkout);
         popup.showPopupWindow();
@@ -178,8 +184,8 @@ public class ExerciseFragment extends Fragment {
         exerciseAdapter = new ArrayAdapter(getContext(),R.layout.simple_list_item,exerciseNames);
     }
 
-    public static void setAllExerciseLists() {
-        ExerciseTable exerciseTable = new ExerciseTable(MainActivity.activity.getBaseContext());
+    public void setAllExerciseLists() {//not possible
+        ExerciseTable exerciseTable = new ExerciseTable(getContext());
         if (exerciseList == null) {
             exerciseList = exerciseTable.getExercises();
             sortExerciseListByName();

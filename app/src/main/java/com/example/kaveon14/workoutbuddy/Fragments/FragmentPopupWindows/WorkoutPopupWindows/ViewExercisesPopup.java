@@ -20,12 +20,17 @@ public class ViewExercisesPopup extends PopupWindowManager {
     private List<Exercise> exerciseList;
     private ArrayAdapter exerciseAdapter;
     private PopupWindow mainPopupWindow;
+    private MainActivity mainActivity;
 
     public ViewExercisesPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
         setPopupLayout(R.layout.view_exercise_popup);
         setPopupViewId(R.id.viewExercisesPopup);
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     public void showPopupWindow() {
@@ -59,7 +64,7 @@ public class ViewExercisesPopup extends PopupWindowManager {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ExerciseFragment.clickedExercise = exerciseList.get(position);
-                MainActivity.activity.showBlankExerciseFragment();
+                mainActivity.showBlankExerciseFragment();
                 mainPopupWindow.dismiss();
                 popupWindow.dismiss();
             }
