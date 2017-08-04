@@ -46,12 +46,11 @@ import com.example.kaveon14.workoutbuddy.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static int fragId;
-    public static MainActivity activity;
+    public int fragId;
     public MainActivity mainActivity = this;
     private CustomExercisePopup customExercisePopup;
-    public static Bitmap bitmap;
-    public int RESULT_LOAD_IMAGE = 1;
+    private Bitmap bitmap;
+    private int RESULT_LOAD_IMAGE = 1;
     private Menu menu;
 
     @Override
@@ -59,10 +58,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setBaseContent();
         getPermissions();
-        //preloadData();
     }
-
-
 
     @Override
     public void onStart() {
@@ -131,12 +127,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void preloadData() {
-        ExerciseFragment exerciseFragment = new ExerciseFragment();
-        exerciseFragment.setMainActivity(mainActivity);
-        exerciseFragment.setAllExerciseLists();
     }
 
     private void getPermissions() {

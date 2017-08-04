@@ -58,7 +58,7 @@ public class BlankSubWorkoutFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_blank_workout, container, false);
         setTextView(root);
         setListView(root);
-        MainActivity.fragId = R.id.blankWorkout_fragment;
+       // mainActivity.fragId = R.id.blankWorkout_fragment;
         setFloatingActionButton();
         return root;
     }
