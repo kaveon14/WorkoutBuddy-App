@@ -40,6 +40,14 @@ public class SubWorkoutFragment extends Fragment {
         this.mainActivity = mainActivity;
     }
 
+    public static SubWorkout getClickedSubWorkout() {
+        return SubWorkoutFragment.clickedSubWorkout;
+    }
+
+    public static void setClickedSubWorkout(SubWorkout clickedSubWorkout) {
+        SubWorkoutFragment.clickedSubWorkout = clickedSubWorkout;
+    }
+
     public void setClickedMainWorkout(String clickedMainWorkoutName) {
         this.clickedMainWorkoutName = clickedMainWorkoutName;
     }
@@ -146,8 +154,8 @@ public class SubWorkoutFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String subWorkoutName = parent.getItemAtPosition(position).toString();
-                clickedSubWorkout = getSubWorkout(subWorkoutName);
-                clickedSubWorkout.setMainWorkoutName(clickedMainWorkoutName);
+                setClickedSubWorkout(getSubWorkout(subWorkoutName));
+                getClickedSubWorkout().setMainWorkoutName(clickedMainWorkoutName);
                 showBlankWorkoutFragment();
             }
         });
@@ -158,7 +166,7 @@ public class SubWorkoutFragment extends Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 String subWorkoutName = parent.getItemAtPosition(position).toString();
-                clickedSubWorkout = getSubWorkout(subWorkoutName);
+                setClickedSubWorkout(getSubWorkout(subWorkoutName));
                 ExerciseFragment exerciseFragment = showExercisefragment();
                 exerciseFragment.addExerciseFromSubWorkout(true);
                 return true;
@@ -182,7 +190,7 @@ public class SubWorkoutFragment extends Fragment {
 
     private void showBlankWorkoutFragment() {
         BlankSubWorkoutFragment blankSubWorkoutFragment = new BlankSubWorkoutFragment();
-        blankSubWorkoutFragment.setClickedSubWorkout(clickedSubWorkout);
+        blankSubWorkoutFragment.setClickedSubWorkout(getClickedSubWorkout());
         blankSubWorkoutFragment.setMainActivity(mainActivity);
         getFragmentManager().beginTransaction()
                 .hide(this)

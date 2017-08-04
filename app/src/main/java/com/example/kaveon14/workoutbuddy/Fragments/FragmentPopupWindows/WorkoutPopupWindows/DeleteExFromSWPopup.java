@@ -98,6 +98,6 @@ public class DeleteExFromSWPopup extends PopupWindowManager {
 
         SubWorkoutTable subWorkoutTable  = new SubWorkoutTable(context);
         subWorkoutTable.deleteExerciseFromSubWorkout(exercise
-                , SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
+                , SubWorkoutFragment.getClickedSubWorkout().getSubWorkoutName());
     }
 }

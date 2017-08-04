@@ -92,7 +92,7 @@ public class BlankSWPopupMenu extends PopupWindowManager {
                // adapter.showCheckBoxes();will be deleted
                 popupWindow.dismiss();
                 workoutData = new ArrayList<>(5);
-                Toast.makeText(context, SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName()
+                Toast.makeText(context, SubWorkoutFragment.getClickedSubWorkout().getSubWorkoutName()
                         +" Workout Started",Toast.LENGTH_SHORT).show();
             }
         });

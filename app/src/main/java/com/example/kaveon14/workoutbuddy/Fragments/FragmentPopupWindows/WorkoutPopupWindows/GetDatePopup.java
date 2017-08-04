@@ -40,7 +40,7 @@ public class GetDatePopup extends PopupWindowManager {
             public void onClick(View v) {
                 WorkoutStatsTable table = new WorkoutStatsTable(context);
                 String date = getDate();
-                SubWorkout subWorkout = SubWorkoutFragment.clickedSubWorkout;
+                SubWorkout subWorkout = SubWorkoutFragment.getClickedSubWorkout();
                 subWorkout.setDate(date);
 
                 table.addWorkoutData(workoutData, subWorkout);

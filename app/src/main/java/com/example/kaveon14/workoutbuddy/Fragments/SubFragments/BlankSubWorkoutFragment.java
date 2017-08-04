@@ -109,7 +109,7 @@ public class BlankSubWorkoutFragment extends Fragment {
 
     private void setTextView(View rootView) {
         TextView textView = (TextView) rootView.findViewById(R.id.workoutNameView);
-        textView.setText(SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
+        textView.setText(SubWorkoutFragment.getClickedSubWorkout().getSubWorkoutName());
     }
 
     private void setListView(View root) {

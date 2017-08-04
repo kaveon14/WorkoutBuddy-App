@@ -97,7 +97,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
         setUpTextViews();
         showPopupButton();
         popupButtonClicked(getClickedExercise(),
-                SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
+                SubWorkoutFragment.getClickedSubWorkout().getSubWorkoutName());
     }
 
     private void showPopupButton() {
