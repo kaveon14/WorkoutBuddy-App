@@ -17,7 +17,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWin
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment.clickedExercise;
+import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment.getClickedExercise;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkoutName;
 
 public class ExerciseToWorkoutPopup extends PopupWindowManager {
@@ -86,7 +86,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
     private void showFullSubWorkoutPopup(AdapterView<?> parent,int position) {
         String subWorkoutName = parent.getItemAtPosition(position).toString();
-        popupButtonClicked(clickedExercise, subWorkoutName);
+        popupButtonClicked(getClickedExercise(), subWorkoutName);
         setUpTextViews();
         showPopupButton();
     }
@@ -94,7 +94,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
     private void showPartialSubWorkoutPopup() {
         setUpTextViews();
         showPopupButton();
-        popupButtonClicked(clickedExercise,
+        popupButtonClicked(getClickedExercise(),
                 SubWorkoutFragment.clickedSubWorkout.getSubWorkoutName());
     }
 

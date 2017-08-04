@@ -111,7 +111,7 @@ public class BlankExerciseFragment extends Fragment {//works now
 
         private final int getImageID() {
             String string_image_id = EXERCISE_IMAGE_MAP.
-                    get(ExerciseFragment.clickedExercise.getExerciseName());
+                    get(ExerciseFragment.getClickedExercise().getExerciseName());
             if(string_image_id != null) {
                 return Integer.valueOf(string_image_id);
             } else {
@@ -120,7 +120,7 @@ public class BlankExerciseFragment extends Fragment {//works now
         }
 
         private Exercise getClickedExercise() {
-            return ExerciseFragment.clickedExercise;
+            return ExerciseFragment.getClickedExercise();
         }
 
         public String getExerciseDescription() {//not even needed

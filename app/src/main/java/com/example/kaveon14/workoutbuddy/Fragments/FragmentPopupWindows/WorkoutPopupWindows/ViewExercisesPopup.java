@@ -63,7 +63,7 @@ public class ViewExercisesPopup extends PopupWindowManager {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ExerciseFragment.clickedExercise = exerciseList.get(position);
+                ExerciseFragment.setClickedExercise(exerciseList.get(position));
                 mainActivity.showBlankExerciseFragment();
                 mainPopupWindow.dismiss();
                 popupWindow.dismiss();

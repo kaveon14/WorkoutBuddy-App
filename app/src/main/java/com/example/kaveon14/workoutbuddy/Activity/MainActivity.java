@@ -46,7 +46,7 @@ import com.example.kaveon14.workoutbuddy.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public int fragId;
+    private int fragId;
     public MainActivity mainActivity = this;
     private CustomExercisePopup customExercisePopup;
     private Bitmap bitmap;

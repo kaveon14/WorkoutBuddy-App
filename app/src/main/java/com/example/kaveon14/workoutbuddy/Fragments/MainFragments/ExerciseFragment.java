@@ -35,9 +35,9 @@ import static android.content.Context.SEARCH_SERVICE;
 public class ExerciseFragment extends Fragment {
 
     private static ArrayAdapter exerciseAdapter;
-    public static Exercise clickedExercise;
-    public static List<Exercise> exerciseList;
-    public static List<Exercise> customExerciseList;
+    private static Exercise clickedExercise;//make private and use getter and setter
+    public static List<Exercise> exerciseList;//see if public needed
+    public static List<Exercise> customExerciseList;//see if public needed
     private static List<String> exerciseNames;
     private boolean fromSubWorkout = false;
     private ListView listView;
@@ -50,6 +50,14 @@ public class ExerciseFragment extends Fragment {
 
     public void addExerciseFromSubWorkout(boolean fromSubWorkout) {
         this.fromSubWorkout = fromSubWorkout;
+    }
+
+    public static void setClickedExercise(Exercise clickedExercise) {
+        ExerciseFragment.clickedExercise = clickedExercise;
+    }
+
+    public static Exercise getClickedExercise() {
+        return clickedExercise;
     }
 
     public void setMainActivity(MainActivity mainActivity) {
@@ -135,7 +143,7 @@ public class ExerciseFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedExercise = exerciseList.get(position);
+                setClickedExercise(exerciseList.get(position));
                 showBlankExerciseFragment();
             }
         });
@@ -145,7 +153,7 @@ public class ExerciseFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedExercise = exerciseList.get(position);
+                setClickedExercise(exerciseList.get(position));
                 ExerciseToWorkoutPopup popup = new ExerciseToWorkoutPopup(root,getContext()
                         ,fromSubWorkout);
                 popup.showPopupWindow();

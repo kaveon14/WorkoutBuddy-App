@@ -77,7 +77,7 @@ public class ViewCustomExercisesPopup extends PopupWindowManager {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 resetExerciseListViewColors(parent);
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
-                ExerciseFragment.clickedExercise = customExerciseList.get(position);
+                ExerciseFragment.setClickedExercise(customExerciseList.get(position));
                 mainPopupWindow.dismiss();
                 popupWindow.dismiss();
                 mainActivity.showBlankExerciseFragment();
@@ -89,7 +89,7 @@ public class ViewCustomExercisesPopup extends PopupWindowManager {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                ExerciseFragment.clickedExercise = customExerciseList.get(position);
+                ExerciseFragment.setClickedExercise(customExerciseList.get(position));
                 mainPopupWindow.dismiss();
                 popupWindow.dismiss();
                 ExerciseToWorkoutPopup popup = new ExerciseToWorkoutPopup(popupLayout,context,

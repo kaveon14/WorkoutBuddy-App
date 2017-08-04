@@ -152,7 +152,7 @@ public class WorkoutFragment extends Fragment {
                 try {
                     exerciseList = workoutAdapter.getExerciseList();
                     Map<String,String> map = workoutAdapter.getWorkoutData();
-                    WorkoutExercise we = new WorkoutExercise(ExerciseFragment.clickedExercise);
+                    WorkoutExercise we = new WorkoutExercise(ExerciseFragment.getClickedExercise());
                     we.setWorkoutData(map);
                     BlankSWPopupMenu.workoutData.add(we);
 

@@ -58,7 +58,6 @@ public class BlankSubWorkoutFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_blank_workout, container, false);
         setTextView(root);
         setListView(root);
-       // mainActivity.fragId = R.id.blankWorkout_fragment;
         setFloatingActionButton();
         return root;
     }
@@ -132,7 +131,7 @@ public class BlankSubWorkoutFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Exercise clickedExercise = exerciseList.get(position);
                 openWorkoutFragment(clickedExercise);
-                ExerciseFragment.clickedExercise = clickedExercise;
+                ExerciseFragment.setClickedExercise(clickedExercise);
             }
         });
     }
