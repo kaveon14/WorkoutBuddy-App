@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteMainWorkoutPopup;
@@ -28,7 +29,7 @@ import static android.content.Context.SEARCH_SERVICE;
 
 public class MainWorkoutFragment extends Fragment {
 
-    public static String clickedMainWorkoutName;//change to mainWorkout
+    private static String clickedMainWorkoutName;//change to mainWorkout
     private List<String> mainWorkoutNames;
     private ArrayAdapter adapter;
     private ListView listView;
@@ -41,6 +42,14 @@ public class MainWorkoutFragment extends Fragment {
 
     public void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
+    }
+
+    public static String getClickedMainWorkoutName() {
+        return clickedMainWorkoutName;
+    }
+
+    public static void setClickedMainWorkoutName(String clickedMainWorkoutName) {
+        MainWorkoutFragment.clickedMainWorkoutName = clickedMainWorkoutName;
     }
 
     @Override
@@ -133,8 +142,9 @@ public class MainWorkoutFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedMainWorkoutName = parent.getItemAtPosition(position).toString();
-                showSubWorkoutfragment(clickedMainWorkoutName);
+                MainWorkoutFragment.setClickedMainWorkoutName(parent
+                        .getItemAtPosition(position).toString());
+                showSubWorkoutfragment(getClickedMainWorkoutName());
             }
         });
     }

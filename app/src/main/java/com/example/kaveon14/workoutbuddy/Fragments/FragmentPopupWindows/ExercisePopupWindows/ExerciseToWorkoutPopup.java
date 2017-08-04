@@ -14,11 +14,12 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment.getClickedExercise;
-import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.clickedMainWorkoutName;
+import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment.getClickedMainWorkoutName;
 
 public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
@@ -58,7 +59,8 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clickedMainWorkoutName = parent.getItemAtPosition(position).toString();
+                MainWorkoutFragment.setClickedMainWorkoutName(parent
+                        .getItemAtPosition(position).toString());
                 listView.setAdapter(getSubWorkoutAdapter());
                 subWorkoutClicked(listView);
             }
@@ -169,7 +171,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
         subWorkoutTable.
-                addExerciseToSubWorkout(clickedMainWorkoutName,subWorkoutName+"_wk",
+                addExerciseToSubWorkout(getClickedMainWorkoutName(),subWorkoutName+"_wk",
                         exercise);
     }
 
@@ -193,7 +195,7 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter getSubWorkoutAdapter() {
         MainWorkoutTable workoutTable = new MainWorkoutTable(context);
-        List<String> list = workoutTable.getSubWorkoutNames(clickedMainWorkoutName);
+        List<String> list = workoutTable.getSubWorkoutNames(getClickedMainWorkoutName());
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                 R.layout.simple_list_item,list);
         return adapter;
