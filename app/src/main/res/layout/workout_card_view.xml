@@ -21,7 +21,7 @@
             <TextView
                 android:id="@+id/liftingStatsDate_textView"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="20dp"
                 android:text="@string/datePointer"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
@@ -29,7 +29,7 @@
             <TextView
                 android:id="@+id/mainWorkout_textView"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:text="@string/mainWorkoutPointer"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
@@ -37,15 +37,15 @@
             <TextView
                 android:id="@+id/subWorkout_textView"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="@string/subWorkoutpointer"
+                android:layout_height="wrap_content"
+                android:text="@string/subWorkoutPointer"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/sets_textView"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="20dp"
                 android:text="@string/totalSets"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
@@ -53,7 +53,7 @@
             <TextView
                 android:id="@+id/reps_textView"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="20dp"
                 android:text="@string/totalReps"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />
@@ -61,7 +61,7 @@
             <TextView
                 android:id="@+id/weight_textView"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="20dp"
                 android:text="@string/totalWeight"
                 android:textColor="@android:color/black"
                 android:textSize="15sp" />

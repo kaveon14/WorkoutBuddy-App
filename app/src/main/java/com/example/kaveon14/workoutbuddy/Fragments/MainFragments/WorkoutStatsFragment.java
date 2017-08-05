@@ -56,7 +56,7 @@ public class WorkoutStatsFragment extends Fragment {
         subWorkoutList = table.getCompletedWorkouts();
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
-        RecyclerView recyclerView = new RecyclerView(getContext());
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.workoutStatsRecycleView);
         recyclerView.setItemViewCacheSize(12);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(manager);
@@ -284,8 +284,8 @@ public class WorkoutStatsFragment extends Fragment {
             SubWorkout subWorkout = subWorkoutList.get(i);
             customViewHolder.dateView.setText(customViewHolder.dateView.getText()+" "+
             getParsedDate(subWorkout.getDate()));
-            customViewHolder.mainWorkoutView.setText(customViewHolder.mainWorkoutView.getText()+" "+
-            subWorkout.getMainWorkoutName());
+            customViewHolder.mainWorkoutView.setText(customViewHolder.mainWorkoutView.getText() + " " +
+                    subWorkout.getMainWorkoutName());
             customViewHolder.subWorkoutView.setText(customViewHolder.subWorkoutView.getText()+" "+
             subWorkout.getSubWorkoutName());
             customViewHolder.setsView.setText(customViewHolder.setsView.getText()+" "+
