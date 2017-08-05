@@ -36,6 +36,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setBaseContent();
         getPermissions();
+        WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
+        table.printTable();
     }
 
     @Override

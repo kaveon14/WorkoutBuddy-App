@@ -206,7 +206,7 @@ public class BodyStatsFragment extends Fragment {
      }
 
 
-    public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
+    private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
         private List<Body> bodyStats;
         private Context context;

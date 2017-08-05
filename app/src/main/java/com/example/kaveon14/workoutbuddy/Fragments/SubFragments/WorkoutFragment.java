@@ -324,8 +324,10 @@ public class WorkoutFragment extends Fragment {
 
             for(int x=rowViews.size()-1;x>0;x--) {
                 View rowView = rowViews.get(x);
-                String set = getTextViewSet(rowView);
-                workoutData.put(set,getData(rowViews.get(x)));
+                if(rowView.isShown()) {
+                    String set = getTextViewSet(rowView);
+                    workoutData.put(set, getData(rowView));
+                }
             }
             return workoutData;
         }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,7 +51,17 @@ public class WorkoutStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
-        setListView(root);
+        //setListView(root);
+        WorkoutStatsTable table = new WorkoutStatsTable(getContext());
+        subWorkoutList = table.getCompletedWorkouts();
+
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
+        RecyclerView recyclerView = new RecyclerView(getContext());
+        recyclerView.setItemViewCacheSize(12);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(new RecyclerAdapter(subWorkoutList));
+
         setSearchViewOnClick();
         return root;
     }
@@ -80,7 +92,7 @@ public class WorkoutStatsFragment extends Fragment {
         listView = (ListView) root.findViewById(R.id.workoutStats_listView);
         listView.setAdapter(setAdapter());
         if(workoutStatsAdapter.isEmpty()) {
-            listView.setEmptyView(root.findViewById(R.id.workoutStatsEmptyListItem));
+           // listView.setEmptyView(root.findViewById());
         }
         setListViewOnClick(listView);
     }
@@ -246,4 +258,72 @@ public class WorkoutStatsFragment extends Fragment {
             textView.setText(text +subWorkout.getTotalWeight());
         }
     }
+
+    private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
+
+        private List<SubWorkout> subWorkoutList;
+
+        public RecyclerAdapter(List<SubWorkout> subWorkoutList) {
+            this.subWorkoutList = subWorkoutList;
+        }
+
+        @Override
+        public int getItemCount() {
+            return (null != subWorkoutList ? subWorkoutList.size() : 0);
+        }
+
+        @Override
+        public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup,int i) {
+            View view = LayoutInflater.from(viewGroup.getContext())
+                    .inflate(R.layout.workout_card_view,null);
+            return new CustomViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(CustomViewHolder customViewHolder,int i) {
+            SubWorkout subWorkout = subWorkoutList.get(i);
+            customViewHolder.dateView.setText(customViewHolder.dateView.getText()+" "+
+            getParsedDate(subWorkout.getDate()));
+            customViewHolder.mainWorkoutView.setText(customViewHolder.mainWorkoutView.getText()+" "+
+            subWorkout.getMainWorkoutName());
+            customViewHolder.subWorkoutView.setText(customViewHolder.subWorkoutView.getText()+" "+
+            subWorkout.getSubWorkoutName());
+            customViewHolder.setsView.setText(customViewHolder.setsView.getText()+" "+
+            subWorkout.getTotalSets());
+            customViewHolder.repsView.setText(customViewHolder.repsView.getText()+" "+
+            subWorkout.getTotalReps());
+            customViewHolder.weightView.setText(customViewHolder.weightView.getText()+" "+
+            subWorkout.getTotalWeight());
+        }
+
+        private String getParsedDate(String date) {//length will always be the same
+            String year = date.substring(0,date.length()-6);
+            String month = date.substring(5,date.length()-3);
+            String day = date.substring(date.length()-2);
+            return new StringBuilder(month).append("/")
+                    .append(day).append("/").append(year).toString();
+        }
+
+
+        class CustomViewHolder extends RecyclerView.ViewHolder {
+
+            protected TextView dateView;
+            protected TextView mainWorkoutView;
+            protected TextView subWorkoutView;
+            protected TextView setsView;
+            protected TextView repsView;
+            protected TextView weightView;
+
+            public CustomViewHolder(View rowView) {
+                super(rowView);
+                dateView = (TextView) rowView.findViewById(R.id.liftingStatsDate_textView);
+                mainWorkoutView = (TextView) rowView.findViewById(R.id.mainWorkout_textView);
+                subWorkoutView = (TextView) rowView.findViewById(R.id.subWorkout_textView);
+                setsView = (TextView) rowView.findViewById(R.id.sets_textView);
+                repsView = (TextView) rowView.findViewById(R.id.reps_textView);
+                weightView = (TextView) rowView.findViewById(R.id.weight_textView);
+            }
+        }
+    }
+
 }
