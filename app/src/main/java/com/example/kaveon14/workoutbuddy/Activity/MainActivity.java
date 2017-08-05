@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-
+//TODO ignore load times for now and focus on ui
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -61,26 +61,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setBaseContent();
         getPermissions();
-
-
-        Body body;
-        BodyTable table = new BodyTable(getBaseContext());
-
-        for(int x=0;x<0;x++) {
-
-            body = new Body();
-            body.setDate("09/23/1997");
-            body.setQuadSize("23 in");
-            body.setWaistSize("30 in");
-            body.setArmSize("16 in");
-            body.setCalfSize("14 in");
-            body.setForearmSize("12 in");
-            body.setBackSize("35 in");
-            body.setChestSize("40 in");
-            table.addStatsToBodyTable(body);
-        }
-
-
     }
 
     @Override

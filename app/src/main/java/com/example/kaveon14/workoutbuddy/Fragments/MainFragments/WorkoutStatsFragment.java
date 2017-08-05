@@ -201,7 +201,7 @@ public class WorkoutStatsFragment extends Fragment {
             setTotalWeightView(rowView,subWorkout);
         }
 
-        private void setDateView(View rowView,SubWorkout subWorkout) {//convert date
+        private void setDateView(View rowView,SubWorkout subWorkout) {//convert date and use calendar pic
             TextView textView = (TextView)  rowView.findViewById(R.id.liftingStatsDate_textView);
             String text = "Date -> ";
             String date = getParsedDate(subWorkout.getDate());
@@ -240,7 +240,7 @@ public class WorkoutStatsFragment extends Fragment {
             textView.setText(text + " " + subWorkout.getTotalReps());
         }
 
-        private void setTotalWeightView(View rowView,SubWorkout subWorkout) {
+        private void setTotalWeightView(View rowView,SubWorkout subWorkout) {//use scale of some type
             TextView textView = (TextView) rowView.findViewById(R.id.weight_textView);
             String text = "Total Weight -> ";
             textView.setText(text +subWorkout.getTotalWeight());
