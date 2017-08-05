@@ -12,88 +12,208 @@
         android:layout_width="@dimen/nav_header_height"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="10dp">
+        card_view:cardCornerRadius="10dp"
+        card_view:cardUseCompatPadding="true">
 
-        <LinearLayout
+
+        <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:textColor="@color/caldroid_black"
-                android:id="@+id/date_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/date"/>
-
-            <TextView
-                android:textColor="@color/caldroid_black"
-                android:id="@+id/weight_textView"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/weight"/>
+            android:layout_height="wrap_content">
 
 
-            <TextView
-                android:textColor="@color/caldroid_black"
-                android:layout_gravity="center"
-                android:id="@+id/chestSize_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chest"/>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:textColor="@color/caldroid_black"
-                android:layout_gravity="center"
-                android:id="@+id/backSize_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/back"/>
+                <ImageView
+                    android:id="@+id/imageView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    card_view:srcCompat="@drawable/ic_date" />
 
-            <TextView
-                android:textColor="@color/caldroid_black"
-                android:layout_gravity="center"
-                android:id="@+id/armSize_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/arms"/>
+                <TextView
+                    android:id="@+id/date_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/date"
+                    android:textColor="@color/caldroid_black" />
 
-            <TextView
-                android:textColor="@color/caldroid_black"
-                android:layout_gravity="center"
-                android:id="@+id/forearmSize_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/forearms"/>
+            </TableRow>
 
-            <TextView
-                android:textColor="@color/caldroid_black"
-                android:layout_gravity="center"
-                android:id="@+id/waistSize_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/waist"/>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:textColor="@color/caldroid_black"
-                android:layout_gravity="center"
-                android:id="@+id/quadSize_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/quads"/>
+                <ImageView
+                    android:id="@+id/imageView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@drawable/ic_scale" />
 
-            <TextView
-                android:layout_gravity="center"
-                android:textColor="@color/caldroid_black"
-                android:id="@+id/calfSize_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/calves"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/weight_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/weight"
+                    android:textColor="@color/caldroid_black" />
 
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView44"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@drawable/ic_chest" />
+
+                <TextView
+                    android:id="@+id/chestSize_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/chest"
+                    android:textColor="@color/caldroid_black" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView55"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@drawable/ic_back" />
+
+                <TextView
+                    android:id="@+id/backSize_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/back"
+                    android:textColor="@color/caldroid_black" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@drawable/ic_arms" />
+
+                <TextView
+                    android:id="@+id/armSize_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/arms"
+                    android:textColor="@color/caldroid_black" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@drawable/ic_menu_send" />
+
+                <TextView
+                    android:id="@+id/forearmSize_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/forearms"
+                    android:textColor="@color/caldroid_black" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@drawable/ic_hips" />
+
+                <TextView
+                    android:id="@+id/waistSize_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/waist"
+                    android:textColor="@color/caldroid_black" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@drawable/ic_quad" />
+
+
+                <TextView
+                    android:id="@+id/quadSize_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/quads"
+                    android:textColor="@color/caldroid_black" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    card_view:srcCompat="@drawable/ic_menu_gallery" />
+
+                <TextView
+                    android:id="@+id/calfSize_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/calves"
+                    android:textColor="@color/caldroid_black" />
+            </TableRow>
+
+
+        </TableLayout>
     </android.support.v7.widget.CardView>
+
 
 </LinearLayout>

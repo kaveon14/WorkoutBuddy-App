@@ -19,7 +19,7 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
     private int position;
     private ListView listView;
     private List<Body> bodyStats;
-    private BodyStatsFragment.BodyStatsAdapter adapter;
+
 
     public DeleteBodyStatsPopup(View root, Context context) {
         setRootView(root);
@@ -40,16 +40,11 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
         this.listView = listView;
     }
 
-    public void setAdapter(BodyStatsFragment.BodyStatsAdapter adapter) {
-        this.adapter = adapter;
-    }
-
     public void showPopupWindow() {
         displayPopupWindow();
         setYesPopupButton();
         setNoPopupButton();
         setTextView();
-        listView.setAdapter(adapter);
     }
 
     private void setYesPopupButton() {
@@ -83,7 +78,6 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
 
     private void deleteRowView() {
         bodyStats.remove(position);
-        adapter.notifyDataSetChanged();
     }
 
     private void deleteBodyStatsRow() {
