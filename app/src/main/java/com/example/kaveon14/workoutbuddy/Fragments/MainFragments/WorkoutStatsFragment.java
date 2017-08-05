@@ -33,9 +33,6 @@ public class WorkoutStatsFragment extends Fragment {
 
     private List<SubWorkout> subWorkoutList;
     private Menu menu;
-    private ListView listView;
-    private WorkoutStatsAdapter workoutStatsAdapter;
-
 
     public WorkoutStatsFragment() {
         // Required empty public constructor
@@ -88,15 +85,6 @@ public class WorkoutStatsFragment extends Fragment {
         this.menu = menu;
     }
 
-    private void setListView(View root) {
-        listView = (ListView) root.findViewById(R.id.workoutStats_listView);
-        listView.setAdapter(setAdapter());
-        if(workoutStatsAdapter.isEmpty()) {
-           // listView.setEmptyView(root.findViewById());
-        }
-        setListViewOnClick(listView);
-    }
-
     private void setSearchViewOnClick() {
         SearchView searchView =
                 (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
@@ -135,15 +123,7 @@ public class WorkoutStatsFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-
-
-    private WorkoutStatsAdapter setAdapter(){
-        WorkoutStatsTable table = new WorkoutStatsTable(getContext());
-        subWorkoutList = table.getCompletedWorkouts();
-        workoutStatsAdapter = new WorkoutStatsAdapter(subWorkoutList);
-        return workoutStatsAdapter;
-    }
-
+    //redo
     public List<SubWorkout> loadSearchedItems(Map<String,List<String>> queriedData) {
         List<SubWorkout> list = new ArrayList<>();
         if(queriedData!=null) {
@@ -169,94 +149,8 @@ public class WorkoutStatsFragment extends Fragment {
                 }
             }
         }
-        listView.setAdapter(new WorkoutStatsAdapter(list));
+
         return list;
-    }
-
-    private class WorkoutStatsAdapter extends BaseAdapter {
-
-        private List<SubWorkout> subWorkoutList;
-
-        public WorkoutStatsAdapter(List<SubWorkout> subWorkoutList) {
-            this.subWorkoutList = subWorkoutList;
-        }
-
-        public int getCount() {
-          return subWorkoutList.size();
-      }
-
-        public SubWorkout getItem(int i) {
-            return subWorkoutList.get(i);
-        }
-
-        public long getItemId(int i) {
-            return i;
-        }
-
-        public View getView(int position,View rowView,ViewGroup viewGroup) {
-            SubWorkout subWorkout = subWorkoutList.get(position);//pass in a
-            if(rowView == null) {
-                LayoutInflater inflater = (LayoutInflater) getContext()
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                rowView = inflater.inflate(R.layout.workoutstats_list_item,null);
-            }
-            setListItemView(rowView,subWorkout);
-            return rowView;
-        }
-
-        private void setListItemView(View rowView,SubWorkout subWorkout) {
-            setDateView(rowView,subWorkout);
-            setMainWorkoutTextView(rowView,subWorkout);
-            setSubWorkoutTextView(rowView,subWorkout);
-            setTotalSetsView(rowView,subWorkout);
-            setTotalRepsView(rowView,subWorkout);
-            setTotalWeightView(rowView,subWorkout);
-        }
-
-        private void setDateView(View rowView,SubWorkout subWorkout) {//convert date and use calendar pic
-            TextView textView = (TextView)  rowView.findViewById(R.id.liftingStatsDate_textView);
-            String text = "Date -> ";
-            String date = getParsedDate(subWorkout.getDate());
-            textView.setText(text + date);
-        }
-
-        private String getParsedDate(String date) {//length will always be the same
-            String year = date.substring(0,date.length()-6);
-            String month = date.substring(5,date.length()-3);
-            String day = date.substring(date.length()-2);
-            return new StringBuilder(month).append("/")
-                    .append(day).append("/").append(year).toString();
-        }
-
-        private void setMainWorkoutTextView(View rowView,SubWorkout subWorkout) {
-            TextView textView = (TextView) rowView.findViewById(R.id.mainWorkout_textView);
-            String text = "MainWorkout -> ";
-            textView.setText(text+subWorkout.getMainWorkoutName());
-        }
-
-        private void setSubWorkoutTextView(View rowView,SubWorkout subWorkout) {
-            TextView textView = (TextView) rowView.findViewById(R.id.subWorkout_textView);
-            String text = "SubWorkout -> ";
-            textView.setText(text + subWorkout.getSubWorkoutName());
-        }
-
-        private void setTotalSetsView(View rowView,SubWorkout subWorkout) {
-            TextView textView = (TextView) rowView.findViewById(R.id.sets_textView);
-            String text = "Total Sets -> ";
-            textView.setText(text + subWorkout.getTotalSets());
-        }
-
-        private void setTotalRepsView(View rowView,SubWorkout subWorkout) {
-            TextView textView = (TextView) rowView.findViewById(R.id.reps_textView);
-            String text = "Total Reps -> ";
-            textView.setText(text + " " + subWorkout.getTotalReps());
-        }
-
-        private void setTotalWeightView(View rowView,SubWorkout subWorkout) {//use scale of some type
-            TextView textView = (TextView) rowView.findViewById(R.id.weight_textView);
-            String text = "Total Weight -> ";
-            textView.setText(text +subWorkout.getTotalWeight());
-        }
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
