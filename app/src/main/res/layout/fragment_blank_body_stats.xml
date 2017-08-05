@@ -1,298 +1,211 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/blankBodyStats_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="visible"
-    >
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        >
 
-        <TextView
-            android:id="@+id/date_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/date"
-            android:visibility="visible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/weight_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="21dp"
-            android:text="@string/weight"
-            android:visibility="visible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_textView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_date" />
 
-        <TextView
-            android:id="@+id/chest_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/chest"
-            android:visibility="visible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weight_textView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            <EditText
+                android:id="@+id/date_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/date"
+                android:textColor="@color/caldroid_black" />
 
-        <TextView
-            android:id="@+id/back_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/back"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/back_inputTextView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/back_inputTextView"
-            tools:layout_constraintBottom_creator="1"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/arms_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/arms"
-            android:visibility="visible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/back_textView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_scale" />
 
-        <TextView
-            android:id="@+id/forearm_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/forearms"
-            android:visibility="visible"
-            app:layout_constraintBaseline_toBaselineOf="@+id/forearms_inputTextView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:layout_constraintBaseline_creator="1"
-            tools:layout_constraintLeft_creator="1" />
+            <EditText
+                android:id="@+id/weight_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/weight"
+                android:textColor="@color/caldroid_black"/>
+        </TableRow>
 
-        <TextView
-            android:id="@+id/waist_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="22dp"
-            android:text="@string/waist"
-            android:visibility="visible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/forearm_textView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/quad_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
-            android:text="@string/quads"
-            android:visibility="visible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/waist_textView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_chest" />
 
-        <TextView
-            android:id="@+id/calf_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/calves"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/calf_inputTextView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/calf_inputTextView"
-            tools:layout_constraintBottom_creator="1"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            <EditText
+                android:id="@+id/chest_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/chest"
+                android:textColor="@color/caldroid_black"/>
+        </TableRow>
 
-        <EditText
-            android:id="@+id/date_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="21dp"
-            android:layout_marginStart="45dp"
-            android:text="@string/dateFormat"
-            android:visibility="visible"
-            android:textSize="14sp"
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-            android:textStyle="normal"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintBottom_toTopOf="@+id/weight_textView"
-            app:layout_constraintLeft_toRightOf="@+id/weight_textView"
-            tools:layout_constraintBottom_creator="1"
-            tools:layout_constraintLeft_creator="1" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_back" />
 
-        <EditText
-            android:id="@+id/weight_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
-            android:text="@string/weightFormat"
-            android:selectAllOnFocus="true"
-            android:visibility="visible"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintLeft_toLeftOf="@+id/date_inputTextView"
-            app:layout_constraintTop_toBottomOf="@+id/date_inputTextView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            <EditText
+                android:id="@+id/back_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/back"
+                android:textColor="@color/caldroid_black"/>
 
-        <EditText
-            android:id="@+id/chest_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/chestFormat"
-            android:selectAllOnFocus="true"
-            android:visibility="visible"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintLeft_toLeftOf="@+id/weight_inputTextView"
-            app:layout_constraintTop_toBottomOf="@+id/weight_inputTextView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        </TableRow>
 
-        <EditText
-            android:id="@+id/back_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
-            android:text="@string/backFormat"
-            android:selectAllOnFocus="true"
-            android:visibility="visible"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintLeft_toLeftOf="@+id/chest_inputTextView"
-            app:layout_constraintTop_toBottomOf="@+id/chest_inputTextView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-        <EditText
-            android:id="@+id/arm_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/armsFormat"
-            android:selectAllOnFocus="true"
-            android:visibility="visible"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintLeft_toLeftOf="@+id/back_inputTextView"
-            app:layout_constraintTop_toBottomOf="@+id/back_inputTextView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_arms" />
 
-        <EditText
-            android:id="@+id/forearms_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/forearmsFormat"
-            android:selectAllOnFocus="true"
-            android:visibility="visible"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintLeft_toLeftOf="@+id/arm_inputTextView"
-            app:layout_constraintTop_toBottomOf="@+id/arm_inputTextView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            <EditText
+                android:id="@+id/arms_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/arms"
+                android:textColor="@color/caldroid_black"/>
 
-        <EditText
-            android:id="@+id/waist_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="@string/waistFormat"
-            android:visibility="visible"
-            android:textSize="14sp"
-            android:selectAllOnFocus="true"
-            android:textStyle="normal"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintLeft_toLeftOf="@+id/forearms_inputTextView"
-            app:layout_constraintTop_toBottomOf="@+id/forearms_inputTextView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        </TableRow>
 
-        <EditText
-            android:id="@+id/quad_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="@string/quadsFormat"
-            android:visibility="visible"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:selectAllOnFocus="true"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintLeft_toLeftOf="@+id/calf_inputTextView"
-            app:layout_constraintTop_toBottomOf="@+id/waist_inputTextView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-        <EditText
-            android:id="@+id/calf_inputTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="25dp"
-            android:text="@string/calvesFormat"
-            android:visibility="visible"
-            android:selectAllOnFocus="true"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:background="@color/caldroid_transparent"
-            app:layout_constraintLeft_toRightOf="@+id/calf_textView"
-            app:layout_constraintTop_toBottomOf="@+id/quad_inputTextView"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintTop_creator="1" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_menu_send" />
 
-        <Button
-            android:id="@+id/addStats_btn"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
-            android:text="@string/addStats"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/calf_textView"
-            app:layout_constraintRight_toRightOf="@+id/calf_textView"
-            tools:layout_constraintBottom_creator="1"
-            tools:layout_constraintLeft_creator="1"
-            tools:layout_constraintRight_creator="1" />
+            <EditText
+                android:id="@+id/forearms_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/forearms"
+                android:textColor="@color/caldroid_black"/>
 
-    </android.support.constraint.ConstraintLayout>
+        </TableRow>
 
-</FrameLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_waist" />
+
+            <EditText
+                android:id="@+id/waist_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/waist"
+                android:textColor="@color/caldroid_black"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_quad" />
+
+            <EditText
+                android:id="@+id/quads_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/quads"
+                android:textColor="@color/caldroid_black"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_menu_gallery" />
+
+            <EditText
+                android:id="@+id/calfs_editText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/calves"
+                android:textColor="@color/caldroid_black"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/addStats_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/addStats" />
+
+
+</LinearLayout>

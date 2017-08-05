@@ -48,7 +48,6 @@ public class WorkoutStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
-        //setListView(root);
         WorkoutStatsTable table = new WorkoutStatsTable(getContext());
         subWorkoutList = table.getCompletedWorkouts();
 
@@ -198,7 +197,6 @@ public class WorkoutStatsFragment extends Fragment {
                     .append(day).append("/").append(year).toString();
         }
 
-
         class CustomViewHolder extends RecyclerView.ViewHolder {
 
             protected TextView dateView;
@@ -219,5 +217,4 @@ public class WorkoutStatsFragment extends Fragment {
             }
         }
     }
-
 }

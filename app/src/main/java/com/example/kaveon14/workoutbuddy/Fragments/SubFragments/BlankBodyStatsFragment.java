@@ -12,7 +12,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
+//TODO convert to popup
 public class BlankBodyStatsFragment extends Fragment {
 
     private boolean updatingRow = false;
@@ -107,92 +107,92 @@ public class BlankBodyStatsFragment extends Fragment {
         }
 
         private String getDate(View root) {
-            EditText date = (EditText) root.findViewById(R.id.date_inputTextView);
+            EditText date = (EditText) root.findViewById(R.id.date_editText);
             return date.getText().toString();
         }
 
         private String getWeight(View root) {
-            EditText weight = (EditText) root.findViewById(R.id.weight_inputTextView);
+            EditText weight = (EditText) root.findViewById(R.id.weight_editText);
             return weight.getText().toString();
         }
 
         private String getChestSize(View root) {
-            EditText chestSize = (EditText) root.findViewById(R.id.chest_inputTextView);
+            EditText chestSize = (EditText) root.findViewById(R.id.chest_editText);
             return chestSize.getText().toString();
         }
 
         private String getBackSize(View root) {
-            EditText backSize = (EditText) root.findViewById(R.id.back_inputTextView);
+            EditText backSize = (EditText) root.findViewById(R.id.back_editText);
             return backSize.getText().toString();
         }
 
         private String getArmSize(View root) {
-            EditText armSize = (EditText) root.findViewById(R.id.arm_inputTextView);
+            EditText armSize = (EditText) root.findViewById(R.id.arms_editText);
             return armSize.getText().toString();
         }
 
         private String getForearmSize(View root) {
-            EditText forearmSize = (EditText) root.findViewById(R.id.forearms_inputTextView);
+            EditText forearmSize = (EditText) root.findViewById(R.id.forearms_editText);
             return forearmSize.getText().toString();
         }
 
         private String getWaistSize(View root) {
-            EditText waistSize = (EditText) root.findViewById(R.id.waist_inputTextView);
+            EditText waistSize = (EditText) root.findViewById(R.id.waist_editText);
             return waistSize.getText().toString();
         }
 
         private String getQuadSize(View root) {
-            EditText quadSize = (EditText) root.findViewById(R.id.quad_inputTextView);
+            EditText quadSize = (EditText) root.findViewById(R.id.quads_editText);
             return quadSize.getText().toString();
         }
 
         private String getCalfSize(View root) {
-            EditText calfSize = (EditText) root.findViewById(R.id.calf_inputTextView);
+            EditText calfSize = (EditText) root.findViewById(R.id.calfs_editText);
             return calfSize.getText().toString();
         }
 
         private void setDate(String date,View root) {
-            EditText dateView = (EditText) root.findViewById(R.id.date_inputTextView);
+            EditText dateView = (EditText) root.findViewById(R.id.date_editText);
             dateView.setText(date);
         }
 
         private void setWeight(String weight,View root) {
-            EditText weightView = (EditText) root.findViewById(R.id.weight_inputTextView);
+            EditText weightView = (EditText) root.findViewById(R.id.weight_editText);
             weightView.setText(weight);
         }
 
         private void setChestSize(String size,View root) {
-            EditText chestView = (EditText) root.findViewById(R.id.chest_inputTextView);
+            EditText chestView = (EditText) root.findViewById(R.id.chest_editText);
             chestView.setText(size);
         }
 
         private void setBackSize(String size,View root) {
-            EditText backView = (EditText) root.findViewById(R.id.back_inputTextView);
+            EditText backView = (EditText) root.findViewById(R.id.back_editText);
             backView.setText(size);
         }
 
         private void setArmSize(String size,View root) {
-            EditText armView = (EditText) root.findViewById(R.id.arm_inputTextView);
+            EditText armView = (EditText) root.findViewById(R.id.arms_editText);
             armView.setText(size);
         }
 
         private void setForearmSize(String size, View root) {
-            EditText forearmView = (EditText) root.findViewById(R.id.forearms_inputTextView);
+            EditText forearmView = (EditText) root.findViewById(R.id.forearms_editText);
             forearmView.setText(size);
         }
 
         private void setWaistSize(String size,View root) {
-            EditText waistView = (EditText) root.findViewById(R.id.waist_inputTextView);
+            EditText waistView = (EditText) root.findViewById(R.id.waist_editText);
             waistView.setText(size);
         }
 
         private void setQuadSize(String size,View root) {
-            EditText quadView = (EditText) root.findViewById(R.id.quad_inputTextView);
+            EditText quadView = (EditText) root.findViewById(R.id.quads_editText);
             quadView.setText(size);
         }
 
         private void setCalfSize(String size,View root) {
-            EditText calfView = (EditText) root.findViewById(R.id.calf_inputTextView);
+            EditText calfView = (EditText) root.findViewById(R.id.calfs_editText);
             calfView.setText(size);
         }
     }

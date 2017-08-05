@@ -203,21 +203,21 @@ public class BlankSubWorkoutFragment extends Fragment {
         private String setExerciseNameTextView(View rowView,Exercise exercise) {
             String text = exercise.getExerciseName();
             exerciseNameView = (TextView) rowView.findViewById(R.id.nameView);
-            exerciseNameView.setText(text);
+            exerciseNameView.setText("Exercise:"+" "+text);
             return text;
         }
 
         private String setExerciseRepsTextView(View rowView,Exercise exercise) {
             String text = exercise.getGoalReps();
             TextView repsView = (TextView) rowView.findViewById(R.id.repsView);
-            repsView.setText(text);
+            repsView.setText("Reps"+" "+text);
             return text;
         }
 
         private String setExerciseSets(View rowView,Exercise exercise) {
             String text = exercise.getGoalSets();
             TextView setsView = (TextView) rowView.findViewById(R.id.setsView);
-            setsView.setText(text);
+            setsView.setText("Sets:"+" "+text);
             return text;
         }
     }
