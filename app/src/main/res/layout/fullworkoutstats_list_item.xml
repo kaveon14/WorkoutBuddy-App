@@ -5,6 +5,12 @@
     android:id="@+id/fullWorkoutListItem"
     android:orientation="vertical">
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/fullWorkoutStatsCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/fwStats_exerciseNameTextView"
         android:layout_width="match_parent"

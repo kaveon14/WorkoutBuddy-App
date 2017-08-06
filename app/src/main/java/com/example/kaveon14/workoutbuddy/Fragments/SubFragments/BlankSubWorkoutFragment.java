@@ -210,7 +210,7 @@ public class BlankSubWorkoutFragment extends Fragment {
         private String setExerciseRepsTextView(View rowView,Exercise exercise) {
             String text = exercise.getGoalReps();
             TextView repsView = (TextView) rowView.findViewById(R.id.repsView);
-            repsView.setText("Reps"+" "+text);
+            repsView.setText("Reps:"+" "+text);
             return text;
         }
 

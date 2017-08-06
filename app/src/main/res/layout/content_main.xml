@@ -14,79 +14,150 @@
         class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment"
         android:id="@+id/exercise_fragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment"
         android:id="@+id/mainWorkout_fragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment"
         android:id="@+id/subWorkout_fragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/mainWorkout_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/mainWorkout_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/mainWorkout_fragment" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment"
         android:id="@+id/blankExercise_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/subWorkout_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/subWorkout_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/subWorkout_fragment" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment"
         android:id="@+id/blankWorkout_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-    />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/blankExercise_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/blankExercise_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/blankExercise_fragment" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment"
         android:id="@+id/calendar_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/blankWorkout_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/blankWorkout_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/blankWorkout_fragment" />
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment"
         android:id="@+id/bodyStats_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment"
         android:id="@+id/blankBodyStats_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/bodyStats_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bodyStats_fragment" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment"
         android:id="@+id/workoutStats_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/blankBodyStats_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/blankBodyStats_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/blankBodyStats_fragment" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.WorkoutFragment"
         android:id="@+id/workout_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/workoutStats_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/workoutStats_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/workoutStats_fragment" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment"
         android:id="@+id/fullWorkoutStats_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/workout_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/workout_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/workout_fragment" />
 
     <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.TestCalenderFragment"
         android:id="@+id/test_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/fullWorkoutStats_fragment"
+        app:layout_constraintTop_toBottomOf="@+id/fullWorkoutStats_fragment"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/fullWorkoutStats_fragment" />
 </android.support.constraint.ConstraintLayout>

@@ -62,8 +62,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setBaseContent();
         getPermissions();
-        WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
-        table.printTable();
     }
 
     @Override
@@ -124,10 +122,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.exercise_menu:
                 showExerciseFragment();
-                break;
-            case R.id.calenderBtn:
-                break;
-            case R.id.nav_send:
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
@@ -187,6 +189,7 @@ public class WorkoutStatsFragment extends Fragment {
             subWorkout.getTotalReps());
             customViewHolder.weightView.setText(customViewHolder.weightView.getText()+" "+
             subWorkout.getTotalWeight());
+            customViewHolder.onClick(customViewHolder.cardView,subWorkout.getWorkoutData());
         }
 
         private String getParsedDate(String date) {//length will always be the same
@@ -199,6 +202,8 @@ public class WorkoutStatsFragment extends Fragment {
 
         class CustomViewHolder extends RecyclerView.ViewHolder {
 
+            public List<WorkoutExercise> workoutData;
+            protected CardView cardView;
             protected TextView dateView;
             protected TextView mainWorkoutView;
             protected TextView subWorkoutView;
@@ -208,12 +213,21 @@ public class WorkoutStatsFragment extends Fragment {
 
             public CustomViewHolder(View rowView) {
                 super(rowView);
+                cardView = (CardView) rowView.findViewById(R.id.workoutStatsCardView);
                 dateView = (TextView) rowView.findViewById(R.id.liftingStatsDate_textView);
                 mainWorkoutView = (TextView) rowView.findViewById(R.id.mainWorkout_textView);
                 subWorkoutView = (TextView) rowView.findViewById(R.id.subWorkout_textView);
                 setsView = (TextView) rowView.findViewById(R.id.sets_textView);
                 repsView = (TextView) rowView.findViewById(R.id.reps_textView);
                 weightView = (TextView) rowView.findViewById(R.id.weight_textView);
+            }
+
+            public void onClick(CardView cardView,List<WorkoutExercise> workoutData) {
+                cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showFullWorkoutStatsFragment(workoutData);}
+                });
             }
         }
     }

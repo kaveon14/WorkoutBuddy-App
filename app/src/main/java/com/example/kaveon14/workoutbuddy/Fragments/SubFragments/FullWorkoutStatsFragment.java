@@ -61,7 +61,7 @@ public class FullWorkoutStatsFragment extends Fragment {
         }
 
         public int getCount() {
-            return workoutData.size();
+            return workoutData != null ? workoutData.size() : 0;
         }
 
         public Exercise getItem(int i) {
@@ -94,7 +94,7 @@ public class FullWorkoutStatsFragment extends Fragment {
 
         private void setExerciseNameView(View rowView,String exerciseName) {
             TextView textView = (TextView) rowView.findViewById(R.id.fwStats_exerciseNameTextView);
-            textView.setText("Exercise: "+exerciseName);
+            textView.setText("Exercise:"+" "+exerciseName);
         }
 
         private void set_SetsTextView(View rowView, int id, int set, WorkoutExercise workout) {

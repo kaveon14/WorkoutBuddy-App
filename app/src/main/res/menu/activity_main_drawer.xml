@@ -18,23 +18,5 @@
             android:id="@+id/exercise_menu"
             android:icon="@drawable/ic_menu_manage"
             android:title="Exercises" />
-        <item
-            android:id="@+id/calenderBtn"
-            android:icon="@drawable/ic_menu_share"
-            android:title="Calender" />
     </group>
-
-    <item android:title="Communicate">//delete this
-        <menu>
-            <item
-                android:id="@+id/nav"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Calender" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
-
 </menu>
