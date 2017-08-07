@@ -102,7 +102,7 @@ public class BlankExerciseFragment extends Fragment {//works now
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"if custom exercise allow it too be editable " +
-                        "otherwise do not show the button",Toast.LENGTH_LONG).show();
+                        "otherwise do not show the border_accent",Toast.LENGTH_LONG).show();
             }
         });
     }

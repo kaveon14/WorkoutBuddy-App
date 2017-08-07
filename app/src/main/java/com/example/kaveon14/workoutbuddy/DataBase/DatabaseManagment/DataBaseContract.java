@@ -71,7 +71,7 @@ public class DataBaseContract {
 
         public static final String TABLE_NAME_WK3 = "Default_Workouts_Leg_Day_wk";
 
-        public static final String TABLE_NAME_WK4 = "Default_Workoust_Arm_Day_wk";
+        public static final String TABLE_NAME_WK4 = "Default_Workouts_Arm_Day_wk";
 
         public static final String TABLE_NAME_WK5 = "Default_Workouts_Shoulder_Day_wk";
 

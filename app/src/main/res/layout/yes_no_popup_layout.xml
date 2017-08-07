@@ -30,7 +30,7 @@
 
                 <Button
                     android:id="@+id/bodyStats_yes_popupBtn"
-                    android:background="@drawable/button"
+                    android:background="@drawable/border_accent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/yes"
@@ -38,7 +38,7 @@
 
                 <Button
                     android:id="@+id/bodyStats_no_popupBtn"
-                    android:background="@drawable/button"
+                    android:background="@drawable/border_accent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/no"
