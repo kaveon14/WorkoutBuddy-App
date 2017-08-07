@@ -57,7 +57,7 @@ public abstract class PopupWindowManager  {
         popupWindow.setFocusable(true);
     }
 
-    private void showPopupWindow() {//change name
+    private void showPopupWindow() {
         int width =  LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
         popupWindow.update(0,0,width,height);

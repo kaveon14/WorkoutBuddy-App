@@ -150,7 +150,9 @@
     <string name="set9">Set 9:</string>
     <string name="set10">Set 10:</string>
 
-    <string name="mainWorkoutName">MainWorkout Name:</string>
+    <string name="mainWorkoutName">MainWorkout Name
+
+    </string>
     <string name="addMainWorkout">Add MainWorkout</string>
 
     <string name="addNewExercise">Add New Exercise</string>
