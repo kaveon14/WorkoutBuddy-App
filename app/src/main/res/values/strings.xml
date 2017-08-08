@@ -182,5 +182,6 @@
     <string name="no">No</string>
 
     <string name="exercise">Exercise Name</string>
+    <string name="addExerciseDescription">Add Exercise Description!</string>
 
 </resources>

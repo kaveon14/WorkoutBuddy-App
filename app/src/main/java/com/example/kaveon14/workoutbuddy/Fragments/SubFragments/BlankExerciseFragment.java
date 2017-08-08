@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
@@ -45,20 +45,21 @@ public class BlankExerciseFragment extends Fragment {//works now
         ExerciseImages exerciseImages = new ExerciseImages(getContext());
         exerciseImages.setImageMap();
         ExerciseContent exerciseContent = new ExerciseContent();
-        EditText exTextBox = (EditText) view.findViewById(R.id.exDescriptionBox);
-        exTextBox.setText(exerciseContent.getClickedExercise().getExerciseDescription());
-        /*if(description != null) {
-            exTextBox.setText(description);
-        } else {
-            exTextBox.setText("Add Exercise Description");
-        }*/
+        TextView exTextBox = (TextView) view.findViewById(R.id.exDescriptionBox);
 
+        String exerciseDcription = exerciseContent.getExerciseDescription();
+        exTextBox.setText(exerciseContent.getClickedExercise().getExerciseDescription());
+        if(exerciseDcription != null) {
+            exTextBox.setText(exerciseDcription);
+        } else {
+            exTextBox.setText(R.string.addExerciseDescription);
+        }
         ImageView exImageView = (ImageView) view.findViewById(R.id.exerciseImageView);
         Bitmap bitmap = exerciseContent.getClickedExercise().getExerciseImage();
         if(bitmap != null) {
             exImageView.setImageBitmap(bitmap);
         } else {
-            exImageView.setImageResource(R.mipmap.ic_launcher);
+            exImageView.setImageResource(R.mipmap.no_image);
         }
     }
 
