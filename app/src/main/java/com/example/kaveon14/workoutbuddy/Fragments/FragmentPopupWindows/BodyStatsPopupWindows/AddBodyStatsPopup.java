@@ -42,7 +42,9 @@ public class AddBodyStatsPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainActivity.showBlankBodyStatsFragment();
+                EditBodyStatsPopup popup = new EditBodyStatsPopup(getRootView(),context);
+                popup.isUpdatingRow(false);
+                popup.showPopupWindow();
                 popupWindow.dismiss();
             }
         });

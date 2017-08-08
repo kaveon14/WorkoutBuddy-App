@@ -68,14 +68,6 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment"
-        android:id="@+id/blankBodyStats_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteY="256dp"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <FrameLayout
         class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment"
         android:id="@+id/workoutStats_fragment"
         android:layout_width="wrap_content"

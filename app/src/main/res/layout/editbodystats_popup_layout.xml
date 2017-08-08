@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/blankBodyStats_fragment"
-    android:layout_width="match_parent"
+    android:id="@+id/editBodyStats_popup"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingTop="60dp"
     android:orientation="vertical">
 
 
@@ -10,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="@color/caldroid_white"
         android:visibility="visible"
         >
 
@@ -201,7 +203,7 @@
     </TableLayout>
 
     <Button
-        android:id="@+id/addStats_btn"
+        android:id="@+id/addStats_btnPop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

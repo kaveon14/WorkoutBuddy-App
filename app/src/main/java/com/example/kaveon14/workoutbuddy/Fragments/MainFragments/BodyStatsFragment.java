@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.DeleteBodyStatsPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.AddBodyStatsPopup;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.EditBodyStatsPopup;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,8 +143,10 @@ public class BodyStatsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 setClickedBodyStatsItem(getBodyStats(position));
-                BlankBodyStatsFragment blankBodyStatsFragment = showBlankBodyStatsfragment();
-                blankBodyStatsFragment.isUpdatingRow(true) ;
+                EditBodyStatsPopup popup = new EditBodyStatsPopup(root,getContext());
+                popup.isUpdatingRow(true);
+                popup.showPopupWindow();
+
             }
         });
     }
@@ -154,16 +155,6 @@ public class BodyStatsFragment extends Fragment {
         if (newBodyStats != null) {
             bodyStats.add(newBodyStats);
         }
-    }
-
-    public BlankBodyStatsFragment showBlankBodyStatsfragment() {
-        BlankBodyStatsFragment blankBodyStatsFragment = new BlankBodyStatsFragment();
-        getFragmentManager().beginTransaction()
-                .hide(this)
-                .add(R.id.blankBodyStats_fragment,blankBodyStatsFragment)
-                .addToBackStack(null)
-                .commit();
-        return blankBodyStatsFragment;
     }
 
     private void deleteRowView(ListView listView) {
@@ -276,8 +267,9 @@ public class BodyStatsFragment extends Fragment {
                     public void onClick(View v) {
                         int i = getLayoutPosition();
                         setClickedBodyStatsItem(bodyStats.get(i));
-                        BlankBodyStatsFragment blankBodyStatsFragment = showBlankBodyStatsfragment();
-                        blankBodyStatsFragment.isUpdatingRow(true) ;
+                        EditBodyStatsPopup popup = new EditBodyStatsPopup(root,getContext());
+                        popup.isUpdatingRow(true);
+                        popup.showPopupWindow();
                     }
                 });
             }

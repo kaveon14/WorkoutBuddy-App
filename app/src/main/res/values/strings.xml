@@ -107,15 +107,15 @@
     <string name="reps">Reps:</string>
 
     <string name="deleteSubWorkout">Delete SubWorkout</string>
-    <string name="date">Date: </string>
-    <string name="weight">Weight:</string>
-    <string name="chest">Chest:</string>
-    <string name="back">Back:</string>
-    <string name="arms">Arms:</string>
-    <string name="forearms">Forearms:</string>
-    <string name="waist">Waist:</string>
-    <string name="quads">Quads:</string>
-    <string name="calves">Calves:</string>
+    <string name="date">Date </string>
+    <string name="weight">Weight</string>
+    <string name="chest">Chest</string>
+    <string name="back">Back</string>
+    <string name="arms">Arms</string>
+    <string name="forearms">Forearms</string>
+    <string name="waist">Waist</string>
+    <string name="quads">Quads</string>
+    <string name="calves">Calves</string>
 
     <string name="dateFormat">Date mm/dd/yyyy</string>
     <string name="weightFormat">Weight kg/lb</string>
@@ -183,5 +183,6 @@
 
     <string name="exercise">Exercise Name</string>
     <string name="addExerciseDescription">Add Exercise Description!</string>
+    <string name="editedBodyStats">Add Edited Body Stats</string>
 
 </resources>

@@ -1,7 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Activity;
 //TODO ignore load times for now and focus on ui
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -11,7 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -28,22 +26,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankBodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
@@ -190,11 +181,6 @@ public class MainActivity extends AppCompatActivity
         mainWorkout_frag.setMenu(menu);
         mainWorkout_frag.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),mainWorkout_frag,R.id.mainWorkout_fragment);
-    }
-
-    public void showBlankBodyStatsFragment() {
-        BlankBodyStatsFragment blankBodyStats_frag = new BlankBodyStatsFragment();
-        addFragmentToStack(getActiveFragment(),blankBodyStats_frag,R.id.blankBodyStats_fragment);
     }
 
     public void addFragmentToStack(@Nullable Fragment fragToHide, Fragment fragToShow, int fragId) {

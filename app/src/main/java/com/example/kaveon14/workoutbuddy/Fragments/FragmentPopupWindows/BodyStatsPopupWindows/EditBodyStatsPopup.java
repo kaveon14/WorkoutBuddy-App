@@ -1,81 +1,82 @@
-package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
+package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows;
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
-//TODO convert to popup
-public class BlankBodyStatsFragment extends Fragment {
+
+
+public class EditBodyStatsPopup extends PopupWindowManager {
 
     private boolean updatingRow = false;
 
-    public BlankBodyStatsFragment() {
-        // Required empty public constructor
+    public EditBodyStatsPopup(View root, Context context) {
+        setRootView(root);
+        setWindowManagerContext(context);
+        setPopupLayout(R.layout.editbodystats_popup_layout);
+        setPopupViewId(R.id.editBodyStats_popup);
+    }
+
+    public void showPopupWindow() {
+        displayPopupWindow();
+        Button btn = (Button) popupLayout.findViewById(R.id.addStats_btnPop);
+        if(updatingRow) {
+            setEditTextView();
+            btn.setText(R.string.editedBodyStats);
+        } else {
+            btn.setText(R.string.addStats);
+        }
+        addButton();
     }
 
     public void isUpdatingRow(boolean updatingRow) {
         this.updatingRow = updatingRow;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_blank_body_stats, container, false);
-        addButton(root);
-        if(updatingRow) {
-            setEditTextView(root);
-        }
-        return root;
-    }
-
-    private void setEditTextView(View root) {
-        BodyStatsExtension bodyStatsExtension = new BodyStatsExtension();
+    private void setEditTextView() {
+        EditBodyStatsPopup.BodyStatsExtension bodyStatsExtension
+                = new EditBodyStatsPopup.BodyStatsExtension();
         Body body = BodyStatsFragment.getClickedBodyStatsItem();
 
-        bodyStatsExtension.setDate(body.getStringDate(),root);
-        bodyStatsExtension.setWeight(body.getWeight(),root);
-        bodyStatsExtension.setChestSize(body.getChestSize(),root);
+        bodyStatsExtension.setDate(body.getStringDate(),popupLayout);
+        bodyStatsExtension.setWeight(body.getWeight(),popupLayout);
+        bodyStatsExtension.setChestSize(body.getChestSize(),popupLayout);
 
-        bodyStatsExtension.setBackSize(body.getBackSize(),root);
-        bodyStatsExtension.setArmSize(body.getArmSize(),root);
-        bodyStatsExtension.setForearmSize(body.getForearmSize(),root);
+        bodyStatsExtension.setBackSize(body.getBackSize(),popupLayout);
+        bodyStatsExtension.setArmSize(body.getArmSize(),popupLayout);
+        bodyStatsExtension.setForearmSize(body.getForearmSize(),popupLayout);
 
-        bodyStatsExtension.setWaistSize(body.getWaistSize(),root);
-        bodyStatsExtension.setQuadSize(body.getQuadSize(),root);
-        bodyStatsExtension.setCalfSize(body.getCalfSize(),root);
+        bodyStatsExtension.setWaistSize(body.getWaistSize(),popupLayout);
+        bodyStatsExtension.setQuadSize(body.getQuadSize(),popupLayout);
+        bodyStatsExtension.setCalfSize(body.getCalfSize(),popupLayout);
     }
 
-    public void addBodyStatsData() {
-        BodyStatsExtension bodyStatsExtension = new BodyStatsExtension();
-        bodyStatsExtension.addBodyStatsData(getView());
+    private void addBodyStatsData() {
+        EditBodyStatsPopup.BodyStatsExtension bodyStatsExtension =
+                new EditBodyStatsPopup.BodyStatsExtension();
+        bodyStatsExtension.addBodyStatsData(getRootView());
     }
 
-    private void addButton(View root) {
-        Button btn = (Button) root.findViewById(R.id.addStats_btn);
+    private void addButton() {
+        Button btn = (Button) popupLayout.findViewById(R.id.addStats_btnPop);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Body body = new BodyStatsExtension()
-                        .getBodyStatsObject(root);
-                if(body != null) {
+                Body body = new EditBodyStatsPopup.BodyStatsExtension()
+                        .getBodyStatsObject(getRootView());
+                if (body != null) {
                     addBodyStatsData();
                     BodyStatsFragment.setNewBodyStats(body);
-                    Toast.makeText(getContext(), "Stats Successfully Added!",
+                    Toast.makeText(context, "Stats Successfully Added!",
                             Toast.LENGTH_SHORT).show();
-                    getActivity().getSupportFragmentManager().popBackStack();
+                    popupWindow.dismiss();
                 }
             }
         });
@@ -84,7 +85,7 @@ public class BlankBodyStatsFragment extends Fragment {
     private class BodyStatsExtension {
 
         private void addBodyStatsData(View root) {
-            new BodyTable(getContext()).addStatsToBodyTable(getBodyStatsObject(root));
+            new BodyTable(context).addStatsToBodyTable(getBodyStatsObject(root));
         }
 
         private Body getBodyStatsObject(View root) {
@@ -98,7 +99,7 @@ public class BlankBodyStatsFragment extends Fragment {
                 body.setDate(date);
             } catch (IllegalArgumentException e) {
                 System.out.println("Caught");
-                Toast.makeText(getContext(),"Date Not Entered Properly" +
+                Toast.makeText(context,"Date Not Entered Properly" +
                         ", Data NOT Saved!!",Toast.LENGTH_LONG).show();
                 return null;
             }
@@ -196,4 +197,10 @@ public class BlankBodyStatsFragment extends Fragment {
             calfView.setText(size);
         }
     }
+
+
+
+
+
+
 }
