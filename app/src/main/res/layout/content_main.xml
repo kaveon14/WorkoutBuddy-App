@@ -122,7 +122,8 @@
                     android:layout_width="150dp"
                     android:layout_height="200dp"
                     app:cardBackgroundColor="@color/caldroid_black"
-                    app:cardCornerRadius="0dp" />
+                    app:cardCornerRadius="0dp" >
+                </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
                     android:layout_weight="1"
@@ -152,14 +153,79 @@
                     android:layout_width="200dp"
                     android:layout_weight="1"
                     android:layout_height="200dp"
-                    app:cardCornerRadius="0dp"/>
+                    app:cardCornerRadius="0dp">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TableRow
+                            android:paddingTop="50dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+
+                            <ImageView
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                app:srcCompat="@drawable/ic_menu_manage" />
+                        </TableRow>
+
+                        <TableRow
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/caldroid_black"
+                                android:textSize="18sp"
+                                android:text="@string/exercises" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
                     app:cardCornerRadius="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/colorPrimary"
                     android:layout_width="200dp"
-                    android:layout_height="200dp" />
+                    android:layout_height="200dp" >
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TableRow
+                            android:paddingTop="50dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                app:srcCompat="@drawable/ic_menu_slideshow" />
+                        </TableRow>
+
+                        <TableRow
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/caldroid_black"
+                                android:textSize="18sp"
+                                android:text="@string/workouts" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                </android.support.v7.widget.CardView>
             </TableRow>
 
             <TableRow

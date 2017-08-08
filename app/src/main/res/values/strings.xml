@@ -187,5 +187,7 @@
     <string name="emptyWorkoutStats">No Workout Stats to Show!</string>
     <string name="emptyBodyStats">No Body Stats to Show!</string>
     <string name="emptyListView">Nothing to Show!</string>
+    <string name="exercises">Exercises</string>
+    <string name="workouts">Workouts</string>
 
 </resources>
