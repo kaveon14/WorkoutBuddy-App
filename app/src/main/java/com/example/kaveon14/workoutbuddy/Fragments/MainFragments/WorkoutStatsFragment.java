@@ -59,6 +59,10 @@ public class WorkoutStatsFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(new RecyclerAdapter(subWorkoutList));
+        if (subWorkoutList.size()==0) {
+            TextView textView = (TextView) root.findViewById(R.id.noWorkoutStats);
+            textView.setVisibility(View.VISIBLE);
+        }
 
         setSearchViewOnClick();
         return root;

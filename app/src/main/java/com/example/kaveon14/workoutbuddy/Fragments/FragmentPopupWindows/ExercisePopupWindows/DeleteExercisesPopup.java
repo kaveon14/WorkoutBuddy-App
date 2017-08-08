@@ -48,6 +48,9 @@ public class DeleteExercisesPopup extends PopupWindowManager {//dont create popu
         listView.setAdapter(customExerciseAdapter);
         listView.setBackgroundColor(Color.WHITE);
         listViewOnClick(listView);
+        if(customExerciseAdapter.isEmpty()) {
+            listView.setEmptyView(popupLayout.findViewById(R.id.emptyList));
+        }
     }
 
     private void listViewOnClick(ListView listView) {

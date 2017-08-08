@@ -86,6 +86,11 @@ public class BodyStatsFragment extends Fragment {
             bodyStats.add(getBodyStats(x));
         }
         recyclerView.setAdapter(new RecyclerAdapter(getContext(),bodyStats));
+        if(bodyStats.size()==0) {
+            TextView textView = (TextView) root.findViewById(R.id.noBodyStats);
+            textView.setVisibility(View.VISIBLE);
+
+        }
 
         setFloatingActionButton();
         return root;

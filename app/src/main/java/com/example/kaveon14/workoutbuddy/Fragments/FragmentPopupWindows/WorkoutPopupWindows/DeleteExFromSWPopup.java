@@ -54,6 +54,9 @@ public class DeleteExFromSWPopup extends PopupWindowManager {
         listView.setBackgroundColor(Color.WHITE);
         listView.setAdapter(adapter);
         listViewOnClick(listView);
+        if (adapter.isEmpty()) {
+            listView.setEmptyView(popupLayout.findViewById(R.id.emptyListView));
+        }
     }
 
     private void listViewOnClick(ListView listView) {

@@ -12,4 +12,13 @@
         android:layout_height="match_parent"
         android:id="@+id/workoutStatsRecycleView"/>
 
+    <TextView
+        android:id="@+id/noWorkoutStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/caldroid_black"
+        android:textSize="15sp"
+        android:visibility="gone"
+        android:text="@string/emptyWorkoutStats" />
+
 </FrameLayout>

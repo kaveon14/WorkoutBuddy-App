@@ -69,6 +69,9 @@ public class ViewCustomExercisesPopup extends PopupWindowManager {
         listView.setBackgroundColor(Color.WHITE);
         listViewOnClick(listView);
         listViewOnLongClick(listView);
+        if(customExerciseAdapter.isEmpty()) {
+            listView.setEmptyView(popupLayout.findViewById(R.id.emptyList));
+        }
     }
 
     private void listViewOnClick(ListView listView) {

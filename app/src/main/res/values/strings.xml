@@ -184,5 +184,8 @@
     <string name="exercise">Exercise Name</string>
     <string name="addExerciseDescription">Add Exercise Description!</string>
     <string name="editedBodyStats">Add Edited Body Stats</string>
+    <string name="emptyWorkoutStats">No Workout Stats to Show!</string>
+    <string name="emptyBodyStats">No Body Stats to Show!</string>
+    <string name="emptyListView">Nothing to Show!</string>
 
 </resources>

@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
@@ -56,6 +58,9 @@ public class ViewExercisesPopup extends PopupWindowManager {
         ListView listView = (ListView) popupLayout.findViewById(R.id.exerciseListView_popup);
         listView.setBackgroundColor(Color.WHITE);
         listView.setAdapter(exerciseAdapter);
+        if(exerciseAdapter.isEmpty()) {
+           listView.setEmptyView(popupLayout.findViewById(R.id.emptyListView));
+        }
         listViewOnClick(listView);
     }
 
@@ -70,10 +75,4 @@ public class ViewExercisesPopup extends PopupWindowManager {
             }
         });
     }
-
-
-
-
-
-
 }
