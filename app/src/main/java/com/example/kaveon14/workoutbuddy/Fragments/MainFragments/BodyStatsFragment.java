@@ -65,8 +65,6 @@ public class BodyStatsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BodyTable bodyTable = new BodyTable(getContext());
-        int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
     }
 
     @Override
