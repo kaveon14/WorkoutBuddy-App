@@ -92,8 +92,8 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.TestCalenderFragment"
-        android:id="@+id/test_fragment"
+        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ProgressPhotosFragment"
+        android:id="@+id/progressPhotos_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="256dp"

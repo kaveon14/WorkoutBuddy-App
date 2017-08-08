@@ -36,6 +36,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ProgressPhotosFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.exercise_menu:
                 showExerciseFragment();
                 break;
+            case R.id.progress_photos:
+                showProgressPhotoFragment();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -195,6 +198,11 @@ public class MainActivity extends AppCompatActivity
         mainWorkout_frag.setMenu(menu);
         mainWorkout_frag.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),mainWorkout_frag,R.id.mainWorkout_fragment);
+    }
+
+    private void showProgressPhotoFragment() {
+        ProgressPhotosFragment progressPhoto_frag = new ProgressPhotosFragment();
+        addFragmentToStack(getActiveFragment(),progressPhoto_frag,R.id.progressPhotos_fragment);
     }
 
     public void addFragmentToStack(@Nullable Fragment fragToHide, Fragment fragToShow, int fragId) {

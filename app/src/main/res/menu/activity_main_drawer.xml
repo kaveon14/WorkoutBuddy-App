@@ -12,12 +12,16 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Workouts" />
         <item
-            android:id="@+id/body_stats"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Body Stats" />
-        <item
             android:id="@+id/lifting_stats"
             android:icon="@drawable/ic_menu_camera"
             android:title="Workout Stats" />
+        <item
+            android:id="@+id/progress_photos"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Progress Photos" />
+        <item
+            android:id="@+id/body_stats"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Body Stats" />
     </group>
 </menu>

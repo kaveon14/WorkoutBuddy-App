@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 
 import com.example.kaveon14.workoutbuddy.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ProgressPhotosFragment extends Fragment {
 
 
