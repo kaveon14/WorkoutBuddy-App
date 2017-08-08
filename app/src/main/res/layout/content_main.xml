@@ -473,7 +473,7 @@
                 <android.support.v7.widget.CardView
                     app:cardCornerRadius="0dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="@color/caldroid_gray"
+                    app:cardBackgroundColor="@android:color/holo_green_light"
                     android:layout_width="125dp"
                     android:layout_height="200dp" >
                     <TableLayout
