@@ -40,6 +40,8 @@
                 android:id="@+id/addExercisePopup_DescriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:maxLines = "100"
+                android:scrollbars="vertical"
                 android:background="@drawable/border_accent"
                 android:gravity="top"
                 android:inputType="textMultiLine" />

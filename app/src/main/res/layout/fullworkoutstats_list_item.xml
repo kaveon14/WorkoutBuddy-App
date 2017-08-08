@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fullWorkoutListItem"
+    android:paddingBottom="3dp"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:id="@+id/fullWorkoutStatsCard"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="gone"/>
 
     <TextView
@@ -23,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set1" />
 
     <TextView
@@ -31,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set2" />
 
     <TextView
@@ -39,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set3" />
 
     <TextView
@@ -47,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set4" />
 
     <TextView
@@ -55,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set5" />
 
     <TextView
@@ -63,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set6" />
 
     <TextView
@@ -71,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set7" />
 
     <TextView
@@ -79,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set8" />
 
     <TextView
@@ -87,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set9" />
 
     <TextView
@@ -95,7 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textColor="@android:color/black"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/set10" />
 
 </LinearLayout>
