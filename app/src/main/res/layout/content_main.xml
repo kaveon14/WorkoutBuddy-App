@@ -120,17 +120,254 @@
                 <android.support.v7.widget.CardView
                     android:layout_weight="1"
                     android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    app:cardBackgroundColor="@color/caldroid_black"
+                    app:cardBackgroundColor="@color/caldroid_lighter_gray"
+                    android:layout_height="wrap_content"
                     app:cardCornerRadius="0dp" >
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/ic_date" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/date"
+                                android:textColor="@color/caldroid_black" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_scale" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/weight"
+                                android:textColor="@color/caldroid_black" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_chest" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/chest"
+                                android:textColor="@color/caldroid_black" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_back" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="32dp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/back"
+                                android:textColor="@color/caldroid_black" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_arms" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/arms"
+                                android:textColor="@color/caldroid_black" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_menu_send" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/forearms"
+                                android:textColor="@color/caldroid_black" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_waist" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/waist"
+                                android:textColor="@color/caldroid_black" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_quad" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/quads"
+                                android:textColor="@color/caldroid_black" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ic_menu_gallery" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:text="@string/calves"
+                                android:textColor="@color/caldroid_black" />
+                        </TableRow>
+
+
+                    </TableLayout>
+
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
                     android:layout_weight="1"
                     android:layout_width="150dp"
-                    android:layout_height="200dp"
-                    app:cardBackgroundColor="@color/caldroid_darker_gray"
-                    app:cardCornerRadius="0dp" />
+                    android:layout_height="match_parent"
+                    app:cardBackgroundColor="@color/caldroid_lighter_gray"
+                    app:cardCornerRadius="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/datePointer"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp"
+                            android:paddingBottom="31dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mainWorkoutPointer"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp"
+                            android:paddingBottom="31dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subWorkoutPointer"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp"
+                            android:paddingBottom="31dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/totalSets"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp"
+                            android:paddingBottom="31dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/totalReps"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp"
+                            android:paddingBottom="31dp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/totalWeight"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
             </TableRow>
 
             <TableRow
@@ -277,6 +514,38 @@
                     app:cardBackgroundColor="@color/caldroid_holo_blue_light"
                     android:layout_width="125dp"
                     android:layout_height="200dp" >
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TableRow
+                            android:paddingTop="70dp"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@drawable/ic_menu_gallery" />
+                        </TableRow>
+
+                        <TableRow
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/caldroid_black"
+                                android:textSize="15sp"
+                                android:text="@string/progressPhotos" />
+                        </TableRow>
+
+                    </TableLayout>
+
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
