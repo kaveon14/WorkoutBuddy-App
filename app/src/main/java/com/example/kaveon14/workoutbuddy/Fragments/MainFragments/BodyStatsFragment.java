@@ -40,6 +40,7 @@ public class BodyStatsFragment extends Fragment {
     private View root;
     private List<Body> bodyStats;
     private MainActivity mainActivity;
+    private RecyclerAdapter recyclerAdapter = null;
 
     public BodyStatsFragment() {
         // Required empty public constructor
@@ -66,32 +67,13 @@ public class BodyStatsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         BodyTable bodyTable = new BodyTable(getContext());
         int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_body_stats, container, false);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recylerView);
-        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setItemViewCacheSize(12);
-        recyclerView.setHasFixedSize(true);
-
-        BodyTable bodyTable = new BodyTable(getContext());
-        int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
-        bodyStats = new ArrayList<>();
-        for(int x=0;x<6;x++) {
-            bodyStats.add(getBodyStats(x));
-        }
-        recyclerView.setAdapter(new RecyclerAdapter(getContext(),bodyStats));
-        if(bodyStats.size()==0) {
-            TextView textView = (TextView) root.findViewById(R.id.noBodyStats);
-            textView.setVisibility(View.VISIBLE);
-
-        }
-
+        setRecycleView(root);
         setFloatingActionButton();
         return root;
     }
@@ -130,6 +112,36 @@ public class BodyStatsFragment extends Fragment {
             handleFloatingActionButtonEvents(fab);
         }
         return fab;
+    }
+
+    private void setRecycleView(View root) {
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recylerView);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setItemViewCacheSize(12);
+        recyclerView.setHasFixedSize(true);
+        if(recyclerAdapter == null) {
+            setRecyclerAdapter();
+        }
+        recyclerView.setAdapter(recyclerAdapter);
+        if(recyclerView.getAdapter().getItemCount()==0) {
+            TextView textView = (TextView) root.findViewById(R.id.noBodyStats);
+            textView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setRecyclerAdapter() {
+        BodyTable bodyTable = new BodyTable(getContext());
+        int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
+        bodyStats = new ArrayList<>();
+        for(int x=0;x<6;x++) {
+            Body body = getBodyStats(x);
+            if(body != null) {
+                bodyStats.add(body);
+            }
+
+        }
+        recyclerAdapter = new RecyclerAdapter(getContext(),bodyStats);
     }
 
     private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
@@ -194,11 +206,19 @@ public class BodyStatsFragment extends Fragment {
          List<String> quadSizeList = bodyTable.getColumn(COLUMN_QUAD_SIZE);
          List<String> calfSizeList = bodyTable.getColumn(COLUMN_CALF_SIZE);
 
-         return new Body().setDate(dateList.get(x)).setWeight(weightList.get(x))
-                 .setChestSize(chestSizeList.get(x)).setBackSize(backSizeList.get(x))
-                 .setArmSize(armSizeList.get(x)).setForearmSize(forearmSizeList.get(x))
-                 .setWaistSize(waistSizeList.get(x)).setQuadSize(quadSizeList.get(x))
-                 .setCalfSize(calfSizeList.get(x));
+        Body body = null;
+
+        try{
+            body = new Body().setDate(dateList.get(x)).setWeight(weightList.get(x))
+                    .setChestSize(chestSizeList.get(x)).setBackSize(backSizeList.get(x))
+                    .setArmSize(armSizeList.get(x)).setForearmSize(forearmSizeList.get(x))
+                    .setWaistSize(waistSizeList.get(x)).setQuadSize(quadSizeList.get(x))
+                    .setCalfSize(calfSizeList.get(x));
+        } catch (IndexOutOfBoundsException e) {
+            //do nothing
+        }
+
+         return body;
      }
 
 
