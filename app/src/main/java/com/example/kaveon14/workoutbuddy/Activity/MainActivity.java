@@ -19,6 +19,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,11 +27,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -48,14 +50,13 @@ public class MainActivity extends AppCompatActivity
     private Bitmap bitmap;
     private int RESULT_LOAD_IMAGE = 1;
     private Menu menu;
+    private boolean activityHidden = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBaseContent();
         getPermissions();
-        MainWorkoutTable table = new MainWorkoutTable(getBaseContext());
-        table.printTable();
     }
 
     @Override
@@ -64,6 +65,11 @@ public class MainActivity extends AppCompatActivity
         if(customExercisePopup != null) {
             customExercisePopup.setImageViewWithGalleryImage();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -77,6 +83,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(getSupportFragmentManager().getBackStackEntryCount()==1
+                && activityHidden) {
+            activityHidden = false;
+            showMainActivityContent();
+        }
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -194,6 +205,20 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
         getActiveFragment();
+        if(!activityHidden) {
+            hideMainActivityContent();
+            activityHidden = true;
+        }
+    }
+
+    private void showMainActivityContent() {
+        ScrollView scrollView = (ScrollView) findViewById(R.id.activityScrollView);
+        scrollView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideMainActivityContent() {
+        ScrollView scrollView = (ScrollView) findViewById(R.id.activityScrollView);
+        scrollView.setVisibility(View.INVISIBLE);
     }
 
     private void setBaseContent() {
@@ -276,7 +301,6 @@ public class MainActivity extends AppCompatActivity
         private void openExternalImageGallery() {
             Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             pickIntent.setType("image/*");
-            //MainActivity.activity.startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
             startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
         }
 
