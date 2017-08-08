@@ -189,5 +189,8 @@
     <string name="emptyListView">Nothing to Show!</string>
     <string name="exercises">Exercises</string>
     <string name="workouts">Workouts</string>
+    <string name="bodyStats">Body Stats</string>
+    <string name="workoutStats">Workout Stats</string>
+    <string name="progressPhotos">Progress Photos</string>
 
 </resources>
