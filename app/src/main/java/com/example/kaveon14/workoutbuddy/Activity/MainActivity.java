@@ -36,6 +36,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseCont
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -274,6 +275,41 @@ public class MainActivity extends AppCompatActivity
         loadRecentProgressPhoto();
     }
 
+    private void loadRecentWorkoutStats() {
+        int INDEX = 0;
+        WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
+        try {//gonna be a little more complex
+            loadRecentWorkoutStatsPt1(table,INDEX);
+            loadRecentWorkoutStatsPt2(table,INDEX);
+        } catch (IndexOutOfBoundsException e) {
+            // do nothing
+        }
+    }
+
+    private void loadRecentWorkoutStatsPt1(WorkoutStatsTable table,int INDEX)
+            throws IndexOutOfBoundsException {
+
+    }
+
+    private void loadRecentWorkoutStatsPt2(WorkoutStatsTable table,int INDEX)
+            throws IndexOutOfBoundsException {
+
+    }
+
+    private void loadRecentProgressPhoto() {
+        int INDEX = 0;
+        ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
+        try {
+            Bitmap photo = table.getImageData(INDEX + 1).get(INDEX);
+            ImageView imageView = (ImageView) findViewById(R.id.progressPhotoView);
+            imageView.setImageBitmap(photo);
+        } catch(IndexOutOfBoundsException e) {
+            //do nothing
+        }
+
+
+    }
+
     private void loadRecentBodyStats() {
         int INDEX = 0;
         BodyTable table = new BodyTable(getBaseContext());
@@ -284,7 +320,6 @@ public class MainActivity extends AppCompatActivity
         } catch (IndexOutOfBoundsException e) {
             //do nothing
         }
-
     }
 
     private void loadRecentBodyStatsPt1(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
@@ -330,14 +365,6 @@ public class MainActivity extends AppCompatActivity
 
         textView = (TextView) findViewById(R.id.recentCalvesView);
         textView.setText(calves);
-
-    }
-
-    private void loadRecentWorkoutStats() {
-
-    }
-
-    private void loadRecentProgressPhoto() {
 
     }
 
