@@ -97,7 +97,6 @@ public class ProgressPhotosTable extends TableManager {
         return photos;
     }
 
-
     private byte[] getImageData(Bitmap bitmap) throws IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
