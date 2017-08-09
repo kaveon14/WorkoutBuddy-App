@@ -1,8 +1,13 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +27,57 @@ public class ProgressPhotosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_progress_photos, container, false);
         setRecycleView(root);
+        setFloatingActionButton();
         return root;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        resetFloatingActionButton();
+    }
+
+    private void resetFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //do nothing
+                }
+            });
+        }
+    }
+
+    private FloatingActionButton setFloatingActionButton() {
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setImageResource(R.drawable.ic_menu_manage);
+            handleFloatingActionButtonEvents(fab);
+        }
+        return fab;
+    }
+
+    private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCameraPermission();
+            }
+        });
+    }
+
+    private void getCameraPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.CAMERA)) {
+            } else {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.CAMERA},1);
+            }
+        }
     }
 
     private void setRecycleView(View root) {
