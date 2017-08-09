@@ -2,14 +2,18 @@ package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_DATE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_PHOTO;
@@ -51,6 +55,33 @@ public class ProgressPhotosTable extends TableManager {
         writableDatabase.insert(TABLE_NAME,null,values);
         writableDatabase.close();
     }
+
+    public List<ProgressPhoto> getProgressPhotos() {
+        List<String> dates = getColumn(COLUMN_DATE);
+        List<Bitmap> photos = getImageData();
+        List<ProgressPhoto> progressPhotos = new ArrayList<>(dates.size());
+
+        for(int x=0;x<dates.size();x++) {
+            ProgressPhoto progressPhoto =
+                     new ProgressPhoto(dates.get(x),photos.get(x));
+            progressPhotos.add(progressPhoto);
+        }
+        return progressPhotos;
+    }
+
+    public List<Bitmap> getImageData() {
+        byte[] data;
+        List<Bitmap> photos = new ArrayList<>();
+        SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
+        Cursor cursor = database.query(TABLE_NAME, null, null, null, null, null, null);
+        while(cursor.moveToNext()) {
+            data = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_PHOTO));
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data,0,data.length);
+            photos.add(bitmap);
+        }
+        return photos;
+    }
+
 
     private byte[] getImageData(Bitmap bitmap) throws IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

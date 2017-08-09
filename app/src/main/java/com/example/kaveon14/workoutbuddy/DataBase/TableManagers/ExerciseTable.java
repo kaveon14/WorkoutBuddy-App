@@ -62,9 +62,9 @@ public class ExerciseTable extends TableManager {
     }
 
     public List<Exercise> getExercises() {
-        List<Exercise> exerciseList = new ArrayList<>();
         List<String> exerciseNames = getColumn(COLUMN_EXERCISES);
         List<String> exerciseDescriptions = getColumn(COLUMN_EXERCISE_DESCRIPTION);
+        List<Exercise> exerciseList = new ArrayList<>(exerciseNames.size());
 
         for(int x=0;x<exerciseNames.size();x++) {
             Exercise exercise = new Exercise(exerciseNames.get(x),
@@ -83,7 +83,7 @@ public class ExerciseTable extends TableManager {
         List<Exercise> exerciseList = new ArrayList<>();
         List<String> exerciseNames = getColumn(COLUMN_EXERCISES);
         List<String> exerciseDescriptions = getColumn(COLUMN_EXERCISE_DESCRIPTION);
-        for(int x=DEFAULT_EXERCISE_COUNT;x<exerciseNames.size();x++) {
+        for(int x=DEFAULT_EXERCISE_COUNT;x<exerciseNames.size();x++) {//needs to be refactored
             Exercise exercise = new Exercise(exerciseNames.get(x),
                     exerciseDescriptions.get(x));
 
@@ -106,14 +106,9 @@ public class ExerciseTable extends TableManager {
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(TABLE_NAME, null, null, null, null, null, null);
         Bitmap bitmap = getImageData(cursor,exercise);
-        if(bitmap != null) {
-            cursor.close();
-            readableDatabase.close();
-            return bitmap;
-        }
         cursor.close();
         readableDatabase.close();
-        return null;
+        return bitmap;
     }
 
     private Bitmap getImageData(Cursor cursor,Exercise exercise) {

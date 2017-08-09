@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setBaseContent();
         getPermissions();
+        ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
+        table.printTable();
     }
 
     @Override
@@ -87,7 +90,8 @@ public class MainActivity extends AppCompatActivity
         if(cameraBitmap != null) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
             String date = dateFormat.format(new Date());
-
+            ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
+            table.addProgressPhoto(date,cameraBitmap);
         }
 
     }
