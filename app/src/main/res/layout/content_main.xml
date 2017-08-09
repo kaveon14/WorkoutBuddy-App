@@ -330,46 +330,52 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/recentWorkoutDateView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/datePointer"
                             android:textColor="@android:color/black"
                             android:textSize="15sp"
-                            android:paddingBottom="31dp"/>
+                            android:paddingBottom="29dp"/>
 
                         <TextView
+                            android:id="@+id/recentMainWorkoutView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mainWorkoutPointer"
                             android:textColor="@android:color/black"
                             android:textSize="15sp"
-                            android:paddingBottom="31dp"/>
+                            android:paddingBottom="29dp"/>
 
                         <TextView
+                            android:id="@+id/recentSubWorkoutView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/subWorkoutPointer"
                             android:textColor="@android:color/black"
                             android:textSize="15sp"
-                            android:paddingBottom="31dp"/>
+                            android:paddingBottom="29dp"/>
 
                         <TextView
+                            android:id="@+id/recentTotalSetsView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/totalSets"
                             android:textColor="@android:color/black"
                             android:textSize="15sp"
-                            android:paddingBottom="31dp"/>
+                            android:paddingBottom="29dp"/>
 
                         <TextView
+                            android:id="@+id/recentTotalRepsView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/totalReps"
                             android:textColor="@android:color/black"
                             android:textSize="15sp"
-                            android:paddingBottom="31dp"/>
+                            android:paddingBottom="29dp"/>
 
                         <TextView
+                            android:id="@+id/recentTotalWeightView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/totalWeight"

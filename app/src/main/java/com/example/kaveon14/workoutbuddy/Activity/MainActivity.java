@@ -278,22 +278,12 @@ public class MainActivity extends AppCompatActivity
     private void loadRecentWorkoutStats() {
         int INDEX = 0;
         WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
-        try {//gonna be a little more complex
+        try {
             loadRecentWorkoutStatsPt1(table,INDEX);
             loadRecentWorkoutStatsPt2(table,INDEX);
         } catch (IndexOutOfBoundsException e) {
             // do nothing
         }
-    }
-
-    private void loadRecentWorkoutStatsPt1(WorkoutStatsTable table,int INDEX)
-            throws IndexOutOfBoundsException {
-
-    }
-
-    private void loadRecentWorkoutStatsPt2(WorkoutStatsTable table,int INDEX)
-            throws IndexOutOfBoundsException {
-
     }
 
     private void loadRecentProgressPhoto() {
@@ -306,8 +296,6 @@ public class MainActivity extends AppCompatActivity
         } catch(IndexOutOfBoundsException e) {
             //do nothing
         }
-
-
     }
 
     private void loadRecentBodyStats() {
@@ -365,8 +353,41 @@ public class MainActivity extends AppCompatActivity
 
         textView = (TextView) findViewById(R.id.recentCalvesView);
         textView.setText(calves);
-
     }
+
+
+    private void loadRecentWorkoutStatsPt1(WorkoutStatsTable table,int INDEX)
+            throws IndexOutOfBoundsException {
+        String date = table.getColumn(DataBaseContract.WorkoutData.COLUMN_DATE,INDEX+1).get(INDEX);
+        String mainWorkout = table.getColumn(DataBaseContract.WorkoutData.COLUMN_MAINWORKOUT,INDEX+1).get(INDEX);
+        String subWorkout = table.getColumn(DataBaseContract.WorkoutData.COLUMN_SUBWORKOUT,INDEX+1).get(INDEX);
+
+        TextView textView = (TextView) findViewById(R.id.recentWorkoutDateView);
+        textView.setText(textView.getText().toString()+" "+date);
+
+        textView = (TextView) findViewById(R.id.recentMainWorkoutView);
+        textView.setText(textView.getText().toString()+" "+mainWorkout);
+
+        textView = (TextView) findViewById(R.id.recentSubWorkoutView);
+        textView.setText(textView.getText().toString()+" "+subWorkout);
+    }
+
+    private void loadRecentWorkoutStatsPt2(WorkoutStatsTable table,int INDEX)
+            throws IndexOutOfBoundsException {
+        String sets = table.getColumn(DataBaseContract.WorkoutData.COLUMN_TOTAL_SETS,INDEX+1).get(INDEX);
+        String reps = table.getColumn(DataBaseContract.WorkoutData.COLUMN_TOTAL_REPS,INDEX+1).get(INDEX);
+        String weight = table.getColumn(DataBaseContract.WorkoutData.COLUMN_TOTAL_WEIGHT,INDEX+1).get(INDEX);
+
+        TextView textView = (TextView) findViewById(R.id.recentTotalSetsView);
+        textView.setText(textView.getText().toString()+" "+sets);
+
+        textView = (TextView) findViewById(R.id.recentTotalRepsView);
+        textView.setText(textView.getText().toString()+" "+reps);
+
+        textView = (TextView) findViewById(R.id.recentTotalWeightView);
+        textView.setText(textView.getText().toString()+" "+weight);
+    }
+
 
     private void setBaseContent() {
         setContentView(R.layout.activity_main);
