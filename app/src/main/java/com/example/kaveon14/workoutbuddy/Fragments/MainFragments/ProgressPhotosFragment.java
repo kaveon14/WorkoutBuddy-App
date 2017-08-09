@@ -4,6 +4,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -16,6 +17,9 @@ import android.view.ViewGroup;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.R;
+
+import static android.app.Activity.RESULT_OK;
+import static com.example.kaveon14.workoutbuddy.Activity.MainActivity.REQUEST_IMAGE_CAPTURE;
 
 public class ProgressPhotosFragment extends Fragment {
 

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -19,7 +20,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +27,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -42,14 +41,19 @@ import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFrag
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private int fragId;
     public MainActivity mainActivity = this;
     private CustomExercisePopup customExercisePopup;
-    private Bitmap bitmap;
+    private Bitmap exerciseImageBitmap;
     private int RESULT_LOAD_IMAGE = 1;
+    public static final int REQUEST_IMAGE_CAPTURE = 1;
     private Menu menu;
     private boolean activityHidden = false;
 
@@ -77,8 +81,23 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(customExercisePopup != null) {
-            bitmap = customExercisePopup.getGalleryImage(requestCode, resultCode, data);
+            exerciseImageBitmap = customExercisePopup.getGalleryImage(requestCode, resultCode, data);
         }
+        Bitmap cameraBitmap = getCameraImage(requestCode,resultCode,data);
+        if(cameraBitmap != null) {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            String date = dateFormat.format(new Date());
+
+        }
+
+    }
+
+    private Bitmap getCameraImage(int requestCode,int resultCode,Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            return (Bitmap) extras.get("data");
+        }
+        return null;
     }
 
     @Override
@@ -159,7 +178,7 @@ public class MainActivity extends AppCompatActivity
                     Manifest.permission.CAMERA)) {
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},1);
+                        new String[]{Manifest.permission.CAMERA},REQUEST_IMAGE_CAPTURE);
             }
         }
     }
@@ -328,11 +347,11 @@ public class MainActivity extends AppCompatActivity
 
         private void setImageViewWithGalleryImage() {
             ImageView imageView;
-            if (bitmap != null) {
+            if (exerciseImageBitmap != null) {
                 if(popupWindow.isShowing()) {
                     imageView = (ImageView) popupWindow.getContentView().findViewById(R.id.addExercisePopup_imageView);
                     imageView.setImageResource(0);
-                    imageView.setImageBitmap(bitmap);
+                    imageView.setImageBitmap(exerciseImageBitmap);
                     imageView.setScaleX(1.0f);
                     imageView.setScaleY(1.0f);
                 }
@@ -360,7 +379,7 @@ public class MainActivity extends AppCompatActivity
         private Exercise getCustomExercise(View popupLayout) {
             String exerciseName = getExerciseName(popupLayout);
             String exerciseDescription = getExerciseDescription(popupLayout);
-            Bitmap exerciseImage = bitmap;
+            Bitmap exerciseImage = exerciseImageBitmap;
 
             Exercise exercise = new Exercise(exerciseName,exerciseDescription);
             exercise.setExerciseImage(exerciseImage);
