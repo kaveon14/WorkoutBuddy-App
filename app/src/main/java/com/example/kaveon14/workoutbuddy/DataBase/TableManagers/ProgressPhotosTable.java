@@ -26,7 +26,7 @@ public class ProgressPhotosTable extends TableManager {
     public ProgressPhotosTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
         setContext(context);
-        searchTable(TABLE_NAME);
+        setTableName(TABLE_NAME);
         setSearchableColumns(new String[]{COLUMN_DATE});
     }
 

@@ -88,7 +88,7 @@ public class ProgressPhotosFragment extends Fragment {
 
     private void openCamera() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        mainActivity.startActivity(intent);
+        mainActivity.startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
     }
 
     private void setRecycleView(View root) {
