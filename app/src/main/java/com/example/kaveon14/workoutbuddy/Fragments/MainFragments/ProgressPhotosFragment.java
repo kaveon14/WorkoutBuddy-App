@@ -2,6 +2,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,13 +14,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.R;
 
 public class ProgressPhotosFragment extends Fragment {
 
 
+    private MainActivity mainActivity;
+
     public ProgressPhotosFragment() {
         // Required empty public constructor
+    }
+
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -52,7 +60,7 @@ public class ProgressPhotosFragment extends Fragment {
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if(fab != null) {
-            fab.setImageResource(R.drawable.ic_menu_manage);
+            fab.setImageResource(R.drawable.ic_menu_camera);
             handleFloatingActionButtonEvents(fab);
         }
         return fab;
@@ -62,23 +70,12 @@ public class ProgressPhotosFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getCameraPermission();
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                mainActivity.startActivity(intent);
             }
         });
     }
 
-    private void getCameraPermission() {
-        if (ContextCompat.checkSelfPermission(getContext(),
-                Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                    Manifest.permission.CAMERA)) {
-            } else {
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.CAMERA},1);
-            }
-        }
-    }
 
     private void setRecycleView(View root) {
         RecyclerView recyclerView =(RecyclerView) root.findViewById(R.id.photoRecycleView);

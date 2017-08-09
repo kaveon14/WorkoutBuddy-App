@@ -149,7 +149,19 @@ public class MainActivity extends AppCompatActivity
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
             }
         }
+    }
 
+    private void getCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},1);
+            }
+        }
     }
 
     @Override
@@ -201,7 +213,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showProgressPhotoFragment() {
+        getCameraPermission();
         ProgressPhotosFragment progressPhoto_frag = new ProgressPhotosFragment();
+        progressPhoto_frag.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),progressPhoto_frag,R.id.progressPhotos_fragment);
     }
 
