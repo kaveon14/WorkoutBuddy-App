@@ -61,7 +61,7 @@ public class EditBodyStatsPopup extends PopupWindowManager {
     private void addBodyStatsData() {
         EditBodyStatsPopup.BodyStatsExtension bodyStatsExtension =
                 new EditBodyStatsPopup.BodyStatsExtension();
-        bodyStatsExtension.addBodyStatsData(getRootView());
+        bodyStatsExtension.addBodyStatsData(popupLayout);
     }
 
     private void addButton() {
@@ -70,7 +70,7 @@ public class EditBodyStatsPopup extends PopupWindowManager {
             @Override
             public void onClick(View v) {
                 Body body = new EditBodyStatsPopup.BodyStatsExtension()
-                        .getBodyStatsObject(getRootView());
+                        .getBodyStatsObject(popupLayout);
                 if (body != null) {
                     addBodyStatsData();
                     BodyStatsFragment.setNewBodyStats(body);
@@ -98,7 +98,6 @@ public class EditBodyStatsPopup extends PopupWindowManager {
             try {
                 body.setDate(date);
             } catch (IllegalArgumentException e) {
-                System.out.println("Caught");
                 Toast.makeText(context,"Date Not Entered Properly" +
                         ", Data NOT Saved!!",Toast.LENGTH_LONG).show();
                 return null;
@@ -197,10 +196,4 @@ public class EditBodyStatsPopup extends PopupWindowManager {
             calfView.setText(size);
         }
     }
-
-
-
-
-
-
 }

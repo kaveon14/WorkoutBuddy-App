@@ -28,9 +28,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setBaseContent();
         getPermissions();
+        loadRecentStats();
     }
 
     @Override
@@ -265,6 +269,33 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadRecentStats() {
+       // loadRecentBodyStats();
+        loadRecentWorkoutStats();
+        loadRecentProgressPhoto();
+    }
+
+    private void loadRecentBodyStats() {
+        int INDEX = 0;
+        BodyTable table = new BodyTable(getBaseContext());
+        String date = table.getColumn(DataBaseContract.BodyData.COLUMN_DATE,INDEX+1).get(INDEX);
+        String weight = table.getColumn(DataBaseContract.BodyData.COLUMN_WEIGHT,INDEX+1).get(INDEX);
+        String chest = table.getColumn(DataBaseContract.BodyData.COLUMN_CHEST_SIZE,INDEX+1).get(INDEX);
+        String back = table.getColumn(DataBaseContract.BodyData.COLUMN_BACK_SIZE,INDEX+1).get(INDEX);
+        String arm = table.getColumn(DataBaseContract.BodyData.COLUMN_ARM_SIZE,INDEX+1).get(INDEX);
+        String forearm = table.getColumn(DataBaseContract.BodyData.COLUMN_FOREARM_SIZE,INDEX+1).get(INDEX);
+        String waist = table.getColumn(DataBaseContract.BodyData.COLUMN_WAIST_SIZE,INDEX+1).get(INDEX);
+        String quad = table.getColumn(DataBaseContract.BodyData.COLUMN_QUAD_SIZE,INDEX+1).get(INDEX);
+        String calves = table.getColumn(DataBaseContract.BodyData.COLUMN_CALF_SIZE,INDEX+1).get(INDEX);
+
+        TextView textView = (TextView) findViewById(R.id.recentDateView);
+        textView.setText(date);
+    }
+
+    private void loadRecentWorkoutStats() {
+
+    }
+
+    private void loadRecentProgressPhoto() {
 
     }
 
