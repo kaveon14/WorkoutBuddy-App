@@ -161,6 +161,7 @@
                                 android:background="@drawable/ic_scale" />
 
                             <TextView
+                                android:id="@+id/recentWeightView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -180,6 +181,7 @@
                                 android:background="@drawable/ic_chest" />
 
                             <TextView
+                                android:id="@+id/recentChestView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -199,6 +201,7 @@
                                 android:background="@drawable/ic_back" />
 
                             <TextView
+                                android:id="@+id/recentBackView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="32dp"
                                 android:layout_gravity="center"
@@ -219,6 +222,7 @@
                                 android:background="@drawable/ic_arms" />
 
                             <TextView
+                                android:id="@+id/recentArmsView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -238,6 +242,7 @@
                                 android:background="@drawable/ic_menu_send" />
 
                             <TextView
+                                android:id="@+id/recentForearmsView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -257,6 +262,7 @@
                                 android:background="@drawable/ic_waist" />
 
                             <TextView
+                                android:id="@+id/recentWaistView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -277,6 +283,7 @@
 
 
                             <TextView
+                                android:id="@+id/recentQuadsView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
@@ -296,6 +303,7 @@
                                 android:background="@drawable/ic_menu_gallery" />
 
                             <TextView
+                                android:id="@+id/recentCalvesView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"

@@ -48,7 +48,7 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+// TODO data loaded in mainActivty is not the most recent yet
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadRecentStats() {
-       // loadRecentBodyStats();
+        loadRecentBodyStats();
         loadRecentWorkoutStats();
         loadRecentProgressPhoto();
     }
@@ -277,18 +277,60 @@ public class MainActivity extends AppCompatActivity
     private void loadRecentBodyStats() {
         int INDEX = 0;
         BodyTable table = new BodyTable(getBaseContext());
+        try {
+            loadRecentBodyStatsPt1(table, INDEX);
+            loadRecentBodyStatsPt2(table, INDEX);
+            loadRecentBodyStatsPt3(table, INDEX);
+        } catch (IndexOutOfBoundsException e) {
+            //do nothing
+        }
+
+    }
+
+    private void loadRecentBodyStatsPt1(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
         String date = table.getColumn(DataBaseContract.BodyData.COLUMN_DATE,INDEX+1).get(INDEX);
         String weight = table.getColumn(DataBaseContract.BodyData.COLUMN_WEIGHT,INDEX+1).get(INDEX);
         String chest = table.getColumn(DataBaseContract.BodyData.COLUMN_CHEST_SIZE,INDEX+1).get(INDEX);
+
+        TextView textView = (TextView) findViewById(R.id.recentDateView);
+        textView.setText(date);
+
+        textView = (TextView) findViewById(R.id.recentWeightView);
+        textView.setText(weight);
+
+        textView = (TextView) findViewById(R.id.recentChestView);
+        textView.setText(chest);
+    }
+
+    private void loadRecentBodyStatsPt2(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
         String back = table.getColumn(DataBaseContract.BodyData.COLUMN_BACK_SIZE,INDEX+1).get(INDEX);
         String arm = table.getColumn(DataBaseContract.BodyData.COLUMN_ARM_SIZE,INDEX+1).get(INDEX);
         String forearm = table.getColumn(DataBaseContract.BodyData.COLUMN_FOREARM_SIZE,INDEX+1).get(INDEX);
+
+        TextView textView = (TextView) findViewById(R.id.recentBackView);
+        textView.setText(back);
+
+        textView = (TextView) findViewById(R.id.recentArmsView);
+        textView.setText(arm);
+
+        textView = (TextView) findViewById(R.id.recentForearmsView);
+        textView.setText(forearm);
+    }
+
+    private void loadRecentBodyStatsPt3(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
         String waist = table.getColumn(DataBaseContract.BodyData.COLUMN_WAIST_SIZE,INDEX+1).get(INDEX);
         String quad = table.getColumn(DataBaseContract.BodyData.COLUMN_QUAD_SIZE,INDEX+1).get(INDEX);
         String calves = table.getColumn(DataBaseContract.BodyData.COLUMN_CALF_SIZE,INDEX+1).get(INDEX);
 
-        TextView textView = (TextView) findViewById(R.id.recentDateView);
-        textView.setText(date);
+        TextView textView = (TextView) findViewById(R.id.recentWaistView);
+        textView.setText(waist);
+
+        textView = (TextView) findViewById(R.id.recentQuadsView);
+        textView.setText(quad);
+
+        textView = (TextView) findViewById(R.id.recentCalvesView);
+        textView.setText(calves);
+
     }
 
     private void loadRecentWorkoutStats() {
