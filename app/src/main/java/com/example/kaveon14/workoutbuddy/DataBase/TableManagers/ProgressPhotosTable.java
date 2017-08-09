@@ -90,9 +90,4 @@ public class ProgressPhotosTable extends TableManager {
         stream.close();
         return data;
     }
-
-
-
-
-
 }

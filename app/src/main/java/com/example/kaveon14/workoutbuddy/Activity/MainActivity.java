@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
-        table.printTable();
     }
 
     @Override

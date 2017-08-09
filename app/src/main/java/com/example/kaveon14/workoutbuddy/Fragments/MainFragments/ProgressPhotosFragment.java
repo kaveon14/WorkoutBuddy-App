@@ -10,13 +10,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.kaveon14.workoutbuddy.R;
+
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.kaveon14.workoutbuddy.Activity.MainActivity.REQUEST_IMAGE_CAPTURE;
@@ -85,19 +92,29 @@ public class ProgressPhotosFragment extends Fragment {
     }
 
     private void setRecycleView(View root) {
+        ProgressPhotosTable table = new ProgressPhotosTable(getContext());
+        RecyclerAdapter adapter = new RecyclerAdapter(table.getProgressPhotos());
         RecyclerView recyclerView =(RecyclerView) root.findViewById(R.id.photoRecycleView);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setItemViewCacheSize(12);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
 
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
-        public RecyclerAdapter() {
+        List<ProgressPhoto> progressPhotoList;
 
+        public RecyclerAdapter(List<ProgressPhoto> progressPhotoList) {
+            this.progressPhotoList = progressPhotoList;
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return (null != progressPhotoList ? progressPhotoList.size() : 0);
         }
 
         @Override
@@ -109,17 +126,22 @@ public class ProgressPhotosFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CustomViewHolder customViewHolder,int i) {
-
+            ProgressPhoto progressPhoto = progressPhotoList.get(i);
+            customViewHolder.dateView.setText(progressPhoto.getDate());
+            customViewHolder.imageView.setImageBitmap(progressPhoto.getProgressPhoto());
         }
 
 
         class CustomViewHolder extends RecyclerView.ViewHolder {
 
+            protected TextView dateView;
+            protected ImageView imageView;
 
             public CustomViewHolder(View rowView) {
                 super(rowView);
+                dateView = (TextView) rowView.findViewById(R.id.progressPhotoDateView);
+                imageView = (ImageView) rowView.findViewById(R.id.progressPhotoImageView);
             }
-
         }
     }
 
