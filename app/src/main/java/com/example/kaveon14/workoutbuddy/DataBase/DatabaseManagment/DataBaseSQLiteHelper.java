@@ -50,15 +50,16 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(DataBaseContract.MainWorkoutData.CREATE_TABLE);
-        testData(database);
+        defaultWorkoutData(database);
         new DefaultWorkoutsExtension().addDefaultWorkoutsOnCreate(database);
         database.execSQL(DataBaseContract.ExerciseData.CREATE_TABLE);
         new DefaultExercisesExtension().addDefaultExercises(database);
         database.execSQL(DataBaseContract.BodyData.CREATE_TABLE);
         database.execSQL(createWorkoutDataTable());
+        database.execSQL(DataBaseContract.ProgressPhotos.CREATE_TABLE);
     }
 
-    private void testData(SQLiteDatabase database) {
+    private void defaultWorkoutData(SQLiteDatabase database) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_MAINWORKOUT,"Default Workouts");
         values.put(COLUMN_SUBWORKOUT_1,"Chest Day");

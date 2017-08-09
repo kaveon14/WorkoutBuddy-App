@@ -153,6 +153,21 @@ public class DataBaseContract {
                 COLUMN_CALF_SIZE + " TEXT" + ")";
     }
 
+    public static final class ProgressPhotos implements BaseColumns {
+
+        public static final String TABLE_NAME = "Progress_Photos";
+
+        public static final String COLUMN_DATE = "Photo_Date";
+
+        public static final String COLUMN_PHOTO = "Progress_Photo";
+
+        public static final String CREATE_TABLE = " CREATE TABLE " +
+                TABLE_NAME + " (" +
+                _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_DATE + " TEXT, " +
+                COLUMN_PHOTO + " BLOB" +")";
+    }
+
     public static final class WorkoutData implements BaseColumns {//gonna have to expand a lot
 
         private static List<String> columnNames = new LinkedList<>();
