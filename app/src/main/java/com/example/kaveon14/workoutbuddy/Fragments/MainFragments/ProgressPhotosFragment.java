@@ -70,12 +70,15 @@ public class ProgressPhotosFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                mainActivity.startActivity(intent);
+               openCamera();
             }
         });
     }
 
+    private void openCamera() {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        mainActivity.startActivity(intent);
+    }
 
     private void setRecycleView(View root) {
         RecyclerView recyclerView =(RecyclerView) root.findViewById(R.id.photoRecycleView);
