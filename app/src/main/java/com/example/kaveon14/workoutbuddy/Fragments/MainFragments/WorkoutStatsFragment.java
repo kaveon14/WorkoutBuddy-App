@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-
+//TODO delete un-needed onCreate methods
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
