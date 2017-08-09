@@ -264,6 +264,10 @@ public class MainActivity extends AppCompatActivity
         scrollView.setVisibility(View.INVISIBLE);
     }
 
+    private void loadRecentStats() {
+
+    }
+
     private void setBaseContent() {
         setContentView(R.layout.activity_main);
         setDrawer(setToolbar());

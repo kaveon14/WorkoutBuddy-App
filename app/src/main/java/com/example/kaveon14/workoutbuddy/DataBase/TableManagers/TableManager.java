@@ -37,8 +37,20 @@ public abstract class TableManager {
         List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
-        int increment = 0;
         while(cursor.moveToNext()) {
+            columnList.add(cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
+        }
+        readableDatabase.close();
+        cursor.close();
+        return columnList;
+    }
+
+    public List<String> getColumn(String columnName,int count) {
+        List<String> columnList = new ArrayList<>(count);
+        SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
+        Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
+        int increment = 0;
+        while(cursor.moveToNext() && increment<count) {
             columnList.add(increment,cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
             increment++;
         }
