@@ -1,6 +1,7 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,7 +18,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 public class DeleteBodyStatsPopup extends PopupWindowManager {
 
     private int position;
-    private ListView listView;
+    private RecyclerView recyclerView;
     private List<Body> bodyStats;
 
 
@@ -36,8 +37,8 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
         this.bodyStats = bodyStats;
     }
 
-    public void setListView(ListView listView) {
-        this.listView = listView;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 
     public void showPopupWindow() {
@@ -78,6 +79,7 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
 
     private void deleteRowView() {
         bodyStats.remove(position);
+        recyclerView.getAdapter().notifyItemRemoved(position);
     }
 
     private void deleteBodyStatsRow() {

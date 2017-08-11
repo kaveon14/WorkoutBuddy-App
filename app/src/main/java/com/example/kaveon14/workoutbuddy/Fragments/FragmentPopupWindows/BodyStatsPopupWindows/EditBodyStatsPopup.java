@@ -1,6 +1,7 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,10 +12,15 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWin
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
+import java.util.List;
 
+//delete add bodystats popup
 public class EditBodyStatsPopup extends PopupWindowManager {
 
     private boolean updatingRow = false;
+    private RecyclerView recyclerView;
+    private int position;
+    private List<Body> bodyList;
 
     public EditBodyStatsPopup(View root, Context context) {
         setRootView(root);
@@ -29,10 +35,22 @@ public class EditBodyStatsPopup extends PopupWindowManager {
         if(updatingRow) {
             setEditTextView();
             btn.setText(R.string.editedBodyStats);
-        } else {
+        } else {//adding new stats
             btn.setText(R.string.addStats);
         }
         addButton();
+    }
+
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public void setBodyList(List<Body> bodyList) {
+        this.bodyList = bodyList;
     }
 
     public void isUpdatingRow(boolean updatingRow) {
@@ -58,12 +76,6 @@ public class EditBodyStatsPopup extends PopupWindowManager {
         bodyStatsExtension.setCalfSize(body.getCalfSize(),popupLayout);
     }
 
-    private void addBodyStatsData() {
-        EditBodyStatsPopup.BodyStatsExtension bodyStatsExtension =
-                new EditBodyStatsPopup.BodyStatsExtension();
-        bodyStatsExtension.addBodyStatsData(popupLayout);
-    }
-
     private void addButton() {
         Button btn = (Button) popupLayout.findViewById(R.id.addStats_btnPop);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +84,11 @@ public class EditBodyStatsPopup extends PopupWindowManager {
                 Body body = new EditBodyStatsPopup.BodyStatsExtension()
                         .getBodyStatsObject(popupLayout);
                 if (body != null) {
-                    addBodyStatsData();
-                    BodyStatsFragment.setNewBodyStats(body);
+                    bodyList.remove(position);
+                    bodyList.add(position,body);
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                    new BodyTable(context).addStatsToBodyTable(body);
+                    //BodyStatsFragment.setNewBodyStats(body);
                     Toast.makeText(context, "Stats Successfully Added!",
                             Toast.LENGTH_SHORT).show();
                     popupWindow.dismiss();
@@ -84,8 +99,10 @@ public class EditBodyStatsPopup extends PopupWindowManager {
 
     private class BodyStatsExtension {
 
-        private void addBodyStatsData(View root) {
-            new BodyTable(context).addStatsToBodyTable(getBodyStatsObject(root));
+        private Body addBodyStatsData(View root) {
+            Body body = getBodyStatsObject(root);
+            new BodyTable(context).addStatsToBodyTable(body);
+            return body;
         }
 
         private Body getBodyStatsObject(View root) {

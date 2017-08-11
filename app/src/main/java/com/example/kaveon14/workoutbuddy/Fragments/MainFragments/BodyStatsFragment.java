@@ -1,6 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-//restore sorted values to increase sorting speeds
-import android.content.Context;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
@@ -33,7 +31,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_ARM_SIZE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_BACK_SIZE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_CHEST_SIZE;
-
+//TODO update delete body stats popup
 public class BodyStatsFragment extends Fragment {
 
     private static Body clickedBodyStatsItem;
@@ -41,7 +39,8 @@ public class BodyStatsFragment extends Fragment {
     private View root;
     private List<Body> bodyStats;
     private MainActivity mainActivity;
-    private RecyclerAdapter recyclerAdapter = null;
+    private RecyclerView recyclerView;
+    private RecyclerAdapter recyclerAdapter;
     private BodyTableExtension tableExtension;
 
     public BodyStatsFragment() {
@@ -73,7 +72,6 @@ public class BodyStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_body_stats, container, false);
-        //setRecycleView(root);
         setFloatingActionButton();
         new MyAsyncTask().execute(new ArrayList<Body>());
         return root;
@@ -116,7 +114,7 @@ public class BodyStatsFragment extends Fragment {
     }
 
     private void setRecycleView(View root,RecyclerAdapter recyclerAdapter) {
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recylerView);
+        recyclerView = (RecyclerView) root.findViewById(R.id.recylerView);
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemViewCacheSize(12);
@@ -126,20 +124,6 @@ public class BodyStatsFragment extends Fragment {
             TextView textView = (TextView) root.findViewById(R.id.noBodyStats);
             textView.setVisibility(View.VISIBLE);
         }
-    }
-
-    private void setRecyclerAdapter() {
-        BodyTable bodyTable = new BodyTable(getContext());
-        int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
-        bodyStats = new ArrayList<>();
-        for(int x=0;x<amountOfStatsLogged;x++) {
-            Body body = tableExtension.getBodyStats(x);
-            if(body != null) {
-                bodyStats.add(body);
-            }
-
-        }
-        recyclerAdapter = new RecyclerAdapter(getContext(),bodyStats);
     }
 
     private void handleFloatingActionButtonEvents(FloatingActionButton fab) {
@@ -153,7 +137,7 @@ public class BodyStatsFragment extends Fragment {
         });
     }
 
-    private void updateRowView(ListView listView) {
+    private void updateRowView(ListView listView) {//needs to be converted
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -172,20 +156,9 @@ public class BodyStatsFragment extends Fragment {
         }
     }
 
-    private void deleteRowView(ListView listView) {
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                view.performHapticFeedback(1);
-                showDeleteBodyStatsPopup(listView,position);
-                return true;
-            }
-        });
-    }
-
-    private void showDeleteBodyStatsPopup(ListView listView,int position) {
+    private void showDeleteBodyStatsPopup(RecyclerView recyclerView,int position) {
         DeleteBodyStatsPopup popup = new DeleteBodyStatsPopup(getView(),getContext());
-        popup.setListView(listView);
+        popup.setRecyclerView(recyclerView);
         popup.setBodyStatsList(bodyStats);
         popup.setPosition(position);
         popup.showPopupWindow();
@@ -234,10 +207,8 @@ public class BodyStatsFragment extends Fragment {
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
         private List<Body> bodyStats;
-        private Context context;
 
-        public RecyclerAdapter(Context context, List<Body> bodyStats) {
-            this.context = context;
+        public RecyclerAdapter(List<Body> bodyStats) {
             this.bodyStats = bodyStats;
         }
 
@@ -282,7 +253,8 @@ public class BodyStatsFragment extends Fragment {
 
             public CustomViewHolder(View rowView) {
                 super(rowView);
-                onItemClickListener(rowView);
+                editBodyStats(rowView);
+                deleteBodyStats(rowView);
                 dateTextView = (TextView) rowView.findViewById(R.id.date_textView);
                 weightView = (TextView) rowView.findViewById(R.id.weight_textView);
                 chestSizeView = (TextView) rowView.findViewById(R.id.chestSize_textView);
@@ -294,7 +266,7 @@ public class BodyStatsFragment extends Fragment {
                 calfSizeView = (TextView) rowView.findViewById(R.id.calfSize_textView);
             }
 
-            private void onItemClickListener(View rowView) {
+            private void editBodyStats(View rowView) {
                 cardView = (CardView) rowView.findViewById(R.id.card_view);
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -302,8 +274,24 @@ public class BodyStatsFragment extends Fragment {
                         int i = getLayoutPosition();
                         setClickedBodyStatsItem(bodyStats.get(i));
                         EditBodyStatsPopup popup = new EditBodyStatsPopup(root,getContext());
+                        popup.setRecyclerView(recyclerView);
+                        popup.setBodyList(bodyStats);
+                        popup.setPosition(getLayoutPosition());
                         popup.isUpdatingRow(true);
                         popup.showPopupWindow();
+                    }
+                });
+            }
+
+            private void deleteBodyStats(View rowView) {
+                cardView = (CardView) rowView.findViewById(R.id.card_view);
+                cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        int i = getLayoutPosition();
+                        v.performHapticFeedback(1);
+                        showDeleteBodyStatsPopup(recyclerView,i);
+                        return true;
                     }
                 });
             }
@@ -311,7 +299,6 @@ public class BodyStatsFragment extends Fragment {
     }
 
     private class MyAsyncTask extends AsyncTask<List<Body>,Void,List<Body>> {
-
 
         @Override
         protected void onPreExecute() {
@@ -334,7 +321,7 @@ public class BodyStatsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Body> bodyStats) {
-            recyclerAdapter = new RecyclerAdapter(getContext(),bodyStats);
+            recyclerAdapter = new RecyclerAdapter(bodyStats);
             setRecycleView(root,recyclerAdapter);
         }
     }
