@@ -21,12 +21,17 @@ public class DeleteExercisesPopup extends PopupWindowManager {//dont create popu
 
     private ArrayAdapter customExerciseAdapter;
     private List<Exercise> customExerciseList;
+    private ExerciseFragment exercise_frag;
 
     public DeleteExercisesPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
         setPopupLayout(R.layout.deletesubworkout_popup_layout);
         setPopupViewId(R.id.deleteSubWorkoutPopup);
+    }
+
+    public void setExerciseFragment(ExerciseFragment exercise_frag) {
+        this.exercise_frag = exercise_frag;
     }
 
     public void showPopupWindow() {
@@ -86,7 +91,7 @@ public class DeleteExercisesPopup extends PopupWindowManager {//dont create popu
         ExerciseTable exerciseTable = new ExerciseTable(context);
         exerciseTable.deleteExercise(exercise);
 
-        ExerciseFragment.deleteExerciseFromList(exercise);
+        exercise_frag.deleteExerciseFromList(exercise);
     }
 
     private void resetExerciseListViewColors(AdapterView<?> parent) {

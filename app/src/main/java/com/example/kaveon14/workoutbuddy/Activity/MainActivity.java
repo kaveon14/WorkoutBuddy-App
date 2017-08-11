@@ -53,6 +53,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ExerciseFragment exercise_frag;
     private int fragId;
     public MainActivity mainActivity = this;
     private CustomExercisePopup customExercisePopup;
@@ -219,7 +220,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showExerciseFragment() {
-        ExerciseFragment exercise_frag = new ExerciseFragment();
+        exercise_frag = new ExerciseFragment();
         exercise_frag.setMenu(menu);
         exercise_frag.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),exercise_frag,R.id.exercise_fragment);
@@ -460,7 +461,7 @@ public class MainActivity extends AppCompatActivity
                     Toast.makeText(getBaseContext()
                             ,"Custom Exercise Added",
                             Toast.LENGTH_SHORT).show();
-                    ExerciseFragment.addExerciseToList(customExercise);
+                    exercise_frag.addExerciseToList(customExercise);
                     popupWindow.dismiss();
                 }
             });

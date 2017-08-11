@@ -36,9 +36,9 @@ import static android.content.Context.SEARCH_SERVICE;
 public class ExerciseFragment extends Fragment {
 
     private static Exercise clickedExercise;
-    private static List<Exercise> exerciseList;//see if public needed
-    private static List<Exercise> customExerciseList;//see if public needed
-    private static List<String> exerciseNames;
+    private List<Exercise> exerciseList;
+    private List<Exercise> customExerciseList;
+    private List<String> exerciseNames;
     private ArrayAdapter<String> exerciseAdapter;
     private boolean fromSubWorkout = false;
     private ListView listView;
@@ -128,6 +128,7 @@ public class ExerciseFragment extends Fragment {
     private void showExercisePopupMenu() {
         ExercisePopupMenu popup = new ExercisePopupMenu(getView(),getContext());
         popup.setMainActivity(mainActivity);
+        popup.setExerciseFragment(this);
         popup.setCustomExerciseList(customExerciseList);
         popup.setFromSubWorkout(fromSubWorkout);
         popup.showPopupWindow();
@@ -163,29 +164,21 @@ public class ExerciseFragment extends Fragment {
         });
     }
 
-    public static void addExerciseToList(Exercise exercise) {
+    public void addExerciseToList(Exercise exercise) {
         exerciseList.add(exercise);
         customExerciseList.add(exercise);
         exerciseNames.add(exercise.getExerciseName());
         sortExerciseListByName();
         sortCustomExerciseListByName();
         sortExerciseNames();
-      //  exerciseAdapter.notifyDataSetChanged();
+        exerciseAdapter.notifyDataSetChanged();
     }
 
-    public static void deleteExerciseFromList(Exercise exercise) {
+    public void deleteExerciseFromList(Exercise exercise) {
         exerciseList.remove(exercise);
         exerciseNames.remove(exercise.getExerciseName());
         customExerciseList.remove(exercise);
-      //  exerciseAdapter.notifyDataSetChanged();
-    }
-
-    public static List<Exercise> getExerciseList() {
-        return exerciseList;
-    }
-
-    public static List<Exercise> getCustomExerciseList() {
-        return customExerciseList;
+        exerciseAdapter.notifyDataSetChanged();
     }
 
     private void showBlankExerciseFragment() {
@@ -197,7 +190,7 @@ public class ExerciseFragment extends Fragment {
                 .commit();
     }
 
-    private static void sortExerciseNames() {
+    private void sortExerciseNames() {
         Collections.sort(exerciseNames, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
@@ -206,7 +199,7 @@ public class ExerciseFragment extends Fragment {
         });
     }
 
-    private static void sortExerciseListByName() {
+    private void sortExerciseListByName() {
         Collections.sort(exerciseList, new Comparator<Exercise>() {
             @Override
             public int compare(Exercise exercise1, Exercise exercise2) {
@@ -215,7 +208,7 @@ public class ExerciseFragment extends Fragment {
         });
     }
 
-    private static void sortCustomExerciseListByName() {
+    private void sortCustomExerciseListByName() {
         Collections.sort(customExerciseList, new Comparator<Exercise>() {
             @Override
             public int compare(Exercise exercise1, Exercise exercise2) {
@@ -279,12 +272,14 @@ public class ExerciseFragment extends Fragment {
 
         @Override
         protected List<String> doInBackground(List<String>[] params) {
-            params[0] = table.getColumn(DataBaseContract.ExerciseData.COLUMN_EXERCISES);
             exerciseList = table.getExercises();
             customExerciseList = table.getCustomExercises();
+            for(int x=0;x<exerciseList.size();x++) {
+                params[0].add(exerciseList.get(x).getExerciseName());
+            }
+            exerciseNames = params[0];
             return params[0];
         }
-
 
         @Override
         protected void onPostExecute(List<String> exerciseNames) {
