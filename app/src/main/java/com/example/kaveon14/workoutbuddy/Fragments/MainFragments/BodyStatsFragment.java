@@ -1,6 +1,7 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 //restore sorted values to increase sorting speeds
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,7 @@ public class BodyStatsFragment extends Fragment {
     private List<Body> bodyStats;
     private MainActivity mainActivity;
     private RecyclerAdapter recyclerAdapter = null;
+    private BodyTableExtension tableExtension;
 
     public BodyStatsFragment() {
         // Required empty public constructor
@@ -71,8 +73,9 @@ public class BodyStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_body_stats, container, false);
-        setRecycleView(root);
+        //setRecycleView(root);
         setFloatingActionButton();
+        new MyAsyncTask().execute(new ArrayList<Body>());
         return root;
     }
 
@@ -112,15 +115,12 @@ public class BodyStatsFragment extends Fragment {
         return fab;
     }
 
-    private void setRecycleView(View root) {
+    private void setRecycleView(View root,RecyclerAdapter recyclerAdapter) {
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recylerView);
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemViewCacheSize(12);
         recyclerView.setHasFixedSize(true);
-        if(recyclerAdapter == null) {
-            setRecyclerAdapter();
-        }
         recyclerView.setAdapter(recyclerAdapter);
         if(recyclerView.getAdapter().getItemCount()==0) {
             TextView textView = (TextView) root.findViewById(R.id.noBodyStats);
@@ -132,9 +132,8 @@ public class BodyStatsFragment extends Fragment {
         BodyTable bodyTable = new BodyTable(getContext());
         int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
         bodyStats = new ArrayList<>();
-        BodyTableExtension extension = new BodyTableExtension();
         for(int x=0;x<amountOfStatsLogged;x++) {
-            Body body = extension.getBodyStats(x);
+            Body body = tableExtension.getBodyStats(x);
             if(body != null) {
                 bodyStats.add(body);
             }
@@ -158,7 +157,7 @@ public class BodyStatsFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setClickedBodyStatsItem(getBodyStats(position));
+                setClickedBodyStatsItem(tableExtension.getBodyStats(position));
                 EditBodyStatsPopup popup = new EditBodyStatsPopup(root,getContext());
                 popup.isUpdatingRow(true);
                 popup.showPopupWindow();
@@ -192,47 +191,29 @@ public class BodyStatsFragment extends Fragment {
         popup.showPopupWindow();
     }
 
-    private Body getBodyStats(int x) {//slow for no reason at all
-         BodyTable bodyTable = new BodyTable(getContext());
-
-         List<String> dateList = bodyTable.getColumn(COLUMN_DATE);
-         List<String> weightList = bodyTable.getColumn(COLUMN_WEIGHT);
-         List<String> chestSizeList = bodyTable.getColumn(COLUMN_CHEST_SIZE);
-         List<String> backSizeList = bodyTable.getColumn(COLUMN_BACK_SIZE);
-         List<String> armSizeList = bodyTable.getColumn(COLUMN_ARM_SIZE);
-         List<String> forearmSizeList = bodyTable.getColumn(COLUMN_FOREARM_SIZE);
-         List<String> waistSizeList = bodyTable.getColumn(COLUMN_WAIST_SIZE);
-         List<String> quadSizeList = bodyTable.getColumn(COLUMN_QUAD_SIZE);
-         List<String> calfSizeList = bodyTable.getColumn(COLUMN_CALF_SIZE);
-
-        Body body = null;
-
-        try{
-            body = new Body().setDate(dateList.get(x)).setWeight(weightList.get(x))
-                    .setChestSize(chestSizeList.get(x)).setBackSize(backSizeList.get(x))
-                    .setArmSize(armSizeList.get(x)).setForearmSize(forearmSizeList.get(x))
-                    .setWaistSize(waistSizeList.get(x)).setQuadSize(quadSizeList.get(x))
-                    .setCalfSize(calfSizeList.get(x));
-        } catch (IndexOutOfBoundsException e) {
-            //do nothing
-        }
-
-         return body;
-     }
-
      private class BodyTableExtension {
 
-         private BodyTable bodyTable = new BodyTable(getContext());
-         private List<String> dateList = bodyTable.getColumn(COLUMN_DATE);
-         private List<String> weightList = bodyTable.getColumn(COLUMN_WEIGHT);
-         private List<String> chestSizeList = bodyTable.getColumn(COLUMN_CHEST_SIZE);
-         private List<String> backSizeList = bodyTable.getColumn(COLUMN_BACK_SIZE);
-         private List<String> armSizeList = bodyTable.getColumn(COLUMN_ARM_SIZE);
-         private List<String> forearmSizeList = bodyTable.getColumn(COLUMN_FOREARM_SIZE);
-         private List<String> waistSizeList = bodyTable.getColumn(COLUMN_WAIST_SIZE);
-         private List<String> quadSizeList = bodyTable.getColumn(COLUMN_QUAD_SIZE);
-         private List<String> calfSizeList = bodyTable.getColumn(COLUMN_CALF_SIZE);
+         private List<String> dateList;
+         private List<String> weightList;
+         private List<String> chestSizeList;
+         private List<String> backSizeList;
+         private List<String> armSizeList;
+         private List<String> forearmSizeList;
+         private List<String> waistSizeList;
+         private List<String> quadSizeList;
+         private List<String> calfSizeList;
 
+         public BodyTableExtension(BodyTable bodyTable) {
+             dateList = bodyTable.getColumn(COLUMN_DATE);
+             weightList = bodyTable.getColumn(COLUMN_WEIGHT);
+             chestSizeList = bodyTable.getColumn(COLUMN_CHEST_SIZE);
+             backSizeList = bodyTable.getColumn(COLUMN_BACK_SIZE);
+             armSizeList = bodyTable.getColumn(COLUMN_ARM_SIZE);
+             forearmSizeList = bodyTable.getColumn(COLUMN_FOREARM_SIZE);
+             waistSizeList = bodyTable.getColumn(COLUMN_WAIST_SIZE);
+             quadSizeList = bodyTable.getColumn(COLUMN_QUAD_SIZE);
+             calfSizeList = bodyTable.getColumn(COLUMN_CALF_SIZE);
+         }
 
          public Body getBodyStats(int x) {
              Body body = null;
@@ -326,6 +307,35 @@ public class BodyStatsFragment extends Fragment {
                     }
                 });
             }
+        }
+    }
+
+    private class MyAsyncTask extends AsyncTask<List<Body>,Void,List<Body>> {
+
+
+        @Override
+        protected void onPreExecute() {
+            BodyTable table = new BodyTable(getContext());
+            tableExtension = new BodyTableExtension(table);
+        }
+
+        @Override
+        protected List<Body> doInBackground(List<Body>[] params) {
+            int i = 1;
+            Body body = tableExtension.getBodyStats(0);
+            while(body != null) {
+                params[0].add(body);
+                body = tableExtension.getBodyStats(i);
+                i++;
+            }
+            bodyStats = params[0];
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(List<Body> bodyStats) {
+            recyclerAdapter = new RecyclerAdapter(getContext(),bodyStats);
+            setRecycleView(root,recyclerAdapter);
         }
     }
 }
