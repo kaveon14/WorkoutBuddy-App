@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         loadRecentStats();
+        BodyTable table = new BodyTable(getBaseContext());
+        table.printTable();
     }
 
     @Override

@@ -22,6 +22,7 @@ import java.util.List;
 public class BodyTable extends TableManager {
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
+    private static int ROW_ID = 0;
 
     public BodyTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
