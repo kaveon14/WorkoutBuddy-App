@@ -263,7 +263,7 @@ public class ExerciseFragment extends Fragment {
 
     private class MyAsyncTask extends AsyncTask<List<String>,Void,List<String>> {
 
-        ExerciseTable table;
+        private ExerciseTable table;
 
         @Override
         protected void onPreExecute() {

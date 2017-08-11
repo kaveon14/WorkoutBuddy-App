@@ -31,6 +31,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
@@ -48,12 +49,15 @@ import com.example.kaveon14.workoutbuddy.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 // TODO data loaded in mainActivty is not the most recent yet
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ExerciseFragment exercise_frag;
+    private ExerciseFragment exercise_frag;//make these variables in a pyramid
     private int fragId;
     public MainActivity mainActivity = this;
     private CustomExercisePopup customExercisePopup;
@@ -69,6 +73,17 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         loadRecentStats();
+
+       /* BodyTable table = new BodyTable(getBaseContext());
+        for(int x=0;x<100;x++) {
+
+            Body body = new Body().setArmSize("arm").setBackSize("back").setCalfSize("calf")
+                    .setChestSize("chest").setDate("10/10/2010").setForearmSize("forearm")
+                    .setQuadSize("quad").setWaistSize("waist").setWeight("weight");
+           table.addStatsToBodyTable(body);
+        }*/
+
+
     }
 
     @Override

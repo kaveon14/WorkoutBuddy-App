@@ -132,8 +132,9 @@ public class BodyStatsFragment extends Fragment {
         BodyTable bodyTable = new BodyTable(getContext());
         int amountOfStatsLogged = bodyTable.getColumn(COLUMN_DATE).size();
         bodyStats = new ArrayList<>();
-        for(int x=0;x<6;x++) {
-            Body body = getBodyStats(x);
+        BodyTableExtension extension = new BodyTableExtension();
+        for(int x=0;x<amountOfStatsLogged;x++) {
+            Body body = extension.getBodyStats(x);
             if(body != null) {
                 bodyStats.add(body);
             }
@@ -191,7 +192,7 @@ public class BodyStatsFragment extends Fragment {
         popup.showPopupWindow();
     }
 
-    private Body getBodyStats(int x) {
+    private Body getBodyStats(int x) {//slow for no reason at all
          BodyTable bodyTable = new BodyTable(getContext());
 
          List<String> dateList = bodyTable.getColumn(COLUMN_DATE);
@@ -219,6 +220,35 @@ public class BodyStatsFragment extends Fragment {
          return body;
      }
 
+     private class BodyTableExtension {
+
+         private BodyTable bodyTable = new BodyTable(getContext());
+         private List<String> dateList = bodyTable.getColumn(COLUMN_DATE);
+         private List<String> weightList = bodyTable.getColumn(COLUMN_WEIGHT);
+         private List<String> chestSizeList = bodyTable.getColumn(COLUMN_CHEST_SIZE);
+         private List<String> backSizeList = bodyTable.getColumn(COLUMN_BACK_SIZE);
+         private List<String> armSizeList = bodyTable.getColumn(COLUMN_ARM_SIZE);
+         private List<String> forearmSizeList = bodyTable.getColumn(COLUMN_FOREARM_SIZE);
+         private List<String> waistSizeList = bodyTable.getColumn(COLUMN_WAIST_SIZE);
+         private List<String> quadSizeList = bodyTable.getColumn(COLUMN_QUAD_SIZE);
+         private List<String> calfSizeList = bodyTable.getColumn(COLUMN_CALF_SIZE);
+
+
+         public Body getBodyStats(int x) {
+             Body body = null;
+             try{
+                 body = new Body().setDate(dateList.get(x)).setWeight(weightList.get(x))
+                         .setChestSize(chestSizeList.get(x)).setBackSize(backSizeList.get(x))
+                         .setArmSize(armSizeList.get(x)).setForearmSize(forearmSizeList.get(x))
+                         .setWaistSize(waistSizeList.get(x)).setQuadSize(quadSizeList.get(x))
+                         .setCalfSize(calfSizeList.get(x));
+             } catch (IndexOutOfBoundsException e) {
+                 //do nothing
+             }
+             return body;
+         }
+
+     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
