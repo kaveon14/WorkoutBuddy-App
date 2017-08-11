@@ -1,6 +1,7 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 import android.app.SearchManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -34,15 +35,16 @@ import static android.content.Context.SEARCH_SERVICE;
 
 public class ExerciseFragment extends Fragment {
 
-    private static ArrayAdapter exerciseAdapter;
     private static Exercise clickedExercise;
     private static List<Exercise> exerciseList;//see if public needed
     private static List<Exercise> customExerciseList;//see if public needed
     private static List<String> exerciseNames;
+    private ArrayAdapter<String> exerciseAdapter;
     private boolean fromSubWorkout = false;
     private ListView listView;
     private Menu menu;
     private MainActivity mainActivity;
+    private View root;
 
     public ExerciseFragment() {
 
@@ -72,9 +74,8 @@ public class ExerciseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_exercise, container, false);
-        setExerciseAdapter();
-        setListView(root,exerciseAdapter);
+        root = inflater.inflate(R.layout.fragment_exercise, container, false);
+        new MyAsyncTask().execute(new ArrayList<String>());
         setFloatingActionButton();
         setSearchViewOnClick();
         return root;
@@ -169,14 +170,14 @@ public class ExerciseFragment extends Fragment {
         sortExerciseListByName();
         sortCustomExerciseListByName();
         sortExerciseNames();
-        exerciseAdapter.notifyDataSetChanged();
+      //  exerciseAdapter.notifyDataSetChanged();
     }
 
     public static void deleteExerciseFromList(Exercise exercise) {
         exerciseList.remove(exercise);
         exerciseNames.remove(exercise.getExerciseName());
         customExerciseList.remove(exercise);
-        exerciseAdapter.notifyDataSetChanged();
+      //  exerciseAdapter.notifyDataSetChanged();
     }
 
     public static List<Exercise> getExerciseList() {
@@ -185,29 +186,6 @@ public class ExerciseFragment extends Fragment {
 
     public static List<Exercise> getCustomExerciseList() {
         return customExerciseList;
-    }
-
-    private void setExerciseAdapter() {
-        setAllExerciseLists();
-        exerciseAdapter = new ArrayAdapter(getContext(),R.layout.simple_list_item,exerciseNames);
-    }
-
-    public void setAllExerciseLists() {//not possible
-        ExerciseTable exerciseTable = new ExerciseTable(getContext());
-        if (exerciseList == null) {
-            exerciseList = exerciseTable.getExercises();
-            sortExerciseListByName();
-        }
-        if (customExerciseList == null) {
-            customExerciseList = exerciseTable.getCustomExercises();
-            sortCustomExerciseListByName();
-        }
-        if (exerciseNames == null) {
-            exerciseNames = new ArrayList<>();
-            for (int x = 0; x < exerciseList.size(); x++) {
-                exerciseNames.add(exerciseList.get(x).getExerciseName());
-            }
-        }
     }
 
     private void showBlankExerciseFragment() {
@@ -288,6 +266,32 @@ public class ExerciseFragment extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter(getContext(),R.layout.simple_list_item,list);
         listView.setAdapter(adapter);
         return list;
+    }
+
+    private class MyAsyncTask extends AsyncTask<List<String>,Void,List<String>> {
+
+        ExerciseTable table;
+
+        @Override
+        protected void onPreExecute() {
+            table = new ExerciseTable(getContext());
+        }
+
+        @Override
+        protected List<String> doInBackground(List<String>[] params) {
+            params[0] = table.getColumn(DataBaseContract.ExerciseData.COLUMN_EXERCISES);
+            exerciseList = table.getExercises();
+            customExerciseList = table.getCustomExercises();
+            return params[0];
+        }
+
+
+        @Override
+        protected void onPostExecute(List<String> exerciseNames) {
+            exerciseAdapter =
+                    new ArrayAdapter<String>(getContext(),R.layout.simple_list_item,exerciseNames);
+            setListView(root,exerciseAdapter);
+        }
     }
 }
 //no need to change the custom image name because it is tied and retrieved by an exercise object
