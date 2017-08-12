@@ -510,10 +510,13 @@ public class MainActivity extends AppCompatActivity
         private Exercise getCustomExercise(View popupLayout) {
             String exerciseName = getExerciseName(popupLayout);
             String exerciseDescription = getExerciseDescription(popupLayout);
-            Bitmap exerciseImage = exerciseImageBitmap;
-
             Exercise exercise = new Exercise(exerciseName,exerciseDescription);
-            exercise.setExerciseImage(exerciseImage);
+            if(exerciseImageBitmap != null) {
+                exercise.setExerciseImage(exerciseImageBitmap);
+            } else {
+                exercise.setExerciseImage(BitmapFactory.decodeResource(getResources(),
+                        R.mipmap.no_image));
+            }
             return exercise;
         }
 
