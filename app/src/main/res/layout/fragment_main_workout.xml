@@ -5,9 +5,8 @@
     tools:context=".Fragments.MainFragments.MainWorkoutFragment">
 
 
-    <ListView
-        android:id="@+id/mainWorkout_listView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mainWorkout_RecycleView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@color/caldroid_transparent"/>
+        android:layout_height="match_parent" />
 </FrameLayout>

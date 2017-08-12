@@ -1,12 +1,12 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,6 +38,9 @@ public class MainWorkoutFragment extends Fragment {
     private List<MainWorkout> mainWorkouts;
     private ArrayAdapter adapter;
     private ListView listView;
+    private RecyclerView recyclerView;
+    private RecyclerAdapter recyclerAdapter;
+    private View root;
     private MainActivity mainActivity;
     private Menu menu;
 
@@ -66,8 +68,9 @@ public class MainWorkoutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main_workout, container, false);
-        setListView(root);
+        root = inflater.inflate(R.layout.fragment_main_workout, container, false);
+       // setListView(root);
+        new MyAsyncTask().execute(mainWorkouts);
         setFloatingActionButton(root);
         setSearchViewOnClick();
         return root;
@@ -128,12 +131,22 @@ public class MainWorkoutFragment extends Fragment {
         popup.showPopupWindow();
     }
 
+    private RecyclerView setRecycleView(View root,RecyclerAdapter recyclerAdapter) {
+        recyclerView = (RecyclerView) root.findViewById(R.id.mainWorkout_RecycleView);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setItemViewCacheSize(12);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(recyclerAdapter);
+        return recyclerView;
+    }
+
     private ListView setListView(View root) {
-        listView = (ListView) root.findViewById(R.id.mainWorkout_listView);
-        listView.setAdapter(getAdapter());
+       // listView = (ListView) root.findViewById(R.id.mainWorkout_listView);
+        //listView.setAdapter(getAdapter());
         openWorkoutOnClick(listView);
         deleteRowVew();
-        return listView;
+        return null;
     }
 
     private ArrayAdapter getAdapter() {
@@ -226,11 +239,11 @@ public class MainWorkoutFragment extends Fragment {
         popup.showPopupWindow();
     }
 
-    private class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.CustomViewHolder> {
+    private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
         private List<MainWorkout> mainWorkoutList;
 
-        public RecycleAdapter(List<MainWorkout> mainWorkoutList) {
+        public RecyclerAdapter(List<MainWorkout> mainWorkoutList) {
             this.mainWorkoutList = mainWorkoutList;
         }
 
@@ -283,7 +296,9 @@ public class MainWorkoutFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<MainWorkout> mainWorkouts) {
-            //set adapter
+            recyclerAdapter = new RecyclerAdapter(mainWorkouts);
+            setRecycleView(root,recyclerAdapter);
+
         }
 
     }
