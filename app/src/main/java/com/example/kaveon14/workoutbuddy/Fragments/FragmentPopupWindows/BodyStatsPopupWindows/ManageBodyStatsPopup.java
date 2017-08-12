@@ -11,10 +11,8 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.List;
 
-//delete add bodystats popup
 public class ManageBodyStatsPopup extends PopupWindowManager {
 
     private boolean updatingRow = false;
@@ -117,12 +115,6 @@ public class ManageBodyStatsPopup extends PopupWindowManager {
     }
 
     private class BodyStatsExtension {
-
-        private Body addBodyStatsData(View root) {
-            Body body = getBodyStatsObject(root);
-            new BodyTable(context).addStatsToBodyTable(body);
-            return body;
-        }
 
         private Body getBodyStatsObject(View root) {
             Body body = new Body().setWeight(getWeight(root))

@@ -10,10 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
-import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.DeleteBodyStatsPopup;
@@ -22,26 +19,14 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStat
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_DATE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_CALF_SIZE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_QUAD_SIZE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_WEIGHT;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_FOREARM_SIZE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_WAIST_SIZE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_ARM_SIZE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_BACK_SIZE;
-import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_CHEST_SIZE;
-//TODO update delete body stats popup
+
 public class BodyStatsFragment extends Fragment {
 
     private static Body clickedBodyStatsItem;
-    private static Body newBodyStats;
     private View root;
     private List<Body> bodyStats;
-    private MainActivity mainActivity;
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
-    private BodyTableExtension tableExtension;
 
     public BodyStatsFragment() {
         // Required empty public constructor
@@ -53,14 +38,6 @@ public class BodyStatsFragment extends Fragment {
 
     public static Body getClickedBodyStatsItem() {
         return clickedBodyStatsItem;
-    }
-
-    public static void setNewBodyStats(Body newBodyStats) {
-        BodyStatsFragment.newBodyStats = newBodyStats;
-    }
-
-    public void setMainActivity(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -81,7 +58,6 @@ public class BodyStatsFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if(!hidden) {
-            updateListViewForNewBodyStats();
             setFloatingActionButton();
         }
     }
@@ -130,30 +106,10 @@ public class BodyStatsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BodyStatsMenuPopup bt = new BodyStatsMenuPopup(getView(),getContext());
-                bt.setMainActivity(mainActivity);
-                bt.showPopupWindow();
-            }
-        });
-    }
-
-    private void updateRowView(ListView listView) {//needs to be converted
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setClickedBodyStatsItem(tableExtension.getBodyStats(position));
-                ManageBodyStatsPopup popup = new ManageBodyStatsPopup(root,getContext());
-                popup.isUpdatingRow(true);
+                BodyStatsMenuPopup popup = new BodyStatsMenuPopup(getView(),getContext());
                 popup.showPopupWindow();
-
             }
         });
-    }
-
-    private void updateListViewForNewBodyStats() {
-        if (newBodyStats != null) {
-            bodyStats.add(newBodyStats);
-        }
     }
 
     private void showDeleteBodyStatsPopup(RecyclerView recyclerView,int position) {
@@ -163,46 +119,6 @@ public class BodyStatsFragment extends Fragment {
         popup.setPosition(position);
         popup.showPopupWindow();
     }
-
-     private class BodyTableExtension {
-
-         private List<String> dateList;
-         private List<String> weightList;
-         private List<String> chestSizeList;
-         private List<String> backSizeList;
-         private List<String> armSizeList;
-         private List<String> forearmSizeList;
-         private List<String> waistSizeList;
-         private List<String> quadSizeList;
-         private List<String> calfSizeList;
-
-         public BodyTableExtension(BodyTable bodyTable) {
-             dateList = bodyTable.getColumn(COLUMN_DATE);
-             weightList = bodyTable.getColumn(COLUMN_WEIGHT);
-             chestSizeList = bodyTable.getColumn(COLUMN_CHEST_SIZE);
-             backSizeList = bodyTable.getColumn(COLUMN_BACK_SIZE);
-             armSizeList = bodyTable.getColumn(COLUMN_ARM_SIZE);
-             forearmSizeList = bodyTable.getColumn(COLUMN_FOREARM_SIZE);
-             waistSizeList = bodyTable.getColumn(COLUMN_WAIST_SIZE);
-             quadSizeList = bodyTable.getColumn(COLUMN_QUAD_SIZE);
-             calfSizeList = bodyTable.getColumn(COLUMN_CALF_SIZE);
-         }
-
-         public Body getBodyStats(int x) {
-             Body body = null;
-             try{
-                 body = new Body().setDate(dateList.get(x)).setWeight(weightList.get(x))
-                         .setChestSize(chestSizeList.get(x)).setBackSize(backSizeList.get(x))
-                         .setArmSize(armSizeList.get(x)).setForearmSize(forearmSizeList.get(x))
-                         .setWaistSize(waistSizeList.get(x)).setQuadSize(quadSizeList.get(x))
-                         .setCalfSize(calfSizeList.get(x));
-             } catch (IndexOutOfBoundsException e) {
-                 //do nothing
-             }
-             return body;
-         }
-
-     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
@@ -300,23 +216,15 @@ public class BodyStatsFragment extends Fragment {
 
     private class MyAsyncTask extends AsyncTask<List<Body>,Void,List<Body>> {
 
-        BodyTable table;
+        private BodyTable table;
 
         @Override
         protected void onPreExecute() {
             table = new BodyTable(getContext());
-            tableExtension = new BodyTableExtension(table);
         }
 
         @Override
         protected List<Body> doInBackground(List<Body>[] params) {
-            int i = 1;
-            Body body = tableExtension.getBodyStats(0);
-            /*while(body != null) {
-                params[0].add(body);
-                body = tableExtension.getBodyStats(i);
-                i++;
-            }*/
             params[0] = table.getSortedBodyStats();
             bodyStats = params[0];
             return params[0];

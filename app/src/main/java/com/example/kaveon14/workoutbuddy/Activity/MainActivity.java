@@ -73,11 +73,6 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         loadRecentStats();
-        BodyTable table = new BodyTable(getBaseContext());
-        List<Body> bodyList = table.getSortedBodyStats();
-        for(Body body : bodyList) {
-            //System.out.println("Date: "+body.getStringDate());
-        }
     }
 
     @Override
@@ -224,7 +219,6 @@ public class MainActivity extends AppCompatActivity
 
     private void showBodyStatsFragment() {
         BodyStatsFragment bodyStats_fragment = new BodyStatsFragment();
-        bodyStats_fragment.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),bodyStats_fragment,R.id.bodyStats_fragment);
     }
 

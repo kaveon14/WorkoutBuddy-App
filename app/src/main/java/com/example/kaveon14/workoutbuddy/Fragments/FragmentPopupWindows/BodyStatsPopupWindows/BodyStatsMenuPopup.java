@@ -11,8 +11,6 @@ import com.example.kaveon14.workoutbuddy.R;
 
 public class BodyStatsMenuPopup extends PopupWindowManager {
 
-    private MainActivity mainActivity;
-
     public BodyStatsMenuPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
@@ -25,10 +23,6 @@ public class BodyStatsMenuPopup extends PopupWindowManager {
         setTextView();
         setYesPopupButton();
         setNoPopupButton();
-    }
-
-    public void setMainActivity(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
     }
 
     private void setTextView() {
