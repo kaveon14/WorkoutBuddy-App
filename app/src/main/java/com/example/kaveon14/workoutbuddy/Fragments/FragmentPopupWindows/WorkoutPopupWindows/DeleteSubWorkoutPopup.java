@@ -97,14 +97,14 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
         subWorkoutAdapter.notifyDataSetChanged();
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
-        mainWorkoutTable.deleteSubWorkout(MainWorkoutFragment.getClickedMainWorkoutName(),
-                subWorkoutName);
+        //mainWorkoutTable.deleteSubWorkout(MainWorkoutFragment.getClickedMainWorkoutName(),
+          //      subWorkoutName);
 
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
-        String tableName = subWorkoutTable.getCorrectTableName(MainWorkoutFragment
-                .getClickedMainWorkoutName(),subWorkoutName);
+        //String tableName = subWorkoutTable.getCorrectTableName(MainWorkoutFragment
+          //      .getClickedMainWorkoutName(),subWorkoutName);
 
-          subWorkoutTable.deleteSubWorkoutTable(tableName);
+      //    subWorkoutTable.deleteSubWorkoutTable(tableName);
     }
 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {

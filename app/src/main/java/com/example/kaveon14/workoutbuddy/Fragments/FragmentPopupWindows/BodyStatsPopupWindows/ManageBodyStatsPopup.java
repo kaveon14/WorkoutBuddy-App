@@ -78,13 +78,13 @@ public class ManageBodyStatsPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Body body = new ManageBodyStatsPopup.BodyStatsExtension()//herre
+                Body body = new ManageBodyStatsPopup.BodyStatsExtension()
                         .getBodyStatsObject(popupLayout);
                 if (body != null) {
                     bodyList.remove(position);
                     bodyList.add(position,body);
                     recyclerView.getAdapter().notifyDataSetChanged();
-                    new BodyTable(context).updateRow(body,body.getRowId());
+                    new BodyTable(context).addStatsToBodyTable(body);
                     Toast.makeText(context, "Stats Successfully Added!",
                             Toast.LENGTH_SHORT).show();
                     popupWindow.dismiss();

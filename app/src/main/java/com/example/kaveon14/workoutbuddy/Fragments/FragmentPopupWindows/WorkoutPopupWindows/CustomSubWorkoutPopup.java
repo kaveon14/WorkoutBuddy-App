@@ -91,9 +91,9 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
 
         subWorkoutTable.addSubWorkoutTable(tableName);
 
-        MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
-        mainWorkoutTable.addSubWorkout(MainWorkoutFragment.getClickedMainWorkoutName()
-                ,subWorkoutName);
+       // MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
+        //mainWorkoutTable.addSubWorkout(MainWorkoutFragment.getClickedMainWorkoutName()
+          //      ,subWorkoutName);
     }
 
     private String getSubWorkoutName() {

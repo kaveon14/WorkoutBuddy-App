@@ -9,10 +9,15 @@ public class MainWorkout {
 
     private String mainWorkoutName;
     private List<SubWorkout> subWorkouts;
+    private long rowId;
 
     public MainWorkout(String mainWorkoutName, List<SubWorkout> subWorkouts) {
         this.mainWorkoutName = mainWorkoutName;
         this.subWorkouts = subWorkouts;
+    }
+
+    public void setRowId(long rowId) {
+        this.rowId = rowId;
     }
 
     public String getMainWorkoutName() {
@@ -41,5 +46,9 @@ public class MainWorkout {
             subWorkoutMap.put(subWorkout.getSubWorkoutName(),subWorkout);
         }
         return subWorkoutMap;
+    }
+
+    public long getRowId() {
+        return rowId;
     }
 }

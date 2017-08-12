@@ -32,9 +32,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
@@ -48,6 +50,8 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
 // TODO data loaded in mainActivty is not the most recent yet
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -68,6 +72,19 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         loadRecentStats();
+        MainWorkoutTable table = new MainWorkoutTable(getBaseContext());
+        //table.addMainWorkout("A Test");
+        //table.addMainWorkout("a test");
+        //table.addMainWorkout("zest");
+        List<String> s = table.getMainWorkoutNames();
+        for(String str : s) {
+            System.out.println("test: "+str);
+        }
+
+        List<MainWorkout> mainWorkouts = table.getMainWorkouts();
+        for(MainWorkout mainWorkout : mainWorkouts) {
+            System.out.println("test2: "+mainWorkout.getMainWorkoutName());
+        }
     }
 
     @Override

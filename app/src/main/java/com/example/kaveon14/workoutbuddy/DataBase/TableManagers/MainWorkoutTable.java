@@ -4,10 +4,15 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.COLUMN_ROWID;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.TABLE_NAME;
 
@@ -30,7 +35,7 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         writableDatabase.close();
     }
 
-    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames) {//error here
+    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames) {
         List<String> rowValues = getSubWorkoutNames(mainWorkoutName);
         deleteRow(mainWorkoutName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
@@ -48,10 +53,43 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         writableDatabase.close();
     }
 
+    public List<MainWorkout> getMainWorkouts() {
+        SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
+        Cursor cursor = database.query(DataBaseContract.MainWorkoutData.TABLE_NAME,
+                null,null,null,null,null,COLUMN_MAINWORKOUT+" COLLATE NOCASE ASC");
+        List<MainWorkout> mainWorkouts = new ArrayList<>();
+        List<SubWorkout> subWorkouts;
+        while(cursor.moveToNext()) {
+            String mainWorkoutName = cursor.getString(cursor.
+                    getColumnIndex(COLUMN_MAINWORKOUT));
+            long rowID = cursor.getLong(cursor.getColumnIndex(COLUMN_ROWID));
+            subWorkouts = getSubWorkouts(mainWorkoutName,cursor);
+            MainWorkout mainWorkout = new MainWorkout(mainWorkoutName,subWorkouts);
+            mainWorkout.setRowId(rowID);
+            mainWorkouts.add(mainWorkout);
+        }
+        database.close();
+        cursor.close();
+        return mainWorkouts;
+    }
+
+    public List<SubWorkout> getSubWorkouts(String mainWorkoutName,Cursor cursor) {
+        SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
+        List<SubWorkout> subWorkouts = new ArrayList<>();
+        for(int x=2;x<=16;x++) {
+            String subWorkoutName = cursor.getString(x);
+            if(subWorkoutName != null) {
+                SubWorkout subWorkout = new SubWorkout(subWorkoutName, null);
+                subWorkouts.add(subWorkout);
+            }
+        }
+        return subWorkouts;
+    }
+
     public List<String> getMainWorkoutNames() {
         SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = database.query(DataBaseContract.MainWorkoutData.TABLE_NAME,
-                null,null,null,null,null,null);
+                null,null,null,null,null,COLUMN_MAINWORKOUT+" COLLATE NOCASE ASC");
         List<String> columnData = new ArrayList<>();
         while(cursor.moveToNext()) {
             columnData.add(cursor.getString(1));
@@ -61,7 +99,7 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         return columnData;
     }
 
-    public List<String> getSubWorkoutNames(String mainWorkout) {//error here
+    public List<String> getSubWorkoutNames(String mainWorkout) {
         SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = database.query(DataBaseContract.MainWorkoutData.TABLE_NAME,
                 null,null,null,null,null,null);

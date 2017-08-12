@@ -29,7 +29,7 @@ import static android.content.Context.SEARCH_SERVICE;
 
 public class MainWorkoutFragment extends Fragment {
 
-    private static String clickedMainWorkoutName;//change to mainWorkout
+    private static MainWorkout clickedMainWorkout;//change to mainWorkout
     private List<String> mainWorkoutNames;
     private ArrayAdapter adapter;
     private ListView listView;
@@ -44,12 +44,12 @@ public class MainWorkoutFragment extends Fragment {
         this.mainActivity = mainActivity;
     }
 
-    public static String getClickedMainWorkoutName() {
-        return clickedMainWorkoutName;
+    public static MainWorkout getClickedMainWorkout() {
+        return clickedMainWorkout;
     }
 
-    public static void setClickedMainWorkoutName(String clickedMainWorkoutName) {
-        MainWorkoutFragment.clickedMainWorkoutName = clickedMainWorkoutName;
+    public static void setClickedMainWorkout(MainWorkout clickedMainWorkout) {
+        MainWorkoutFragment.clickedMainWorkout = clickedMainWorkout;
     }
 
     @Override
@@ -142,9 +142,8 @@ public class MainWorkoutFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                MainWorkoutFragment.setClickedMainWorkoutName(parent
-                        .getItemAtPosition(position).toString());
-                showSubWorkoutfragment(getClickedMainWorkoutName());
+               // MainWorkoutFragment.setClickedMainWorkout(m);
+                //showSubWorkoutfragment(getClickedMainWorkout());
             }
         });
     }
