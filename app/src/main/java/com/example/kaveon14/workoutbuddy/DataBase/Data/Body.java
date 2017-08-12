@@ -16,7 +16,7 @@ public class Body {
     private Date dateForSorting;
 
     public Body setDate(String date) {
-        dateForSorting = new Date(date);
+   //     dateForSorting = new Date(date);
         dateForDisplaying = date;
         return this;
     }

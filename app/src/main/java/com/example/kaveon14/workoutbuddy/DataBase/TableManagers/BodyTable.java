@@ -46,6 +46,31 @@ public class BodyTable extends TableManager {
         writableDatabase.close();
     }
 
+    public List<Body> getSortedBodyStats() {
+        SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
+        Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null
+                ,COLUMN_DATE+" DESC");
+        Body body;
+        System.out.println("WTF");
+        List<Body> bodyList = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            System.out.println("Date:  "+cursor.getString(cursor.getColumnIndex(COLUMN_DATE)));
+            body = new Body().setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)))
+                    .setWeight(cursor.getString(cursor.getColumnIndex(COLUMN_WEIGHT)))
+                    .setChestSize(cursor.getString(cursor.getColumnIndex(COLUMN_CHEST_SIZE)))
+                    .setBackSize(cursor.getString(cursor.getColumnIndex(COLUMN_BACK_SIZE)))
+                    .setArmSize(cursor.getString(cursor.getColumnIndex(COLUMN_ARM_SIZE)))
+                    .setForearmSize(cursor.getString(cursor.getColumnIndex(COLUMN_FOREARM_SIZE)))
+                    .setWaistSize(cursor.getColumnName(cursor.getColumnIndex(COLUMN_WAIST_SIZE)))
+                    .setQuadSize(cursor.getString(cursor.getColumnIndex(COLUMN_QUAD_SIZE)))
+                    .setCalfSize(cursor.getString(cursor.getColumnIndex(COLUMN_CALF_SIZE)));
+            bodyList.add(body);
+        }
+        cursor.close();
+        readableDatabase.close();
+        return bodyList;
+    }
+
     public void deleteRow(String datesToDelete[]) {
         SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
         database.delete(TABLE_NAME,COLUMN_DATE+"=?",datesToDelete);

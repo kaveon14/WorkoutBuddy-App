@@ -74,7 +74,10 @@ public class MainActivity extends AppCompatActivity
         getPermissions();
         loadRecentStats();
         BodyTable table = new BodyTable(getBaseContext());
-        table.printTable();
+        List<Body> bodyList = table.getSortedBodyStats();
+        for(Body body : bodyList) {
+            //System.out.println("Date: "+body.getStringDate());
+        }
     }
 
     @Override

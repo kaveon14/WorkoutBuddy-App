@@ -300,9 +300,11 @@ public class BodyStatsFragment extends Fragment {
 
     private class MyAsyncTask extends AsyncTask<List<Body>,Void,List<Body>> {
 
+        BodyTable table;
+
         @Override
         protected void onPreExecute() {
-            BodyTable table = new BodyTable(getContext());
+            table = new BodyTable(getContext());
             tableExtension = new BodyTableExtension(table);
         }
 
@@ -310,11 +312,12 @@ public class BodyStatsFragment extends Fragment {
         protected List<Body> doInBackground(List<Body>[] params) {
             int i = 1;
             Body body = tableExtension.getBodyStats(0);
-            while(body != null) {
+            /*while(body != null) {
                 params[0].add(body);
                 body = tableExtension.getBodyStats(i);
                 i++;
-            }
+            }*/
+            params[0] = table.getSortedBodyStats();
             bodyStats = params[0];
             return params[0];
         }
