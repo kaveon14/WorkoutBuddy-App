@@ -73,13 +73,13 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         return mainWorkouts;
     }
 
-    public List<SubWorkout> getSubWorkouts(String mainWorkoutName,Cursor cursor) {
-        SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
+    private List<SubWorkout> getSubWorkouts(String mainWorkoutName,Cursor cursor) {
         List<SubWorkout> subWorkouts = new ArrayList<>();
         for(int x=2;x<=16;x++) {
             String subWorkoutName = cursor.getString(x);
             if(subWorkoutName != null) {
                 SubWorkout subWorkout = new SubWorkout(subWorkoutName, null);
+                subWorkout.setMainWorkoutName(mainWorkoutName);
                 subWorkouts.add(subWorkout);
             }
         }
