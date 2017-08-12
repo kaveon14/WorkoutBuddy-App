@@ -1,10 +1,13 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 import android.app.SearchManager;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
@@ -31,6 +36,7 @@ public class MainWorkoutFragment extends Fragment {
 
     private static MainWorkout clickedMainWorkout;//change to mainWorkout
     private List<String> mainWorkoutNames;
+    private List<MainWorkout> mainWorkouts;
     private ArrayAdapter adapter;
     private ListView listView;
     private MainActivity mainActivity;
@@ -218,5 +224,67 @@ public class MainWorkoutFragment extends Fragment {
         popup.setMainWorkoutNames(mainWorkoutNames);
         popup.setPosition(position);
         popup.showPopupWindow();
+    }
+
+    private class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.CustomViewHolder> {
+
+        private List<MainWorkout> mainWorkoutList;
+
+        public RecycleAdapter(List<MainWorkout> mainWorkoutList) {
+            this.mainWorkoutList = mainWorkoutList;
+        }
+
+        @Override
+        public int getItemCount() {
+            return (null != mainWorkoutList ? mainWorkoutList.size() : 0);
+        }
+
+        @Override
+        public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup,int i) {
+            View view = LayoutInflater.from(viewGroup.getContext()).
+                    inflate(R.layout.simple_list_item,null);
+            return new CustomViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(CustomViewHolder customViewHolder,int i) {
+            MainWorkout mainWorkout = mainWorkoutList.get(i);
+            customViewHolder.nameView.setText(mainWorkout.getMainWorkoutName());
+        }
+
+
+        class CustomViewHolder extends RecyclerView.ViewHolder {
+
+            protected TextView nameView;
+
+            public CustomViewHolder(View rowView) {
+                super(rowView);
+                nameView = (TextView) rowView.findViewById(R.id.simpleTextView);
+            }
+
+        }
+    }
+
+    private class MyAsyncTask extends AsyncTask<List<MainWorkout>,Void,List<MainWorkout>> {
+
+        private MainWorkoutTable table;
+
+        @Override
+        protected void onPreExecute() {
+            table = new MainWorkoutTable(getContext());
+        }
+
+        @Override
+        protected List<MainWorkout> doInBackground(List<MainWorkout>[] params) {
+            params[0] = table.getMainWorkouts();
+            mainWorkouts = params[0];
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(List<MainWorkout> mainWorkouts) {
+            //set adapter
+        }
+
     }
 }

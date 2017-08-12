@@ -72,19 +72,6 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         loadRecentStats();
-        MainWorkoutTable table = new MainWorkoutTable(getBaseContext());
-        //table.addMainWorkout("A Test");
-        //table.addMainWorkout("a test");
-        //table.addMainWorkout("zest");
-        List<String> s = table.getMainWorkoutNames();
-        for(String str : s) {
-            System.out.println("test: "+str);
-        }
-
-        List<MainWorkout> mainWorkouts = table.getMainWorkouts();
-        for(MainWorkout mainWorkout : mainWorkouts) {
-            System.out.println("test2: "+mainWorkout.getMainWorkoutName());
-        }
     }
 
     @Override

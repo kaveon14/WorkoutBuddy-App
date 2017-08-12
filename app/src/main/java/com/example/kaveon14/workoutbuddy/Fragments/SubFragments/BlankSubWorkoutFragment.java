@@ -171,7 +171,7 @@ public class BlankSubWorkoutFragment extends Fragment {
             return exerciseList.size();
         }
 
-        public Object getItem(int position) {
+        public Exercise getItem(int position) {
             return exerciseList.get(position);
         }
 
