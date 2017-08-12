@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-//TODO ignore load times for now and focus on ui
+/* TODO- make it impossible to add subWorkout to the default workout
+ TODO- and also make it impossible to add or delete exercises */
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -30,8 +31,6 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
@@ -46,13 +45,9 @@ import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFra
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 // TODO data loaded in mainActivty is not the most recent yet
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

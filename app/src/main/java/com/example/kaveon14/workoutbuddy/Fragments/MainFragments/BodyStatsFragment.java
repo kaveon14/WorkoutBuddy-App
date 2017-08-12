@@ -19,7 +19,8 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStat
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
-
+// TODO make sure list is sorted when adding new body stats
+// TODO convert dates(dd-mm-yyyy & dd/mm/yyyy) to yyyy-mm-dd for the database
 public class BodyStatsFragment extends Fragment {
 
     private static Body clickedBodyStatsItem;

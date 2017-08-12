@@ -21,7 +21,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
-public class BlankExerciseFragment extends Fragment {//works now
+public class BlankExerciseFragment extends Fragment {
 
     public BlankExerciseFragment() {
         // Required empty public constructor
