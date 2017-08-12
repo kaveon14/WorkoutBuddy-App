@@ -15,14 +15,14 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 //delete add bodystats popup
-public class EditBodyStatsPopup extends PopupWindowManager {
+public class ManageBodyStatsPopup extends PopupWindowManager {
 
     private boolean updatingRow = false;
     private RecyclerView recyclerView;
     private int position;
     private List<Body> bodyList;
 
-    public EditBodyStatsPopup(View root, Context context) {
+    public ManageBodyStatsPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
         setPopupLayout(R.layout.editbodystats_popup_layout);
@@ -31,14 +31,12 @@ public class EditBodyStatsPopup extends PopupWindowManager {
 
     public void showPopupWindow() {
         displayPopupWindow();
-        Button btn = (Button) popupLayout.findViewById(R.id.addStats_btnPop);
         if(updatingRow) {
             setEditTextView();
-            btn.setText(R.string.editedBodyStats);
+            editBodyStats();
         } else {//adding new stats
-            btn.setText(R.string.addStats);
+            addBodyStats();
         }
-        addButton();
     }
 
     public void setRecyclerView(RecyclerView recyclerView) {
@@ -59,8 +57,8 @@ public class EditBodyStatsPopup extends PopupWindowManager {
 
 
     private void setEditTextView() {
-        EditBodyStatsPopup.BodyStatsExtension bodyStatsExtension
-                = new EditBodyStatsPopup.BodyStatsExtension();
+        ManageBodyStatsPopup.BodyStatsExtension bodyStatsExtension
+                = new ManageBodyStatsPopup.BodyStatsExtension();
         Body body = BodyStatsFragment.getClickedBodyStatsItem();
 
         bodyStatsExtension.setDate(body.getStringDate(),popupLayout);
@@ -76,20 +74,41 @@ public class EditBodyStatsPopup extends PopupWindowManager {
         bodyStatsExtension.setCalfSize(body.getCalfSize(),popupLayout);
     }
 
-    private void addButton() {
+    private void addBodyStats() {
         Button btn = (Button) popupLayout.findViewById(R.id.addStats_btnPop);
+        btn.setText(R.string.addStats);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Body body = new EditBodyStatsPopup.BodyStatsExtension()
+                Body body = new ManageBodyStatsPopup.BodyStatsExtension()//herre
                         .getBodyStatsObject(popupLayout);
                 if (body != null) {
                     bodyList.remove(position);
                     bodyList.add(position,body);
                     recyclerView.getAdapter().notifyDataSetChanged();
-                    new BodyTable(context).addStatsToBodyTable(body);
-                    //BodyStatsFragment.setNewBodyStats(body);
+                    new BodyTable(context).updateRow(body,body.getRowId());
                     Toast.makeText(context, "Stats Successfully Added!",
+                            Toast.LENGTH_SHORT).show();
+                    popupWindow.dismiss();
+                }
+            }
+        });
+    }
+
+    private void editBodyStats() {
+        Button btn = (Button) popupLayout.findViewById(R.id.addStats_btnPop);
+        btn.setText(R.string.editedBodyStats);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Body body = new ManageBodyStatsPopup.BodyStatsExtension()
+                        .getBodyStatsObject(popupLayout);
+                if (body != null) {
+                    bodyList.remove(position);
+                    bodyList.add(position,body);
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                    new BodyTable(context).updateRow(body,body.getRowId());
+                    Toast.makeText(context, "Stats Successfully Updated!",
                             Toast.LENGTH_SHORT).show();
                     popupWindow.dismiss();
                 }
@@ -110,7 +129,8 @@ public class EditBodyStatsPopup extends PopupWindowManager {
                     .setChestSize(getChestSize(root)).setBackSize(getBackSize(root))
                     .setArmSize(getArmSize(root)).setForearmSize(getForearmSize(root))
                     .setWaistSize(getWaistSize(root)).setQuadSize(getQuadSize(root))
-                    .setCalfSize(getCalfSize(root));
+                    .setCalfSize(getCalfSize(root)).setRowID(BodyStatsFragment
+                            .getClickedBodyStatsItem().getRowId());
             String date = getDate(root);
             try {
                 body.setDate(date);

@@ -17,8 +17,8 @@ import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.DeleteBodyStatsPopup;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.AddBodyStatsPopup;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.EditBodyStatsPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.BodyStatsMenuPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.ManageBodyStatsPopup;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +130,7 @@ public class BodyStatsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddBodyStatsPopup bt = new AddBodyStatsPopup(getView(),getContext());
+                BodyStatsMenuPopup bt = new BodyStatsMenuPopup(getView(),getContext());
                 bt.setMainActivity(mainActivity);
                 bt.showPopupWindow();
             }
@@ -142,7 +142,7 @@ public class BodyStatsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 setClickedBodyStatsItem(tableExtension.getBodyStats(position));
-                EditBodyStatsPopup popup = new EditBodyStatsPopup(root,getContext());
+                ManageBodyStatsPopup popup = new ManageBodyStatsPopup(root,getContext());
                 popup.isUpdatingRow(true);
                 popup.showPopupWindow();
 
@@ -273,7 +273,7 @@ public class BodyStatsFragment extends Fragment {
                     public void onClick(View v) {
                         int i = getLayoutPosition();
                         setClickedBodyStatsItem(bodyStats.get(i));
-                        EditBodyStatsPopup popup = new EditBodyStatsPopup(root,getContext());
+                        ManageBodyStatsPopup popup = new ManageBodyStatsPopup(root,getContext());
                         popup.setRecyclerView(recyclerView);
                         popup.setBodyList(bodyStats);
                         popup.setPosition(getLayoutPosition());

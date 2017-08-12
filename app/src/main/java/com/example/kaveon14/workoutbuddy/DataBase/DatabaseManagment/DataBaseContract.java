@@ -6,6 +6,8 @@ import java.util.List;
 
 public class DataBaseContract {
 
+    public static final String COLUMN_ROWID = "_id";
+
     public static class MainWorkoutData implements BaseColumns {//is _wk needed????
 
         public static final String TABLE_NAME = "Main_Workouts";

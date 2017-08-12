@@ -13,10 +13,9 @@ public class Body {
     private String quadSize;
     private String calfSize;
     private String dateForDisplaying;
-    private Date dateForSorting;
+    private long rowId;
 
     public Body setDate(String date) {
-   //     dateForSorting = new Date(date);
         dateForDisplaying = date;
         return this;
     }
@@ -61,8 +60,9 @@ public class Body {
         return this;
     }
 
-    public Date getDateForSorting() {
-        return dateForSorting;
+    public Body setRowID(long rowId) {
+        this.rowId = rowId;
+        return this;
     }
 
     public String getStringDate() {
@@ -99,5 +99,9 @@ public class Body {
 
     public String getCalfSize() {
         return calfSize;
+    }
+
+    public long getRowId() {
+        return rowId;
     }
 }

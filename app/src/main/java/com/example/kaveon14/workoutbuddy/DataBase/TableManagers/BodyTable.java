@@ -16,6 +16,8 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_FOREARM_SIZE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_WEIGHT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_QUAD_SIZE;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.COLUMN_ROWID;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,10 +53,8 @@ public class BodyTable extends TableManager {
         Cursor cursor = readableDatabase.query(TABLE_NAME,null,null,null,null,null
                 ,COLUMN_DATE+" DESC");
         Body body;
-        System.out.println("WTF");
         List<Body> bodyList = new ArrayList<>();
         while(cursor.moveToNext()) {
-            System.out.println("Date:  "+cursor.getString(cursor.getColumnIndex(COLUMN_DATE)));
             body = new Body().setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)))
                     .setWeight(cursor.getString(cursor.getColumnIndex(COLUMN_WEIGHT)))
                     .setChestSize(cursor.getString(cursor.getColumnIndex(COLUMN_CHEST_SIZE)))
@@ -63,12 +63,28 @@ public class BodyTable extends TableManager {
                     .setForearmSize(cursor.getString(cursor.getColumnIndex(COLUMN_FOREARM_SIZE)))
                     .setWaistSize(cursor.getColumnName(cursor.getColumnIndex(COLUMN_WAIST_SIZE)))
                     .setQuadSize(cursor.getString(cursor.getColumnIndex(COLUMN_QUAD_SIZE)))
-                    .setCalfSize(cursor.getString(cursor.getColumnIndex(COLUMN_CALF_SIZE)));
+                    .setCalfSize(cursor.getString(cursor.getColumnIndex(COLUMN_CALF_SIZE)))
+                    .setRowID(cursor.getLong(cursor.getColumnIndex(COLUMN_ROWID)));
             bodyList.add(body);
         }
         cursor.close();
         readableDatabase.close();
         return bodyList;
+    }
+
+    public void updateRow(Body body,long rowId) {
+        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE,body.getStringDate());
+        values.put(COLUMN_WEIGHT,body.getWeight());
+        values.put(COLUMN_CHEST_SIZE,body.getChestSize());
+        values.put(COLUMN_BACK_SIZE,body.getBackSize());
+        values.put(COLUMN_ARM_SIZE,body.getArmSize());
+        values.put(COLUMN_FOREARM_SIZE,body.getForearmSize());
+        values.put(COLUMN_WAIST_SIZE,body.getWaistSize());
+        values.put(COLUMN_QUAD_SIZE,body.getQuadSize());
+        values.put(COLUMN_CALF_SIZE,body.getCalfSize());
+        writableDatabase.update(TABLE_NAME,values,"_id="+rowId,null);
     }
 
     public void deleteRow(String datesToDelete[]) {

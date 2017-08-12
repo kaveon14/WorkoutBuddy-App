@@ -9,11 +9,11 @@ import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 
-public class AddBodyStatsPopup extends PopupWindowManager {
+public class BodyStatsMenuPopup extends PopupWindowManager {
 
     private MainActivity mainActivity;
 
-    public AddBodyStatsPopup(View root, Context context) {
+    public BodyStatsMenuPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
         setPopupLayout(R.layout.yes_no_popup_layout);
@@ -42,7 +42,7 @@ public class AddBodyStatsPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditBodyStatsPopup popup = new EditBodyStatsPopup(getRootView(),context);
+                ManageBodyStatsPopup popup = new ManageBodyStatsPopup(getRootView(),context);
                 popup.isUpdatingRow(false);
                 popup.showPopupWindow();
                 popupWindow.dismiss();
