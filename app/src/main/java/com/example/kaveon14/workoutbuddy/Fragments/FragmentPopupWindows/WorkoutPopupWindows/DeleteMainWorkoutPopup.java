@@ -9,8 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
 import java.util.ArrayList;
@@ -18,9 +21,9 @@ import java.util.List;
 // TODO put context in constructor for all pw's
 public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
-    private ArrayAdapter mainWorkoutAdapter;
-    private List<String> mainWorkoutNames;
     private int position;
+    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
+    private List<MainWorkout> mainWorkoutList;
 
     public DeleteMainWorkoutPopup(View root,Context context) {
         setRootView(root);
@@ -36,12 +39,12 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         btn.setText("Delete MainWorkout");
     }
 
-    public void setMainWorkoutAdapter(ArrayAdapter mainWorkoutAdapter) {
-        this.mainWorkoutAdapter = mainWorkoutAdapter;
+    public void setRecyclerAdapter(MainWorkoutFragment.RecyclerAdapter recyclerAdapter) {
+        this.recyclerAdapter = recyclerAdapter;
     }
 
-    public void setMainWorkoutNames(List<String> mainWorkoutNames) {
-        this.mainWorkoutNames = mainWorkoutNames;
+    public void setMainWorkoutList(List<MainWorkout> mainWorkoutList) {
+        this.mainWorkoutList = mainWorkoutList;
     }
 
     public void setPosition(int position) {
@@ -50,7 +53,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private void setMainWorkoutListView() {
         ListView listView = (ListView) popupLayout.findViewById(R.id.deleteSubWorkoutPopup_listView);
-        listView.setAdapter(mainWorkoutAdapter);
+       // listView.setAdapter(mainWorkoutAdapter);
         listView.setBackgroundColor(Color.WHITE);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,7 +61,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 if(position != 0) {
                     resetSubWorkoutListViewColors(parent);
-                    setDeleteButton(parent.getItemAtPosition(position).toString());
+                    setDeleteButton(mainWorkoutList.get(position));
                 } else {
                     resetDeleteButton();
                     Toast.makeText(context,"Can Not Delete This MainWorkout!"
@@ -68,12 +71,12 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         });
     }
 
-    private void setDeleteButton(String mainWorkoutName) {
+    private void setDeleteButton(MainWorkout mainWorkout) {
         Button btn = (Button) popupLayout.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteMainWorkout(mainWorkoutName);
+                deleteMainWorkout(mainWorkout);
                 Toast.makeText(context,"MainWorkout Successfully Deleted!"
                         ,Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
@@ -92,12 +95,12 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         });
     }
 
-    private void deleteMainWorkout(String mainWorkoutName) {
-        mainWorkoutNames.remove(position);
-        mainWorkoutAdapter.notifyDataSetChanged();
+    private void deleteMainWorkout(MainWorkout mainWorkout) {
+        mainWorkoutList.remove(mainWorkout);
+        recyclerAdapter.notifyItemRemoved(position);
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
-        mainWorkoutTable.deleteMainWorkout(mainWorkoutName);
+        mainWorkoutTable.deleteMainWorkout(mainWorkout.getMainWorkoutName());
     }
 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {
