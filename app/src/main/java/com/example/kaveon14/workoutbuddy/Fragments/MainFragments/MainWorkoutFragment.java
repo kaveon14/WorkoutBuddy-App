@@ -122,8 +122,8 @@ public class MainWorkoutFragment extends Fragment {
 
     private void showMainWorkoutPopupMenu() {
         MainWorkoutPopupMenu popup = new MainWorkoutPopupMenu(getView(),getContext());
-        //popup.setMainWorkoutAdapter(adapter);convert to recycler view and
-       // popup.setMainWorkoutNames(mainWorkoutNames);mainworkout objects
+        popup.setMainWorkoutList(mainWorkouts);
+        popup.setRecyclerAdapter(recyclerAdapter);
         popup.showPopupWindow();
     }
 
@@ -188,7 +188,7 @@ public class MainWorkoutFragment extends Fragment {
         return list;
     }
 
-    private void deleteRowVew(ListView listView) {
+    private void deleteRowVew(ListView listView) {//need to be refactored
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -207,7 +207,7 @@ public class MainWorkoutFragment extends Fragment {
         popup.showPopupWindow();
     }
 
-    private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
+    public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
         private List<MainWorkout> mainWorkoutList;
 

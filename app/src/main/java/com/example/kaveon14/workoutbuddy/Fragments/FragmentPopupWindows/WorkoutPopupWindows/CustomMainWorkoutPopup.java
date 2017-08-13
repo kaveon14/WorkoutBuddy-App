@@ -7,15 +7,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 public class CustomMainWorkoutPopup extends PopupWindowManager {
 
-    private List<String> mainWorkoutNames;
-    private ArrayAdapter adapter;
+    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
+    private List<MainWorkout> mainWorkoutList;
 
     public CustomMainWorkoutPopup(View root,Context context) {
         setRootView(root);
@@ -30,12 +33,12 @@ public class CustomMainWorkoutPopup extends PopupWindowManager {
         setTextView();
     }
 
-    public void setMainWorkoutList(List<String> mainWorkoutNames) {
-        this.mainWorkoutNames = mainWorkoutNames;
+    public void setRecyclerAdapter(MainWorkoutFragment.RecyclerAdapter recyclerAdapter) {
+        this.recyclerAdapter = recyclerAdapter;
     }
 
-    public void setAdapter(ArrayAdapter adapter) {
-        this.adapter = adapter;
+    public void setMainWorkoutList(List<MainWorkout> mainWorkoutList) {
+        this.mainWorkoutList = mainWorkoutList;
     }
 
     private void setAddMainWorkoutBtn() {
@@ -58,12 +61,12 @@ public class CustomMainWorkoutPopup extends PopupWindowManager {
 
     private void addNewMainWorkoutOnClick() {
         String mainWorkoutName = getMainWorkoutName();
-        addMainWorkoutToDatatable(mainWorkoutName);
-        mainWorkoutNames.add(mainWorkoutName);
-        adapter.notifyDataSetChanged();
+        addMainWorkoutToDataTable(mainWorkoutName);
+        mainWorkoutList.add(new MainWorkout(mainWorkoutName,null));
+        recyclerAdapter.notifyDataSetChanged();
     }
 
-    private void addMainWorkoutToDatatable(String mainWorkoutName) {
+    private void addMainWorkoutToDataTable(String mainWorkoutName) {
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
         mainWorkoutTable.addMainWorkout(mainWorkoutName);
     }

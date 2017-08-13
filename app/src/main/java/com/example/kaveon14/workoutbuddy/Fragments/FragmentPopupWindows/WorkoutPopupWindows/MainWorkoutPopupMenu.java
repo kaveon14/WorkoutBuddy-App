@@ -4,14 +4,17 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 public class MainWorkoutPopupMenu extends PopupWindowManager {
 
-    private ArrayAdapter mainWorkoutAdapter;
-    private List<String> mainWorkoutNames;
+    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
+    private List<MainWorkout> mainWorkoutList;
 
 
     public MainWorkoutPopupMenu(View root,Context context) {
@@ -28,12 +31,12 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
         setDeleteMainWorkoutBtn();
     }
 
-    public void setMainWorkoutAdapter(ArrayAdapter mainWorkoutAdapter) {
-        this.mainWorkoutAdapter = mainWorkoutAdapter;
+    public void setRecyclerAdapter(MainWorkoutFragment.RecyclerAdapter recyclerAdapter) {
+        this.recyclerAdapter = recyclerAdapter;
     }
 
-    public void setMainWorkoutNames(List<String> mainWorkoutNames) {
-        this.mainWorkoutNames = mainWorkoutNames;
+    public void setMainWorkoutList(List<MainWorkout> mainWorkoutList) {
+        this.mainWorkoutList = mainWorkoutList;
     }
 
     private void hidePopupBtn() {
@@ -54,8 +57,8 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
 
     private void showCustomMainWorkoutPopup() {
         CustomMainWorkoutPopup pop = new CustomMainWorkoutPopup(getRootView(),context);
-        pop.setMainWorkoutList(mainWorkoutNames);
-        pop.setAdapter(mainWorkoutAdapter);
+        pop.setRecyclerAdapter(recyclerAdapter);
+        pop.setMainWorkoutList(mainWorkoutList);
         pop.showPopupWindow();
     }
 
@@ -71,8 +74,8 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
     }
     private void showDeleteMainWorkoutPopup() {
        DeleteMainWorkoutPopup popup = new DeleteMainWorkoutPopup(getRootView(),context);
-        popup.setMainWorkoutAdapter(mainWorkoutAdapter);
-        popup.setMainWorkoutNames(mainWorkoutNames);
+      //  popup.setMainWorkoutAdapter(mainWorkoutAdapter);
+        //popup.setMainWorkoutNames(mainWorkoutNames);
         popup.showPopupWindow();
     }
 
