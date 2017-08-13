@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
@@ -29,7 +30,7 @@ public class SubWorkoutFragment extends Fragment {
     private int subWorkoutCount;
     private Menu menu;
     private ListView listView;
-    private String clickedMainWorkoutName;
+    private MainWorkout clickedMainWorkout;
     private MainActivity mainActivity;
 
     public SubWorkoutFragment() {
@@ -48,8 +49,8 @@ public class SubWorkoutFragment extends Fragment {
         SubWorkoutFragment.clickedSubWorkout = clickedSubWorkout;
     }
 
-    public void setClickedMainWorkout(String clickedMainWorkoutName) {
-        this.clickedMainWorkoutName = clickedMainWorkoutName;
+    public void setClickedMainWorkout(MainWorkout clickedMainWorkout) {
+        this.clickedMainWorkout = clickedMainWorkout;
     }
 
     @Override
@@ -131,14 +132,14 @@ public class SubWorkoutFragment extends Fragment {
         SubWorkoutMenuPopup popup = new SubWorkoutMenuPopup(getView(),getContext());
         popup.setSubWorkoutAdapter(subWorkoutAdapter);
         popup.setSubWorkoutNames(subWorkoutNames);
-        popup.setClickedMainWorkoutName(clickedMainWorkoutName);
+        popup.setClickedMainWorkoutName(clickedMainWorkout.getMainWorkoutName());
         popup.setCurrentSubWorkoutCount(subWorkoutCount);
         popup.showPopupWindow();
     }
 
     private ArrayAdapter getAdapter() {
         MainWorkoutTable workoutTable = new MainWorkoutTable(getContext());
-        subWorkoutNames = workoutTable.getSubWorkoutNames(clickedMainWorkoutName);
+        subWorkoutNames = workoutTable.getSubWorkoutNames(clickedMainWorkout.getMainWorkoutName());
         if(subWorkoutNames.size()!=0) {
             if (subWorkoutNames.get(0) == null) {
                 return null;
@@ -155,7 +156,7 @@ public class SubWorkoutFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String subWorkoutName = parent.getItemAtPosition(position).toString();
                 setClickedSubWorkout(getSubWorkout(subWorkoutName));
-                getClickedSubWorkout().setMainWorkoutName(clickedMainWorkoutName);
+                getClickedSubWorkout().setMainWorkoutName(clickedMainWorkout.getMainWorkoutName());
                 showBlankWorkoutFragment();
             }
         });
@@ -177,13 +178,13 @@ public class SubWorkoutFragment extends Fragment {
     private SubWorkout getSubWorkout(String subWorkoutName) {
         SubWorkout subWorkout = new SubWorkout(subWorkoutName,
                 getExercisesForClickedSubWorkout(subWorkoutName));
-        subWorkout.setMainWorkoutName(clickedMainWorkoutName);
+        subWorkout.setMainWorkoutName(clickedMainWorkout.getMainWorkoutName());
         return subWorkout;
     }
 
     private List<Exercise> getExercisesForClickedSubWorkout(String subWorkoutName) {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = subWorkoutTable.getCorrectTableName(clickedMainWorkoutName
+        String tableName = subWorkoutTable.getCorrectTableName(clickedMainWorkout.getMainWorkoutName()
                 ,subWorkoutName);
         return subWorkoutTable.getSubWorkoutExercises(tableName);
     }

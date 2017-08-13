@@ -169,7 +169,7 @@ public class MainWorkoutFragment extends Fragment {
 
     private void showSubWorkoutfragment(MainWorkout clickedMainWorkout) {
         SubWorkoutFragment subWorkoutFragment = new SubWorkoutFragment();
-        //subWorkoutFragment.setClickedMainWorkout(clickedMainWorkout);
+        subWorkoutFragment.setClickedMainWorkout(clickedMainWorkout);
         subWorkoutFragment.setMenu(menu);
         subWorkoutFragment.setMainActivity(mainActivity);
         getFragmentManager().beginTransaction()
@@ -273,10 +273,11 @@ public class MainWorkoutFragment extends Fragment {
             public CustomViewHolder(View rowView) {
                 super(rowView);
                 nameView = (TextView) rowView.findViewById(R.id.simpleTextView);
+                openClickdMainWorkout(nameView  );
             }
 
-            private void openClickdMainWorkout() {
-                nameView.setOnClickListener(new View.OnClickListener() {
+            private void openClickdMainWorkout(TextView textView) {
+                textView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         int i = getLayoutPosition();
