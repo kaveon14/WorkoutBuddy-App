@@ -167,9 +167,9 @@ public class MainWorkoutFragment extends Fragment {
         });
     }
 
-    private void showSubWorkoutfragment(String clickedMainWorkoutName) {
+    private void showSubWorkoutfragment(MainWorkout clickedMainWorkout) {
         SubWorkoutFragment subWorkoutFragment = new SubWorkoutFragment();
-        subWorkoutFragment.setClickedMainWorkout(clickedMainWorkoutName);
+        //subWorkoutFragment.setClickedMainWorkout(clickedMainWorkout);
         subWorkoutFragment.setMenu(menu);
         subWorkoutFragment.setMainActivity(mainActivity);
         getFragmentManager().beginTransaction()
@@ -273,6 +273,17 @@ public class MainWorkoutFragment extends Fragment {
             public CustomViewHolder(View rowView) {
                 super(rowView);
                 nameView = (TextView) rowView.findViewById(R.id.simpleTextView);
+            }
+
+            private void openClickdMainWorkout() {
+                nameView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int i = getLayoutPosition();
+                        setClickedMainWorkout(mainWorkoutList.get(i));
+                        showSubWorkoutfragment(getClickedMainWorkout());
+                    }
+                });
             }
 
         }
