@@ -34,10 +34,7 @@ import static android.content.Context.SEARCH_SERVICE;
 public class MainWorkoutFragment extends Fragment {
 
     private static MainWorkout clickedMainWorkout;//change to mainWorkout
-    private List<String> mainWorkoutNames;
     private List<MainWorkout> mainWorkouts;
-    private ArrayAdapter adapter;
-    private ListView listView;
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
     private View root;
@@ -69,7 +66,6 @@ public class MainWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_main_workout, container, false);
-       // setListView(root);
         new MyAsyncTask().execute(mainWorkouts);
         setFloatingActionButton(root);
         setSearchViewOnClick();
@@ -126,8 +122,8 @@ public class MainWorkoutFragment extends Fragment {
 
     private void showMainWorkoutPopupMenu() {
         MainWorkoutPopupMenu popup = new MainWorkoutPopupMenu(getView(),getContext());
-        popup.setMainWorkoutAdapter(adapter);
-        popup.setMainWorkoutNames(mainWorkoutNames);
+        //popup.setMainWorkoutAdapter(adapter);convert to recycler view and
+       // popup.setMainWorkoutNames(mainWorkoutNames);mainworkout objects
         popup.showPopupWindow();
     }
 
@@ -139,32 +135,6 @@ public class MainWorkoutFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerAdapter);
         return recyclerView;
-    }
-
-    private ListView setListView(View root) {
-       // listView = (ListView) root.findViewById(R.id.mainWorkout_listView);
-        //listView.setAdapter(getAdapter());
-        openWorkoutOnClick(listView);
-        deleteRowVew();
-        return null;
-    }
-
-    private ArrayAdapter getAdapter() {
-        MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(getContext());
-        mainWorkoutNames = mainWorkoutTable.getMainWorkoutNames();
-        adapter = new ArrayAdapter<>(getContext(),
-                R.layout.simple_list_item,mainWorkoutNames);
-        return adapter;
-    }
-
-    private void openWorkoutOnClick(ListView listView) {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               // MainWorkoutFragment.setClickedMainWorkout(m);
-                //showSubWorkoutfragment(getClickedMainWorkout());
-            }
-        });
     }
 
     private void showSubWorkoutfragment(MainWorkout clickedMainWorkout) {
@@ -205,22 +175,20 @@ public class MainWorkoutFragment extends Fragment {
             List<String> mainWorkouts = queriedData
                     .get(DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT);
            for(int x=0;x<mainWorkouts.size();x++) {
-               String mainWorkotName = mainWorkouts.get(x);
-               for(int i=0;i<mainWorkoutNames.size();i++) {
-                   String mainWorkoutListName = mainWorkoutNames.get(i);
-                   if(mainWorkotName.equals(mainWorkoutListName)) {
-                       list.add(mainWorkoutListName);
+               String mainWorkout = mainWorkouts.get(x);
+               for(int i=0;i<mainWorkouts.size();i++) {
+                   String mainWorkoutListItem = mainWorkouts.get(i);
+                   if(mainWorkout.equals(mainWorkoutListItem)) {
+                       list.add(mainWorkoutListItem);
                    }
                }
            }
 
         }
-        ArrayAdapter adapter = new ArrayAdapter(getContext(),R.layout.simple_list_item,list);
-        listView.setAdapter(adapter);
         return list;
     }
 
-    private void deleteRowVew() {
+    private void deleteRowVew(ListView listView) {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -233,8 +201,8 @@ public class MainWorkoutFragment extends Fragment {
 
     private void showDeleteMainWorkoutPopup(int position) {
         DeleteMainWorkoutPopup popup = new DeleteMainWorkoutPopup(getView(),getContext());
-        popup.setMainWorkoutAdapter(adapter);
-        popup.setMainWorkoutNames(mainWorkoutNames);
+       // popup.setMainWorkoutAdapter(adapter);convert
+       // popup.setMainWorkoutNames(mainWorkoutNames);
         popup.setPosition(position);
         popup.showPopupWindow();
     }
