@@ -15,8 +15,6 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
 
     private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
     private List<MainWorkout> mainWorkoutList;
-    private MainWorkoutFragment mainWorkoutFragment;
-
 
     public MainWorkoutPopupMenu(View root,Context context) {
         setRootView(root);
@@ -30,10 +28,6 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
         hidePopupBtn();
         setAddCustomMainWorkoutBtn();
         setDeleteMainWorkoutBtn();
-    }
-
-    public void setMainWorkoutFragment(MainWorkoutFragment mainWorkoutFragment) {
-        this.mainWorkoutFragment = mainWorkoutFragment;
     }
 
     public void setRecyclerAdapter(MainWorkoutFragment.RecyclerAdapter recyclerAdapter) {
@@ -64,7 +58,6 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
         CustomMainWorkoutPopup pop = new CustomMainWorkoutPopup(getRootView(),context);
         pop.setRecyclerAdapter(recyclerAdapter);
         pop.setMainWorkoutList(mainWorkoutList);
-        pop.setMainWorkoutFragment(mainWorkoutFragment);
         pop.showPopupWindow();
     }
 

@@ -124,13 +124,7 @@ public class MainWorkoutFragment extends Fragment {
         MainWorkoutPopupMenu popup = new MainWorkoutPopupMenu(getView(),getContext());
         popup.setMainWorkoutList(mainWorkouts);
         popup.setRecyclerAdapter(recyclerAdapter);
-        popup.setMainWorkoutFragment(this);
         popup.showPopupWindow();
-    }
-
-    public void addMainWorkoutToList(MainWorkout mainWorkout) {
-        mainWorkouts.add(mainWorkout);
-        recyclerAdapter.notifyItemInserted(mainWorkouts.size()-1);
     }
 
     private RecyclerView setRecycleView(View root,RecyclerAdapter recyclerAdapter) {
