@@ -19,6 +19,7 @@ public class CustomMainWorkoutPopup extends PopupWindowManager {
 
     private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
     private List<MainWorkout> mainWorkoutList;
+    private MainWorkoutFragment mainWorkoutFragment;
 
     public CustomMainWorkoutPopup(View root,Context context) {
         setRootView(root);
@@ -31,6 +32,10 @@ public class CustomMainWorkoutPopup extends PopupWindowManager {
         displayPopupWindow();
         setAddMainWorkoutBtn();
         setTextView();
+    }
+
+    public void setMainWorkoutFragment(MainWorkoutFragment mainWorkoutFragment) {
+        this.mainWorkoutFragment = mainWorkoutFragment;
     }
 
     public void setRecyclerAdapter(MainWorkoutFragment.RecyclerAdapter recyclerAdapter) {
@@ -62,8 +67,8 @@ public class CustomMainWorkoutPopup extends PopupWindowManager {
     private void addNewMainWorkoutOnClick() {
         String mainWorkoutName = getMainWorkoutName();
         addMainWorkoutToDataTable(mainWorkoutName);
-        mainWorkoutList.add(new MainWorkout(mainWorkoutName,null));
-        recyclerAdapter.notifyDataSetChanged();
+        mainWorkoutFragment.addMainWorkoutToList(new MainWorkout(mainWorkoutName,null
+        ));
     }
 
     private void addMainWorkoutToDataTable(String mainWorkoutName) {

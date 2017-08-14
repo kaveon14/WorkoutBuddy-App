@@ -46,7 +46,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         this.mainWorkoutList = mainWorkoutList;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(int posit) {//why is this even passed in
         this.position = position;
     }
 
@@ -60,7 +60,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
                 resetSubWorkoutListViewColors(parent);
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 if(position != 0) {
-                    setDeleteButton(mainWorkoutList.get(position));
+                    setDeleteButton(mainWorkoutList.get(position),position);
                 } else {
                     resetDeleteButton();
                     Toast.makeText(context,"Can Not Delete This MainWorkout!"
@@ -70,12 +70,12 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         });
     }
 
-    private void setDeleteButton(MainWorkout mainWorkout) {
+    private void setDeleteButton(MainWorkout mainWorkout,int position) {
         Button btn = (Button) popupLayout.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteMainWorkout(mainWorkout);
+                deleteMainWorkout(mainWorkout,position);
                 Toast.makeText(context,"MainWorkout Successfully Deleted!"
                         ,Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
@@ -94,8 +94,8 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         });
     }
 
-    private void deleteMainWorkout(MainWorkout mainWorkout) {
-        mainWorkoutList.remove(mainWorkout);
+    private void deleteMainWorkout(MainWorkout mainWorkout,int position) {
+        mainWorkoutList.remove(position);
         recyclerAdapter.notifyItemRemoved(position);
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
