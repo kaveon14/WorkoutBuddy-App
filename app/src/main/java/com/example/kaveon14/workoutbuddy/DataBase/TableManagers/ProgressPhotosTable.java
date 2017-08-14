@@ -97,6 +97,21 @@ public class ProgressPhotosTable extends TableManager {
         return photos;
     }
 
+    public List<Bitmap> getImageData(int count,String query) {
+        byte[] data;
+        List<Bitmap> photos = new ArrayList<>();
+        SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
+        Cursor cursor = database.query(TABLE_NAME, null, null, null, null, null, query);
+        int increment = 0;
+        while(cursor.moveToNext() && increment<count) {
+            data = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_PHOTO));
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data,0,data.length);
+            photos.add(bitmap);
+            increment++;
+        }
+        return photos;
+    }
+
     private byte[] getImageData(Bitmap bitmap) throws IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);

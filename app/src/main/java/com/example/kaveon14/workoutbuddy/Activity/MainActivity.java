@@ -296,7 +296,8 @@ public class MainActivity extends AppCompatActivity
         int INDEX = 0;
         ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
         try {
-            Bitmap photo = table.getImageData(INDEX + 1).get(INDEX);
+            Bitmap photo = table.getImageData(INDEX + 1,
+                    DataBaseContract.ProgressPhotos.COLUMN_DATE+" DESC").get(INDEX);
             ImageView imageView = (ImageView) findViewById(R.id.progressPhotoView);
             imageView.setImageBitmap(photo);
         } catch(IndexOutOfBoundsException e) {
