@@ -2,6 +2,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 //TODO delete un-needed onCreate methods
 import android.app.SearchManager;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,6 +37,8 @@ public class WorkoutStatsFragment extends Fragment {
 
     private List<SubWorkout> subWorkoutList;
     private Menu menu;
+    private View root;
+    private RecyclerAdapter recyclerAdapter;
 
     public WorkoutStatsFragment() {
         // Required empty public constructor
@@ -49,10 +53,8 @@ public class WorkoutStatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
-        WorkoutStatsTable table = new WorkoutStatsTable(getContext());//add asynctask
-        subWorkoutList = table.getCompletedWorkouts();
-        setRecycleView(root);
+        root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
+        new MyAsyncTask().execute(subWorkoutList);
         setSearchViewOnClick();
         return root;
     }
@@ -79,13 +81,13 @@ public class WorkoutStatsFragment extends Fragment {
         this.menu = menu;
     }
 
-    private void setRecycleView(View root) {
+    private void setRecycleView(View root,RecyclerAdapter adapter) {
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.workoutStatsRecycleView);
         recyclerView.setItemViewCacheSize(12);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(new RecyclerAdapter(subWorkoutList));
+        recyclerView.setAdapter(adapter);
         if (subWorkoutList.size()==0) {
             TextView textView = (TextView) root.findViewById(R.id.noWorkoutStats);
             textView.setVisibility(View.VISIBLE);
@@ -237,5 +239,29 @@ public class WorkoutStatsFragment extends Fragment {
                 });
             }
         }
+    }
+
+    private class MyAsyncTask extends AsyncTask<List<SubWorkout>,Void,List<SubWorkout>> {
+
+        private WorkoutStatsTable table;
+
+        @Override
+        protected void onPreExecute(){
+            table = new WorkoutStatsTable(getContext());
+        }
+
+        @Override
+        protected List<SubWorkout> doInBackground(List<SubWorkout>[] params) {
+            params[0] = table.getCompletedWorkouts();
+            subWorkoutList = params[0];
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(List<SubWorkout> subWorkoutList) {
+            recyclerAdapter = new RecyclerAdapter(subWorkoutList);
+            setRecycleView(root,recyclerAdapter);
+        }
+
     }
 }
