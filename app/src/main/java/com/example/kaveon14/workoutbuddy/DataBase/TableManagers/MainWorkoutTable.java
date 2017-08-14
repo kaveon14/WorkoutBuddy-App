@@ -14,6 +14,21 @@ import java.util.List;
 
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.COLUMN_ROWID;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_1;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_10;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_11;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_12;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_13;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_14;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_15;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_2;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_3;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_4;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_5;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_6;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_7;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_8;
+import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_9;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.TABLE_NAME;
 
 public class MainWorkoutTable extends TableManager {//need to increase table columns to 10(days)
@@ -35,7 +50,34 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         writableDatabase.close();
     }
 
-    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames) {
+    public void updateRow(MainWorkout mainWorkout) {
+        String[] columns = new String[] {
+                COLUMN_SUBWORKOUT_1,COLUMN_SUBWORKOUT_2,COLUMN_SUBWORKOUT_3,
+                COLUMN_SUBWORKOUT_4,COLUMN_SUBWORKOUT_5,COLUMN_SUBWORKOUT_6,
+                COLUMN_SUBWORKOUT_7,COLUMN_SUBWORKOUT_8,COLUMN_SUBWORKOUT_9,
+                COLUMN_SUBWORKOUT_10,COLUMN_SUBWORKOUT_11,COLUMN_SUBWORKOUT_12,
+                COLUMN_SUBWORKOUT_13,COLUMN_SUBWORKOUT_14,COLUMN_SUBWORKOUT_15
+        };
+
+        List<SubWorkout> subWorkouts = mainWorkout.getSubWorkoutsList();
+
+        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+
+
+        values.put(COLUMN_MAINWORKOUT,mainWorkout.getMainWorkoutName());
+        for(int x=subWorkouts.size()-1;x>=0;x--) {
+            values.put(columns[x],subWorkouts.get(x).getSubWorkoutName());
+        }
+        String s = null;
+        for(int x=subWorkouts.size();x<columns.length;x++) {
+            values.put(columns[x],s);
+        }//wrong id
+        writableDatabase.update(TABLE_NAME,values,"_id="+mainWorkout.getRowId(),null);
+    }
+
+    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames) {//needs to be changed
         List<String> rowValues = getSubWorkoutNames(mainWorkoutName);
         deleteRow(mainWorkoutName);
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
@@ -62,9 +104,9 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         while(cursor.moveToNext()) {
             String mainWorkoutName = cursor.getString(cursor.
                     getColumnIndex(COLUMN_MAINWORKOUT));
-            long rowID = cursor.getLong(cursor.getColumnIndex(COLUMN_ROWID));
             subWorkouts = getSubWorkouts(mainWorkoutName,cursor);
             MainWorkout mainWorkout = new MainWorkout(mainWorkoutName,subWorkouts);
+            long rowID = cursor.getLong(cursor.getColumnIndex(COLUMN_ROWID));
             mainWorkout.setRowId(rowID);
             mainWorkouts.add(mainWorkout);
         }
@@ -99,10 +141,31 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         return columnData;
     }
 
+    public List<SubWorkout> getSubWorkouts(String mainWorkout) {
+        SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
+        Cursor cursor = database.query(DataBaseContract.MainWorkoutData.TABLE_NAME,
+                null,null,null,null,null,null);//change to search query
+        List<SubWorkout> rowData = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            if(cursor.getString(1).equalsIgnoreCase(mainWorkout)) {
+                for(int x=2;x<=16;x++) {
+                    String s = cursor.getString(x);
+                    if(s!=null) {
+                        rowData.add(new SubWorkout(s,null));
+                    }
+                }
+                break;
+            }
+        }
+        database.close();
+        cursor.close();
+        return rowData;
+    }
+
     public List<String> getSubWorkoutNames(String mainWorkout) {
         SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = database.query(DataBaseContract.MainWorkoutData.TABLE_NAME,
-                null,null,null,null,null,null);
+                null,null,null,null,null,null);//change to search query
         List<String> rowData = new ArrayList<>();
         while(cursor.moveToNext()) {
             if(cursor.getString(1).equalsIgnoreCase(mainWorkout)) {

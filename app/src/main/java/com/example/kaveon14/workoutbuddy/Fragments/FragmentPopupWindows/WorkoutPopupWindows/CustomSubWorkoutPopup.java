@@ -7,6 +7,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
@@ -19,7 +22,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter adapter;
     private List<String> subWorkoutNames;
-    private String clkickedMainWorkoutName;
+    private String clickedMainWorkoutName;
     private int subWorkoutCount;
 
     public CustomSubWorkoutPopup(View root, Context context) {
@@ -44,7 +47,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
     }
 
     public void setClickedMainWorkout(String clickedMainWorkoutName) {
-        this.clkickedMainWorkoutName = clickedMainWorkoutName;
+        this.clickedMainWorkoutName = clickedMainWorkoutName;
     }
 
     public void subWorkoutNamesList(List<String> subWorkoutNames) {
@@ -86,10 +89,16 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
 
     private void addSubWorkoutToDatatable(String subWorkoutName) {
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
-        String tableName = subWorkoutTable.getCorrectTableName(clkickedMainWorkoutName
+        String tableName = subWorkoutTable.getCorrectTableName(clickedMainWorkoutName
                 ,subWorkoutName);
 
         subWorkoutTable.addSubWorkoutTable(tableName);
+        MainWorkoutTable table = new MainWorkoutTable(context);
+        List<SubWorkout> subWorkouts = table.getSubWorkouts(clickedMainWorkoutName);
+        subWorkouts.add(new SubWorkout(subWorkoutName,null));
+        MainWorkout mainWorkout = new MainWorkout(clickedMainWorkoutName,subWorkouts);
+        mainWorkout.setRowId(MainWorkoutFragment.getClickedMainWorkout().getRowId());
+        table.updateRow(mainWorkout);
 
        // MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
         //mainWorkoutTable.addSubWorkout(MainWorkoutFragment.getClickedMainWorkoutName()
