@@ -33,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ExerciseFragment exercise_frag;//make these variables in a pyramid
+    private ProgressPhotosFragment progressPhoto_frag;
     private int fragId;
     public MainActivity mainActivity = this;
     private CustomExercisePopup customExercisePopup;
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity
             String date = dateFormat.format(new Date());
             ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
             table.addProgressPhoto(date,cameraBitmap);
+            progressPhoto_frag.addPhotoToList(new ProgressPhoto(date,cameraBitmap));
         }
 
     }
@@ -243,7 +246,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showProgressPhotoFragment() {
         getCameraPermission();
-        ProgressPhotosFragment progressPhoto_frag = new ProgressPhotosFragment();
+        progressPhoto_frag = new ProgressPhotosFragment();
         progressPhoto_frag.setMainActivity(mainActivity);
         addFragmentToStack(getActiveFragment(),progressPhoto_frag,R.id.progressPhotos_fragment);
     }

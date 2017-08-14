@@ -29,6 +29,8 @@ public class ProgressPhotosFragment extends Fragment {
 
     private MainActivity mainActivity;
     private View root;
+    private List<ProgressPhoto> progressPhotos;
+    private ProgressPhotoAdapter progressPhotoAdapter;
 
     public ProgressPhotosFragment() {
         // Required empty public constructor
@@ -96,20 +98,26 @@ public class ProgressPhotosFragment extends Fragment {
 
     private void setRecycleView(View root) {
         ProgressPhotosTable table = new ProgressPhotosTable(getContext());
-        RecyclerAdapter adapter = new RecyclerAdapter(table.getProgressPhotos());
+        progressPhotos = table.getProgressPhotos();
+        progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.photoRecycleView);
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemViewCacheSize(12);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(progressPhotoAdapter);
     }
 
-    private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
+    public void addPhotoToList(ProgressPhoto photo) {
+        progressPhotos.add(0,photo);
+        progressPhotoAdapter.notifyItemInserted(0);
+    }
+
+    public class ProgressPhotoAdapter extends RecyclerView.Adapter<ProgressPhotoAdapter.CustomViewHolder> {
 
         List<ProgressPhoto> progressPhotoList;
 
-        public RecyclerAdapter(List<ProgressPhoto> progressPhotoList) {
+        public ProgressPhotoAdapter(List<ProgressPhoto> progressPhotoList) {
             this.progressPhotoList = progressPhotoList;
         }
 
