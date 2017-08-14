@@ -27,8 +27,8 @@ public class ViewCustomExercisesPopup extends PopupWindowManager {
     public ViewCustomExercisesPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
-        setPopupLayout(R.layout.deletesubworkout_popup_layout);
-        setPopupViewId(R.id.deleteSubWorkoutPopup);
+        setPopupLayout(R.layout.recycleview_popup_layout);
+        setPopupViewId(R.id.recycleViewPopupLayout);
     }
 
     public void setMainActivity(MainActivity mainActivity) {

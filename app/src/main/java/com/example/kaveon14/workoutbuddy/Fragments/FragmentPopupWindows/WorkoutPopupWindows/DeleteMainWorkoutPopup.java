@@ -1,13 +1,15 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
-
+//create adapter keep listView
 import android.content.Context;
 import android.graphics.Color;
-import android.view.HapticFeedbackConstants;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
@@ -16,20 +18,19 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWin
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
-import java.util.ArrayList;
 import java.util.List;
 // TODO put context in constructor for all pw's
 public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private int position;
-    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
+    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;//not needed
     private List<MainWorkout> mainWorkoutList;
 
     public DeleteMainWorkoutPopup(View root,Context context) {
         setRootView(root);
-        setPopupViewId(R.id.deleteSubWorkoutPopup);
+        setPopupViewId(R.id.recycleViewPopupLayout);
         setWindowManagerContext(context);
-        setPopupLayout(R.layout.deletesubworkout_popup_layout);
+        setPopupLayout(R.layout.recycleview_popup_layout);
     }
 
     public void showPopupWindow() {
@@ -53,14 +54,14 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private void setMainWorkoutListView() {
         ListView listView = (ListView) popupLayout.findViewById(R.id.deleteSubWorkoutPopup_listView);
-       // listView.setAdapter(mainWorkoutAdapter);
+        listView.setAdapter(new SubWorkoutAdapter(mainWorkoutList));
         listView.setBackgroundColor(Color.WHITE);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                resetSubWorkoutListViewColors(parent);
                 parent.getChildAt(position).setBackgroundColor(Color.LTGRAY);
                 if(position != 0) {
-                    resetSubWorkoutListViewColors(parent);
                     setDeleteButton(mainWorkoutList.get(position));
                 } else {
                     resetDeleteButton();
@@ -69,6 +70,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
                 }
             }
         });
+
     }
 
     private void setDeleteButton(MainWorkout mainWorkout) {
@@ -103,10 +105,51 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         mainWorkoutTable.deleteMainWorkout(mainWorkout.getMainWorkoutName());
     }
 
+    //create better method possibly use a 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {
         for(int x=0;x<parent.getCount();x++) {
             View view = parent.getChildAt(x);
             view.setBackgroundColor(Color.WHITE);
         }
     }
+
+    private class SubWorkoutAdapter extends BaseAdapter {
+
+        List<MainWorkout> mainWorkoutList;
+
+        public SubWorkoutAdapter(List<MainWorkout> mainWorkoutList) {
+            this.mainWorkoutList = mainWorkoutList;
+        }
+
+        @Override
+        public int getCount() {
+            return mainWorkoutList.size();
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        public MainWorkout getItem(int position) {
+            return mainWorkoutList.get(position);
+        }
+
+        @Override
+        public View getView(int position,View rowView,ViewGroup viewGroup) {
+            MainWorkout mainWorkout = mainWorkoutList.get(position);
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            rowView = inflater.inflate(R.layout.simple_list_item,null);
+            setListItemView(rowView,mainWorkout);
+            return rowView;
+        }
+
+        private void setListItemView(View rowView,MainWorkout mainWorkout) {
+            TextView textView = (TextView) rowView.findViewById(R.id.simpleTextView);
+            textView.setText(mainWorkout.getMainWorkoutName());
+        }
+    }
+
+
 }

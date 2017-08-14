@@ -26,8 +26,8 @@ public class DeleteExercisesPopup extends PopupWindowManager {//dont create popu
     public DeleteExercisesPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
-        setPopupLayout(R.layout.deletesubworkout_popup_layout);
-        setPopupViewId(R.id.deleteSubWorkoutPopup);
+        setPopupLayout(R.layout.recycleview_popup_layout);
+        setPopupViewId(R.id.recycleViewPopupLayout);
     }
 
     public void setExerciseFragment(ExerciseFragment exercise_frag) {

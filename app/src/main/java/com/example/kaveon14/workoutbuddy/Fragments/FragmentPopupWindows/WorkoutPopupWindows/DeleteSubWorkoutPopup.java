@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
@@ -24,8 +23,8 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
     public DeleteSubWorkoutPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
-        setPopupLayout(R.layout.deletesubworkout_popup_layout);
-        setPopupViewId(R.id.deleteSubWorkoutPopup);
+        setPopupLayout(R.layout.recycleview_popup_layout);
+        setPopupViewId(R.id.recycleViewPopupLayout);
     }
 
     public void showPopupWindow() {
