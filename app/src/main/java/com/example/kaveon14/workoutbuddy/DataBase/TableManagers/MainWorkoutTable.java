@@ -60,12 +60,8 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         };
 
         List<SubWorkout> subWorkouts = mainWorkout.getSubWorkoutsList();
-
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-
-
-
         values.put(COLUMN_MAINWORKOUT,mainWorkout.getMainWorkoutName());
         for(int x=subWorkouts.size()-1;x>=0;x--) {
             values.put(columns[x],subWorkouts.get(x).getSubWorkoutName());
@@ -73,26 +69,8 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         String s = null;
         for(int x=subWorkouts.size();x<columns.length;x++) {
             values.put(columns[x],s);
-        }//wrong id
-        writableDatabase.update(TABLE_NAME,values,"_id="+mainWorkout.getRowId(),null);
-    }
-
-    public void addSubWorkout(String mainWorkoutName,String subWorkoutNames) {//needs to be changed
-        List<String> rowValues = getSubWorkoutNames(mainWorkoutName);
-        deleteRow(mainWorkoutName);
-        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
-
-        int day = 1;
-        rowValues.add(subWorkoutNames);
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_MAINWORKOUT,mainWorkoutName);
-        for(int x=0;x<rowValues.size();x++) {
-            String COLUMN_NAME = "Day"+day + "_Workout"+day;
-            values.put(COLUMN_NAME,rowValues.get(x));
-            day++;
         }
-        writableDatabase.insert(TABLE_NAME,null,values);
-        writableDatabase.close();
+        writableDatabase.update(TABLE_NAME,values,"_id="+mainWorkout.getRowId(),null);
     }
 
     public List<MainWorkout> getMainWorkouts() {
