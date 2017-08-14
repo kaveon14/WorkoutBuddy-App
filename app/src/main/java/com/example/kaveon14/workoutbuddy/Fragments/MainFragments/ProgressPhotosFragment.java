@@ -3,6 +3,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -44,7 +45,7 @@ public class ProgressPhotosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_progress_photos, container, false);
-        setRecycleView(root);
+        new MyAsyncTask().execute(progressPhotos);
         setFloatingActionButton();
         return root;
     }
@@ -96,16 +97,14 @@ public class ProgressPhotosFragment extends Fragment {
         popup.showPopupWindow();
     }
 
-    private void setRecycleView(View root) {
-        ProgressPhotosTable table = new ProgressPhotosTable(getContext());
-        progressPhotos = table.getProgressPhotos();
+    private void setRecycleView(View root,ProgressPhotoAdapter adapter) {
         progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.photoRecycleView);
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemViewCacheSize(12);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(progressPhotoAdapter);
+        recyclerView.setAdapter(adapter);
     }
 
     public void addPhotoToList(ProgressPhoto photo) {
@@ -164,6 +163,29 @@ public class ProgressPhotosFragment extends Fragment {
                 });
             }
         }
+    }
+    class MyAsyncTask extends AsyncTask<List<ProgressPhoto>,Void,List<ProgressPhoto>> {
+
+        private ProgressPhotosTable table;
+
+        @Override
+        protected void onPreExecute() {
+            table = new ProgressPhotosTable(getContext());
+        }
+
+        @Override
+        protected List<ProgressPhoto> doInBackground(List<ProgressPhoto>[] params) {
+            params[0] = table.getProgressPhotos();
+            progressPhotos = params[0];
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(List<ProgressPhoto> progressPhotos) {
+            progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
+            setRecycleView(root,progressPhotoAdapter);
+        }
+
     }
 
 }
