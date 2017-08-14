@@ -134,7 +134,7 @@ public class ProgressPhotosFragment extends Fragment {
         @Override
         public void onBindViewHolder(CustomViewHolder customViewHolder,int i) {
             ProgressPhoto progressPhoto = progressPhotoList.get(i);
-            customViewHolder.dateView.setText(progressPhoto.getDate());
+            customViewHolder.dateView.setText(progressPhoto.getDate().substring(0,10));
             customViewHolder.imageView.setImageBitmap(progressPhoto.getProgressPhoto());
         }
 

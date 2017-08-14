@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         }
         Bitmap cameraBitmap = getCameraImage(requestCode,resultCode,data);
         if(cameraBitmap != null) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd  HH:mm:ss");
             String date = dateFormat.format(new Date());
             ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
             table.addProgressPhoto(date,cameraBitmap);
@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity
         ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
         try {
             Bitmap photo = table.getImageData(INDEX + 1,
-                    DataBaseContract.ProgressPhotos.COLUMN_DATE+" DESC").get(INDEX);
+                    DataBaseContract.ProgressPhotos.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
             ImageView imageView = (ImageView) findViewById(R.id.progressPhotoView);
             imageView.setImageBitmap(photo);
         } catch(IndexOutOfBoundsException e) {
@@ -319,11 +319,11 @@ public class MainActivity extends AppCompatActivity
 
     private void loadRecentBodyStatsPt1(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
         String date = table.getColumn(DataBaseContract.BodyData.COLUMN_DATE,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String weight = table.getColumn(DataBaseContract.BodyData.COLUMN_WEIGHT,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String chest = table.getColumn(DataBaseContract.BodyData.COLUMN_CHEST_SIZE,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
 
         TextView textView = (TextView) findViewById(R.id.recentDateView);
         textView.setText(date);
@@ -337,11 +337,11 @@ public class MainActivity extends AppCompatActivity
 
     private void loadRecentBodyStatsPt2(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
         String back = table.getColumn(DataBaseContract.BodyData.COLUMN_BACK_SIZE,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String arm = table.getColumn(DataBaseContract.BodyData.COLUMN_ARM_SIZE,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String forearm = table.getColumn(DataBaseContract.BodyData.COLUMN_FOREARM_SIZE,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
 
         TextView textView = (TextView) findViewById(R.id.recentBackView);
         textView.setText(back);
@@ -355,11 +355,11 @@ public class MainActivity extends AppCompatActivity
 
     private void loadRecentBodyStatsPt3(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
         String waist = table.getColumn(DataBaseContract.BodyData.COLUMN_WAIST_SIZE,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String quad = table.getColumn(DataBaseContract.BodyData.COLUMN_QUAD_SIZE,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String calves = table.getColumn(DataBaseContract.BodyData.COLUMN_CALF_SIZE,INDEX+1,
-                DataBaseContract.BodyData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.BodyData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
 
         TextView textView = (TextView) findViewById(R.id.recentWaistView);
         textView.setText(waist);
@@ -375,11 +375,11 @@ public class MainActivity extends AppCompatActivity
     private void loadRecentWorkoutStatsPt1(WorkoutStatsTable table,int INDEX)
             throws IndexOutOfBoundsException {
         String date = table.getColumn(DataBaseContract.WorkoutData.COLUMN_DATE,INDEX+1,
-                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String mainWorkout = table.getColumn(DataBaseContract.WorkoutData.COLUMN_MAINWORKOUT,INDEX+1,
-                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String subWorkout = table.getColumn(DataBaseContract.WorkoutData.COLUMN_SUBWORKOUT,INDEX+1,
-                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
 
         TextView textView = (TextView) findViewById(R.id.recentWorkoutDateView);
         textView.setText(textView.getText().toString()+" "+date);
@@ -394,11 +394,11 @@ public class MainActivity extends AppCompatActivity
     private void loadRecentWorkoutStatsPt2(WorkoutStatsTable table,int INDEX)
             throws IndexOutOfBoundsException {
         String sets = table.getColumn(DataBaseContract.WorkoutData.COLUMN_TOTAL_SETS,INDEX+1,
-                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String reps = table.getColumn(DataBaseContract.WorkoutData.COLUMN_TOTAL_REPS,INDEX+1,
-                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
         String weight = table.getColumn(DataBaseContract.WorkoutData.COLUMN_TOTAL_WEIGHT,INDEX+1,
-                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC").get(INDEX);
+                DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
 
         TextView textView = (TextView) findViewById(R.id.recentTotalSetsView);
         textView.setText(textView.getText().toString()+" "+sets);
