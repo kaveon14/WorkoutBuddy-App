@@ -97,7 +97,7 @@ public class ProgressPhotosFragment extends Fragment {
     private void setRecycleView(View root) {
         ProgressPhotosTable table = new ProgressPhotosTable(getContext());
         RecyclerAdapter adapter = new RecyclerAdapter(table.getProgressPhotos());
-        RecyclerView recyclerView =(RecyclerView) root.findViewById(R.id.photoRecycleView);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.photoRecycleView);
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemViewCacheSize(12);

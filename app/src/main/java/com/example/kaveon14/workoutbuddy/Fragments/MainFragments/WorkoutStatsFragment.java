@@ -50,20 +50,9 @@ public class WorkoutStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
-        WorkoutStatsTable table = new WorkoutStatsTable(getContext());
+        WorkoutStatsTable table = new WorkoutStatsTable(getContext());//add asynctask
         subWorkoutList = table.getCompletedWorkouts();
-
-        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.workoutStatsRecycleView);
-        recyclerView.setItemViewCacheSize(12);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(new RecyclerAdapter(subWorkoutList));
-        if (subWorkoutList.size()==0) {
-            TextView textView = (TextView) root.findViewById(R.id.noWorkoutStats);
-            textView.setVisibility(View.VISIBLE);
-        }
-
+        setRecycleView(root);
         setSearchViewOnClick();
         return root;
     }
@@ -88,6 +77,20 @@ public class WorkoutStatsFragment extends Fragment {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    private void setRecycleView(View root) {
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.workoutStatsRecycleView);
+        recyclerView.setItemViewCacheSize(12);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(new RecyclerAdapter(subWorkoutList));
+        if (subWorkoutList.size()==0) {
+            TextView textView = (TextView) root.findViewById(R.id.noWorkoutStats);
+            textView.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void setSearchViewOnClick() {

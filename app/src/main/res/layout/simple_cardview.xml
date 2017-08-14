@@ -15,11 +15,9 @@
         card_view:cardCornerRadius="10dp"
         card_view:cardUseCompatPadding="true">
 
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <TableRow
                 android:layout_width="match_parent"
