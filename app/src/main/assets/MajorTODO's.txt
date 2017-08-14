@@ -1,4 +1,3 @@
-// TODO change ui to material theme in august
 -use recylerView for bodyStats and lifting stats
 --think about using a cardView inside the recyclerView
 -overhaul the add custom exercise popup

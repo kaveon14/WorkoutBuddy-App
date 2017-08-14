@@ -81,8 +81,7 @@ public class ManageBodyStatsPopup extends PopupWindowManager {
                 Body body = new ManageBodyStatsPopup.BodyStatsExtension()
                         .getBodyStatsObject(popupLayout);
                 if (body != null) {
-                    bodyList.remove(position);
-                    bodyList.add(position,body);
+                    bodyList.add(body);
                     recyclerView.getAdapter().notifyDataSetChanged();
                     new BodyTable(context).addStatsToBodyTable(body);
                     Toast.makeText(context, "Stats Successfully Added!",
@@ -121,8 +120,11 @@ public class ManageBodyStatsPopup extends PopupWindowManager {
                     .setChestSize(getChestSize(root)).setBackSize(getBackSize(root))
                     .setArmSize(getArmSize(root)).setForearmSize(getForearmSize(root))
                     .setWaistSize(getWaistSize(root)).setQuadSize(getQuadSize(root))
-                    .setCalfSize(getCalfSize(root)).setRowID(BodyStatsFragment
-                            .getClickedBodyStatsItem().getRowId());
+                    .setCalfSize(getCalfSize(root));
+            if(BodyStatsFragment.getClickedBodyStatsItem()!=null) {
+                body.setRowID(BodyStatsFragment
+                        .getClickedBodyStatsItem().getRowId());
+            }
             String date = getDate(root);
             try {
                 body.setDate(date);

@@ -56,7 +56,7 @@ public class ProgressPhotosTable extends TableManager {
         writableDatabase.close();
     }
 
-    public List<ProgressPhoto> getProgressPhotos() {
+    public List<ProgressPhoto> getProgressPhotos() {//get data sorted
         List<String> dates = getColumn(COLUMN_DATE);
         List<Bitmap> photos = getImageData();
         List<ProgressPhoto> progressPhotos = new ArrayList<>(dates.size());

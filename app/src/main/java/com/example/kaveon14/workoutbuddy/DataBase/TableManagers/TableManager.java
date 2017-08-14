@@ -59,6 +59,20 @@ public abstract class TableManager {
         return columnList;
     }
 
+    public List<String> getColumn(String columnName,int count,String query) {
+        List<String> columnList = new ArrayList<>(count);
+        SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
+        Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,query);
+        int increment = 0;
+        while(cursor.moveToNext() && increment<count) {
+            columnList.add(increment,cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
+            increment++;
+        }
+        readableDatabase.close();
+        cursor.close();
+        return columnList;
+    }
+
     public Map<String,List<String>> searchTable(String searchedItem) {
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.rawQuery(getSearchQueryStatement(searchedItem),null);
