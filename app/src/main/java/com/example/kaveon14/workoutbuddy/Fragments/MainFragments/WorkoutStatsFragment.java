@@ -39,6 +39,7 @@ public class WorkoutStatsFragment extends Fragment {
     private Menu menu;
     private View root;
     private RecyclerAdapter recyclerAdapter;
+    private RecyclerView recyclerView;
 
     public WorkoutStatsFragment() {
         // Required empty public constructor
@@ -83,7 +84,7 @@ public class WorkoutStatsFragment extends Fragment {
 
     private void setRecycleView(View root,RecyclerAdapter adapter) {
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.workoutStatsRecycleView);
+        recyclerView = (RecyclerView) root.findViewById(R.id.workoutStatsRecycleView);
         recyclerView.setItemViewCacheSize(12);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(manager);
@@ -133,7 +134,7 @@ public class WorkoutStatsFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
-    //redo
+    //redo for better big o
     public List<SubWorkout> loadSearchedItems(Map<String,List<String>> queriedData) {
         List<SubWorkout> list = new ArrayList<>();
         if(queriedData!=null) {
@@ -159,7 +160,7 @@ public class WorkoutStatsFragment extends Fragment {
                 }
             }
         }
-
+        recyclerView.setAdapter(new RecyclerAdapter(list));
         return list;
     }
 
