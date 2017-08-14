@@ -98,7 +98,6 @@ public class ProgressPhotosFragment extends Fragment {
     }
 
     private void setRecycleView(View root,ProgressPhotoAdapter adapter) {
-        progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.photoRecycleView);
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(manager);
