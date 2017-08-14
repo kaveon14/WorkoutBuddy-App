@@ -116,15 +116,6 @@ public class WorkoutStatsFragment extends Fragment {
         });
     }
 
-    private void setListViewOnClick(ListView listView) {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showFullWorkoutStatsFragment(subWorkoutList.get(position).getWorkoutData());
-            }
-        });
-    }
-
     private void showFullWorkoutStatsFragment(List<WorkoutExercise> workoutData) {
         FullWorkoutStatsFragment fw = new FullWorkoutStatsFragment();
         fw.setWorkoutData(workoutData);

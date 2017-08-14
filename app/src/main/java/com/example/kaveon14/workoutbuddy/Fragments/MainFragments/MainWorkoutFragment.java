@@ -169,22 +169,23 @@ public class MainWorkoutFragment extends Fragment {
         });
     }
 
-    private List<String> loadSearchedItems(Map<String,List<String>> queriedData) {
-        List<String> list = new ArrayList<>();
+    private List<MainWorkout> loadSearchedItems(Map<String,List<String>> queriedData) {
+        List<MainWorkout> list = new ArrayList<>();
         if (queriedData != null) {
             List<String> mainWorkouts = queriedData
                     .get(DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT);
            for(int x=0;x<mainWorkouts.size();x++) {
-               String mainWorkout = mainWorkouts.get(x);
+               String mainWorkoutName = mainWorkouts.get(x);
                for(int i=0;i<mainWorkouts.size();i++) {
                    String mainWorkoutListItem = mainWorkouts.get(i);
-                   if(mainWorkout.equals(mainWorkoutListItem)) {
-                       list.add(mainWorkoutListItem);
+                   if(mainWorkoutName.equals(mainWorkoutListItem)) {
+                       list.add(new MainWorkout(mainWorkoutName,null));
                    }
                }
            }
 
         }
+        recyclerView.setAdapter(new RecyclerAdapter(list));
         return list;
     }
 
