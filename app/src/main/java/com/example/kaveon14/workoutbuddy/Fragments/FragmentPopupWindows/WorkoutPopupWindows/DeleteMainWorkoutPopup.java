@@ -11,19 +11,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.List;
 // TODO put context in constructor for all pw's
 public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private int position;
-    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;//not needed
+    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
     private List<MainWorkout> mainWorkoutList;
 
     public DeleteMainWorkoutPopup(View root,Context context) {
@@ -70,7 +68,6 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
                 }
             }
         });
-
     }
 
     private void setDeleteButton(MainWorkout mainWorkout) {
@@ -105,7 +102,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
         mainWorkoutTable.deleteMainWorkout(mainWorkout.getMainWorkoutName());
     }
 
-    //create better method possibly use a 
+    //create better method possibly use a qeuqe
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {
         for(int x=0;x<parent.getCount();x++) {
             View view = parent.getChildAt(x);
@@ -150,6 +147,4 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
             textView.setText(mainWorkout.getMainWorkoutName());
         }
     }
-
-
 }

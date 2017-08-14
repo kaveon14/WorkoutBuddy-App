@@ -188,25 +188,6 @@ public class MainWorkoutFragment extends Fragment {
         return list;
     }
 
-    private void deleteRowVew(ListView listView) {//need to be refactored
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                view.performHapticFeedback(1);
-                showDeleteMainWorkoutPopup(position);
-                return true;
-            }
-        });
-    }
-
-    private void showDeleteMainWorkoutPopup(int position) {
-        DeleteMainWorkoutPopup popup = new DeleteMainWorkoutPopup(getView(),getContext());
-       // popup.setMainWorkoutAdapter(adapter);convert
-       // popup.setMainWorkoutNames(mainWorkoutNames);
-        popup.setPosition(position);
-        popup.showPopupWindow();
-    }
-
     public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
         private List<MainWorkout> mainWorkoutList;
@@ -254,7 +235,6 @@ public class MainWorkoutFragment extends Fragment {
                     }
                 });
             }
-
         }
     }
 
