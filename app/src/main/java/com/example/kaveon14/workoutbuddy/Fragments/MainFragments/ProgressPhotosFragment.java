@@ -1,15 +1,11 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,17 +17,18 @@ import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ProgressPhotoPopupWindows.ExpandedImagePopup;
 import com.example.kaveon14.workoutbuddy.R;
 
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
 import static com.example.kaveon14.workoutbuddy.Activity.MainActivity.REQUEST_IMAGE_CAPTURE;
 
 public class ProgressPhotosFragment extends Fragment {
 
 
     private MainActivity mainActivity;
+    private View root;
 
     public ProgressPhotosFragment() {
         // Required empty public constructor
@@ -44,7 +41,7 @@ public class ProgressPhotosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_progress_photos, container, false);
+        root = inflater.inflate(R.layout.fragment_progress_photos, container, false);
         setRecycleView(root);
         setFloatingActionButton();
         return root;
@@ -91,6 +88,12 @@ public class ProgressPhotosFragment extends Fragment {
         mainActivity.startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
     }
 
+    private void showExapndedImagePopup(Bitmap image) {
+        ExpandedImagePopup popup = new ExpandedImagePopup(getContext(),root);
+        popup.setImage(image);
+        popup.showPopupWindow();
+    }
+
     private void setRecycleView(View root) {
         ProgressPhotosTable table = new ProgressPhotosTable(getContext());
         RecyclerAdapter adapter = new RecyclerAdapter(table.getProgressPhotos());
@@ -100,8 +103,6 @@ public class ProgressPhotosFragment extends Fragment {
         recyclerView.setItemViewCacheSize(12);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
-
-
     }
 
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
@@ -141,6 +142,18 @@ public class ProgressPhotosFragment extends Fragment {
                 super(rowView);
                 dateView = (TextView) rowView.findViewById(R.id.progressPhotoDateView);
                 imageView = (ImageView) rowView.findViewById(R.id.progressPhotoImageView);
+                expandedImage(imageView);
+            }
+
+            private void expandedImage(ImageView imageView) {
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int i = getLayoutPosition();
+                        Bitmap image = progressPhotoList.get(i).getProgressPhoto();
+                        showExapndedImagePopup(image);
+                    }
+                });
             }
         }
     }

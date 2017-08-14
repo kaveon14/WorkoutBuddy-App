@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows;
-//create adapter keep listView
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -17,7 +17,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWin
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-// TODO put context in constructor for all pw's
+
 public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private int position;
