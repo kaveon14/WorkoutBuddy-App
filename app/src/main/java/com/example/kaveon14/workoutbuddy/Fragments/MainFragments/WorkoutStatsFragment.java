@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
-//TODO delete un-needed onCreate methods
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -43,12 +43,6 @@ public class WorkoutStatsFragment extends Fragment {
 
     public WorkoutStatsFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override

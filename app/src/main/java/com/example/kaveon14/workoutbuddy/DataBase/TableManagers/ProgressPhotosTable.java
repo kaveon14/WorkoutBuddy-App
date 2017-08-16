@@ -18,7 +18,7 @@ import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_DATE;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_PHOTO;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.TABLE_NAME;
-
+//add method to delete date on long click(on a different branch)
 public class ProgressPhotosTable extends TableManager {
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
@@ -73,7 +73,7 @@ public class ProgressPhotosTable extends TableManager {
         byte[] data;
         List<Bitmap> photos = new ArrayList<>();
         SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = database.query(TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = database.query(TABLE_NAME, null, null, null, null, null,COLUMN_DATE+" DESC");
         while(cursor.moveToNext()) {
             data = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_PHOTO));
             Bitmap bitmap = BitmapFactory.decodeByteArray(data,0,data.length);

@@ -8,11 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseNames;
+import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseContent;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -195,11 +196,15 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
     private class DefaultExercisesExtension {
 
         protected void addDefaultExercises(SQLiteDatabase database) {//add exercise descriptions also change func name
-            List<String> exerciseNames = new DefaultExerciseNames(context, "ExerciseNames.txt")
-                    .readFileSorted();
+            List<String> exerciseNames = new DefaultExerciseContent(context)
+                    .getExerciseNames();
+            Hashtable<String,String> exerciseDescriptions = new DefaultExerciseContent(context)
+                    .getExerciseDescriptions();
             ContentValues values = new ContentValues();
             for(String exerciseName : exerciseNames) {
                 values.put(DataBaseContract.ExerciseData.COLUMN_EXERCISES, exerciseName);
+                values.put(DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION,
+                        exerciseDescriptions.get(exerciseName));
                 byte[] data = getDefaultImages(exerciseName);
                 values.put(DataBaseContract.ExerciseData.COLUMN_EXERCISE_IMAGES,data);
                 database.insert(DataBaseContract.ExerciseData.TABLE_NAME, null, values);

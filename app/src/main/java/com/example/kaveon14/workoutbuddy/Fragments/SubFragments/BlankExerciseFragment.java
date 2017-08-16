@@ -42,20 +42,18 @@ public class BlankExerciseFragment extends Fragment {
     }
 
     private void setExerciseContent(View view) {
-        ExerciseImages exerciseImages = new ExerciseImages(getContext());
-        exerciseImages.setImageMap();
-        ExerciseContent exerciseContent = new ExerciseContent();
         TextView exTextBox = (TextView) view.findViewById(R.id.exDescriptionBox);
+        String exerciseDescription = ExerciseFragment.getClickedExercise().getExerciseDescription();
 
-        String exerciseDcription = exerciseContent.getExerciseDescription();
-        exTextBox.setText(exerciseContent.getClickedExercise().getExerciseDescription());
-        if(exerciseDcription != null) {
-            exTextBox.setText(exerciseDcription);
+        if(exerciseDescription != null) {
+            exTextBox.setText(exerciseDescription);
         } else {
             exTextBox.setText(R.string.addExerciseDescription);
         }
+
         ImageView exImageView = (ImageView) view.findViewById(R.id.exerciseImageView);
-        Bitmap bitmap = exerciseContent.getClickedExercise().getExerciseImage();
+        Bitmap bitmap = ExerciseFragment.getClickedExercise().getExerciseImage();
+
         if(bitmap != null) {
             exImageView.setImageBitmap(bitmap);
         } else {
@@ -106,50 +104,5 @@ public class BlankExerciseFragment extends Fragment {
                         "otherwise do not show the border_accent",Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private class ExerciseContent extends ExerciseImages {//most likely nothing needed
-
-        private final int getImageID() {
-            String string_image_id = EXERCISE_IMAGE_MAP.
-                    get(ExerciseFragment.getClickedExercise().getExerciseName());
-            if(string_image_id != null) {
-                return Integer.valueOf(string_image_id);
-            } else {
-                return R.mipmap.ic_launcher;
-            }
-        }
-
-        private Exercise getClickedExercise() {
-            return ExerciseFragment.getClickedExercise();
-        }
-
-        public String getExerciseDescription() {//not even needed
-            DataBaseSQLiteHelper db = new DataBaseSQLiteHelper(getContext());
-            SQLiteDatabase database = db.getReadableDatabase();
-            Cursor cursor = database.query(DataBaseContract.ExerciseData.TABLE_NAME,
-                    null,null,null,null,null,null);
-            String exDescription = null;
-            Exercise exercise = getClickedExercise();
-            while(cursor.moveToNext() && cursor
-                    .getString(cursor.getColumnIndexOrThrow(DataBaseContract.ExerciseData.COLUMN_EXERCISES))
-                    != exercise.getExerciseName()) {
-
-                exDescription = cursor
-                        .getString(cursor.getColumnIndexOrThrow(DataBaseContract.ExerciseData.COLUMN_EXERCISE_DESCRIPTION));
-                String dafuq = exDescription;
-
-            }
-            return exDescription;
-        }
-
-        public Bitmap getExerciseImage() {
-            ExerciseTable et = new ExerciseTable(getContext());
-            return et.getExerciseImage(getClickedExercise());
-        }
-
-        public Bitmap getImageBitmap(View view) {
-            return BitmapFactory.decodeResource(view.getResources(),getImageID());
-        }
     }
 }

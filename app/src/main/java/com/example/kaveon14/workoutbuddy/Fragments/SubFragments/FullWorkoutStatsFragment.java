@@ -14,7 +14,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import java.util.Map;
-
+// TODO add method to delete workout stats (only allow deletion from here)
 public class FullWorkoutStatsFragment extends Fragment {
 
     private List<WorkoutExercise> workoutData;

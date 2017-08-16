@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
-import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseNames;
+import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseContent;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,8 +31,8 @@ public class ExerciseTable extends TableManager {
     }
 
     public void setDefaultExerciseCount() {
-        DEFAULT_EXERCISE_COUNT = new DefaultExerciseNames(context,"ExerciseNames.txt")
-                .readFileSorted().size();
+        DEFAULT_EXERCISE_COUNT = new DefaultExerciseContent(context)
+                .getExerciseNames().size();
     }
 
     public void addAnExercise(Exercise exercise) {

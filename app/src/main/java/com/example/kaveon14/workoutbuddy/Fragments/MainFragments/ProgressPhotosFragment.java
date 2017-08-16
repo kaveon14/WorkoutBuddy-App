@@ -1,6 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -26,7 +25,6 @@ import java.util.List;
 import static com.example.kaveon14.workoutbuddy.Activity.MainActivity.REQUEST_IMAGE_CAPTURE;
 
 public class ProgressPhotosFragment extends Fragment {
-
 
     private MainActivity mainActivity;
     private View root;
@@ -184,7 +182,5 @@ public class ProgressPhotosFragment extends Fragment {
             progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
             setRecycleView(root,progressPhotoAdapter);
         }
-
     }
-
 }
