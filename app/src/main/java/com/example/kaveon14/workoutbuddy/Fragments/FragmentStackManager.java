@@ -13,7 +13,6 @@ public class FragmentStackManager {
         this.fragmentManager = fragmentManager;
     }
 
-
     public void addFragmentToStack(Fragment frag,int fragId) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(currFragId==0) {
@@ -29,5 +28,4 @@ public class FragmentStackManager {
         }
         currFragId = fragId;
     }
-
 }

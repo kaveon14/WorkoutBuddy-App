@@ -329,50 +329,53 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/recentWorkoutDateView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:paddingBottom="29dp"
                             android:text="@string/datePointer"
                             android:textColor="@android:color/black"
                             android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
+                            tools:gravity="center" />
 
                         <TextView
                             android:id="@+id/recentMainWorkoutView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingBottom="29dp"
                             android:text="@string/mainWorkoutPointer"
                             android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/recentSubWorkoutView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingBottom="29dp"
                             android:text="@string/subWorkoutPointer"
                             android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/recentTotalSetsView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingBottom="29dp"
                             android:text="@string/totalSets"
                             android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/recentTotalRepsView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingBottom="29dp"
                             android:text="@string/totalReps"
                             android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/recentTotalWeightView"
@@ -388,17 +391,7 @@
 
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="500dp" >
 
-                <ImageView
-                    android:id="@+id/progressPhotoView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/caldroid_lighter_gray"
-                    app:srcCompat="@mipmap/no_image" />
-            </TableRow>
 
             <TableRow
                 android:gravity="center"

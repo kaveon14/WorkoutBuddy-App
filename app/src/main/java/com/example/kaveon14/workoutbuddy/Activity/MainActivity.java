@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity
     private void loadRecentStats() {
         loadRecentBodyStats();
         loadRecentWorkoutStats();
-        loadRecentProgressPhoto();
+      //  loadRecentProgressPhoto();
     }
 
     private void loadRecentWorkoutStats() {
@@ -325,8 +325,8 @@ public class MainActivity extends AppCompatActivity
         try {
             Bitmap photo = table.getImageData(INDEX + 1,
                     DataBaseContract.ProgressPhotos.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
-            ImageView imageView = (ImageView) findViewById(R.id.progressPhotoView);
-            imageView.setImageBitmap(photo);
+            //ImageView imageView = (ImageView) findViewById(R.id.progressPhotoView);
+            //imageView.setImageBitmap(photo);
         } catch(IndexOutOfBoundsException e) {
             //do nothing
         }
