@@ -65,11 +65,7 @@ public class MainActivity extends AppCompatActivity
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     private Menu menu;
     private boolean activityHidden = false;
-
-
-    FragmentStackManager fragmentStackManager =
-            new FragmentStackManager(getSupportFragmentManager());
-
+    private FragmentStackManager fragmentStackManager;
 
 
     @Override
@@ -78,8 +74,8 @@ public class MainActivity extends AppCompatActivity
         setBaseContent();
         getPermissions();
         loadRecentStats();
-        DefaultExerciseContent exerciseContent = new DefaultExerciseContent(getBaseContext());
-        exerciseContent.getExerciseDescriptions();
+        fragmentStackManager =
+                new FragmentStackManager(getSupportFragmentManager());
     }
 
     @Override
@@ -305,7 +301,6 @@ public class MainActivity extends AppCompatActivity
     private void loadRecentStats() {
         loadRecentBodyStats();
         loadRecentWorkoutStats();
-      //  loadRecentProgressPhoto();
     }
 
     private void loadRecentWorkoutStats() {
@@ -316,19 +311,6 @@ public class MainActivity extends AppCompatActivity
             loadRecentWorkoutStatsPt2(table,INDEX);
         } catch (IndexOutOfBoundsException e) {
             // do nothing
-        }
-    }
-
-    private void loadRecentProgressPhoto() {
-        int INDEX = 0;
-        ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
-        try {
-            Bitmap photo = table.getImageData(INDEX + 1,
-                    DataBaseContract.ProgressPhotos.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
-            //ImageView imageView = (ImageView) findViewById(R.id.progressPhotoView);
-            //imageView.setImageBitmap(photo);
-        } catch(IndexOutOfBoundsException e) {
-            //do nothing
         }
     }
 
