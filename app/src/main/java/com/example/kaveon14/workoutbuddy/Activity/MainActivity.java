@@ -241,6 +241,7 @@ public class MainActivity extends AppCompatActivity
     private void showExerciseFragment() {
         exercise_frag = new ExerciseFragment();
         exercise_frag.setMenu(menu);
+        exercise_frag.setFragmentStackManager(fragmentStackManager);
         exercise_frag.setMainActivity(mainActivity);
         fragmentStackManager.addFragmentToStack(exercise_frag,R.id.exercise_fragment);
         if(!activityHidden) {
@@ -249,16 +250,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    public void showBlankExerciseFragment() {//why is this here???
+    public void showBlankExerciseFragment() {
         BlankExerciseFragment blankExercise_frag = new BlankExerciseFragment();
-        addFragmentToStack(getActiveFragment(),blankExercise_frag
-                , R.id.blankExercise_fragment);
+        fragmentStackManager.addFragmentToStack(blankExercise_frag,R.id.blankExercise_fragment);
     }
 
     private void showWorkoutFragment() {
         MainWorkoutFragment mainWorkout_frag = new MainWorkoutFragment();
         mainWorkout_frag.setMenu(menu);
         mainWorkout_frag.setMainActivity(mainActivity);
+        mainWorkout_frag.setFragmentStackManager(fragmentStackManager);
         fragmentStackManager.addFragmentToStack(mainWorkout_frag,R.id.mainWorkout_fragment);
         if(!activityHidden) {
             hideMainActivityContent();

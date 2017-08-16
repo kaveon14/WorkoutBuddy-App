@@ -18,6 +18,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.SubWorkoutMenuPopup;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
@@ -32,6 +33,7 @@ public class SubWorkoutFragment extends Fragment {
     private ListView listView;
     private MainWorkout clickedMainWorkout;
     private MainActivity mainActivity;
+    private FragmentStackManager fragmentStackManager;
 
     public SubWorkoutFragment() {
         // Required empty public constructor
@@ -51,6 +53,10 @@ public class SubWorkoutFragment extends Fragment {
 
     public void setClickedMainWorkout(MainWorkout clickedMainWorkout) {
         this.clickedMainWorkout = clickedMainWorkout;
+    }
+
+    public void setFragmentStackManager(FragmentStackManager fragmentStackManager) {
+        this.fragmentStackManager = fragmentStackManager;
     }
 
     @Override
@@ -193,11 +199,9 @@ public class SubWorkoutFragment extends Fragment {
         BlankSubWorkoutFragment blankSubWorkoutFragment = new BlankSubWorkoutFragment();
         blankSubWorkoutFragment.setClickedSubWorkout(getClickedSubWorkout());
         blankSubWorkoutFragment.setMainActivity(mainActivity);
-        getFragmentManager().beginTransaction()
-                .hide(this)
-                .add(R.id.blankWorkout_fragment, blankSubWorkoutFragment)
-                .addToBackStack(null)
-                .commit();
+        blankSubWorkoutFragment.setFragmentStackManager(fragmentStackManager);
+        fragmentStackManager.addFragmentToStack(blankSubWorkoutFragment,
+                R.id.blankWorkout_fragment);
     }
 
     private ExerciseFragment showExercisefragment() {

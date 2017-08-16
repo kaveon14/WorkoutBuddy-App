@@ -23,6 +23,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.ExerciseToWorkoutPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.ExercisePopupMenu;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class ExerciseFragment extends Fragment {
     private ListView listView;
     private Menu menu;
     private MainActivity mainActivity;
+    private FragmentStackManager fragmentStackManager;
     private View root;
 
     public ExerciseFragment() {
@@ -56,6 +58,10 @@ public class ExerciseFragment extends Fragment {
 
     public static void setClickedExercise(Exercise clickedExercise) {
         ExerciseFragment.clickedExercise = clickedExercise;
+    }
+
+    public void setFragmentStackManager(FragmentStackManager fragmentStackManager) {
+        this.fragmentStackManager = fragmentStackManager;
     }
 
     public static Exercise getClickedExercise() {
@@ -183,11 +189,7 @@ public class ExerciseFragment extends Fragment {
 
     private void showBlankExerciseFragment() {
         BlankExerciseFragment bf = new BlankExerciseFragment();
-        getFragmentManager().beginTransaction()
-                .hide(this)
-                .replace(R.id.blankExercise_fragment,bf)
-                .addToBackStack(null)
-                .commit();
+        fragmentStackManager.addFragmentToStack(bf,R.id.blankExercise_fragment);
     }
 
     private void sortExerciseNames() {

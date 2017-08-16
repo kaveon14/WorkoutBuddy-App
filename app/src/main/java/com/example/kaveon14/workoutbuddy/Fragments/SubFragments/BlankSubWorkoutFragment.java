@@ -20,6 +20,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 
@@ -34,6 +35,7 @@ public class BlankSubWorkoutFragment extends Fragment {
     private List<Exercise> exerciseList;
     private SubWorkout clickedSubWorkout;
     private MainActivity mainActivity;
+    private FragmentStackManager fragmentStackManager;
 
     public BlankSubWorkoutFragment() {
         // Required empty public constructor
@@ -45,6 +47,10 @@ public class BlankSubWorkoutFragment extends Fragment {
 
     public void setClickedSubWorkout(SubWorkout clickedSubWorkout) {
         this.clickedSubWorkout = clickedSubWorkout;
+    }
+
+    public void setFragmentStackManager(FragmentStackManager fragmentStackManager) {
+        this.fragmentStackManager = fragmentStackManager;
     }
 
     @Override
@@ -139,11 +145,7 @@ public class BlankSubWorkoutFragment extends Fragment {
     private void openWorkoutFragment(Exercise exercise) {
         WorkoutFragment workoutFragment =  new WorkoutFragment();
         workoutFragment.setExercise(exercise);
-        getFragmentManager().beginTransaction()
-                .hide(this)
-                .add(R.id.workout_fragment,workoutFragment)
-                .addToBackStack(null)
-                .commit();
+        fragmentStackManager.addFragmentToStack(workoutFragment,R.id.workout_fragment);
     }
 
     private WorkoutAdapter setWorkoutAdapter() {

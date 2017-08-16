@@ -24,6 +24,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseCont
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.DeleteMainWorkoutPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.MainWorkoutPopupMenu;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class MainWorkoutFragment extends Fragment {
     private RecyclerAdapter recyclerAdapter;
     private View root;
     private MainActivity mainActivity;
+    private FragmentStackManager fragmentStackManager;
     private Menu menu;
 
     public MainWorkoutFragment() {
@@ -55,6 +57,10 @@ public class MainWorkoutFragment extends Fragment {
 
     public static void setClickedMainWorkout(MainWorkout clickedMainWorkout) {
         MainWorkoutFragment.clickedMainWorkout = clickedMainWorkout;
+    }
+
+    public void setFragmentStackManager(FragmentStackManager fragmentStackManager) {
+        this.fragmentStackManager = fragmentStackManager;
     }
 
     @Override
@@ -142,11 +148,9 @@ public class MainWorkoutFragment extends Fragment {
         subWorkoutFragment.setClickedMainWorkout(clickedMainWorkout);
         subWorkoutFragment.setMenu(menu);
         subWorkoutFragment.setMainActivity(mainActivity);
-        getFragmentManager().beginTransaction()
-                .hide(this)
-                .add(R.id.subWorkout_fragment,subWorkoutFragment)
-                .addToBackStack(null)
-                .commit();
+        subWorkoutFragment.setFragmentStackManager(fragmentStackManager);
+        fragmentStackManager.addFragmentToStack(subWorkoutFragment,
+                R.id.subWorkout_fragment);
     }
 
     private void setSearchViewOnClick() {
