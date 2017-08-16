@@ -105,8 +105,13 @@ public class ProgressPhotosFragment extends Fragment {
     }
 
     public void addPhotoToList(ProgressPhoto photo) {
-        progressPhotos.add(0,photo);
-        progressPhotoAdapter.notifyItemInserted(0);
+        if(progressPhotoAdapter.getItemCount()==0) {
+            progressPhotos.add(photo);
+            progressPhotoAdapter.notifyDataSetChanged();
+        } else {
+            progressPhotos.add(0, photo);
+            progressPhotoAdapter.notifyItemInserted(0);
+        }
     }
 
     public class ProgressPhotoAdapter extends RecyclerView.Adapter<ProgressPhotoAdapter.CustomViewHolder> {
