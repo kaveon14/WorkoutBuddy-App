@@ -10,10 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -24,21 +21,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
-import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseContent;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.CustomExercisePopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
@@ -51,22 +41,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-// TODO data loaded in mainActivty is not the most recent yet
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ExerciseFragment exercise_frag;//make these variables in a pyramid
-    private ProgressPhotosFragment progressPhoto_frag;
-    private int fragId;
-    public MainActivity mainActivity = this;
-    private CustomExercisePopup customExercisePopup;
-    private Bitmap exerciseImageBitmap;
-    private int RESULT_LOAD_IMAGE = 1;
-    public static final int REQUEST_IMAGE_CAPTURE = 1;
     private Menu menu;
     private boolean activityHidden = false;
+    private ExerciseFragment exercise_frag;
+    public static final int RESULT_LOAD_IMAGE = 1;
+    private CustomExercisePopup customExercisePopup;
+    public static final int REQUEST_IMAGE_CAPTURE = 2;
+    private ProgressPhotosFragment progressPhoto_frag;
     private FragmentStackManager fragmentStackManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,34 +63,66 @@ public class MainActivity extends AppCompatActivity
                 new FragmentStackManager(getSupportFragmentManager());
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(customExercisePopup != null) {
-            customExercisePopup.setImageViewWithGalleryImage();
-        }
+    private void setBaseContent() {
+        setContentView(R.layout.activity_main);
+        setDrawer(setToolbar());
+        setNaviagtionView();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    private Toolbar setToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        return toolbar;
     }
+
+    private void setDrawer(Toolbar toolbar) {
+        DrawerLayout mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
+        toggle.syncState();
+    }
+
+    private void setNaviagtionView() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(customExercisePopup != null) {
-            exerciseImageBitmap = customExercisePopup.getGalleryImage(requestCode, resultCode, data);
+        Bitmap customImageBitmap = getGalleryImage(requestCode, resultCode, data);
+        if(customImageBitmap != null) {
+            customExercisePopup.setExerciseImageBitmap(customImageBitmap);
+            customExercisePopup.setImageViewWithGalleryImage();
         }
-        Bitmap cameraBitmap = getCameraImage(requestCode,resultCode,data);
-        if(cameraBitmap != null) {
+        customImageBitmap = getCameraImage(requestCode,resultCode,data);
+        if(customImageBitmap != null) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd  HH:mm:ss");
             String date = dateFormat.format(new Date());
             ProgressPhotosTable table = new ProgressPhotosTable(getBaseContext());
-            table.addProgressPhoto(date,cameraBitmap);
-            progressPhoto_frag.addPhotoToList(new ProgressPhoto(date,cameraBitmap));
+            table.addProgressPhoto(date,customImageBitmap);
+            progressPhoto_frag.addPhotoToList(new ProgressPhoto(date,customImageBitmap));
         }
+    }
 
+    private Bitmap getGalleryImage(int requestCode,int resultCode,Intent data) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            return BitmapFactory.decodeFile(picturePath);
+        }
+        return null;
     }
 
     private Bitmap getCameraImage(int requestCode,int resultCode,Intent data) {
@@ -199,51 +216,39 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
+    /*@Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
                 }
             }
         }
-    }
-
-    private Fragment getActiveFragment() {
-        return getSupportFragmentManager().findFragmentById(fragId);
-    }
+    }*/
 
     private void showWorkoutStatsFragment() {
         WorkoutStatsFragment workoutStatsFragment = new WorkoutStatsFragment();
         workoutStatsFragment.setMenu(menu);
         fragmentStackManager.addFragmentToStack(workoutStatsFragment,R.id.workoutStats_fragment);
-        if(!activityHidden) {
-            hideMainActivityContent();
-            activityHidden = true;
-        }
+        hideMainActivity();
     }
 
     private void showBodyStatsFragment() {
         BodyStatsFragment bodyStats_fragment = new BodyStatsFragment();
         fragmentStackManager.addFragmentToStack(bodyStats_fragment,R.id.bodyStats_fragment);
-        if(!activityHidden) {
-            hideMainActivityContent();
-            activityHidden = true;
-        }
+        hideMainActivity();
     }
 
     private void showExerciseFragment() {
         exercise_frag = new ExerciseFragment();
         exercise_frag.setMenu(menu);
         exercise_frag.setFragmentStackManager(fragmentStackManager);
-        exercise_frag.setMainActivity(mainActivity);
+        exercise_frag.setMainActivity(this);
         fragmentStackManager.addFragmentToStack(exercise_frag,R.id.exercise_fragment);
-        if(!activityHidden) {
-            hideMainActivityContent();
-            activityHidden = true;
-        }
+        hideMainActivity();
     }
 
     public void showBlankExerciseFragment() {
@@ -254,43 +259,37 @@ public class MainActivity extends AppCompatActivity
     private void showWorkoutFragment() {
         MainWorkoutFragment mainWorkout_frag = new MainWorkoutFragment();
         mainWorkout_frag.setMenu(menu);
-        mainWorkout_frag.setMainActivity(mainActivity);
+        mainWorkout_frag.setMainActivity(this);
         mainWorkout_frag.setFragmentStackManager(fragmentStackManager);
         fragmentStackManager.addFragmentToStack(mainWorkout_frag,R.id.mainWorkout_fragment);
-        if(!activityHidden) {
-            hideMainActivityContent();
-            activityHidden = true;
-        }
+        hideMainActivity();
     }
 
     private void showProgressPhotoFragment() {
         getCameraPermission();
         progressPhoto_frag = new ProgressPhotosFragment();
-        progressPhoto_frag.setMainActivity(mainActivity);
-        fragmentStackManager.addFragmentToStack(progressPhoto_frag,R.id.progressPhotos_fragment);
-        if(!activityHidden) {
-            hideMainActivityContent();
-            activityHidden = true;
-        }
+        progressPhoto_frag.setMainActivity(this);
+        fragmentStackManager.addFragmentToStack(progressPhoto_frag, R.id.progressPhotos_fragment);
+        hideMainActivity();
     }
 
-    public void addFragmentToStack(@Nullable Fragment fragToHide, Fragment fragToShow, int fragId) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        this.fragId = fragId;
-        if(fragToHide != null) {fragmentTransaction.hide(fragToHide);}
-        fragmentTransaction.add(fragId, fragToShow);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-        getActiveFragment();
-        if(!activityHidden) {
-            hideMainActivityContent();
-            activityHidden = true;
-        }
+    public void showAddExercisePopupWindow() {
+        customExercisePopup = new CustomExercisePopup(getCurrentFocus(),getBaseContext());
+        customExercisePopup.setExerciseFragment(exercise_frag);
+        customExercisePopup.setMainActivity(this);
+        customExercisePopup.showPopupWindow();
     }
 
     private void showMainActivityContent() {
         ScrollView scrollView = (ScrollView) findViewById(R.id.activityScrollView);
         scrollView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideMainActivity() {
+        if (!activityHidden) {
+            hideMainActivityContent();
+            activityHidden = true;
+        }
     }
 
     private void hideMainActivityContent() {
@@ -299,31 +298,28 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void loadRecentStats() {
-        loadRecentBodyStats();
-        loadRecentWorkoutStats();
+        try {
+            loadRecentBodyStats();
+            loadRecentWorkoutStats();
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void loadRecentWorkoutStats() {
+    private void loadRecentWorkoutStats() throws IndexOutOfBoundsException {
         int INDEX = 0;
         WorkoutStatsTable table = new WorkoutStatsTable(getBaseContext());
-        try {
-            loadRecentWorkoutStatsPt1(table,INDEX);
-            loadRecentWorkoutStatsPt2(table,INDEX);
-        } catch (IndexOutOfBoundsException e) {
-            // do nothing
-        }
+        loadRecentWorkoutStatsPt1(table,INDEX);
+        loadRecentWorkoutStatsPt2(table,INDEX);
     }
 
-    private void loadRecentBodyStats() {
+    private void loadRecentBodyStats() throws IndexOutOfBoundsException{
         int INDEX = 0;
         BodyTable table = new BodyTable(getBaseContext());
-        try {
-            loadRecentBodyStatsPt1(table, INDEX);
-            loadRecentBodyStatsPt2(table, INDEX);
-            loadRecentBodyStatsPt3(table, INDEX);
-        } catch (IndexOutOfBoundsException e) {
-            //do nothing
-        }
+        loadRecentBodyStatsPt1(table, INDEX);
+        loadRecentBodyStatsPt2(table, INDEX);
+        loadRecentBodyStatsPt3(table, INDEX);
+
     }
 
     private void loadRecentBodyStatsPt1(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
@@ -417,144 +413,5 @@ public class MainActivity extends AppCompatActivity
 
         textView = (TextView) findViewById(R.id.recentTotalWeightView);
         textView.setText(textView.getText().toString()+" "+weight);
-    }
-
-
-    private void setBaseContent() {
-        setContentView(R.layout.activity_main);
-        setDrawer(setToolbar());
-        setNaviagtionView();
-    }
-
-    private Toolbar setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        return toolbar;
-    }
-
-    private void setDrawer(Toolbar toolbar) {
-        DrawerLayout mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.setDrawerListener(toggle);
-        toggle.syncState();
-    }
-
-    private void setNaviagtionView() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    public void showAddExercisePopupWindow() {
-        customExercisePopup = new CustomExercisePopup(getCurrentFocus());
-        customExercisePopup.showPopupWindow();
-    }
-
-    private class CustomExercisePopup extends PopupWindowManager {//must put this in
-        // different class this
-
-        public CustomExercisePopup(View root) {
-            setRootView(root);
-            setWindowManagerContext(getBaseContext());
-            setPopupLayout(R.layout.addexercise_popup_layout);
-            setPopupViewId(R.id.addExercise_PopupWindow);
-        }
-
-        public void showPopupWindow() {
-            displayPopupWindow();
-            setPopupImageView();
-            addExerciseButton();
-        }
-
-        private void setPopupImageView() {
-            ImageView imageView = (ImageView) popupLayout.findViewById(R.id.addExercisePopup_imageView);
-            imageView.setImageResource(R.drawable.ic_menu_gallery);
-            float x = 0.5f;float y = 0.5f;
-            imageView.setScaleX(x);
-            imageView.setScaleY(y);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openExternalImageGallery();
-                }
-            });
-        }
-
-        private void addExerciseButton() {
-            Button btn = (Button) popupLayout.findViewById(R.id.addExercisePopupBtn);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Exercise customExercise = getCustomExercise(popupLayout);
-                    new ExerciseTable(getBaseContext())
-                            .addAnExercise(customExercise);
-                    Toast.makeText(getBaseContext()
-                            ,"Custom Exercise Added",
-                            Toast.LENGTH_SHORT).show();
-                    exercise_frag.addExerciseToList(customExercise);
-                    popupWindow.dismiss();
-                }
-            });
-        }
-
-        private void openExternalImageGallery() {
-            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            pickIntent.setType("image/*");
-            startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
-        }
-
-        private void setImageViewWithGalleryImage() {
-            ImageView imageView;
-            if (exerciseImageBitmap != null) {
-                if(popupWindow.isShowing()) {
-                    imageView = (ImageView) popupWindow.getContentView().findViewById(R.id.addExercisePopup_imageView);
-                    imageView.setImageResource(0);
-                    imageView.setImageBitmap(exerciseImageBitmap);
-                    imageView.setScaleX(1.0f);
-                    imageView.setScaleY(1.0f);
-                }
-            }
-        }
-
-        private Bitmap getGalleryImage(int requestCode,int resultCode,Intent data) {
-            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                Cursor cursor = getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                cursor.moveToFirst();
-
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                String picturePath = cursor.getString(columnIndex);
-                cursor.close();
-
-                return BitmapFactory.decodeFile(picturePath);
-            }
-            return null;
-        }
-
-        private Exercise getCustomExercise(View popupLayout) {
-            String exerciseName = getExerciseName(popupLayout);
-            String exerciseDescription = getExerciseDescription(popupLayout);
-            Exercise exercise = new Exercise(exerciseName,exerciseDescription);
-            if(exerciseImageBitmap != null) {
-                exercise.setExerciseImage(exerciseImageBitmap);
-            } else {
-                exercise.setExerciseImage(BitmapFactory.decodeResource(getResources(),
-                        R.mipmap.no_image));
-            }
-            return exercise;
-        }
-
-        private String getExerciseName(View popupLayout) {
-            EditText et = (EditText) popupLayout.findViewById(R.id.addExercisePopup_NameEditText);
-            return et.getText().toString();
-        }
-
-        private String getExerciseDescription(View popupLayout) {
-            EditText et = (EditText) popupLayout.findViewById(R.id.addExercisePopup_DescriptionEditText);
-            return et.getText().toString();
-        }
     }
 }
