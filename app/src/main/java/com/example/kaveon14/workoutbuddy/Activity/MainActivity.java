@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -32,16 +31,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseContent;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ProgressPhotosFragment;
@@ -52,7 +50,6 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 // TODO data loaded in mainActivty is not the most recent yet
 public class MainActivity extends AppCompatActivity
@@ -68,6 +65,12 @@ public class MainActivity extends AppCompatActivity
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     private Menu menu;
     private boolean activityHidden = false;
+
+
+    FragmentStackManager fragmentStackManager =
+            new FragmentStackManager(getSupportFragmentManager());
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,22 +222,34 @@ public class MainActivity extends AppCompatActivity
     private void showWorkoutStatsFragment() {
         WorkoutStatsFragment workoutStatsFragment = new WorkoutStatsFragment();
         workoutStatsFragment.setMenu(menu);
-        addFragmentToStack(getActiveFragment(), workoutStatsFragment,R.id.workoutStats_fragment);
+        fragmentStackManager.addFragmentToStack(workoutStatsFragment,R.id.workoutStats_fragment);
+        if(!activityHidden) {
+            hideMainActivityContent();
+            activityHidden = true;
+        }
     }
 
     private void showBodyStatsFragment() {
         BodyStatsFragment bodyStats_fragment = new BodyStatsFragment();
-        addFragmentToStack(getActiveFragment(),bodyStats_fragment,R.id.bodyStats_fragment);
+        fragmentStackManager.addFragmentToStack(bodyStats_fragment,R.id.bodyStats_fragment);
+        if(!activityHidden) {
+            hideMainActivityContent();
+            activityHidden = true;
+        }
     }
 
     private void showExerciseFragment() {
         exercise_frag = new ExerciseFragment();
         exercise_frag.setMenu(menu);
         exercise_frag.setMainActivity(mainActivity);
-        addFragmentToStack(getActiveFragment(),exercise_frag,R.id.exercise_fragment);
+        fragmentStackManager.addFragmentToStack(exercise_frag,R.id.exercise_fragment);
+        if(!activityHidden) {
+            hideMainActivityContent();
+            activityHidden = true;
+        }
     }
 
-    public void showBlankExerciseFragment() {
+    public void showBlankExerciseFragment() {//why is this here???
         BlankExerciseFragment blankExercise_frag = new BlankExerciseFragment();
         addFragmentToStack(getActiveFragment(),blankExercise_frag
                 , R.id.blankExercise_fragment);
@@ -244,14 +259,22 @@ public class MainActivity extends AppCompatActivity
         MainWorkoutFragment mainWorkout_frag = new MainWorkoutFragment();
         mainWorkout_frag.setMenu(menu);
         mainWorkout_frag.setMainActivity(mainActivity);
-        addFragmentToStack(getActiveFragment(),mainWorkout_frag,R.id.mainWorkout_fragment);
+        fragmentStackManager.addFragmentToStack(mainWorkout_frag,R.id.mainWorkout_fragment);
+        if(!activityHidden) {
+            hideMainActivityContent();
+            activityHidden = true;
+        }
     }
 
     private void showProgressPhotoFragment() {
         getCameraPermission();
         progressPhoto_frag = new ProgressPhotosFragment();
         progressPhoto_frag.setMainActivity(mainActivity);
-        addFragmentToStack(getActiveFragment(),progressPhoto_frag,R.id.progressPhotos_fragment);
+        fragmentStackManager.addFragmentToStack(progressPhoto_frag,R.id.progressPhotos_fragment);
+        if(!activityHidden) {
+            hideMainActivityContent();
+            activityHidden = true;
+        }
     }
 
     public void addFragmentToStack(@Nullable Fragment fragToHide, Fragment fragToShow, int fragId) {
