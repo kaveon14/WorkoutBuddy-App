@@ -141,11 +141,6 @@ public class ExerciseFragment extends Fragment {
         popup.showPopupWindow();
     }
 
-    private void setProgressBar(int visiblity) {
-        ProgressBar progressBar = (ProgressBar) root.findViewById(R.id.exerciseProgressBar);
-        progressBar.setVisibility(visiblity);
-    }
-
     private void setListView(View root,ArrayAdapter adapter) {
         listView = (ListView) root.findViewById(R.id.exercise_listView);
         listView.setAdapter(adapter);
@@ -272,13 +267,13 @@ public class ExerciseFragment extends Fragment {
     private class MyAsyncTask extends AsyncTask<List<String>,Void,List<String>> {
 
         private ExerciseTable table;
-        ProgressDialog wtf;
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
-            wtf = new ProgressDialog(getContext(),ProgressDialog.STYLE_SPINNER);
-            wtf.setMessage("Loading...");
-            wtf.show();
+            progressDialog = new ProgressDialog(getContext(),ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
             table = new ExerciseTable(getContext());
         }
 
@@ -295,8 +290,7 @@ public class ExerciseFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<String> exerciseNames) {
-            wtf.dismiss();
-            setProgressBar(View.GONE);
+            progressDialog.dismiss();
             exerciseAdapter =
                     new ArrayAdapter<String>(getContext(),R.layout.simple_list_item,exerciseNames);
             setListView(root,exerciseAdapter);

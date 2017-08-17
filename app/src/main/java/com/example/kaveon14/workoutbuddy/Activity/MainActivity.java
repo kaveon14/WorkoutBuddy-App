@@ -32,7 +32,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFra
 import com.example.kaveon14.workoutbuddy.R;
 import java.text.*;
 import java.util.Date;
-
+// added method to update most recent stats when new data added
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -321,6 +321,7 @@ public class MainActivity extends AppCompatActivity
     private void showMainActivityContent() {
         ScrollView scrollView = (ScrollView) findViewById(R.id.activityScrollView);
         scrollView.setVisibility(View.VISIBLE);
+        loadRecentStats();
     }
 
     private void hideMainActivity() {
@@ -427,13 +428,13 @@ public class MainActivity extends AppCompatActivity
                 DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
 
         TextView textView = (TextView) findViewById(R.id.recentWorkoutDateView);
-        textView.setText(textView.getText().toString()+" "+date);
+        textView.setText(getString(R.string.datePointer)+" "+date);
 
         textView = (TextView) findViewById(R.id.recentMainWorkoutView);
-        textView.setText(textView.getText().toString()+" "+mainWorkout);
+        textView.setText(getString(R.string.mainWorkoutPointer)+" "+mainWorkout);
 
         textView = (TextView) findViewById(R.id.recentSubWorkoutView);
-        textView.setText(textView.getText().toString()+" "+subWorkout);
+        textView.setText(getString(R.string.subWorkoutPointer)+" "+subWorkout);
     }
 
     private void loadRecentWorkoutStatsPt2(WorkoutStatsTable table,int INDEX)
@@ -446,12 +447,12 @@ public class MainActivity extends AppCompatActivity
                 DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
 
         TextView textView = (TextView) findViewById(R.id.recentTotalSetsView);
-        textView.setText(textView.getText().toString()+" "+sets);
+        textView.setText(getString(R.string.totalReps)+" "+sets);
 
         textView = (TextView) findViewById(R.id.recentTotalRepsView);
-        textView.setText(textView.getText().toString()+" "+reps);
+        textView.setText(getString(R.string.totalReps)+" "+reps);
 
         textView = (TextView) findViewById(R.id.recentTotalWeightView);
-        textView.setText(textView.getText().toString()+" "+weight);
+        textView.setText(getString(R.string.totalWeight)+" "+weight);
     }
 }

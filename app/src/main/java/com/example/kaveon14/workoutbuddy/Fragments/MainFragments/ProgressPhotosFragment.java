@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -173,10 +174,14 @@ public class ProgressPhotosFragment extends Fragment {
     class MyAsyncTask extends AsyncTask<List<ProgressPhoto>,Void,List<ProgressPhoto>> {
 
         private ProgressPhotosTable table;
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             table = new ProgressPhotosTable(getContext());
+            progressDialog = new ProgressDialog(getContext(),ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
         }
 
         @Override
@@ -188,6 +193,7 @@ public class ProgressPhotosFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<ProgressPhoto> progressPhotos) {
+            progressDialog.dismiss();
             progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
             setRecycleView(root,progressPhotoAdapter);
         }

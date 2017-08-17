@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -113,7 +114,7 @@ public class WorkoutStatsFragment extends Fragment {
     private void showFullWorkoutStatsFragment(List<WorkoutExercise> workoutData) {
         FullWorkoutStatsFragment fw = new FullWorkoutStatsFragment();
         fw.setWorkoutData(workoutData);
-
+        fragmentStackManager.addFragmentToStack(fw,R.id.fullWorkoutStats_fragment);
     }
     //redo for better big o
     public List<SubWorkout> loadSearchedItems(Map<String,List<String>> queriedData) {
@@ -226,10 +227,14 @@ public class WorkoutStatsFragment extends Fragment {
     private class MyAsyncTask extends AsyncTask<List<SubWorkout>,Void,List<SubWorkout>> {
 
         private WorkoutStatsTable table;
+        private ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute(){
             table = new WorkoutStatsTable(getContext());
+            progressDialog = new ProgressDialog(getContext(),ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
         }
 
         @Override
@@ -241,6 +246,7 @@ public class WorkoutStatsFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<SubWorkout> subWorkoutList) {
+            progressDialog.dismiss();
             recyclerAdapter = new RecyclerAdapter(subWorkoutList);
             setRecycleView(root,recyclerAdapter);
         }
