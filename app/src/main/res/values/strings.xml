@@ -193,4 +193,6 @@
     <string name="workoutStats">Workout Stats</string>
     <string name="progressPhotos">Progress Photos</string>
     <string name="subWorkout">SubWorkout Name</string>
+
+    <string name="noProgressPhotos">No Progress Photos to Show!></string>
 </resources>

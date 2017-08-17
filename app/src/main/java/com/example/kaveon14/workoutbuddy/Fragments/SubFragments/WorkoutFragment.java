@@ -291,13 +291,7 @@ public class WorkoutFragment extends Fragment {
             return i;
         }
 
-        public Exercise getExerciseObject(View rowView) {
-            int actualSets = getCount();
-            EditText repsAndWeight_editTextView = (EditText) rowView.findViewById(R.id.repsNweightEditText);
-            String repsAndWeight = repsAndWeight_editTextView.getText().toString();
-            int index = repsAndWeight.indexOf("/");
-            String reps = repsAndWeight.subSequence(0,index).toString().trim();
-            String weight = repsAndWeight.subSequence(index+1,repsAndWeight.length()).toString().trim();
+        public Exercise getExerciseObject() {
             return new Exercise(exercise.getExerciseName(),null);
         }
 
@@ -324,7 +318,7 @@ public class WorkoutFragment extends Fragment {
 
         public List<Exercise> getExerciseList() {
             for(int x=rowViews.size()-1;x>0;x--) {
-                exerciseList.add(getExerciseObject(rowViews.get(x)));
+                exerciseList.add(getExerciseObject());
             }
             return exerciseList;
         }

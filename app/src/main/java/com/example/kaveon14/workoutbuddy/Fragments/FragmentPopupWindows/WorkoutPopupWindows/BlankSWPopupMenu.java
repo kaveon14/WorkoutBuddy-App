@@ -24,8 +24,8 @@ public class BlankSWPopupMenu extends PopupWindowManager {
     public BlankSWPopupMenu(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
-        setPopupLayout(R.layout.workout_popup_menu);
-        setPopupViewId(R.id.workoutPopupMenu);
+        setPopupLayout(R.layout.popup_menu);
+        setPopupViewId(R.id.popupMenu);
     }
 
     public void setMainActivity(MainActivity mainActivity) {

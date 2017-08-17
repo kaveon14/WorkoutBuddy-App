@@ -102,6 +102,10 @@ public class ProgressPhotosFragment extends Fragment {
         recyclerView.setItemViewCacheSize(12);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
+        if(recyclerView.getAdapter().getItemCount()==0) {
+            TextView textView = (TextView) root.findViewById(R.id.noProgressPhotosView);
+            textView.setVisibility(View.VISIBLE);
+        }
     }
 
     public void addPhotoToList(ProgressPhoto photo) {
