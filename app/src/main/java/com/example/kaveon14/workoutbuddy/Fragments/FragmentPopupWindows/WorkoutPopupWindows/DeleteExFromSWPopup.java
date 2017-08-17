@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;

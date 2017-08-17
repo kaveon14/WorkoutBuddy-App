@@ -1,17 +1,12 @@
 package com.example.kaveon14.workoutbuddy.DataBase.Data;
 
-import android.support.annotation.Nullable;
-import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 public class SubWorkout {
 
     private String mainWorkoutName;
     private String subWorkoutName;
     private String date;
-    private List<Exercise> exerciseList;
     private int totalReps;
     private int totalSets;
     private String totalWeight;
@@ -21,9 +16,8 @@ public class SubWorkout {
 
     }
 
-    public SubWorkout(String subWorkoutName,@Nullable List<Exercise> exerciseList) {
+    public SubWorkout(String subWorkoutName) {
         this.subWorkoutName = subWorkoutName;
-        this.exerciseList = exerciseList;
     }
 
     public SubWorkout setMainWorkoutName(String mainWorkoutName) {
@@ -60,10 +54,6 @@ public class SubWorkout {
         return subWorkoutName;
     }
 
-    public List<Exercise> getExerciseList() {
-        return exerciseList;
-    }
-
     public String getDate() {
         return date;
     }
@@ -82,36 +72,5 @@ public class SubWorkout {
 
     public List<WorkoutExercise> getWorkoutData() {
         return workoutData;
-    }
-
-    public List<Exercise> addExercise(Exercise exercise) {
-        exerciseList.add(exercise);
-        return exerciseList;
-    }
-
-    public List<WorkoutExercise> addWorkoutExercises(List<Map<String,String>> map) {
-        int x = 0;
-        for(Exercise e:exerciseList) {
-            WorkoutExercise we = new WorkoutExercise(e);
-            we.setWorkoutData(map.get(x));
-            workoutData.add(we);
-        }
-        return workoutData;
-    }
-
-    public Map<String,String> getExerciseSets() {
-        Map<String,String> exerciseSets = new Hashtable<>();
-        for(Exercise exercise : exerciseList) {
-            exerciseSets.put(exercise.getExerciseName(),exercise.getGoalSets());
-        }
-        return exerciseSets;
-    }
-
-    public Map<String,String> getExerciseReps() {
-        Map<String,String> exerciseReps = new Hashtable<>();
-        for(Exercise exercise : exerciseList) {
-            exerciseReps.put(exercise.getExerciseName(),exercise.getGoalReps());
-        }
-        return exerciseReps;
     }
 }

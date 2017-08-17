@@ -10,29 +10,26 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.SubWorkoutMenuPopup;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 public class SubWorkoutFragment extends Fragment {
 
-    private static SubWorkout clickedSubWorkout;
-    private ArrayAdapter subWorkoutAdapter;
-    private List<String> subWorkoutNames;
-    private int subWorkoutCount;
     private Menu menu;
     private ListView listView;
-    private MainWorkout clickedMainWorkout;
+    private int subWorkoutCount;
     private MainActivity mainActivity;
+    private List<String> subWorkoutNames;
+    private MainWorkout clickedMainWorkout;
+    private ArrayAdapter subWorkoutAdapter;
+    private static SubWorkout clickedSubWorkout;
     private FragmentStackManager fragmentStackManager;
 
     public SubWorkoutFragment() {
@@ -182,17 +179,9 @@ public class SubWorkoutFragment extends Fragment {
     }
 
     private SubWorkout getSubWorkout(String subWorkoutName) {
-        SubWorkout subWorkout = new SubWorkout(subWorkoutName,
-                getExercisesForClickedSubWorkout(subWorkoutName));
+        SubWorkout subWorkout = new SubWorkout(subWorkoutName);
         subWorkout.setMainWorkoutName(clickedMainWorkout.getMainWorkoutName());
         return subWorkout;
-    }
-
-    private List<Exercise> getExercisesForClickedSubWorkout(String subWorkoutName) {
-        SubWorkoutTable subWorkoutTable = new SubWorkoutTable(getContext());
-        String tableName = subWorkoutTable.getCorrectTableName(clickedMainWorkout.getMainWorkoutName()
-                ,subWorkoutName);
-        return subWorkoutTable.getSubWorkoutExercises(tableName);
     }
 
     private void showBlankWorkoutFragment() {

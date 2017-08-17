@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 
 public class ExpandedImagePopup extends PopupWindowManager {

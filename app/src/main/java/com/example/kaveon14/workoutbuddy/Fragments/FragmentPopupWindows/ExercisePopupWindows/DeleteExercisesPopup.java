@@ -10,14 +10,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
 
-// ViewCustomExercisesPopup just change adapter not create popup class
-public class DeleteExercisesPopup extends PopupWindowManager {//dont create popup just
+public class DeleteExercisesPopup extends PopupWindowManager {
 
     private ArrayAdapter customExerciseAdapter;
     private List<Exercise> customExerciseList;
@@ -70,7 +69,7 @@ public class DeleteExercisesPopup extends PopupWindowManager {//dont create popu
         });
     }
 
-    private void setDeleteButton(Exercise exercise) {//test
+    private void setDeleteButton(Exercise exercise) {
         Button btn = (Button) popupLayout.findViewById(R.id.button);
         btn.setText("Delete Exercise");
         btn.setOnClickListener(new View.OnClickListener() {

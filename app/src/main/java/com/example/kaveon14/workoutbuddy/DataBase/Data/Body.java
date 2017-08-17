@@ -1,7 +1,5 @@
 package com.example.kaveon14.workoutbuddy.DataBase.Data;
 
-import java.util.Date;
-
 public class Body {
 
     private String weight;
@@ -12,11 +10,11 @@ public class Body {
     private String waistSize;
     private String quadSize;
     private String calfSize;
-    private String dateForDisplaying;
+    private String date;
     private long rowId;
 
     public Body setDate(String date) {
-        dateForDisplaying = date;
+        this.date = date;
         return this;
     }
 
@@ -66,7 +64,7 @@ public class Body {
     }
 
     public String getStringDate() {
-        return dateForDisplaying;
+        return date;
     }
 
     public String getWeight() {

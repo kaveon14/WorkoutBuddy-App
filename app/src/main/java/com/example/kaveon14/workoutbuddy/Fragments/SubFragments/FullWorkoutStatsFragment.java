@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +38,6 @@ public class FullWorkoutStatsFragment extends Fragment {
     }
 
     private FullWorkoutStatsAdapter setAdapter() {
-
         return new FullWorkoutStatsAdapter(workoutData);
     }
 
@@ -100,14 +99,13 @@ public class FullWorkoutStatsFragment extends Fragment {
         private void set_SetsTextView(View rowView, int id, int set, WorkoutExercise workout) {
             TextView textView = (TextView) rowView.findViewById(id);
             textView.setVisibility(View.VISIBLE);
-            int reps = workout.getReps("Set "+set);
-            String weight = workout.getWeight("Set "+set)[WorkoutExercise.WEIGHT];
-            String uOfmeas = workout.getWeight("Set "+set)[WorkoutExercise.UNIT_OF_MEAS];
+            int reps = workout.getReps("Set " + set);
+            String weight = workout.getWeight("Set " + set)[WorkoutExercise.WEIGHT];
+            String uOfmeas = workout.getWeight("Set " + set)[WorkoutExercise.UNIT_OF_MEAS];
             StringBuilder builder = new StringBuilder();
             String setData = builder.append("Set ").append(set).append(": ")
                     .append(reps).append("/").append(weight).append(uOfmeas).toString();
             textView.setText(setData);
         }
     }
-
 }

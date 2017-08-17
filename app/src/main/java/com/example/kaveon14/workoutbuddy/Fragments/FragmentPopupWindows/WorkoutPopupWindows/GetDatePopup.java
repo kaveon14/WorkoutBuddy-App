@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import static com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu.workoutData;
@@ -38,17 +38,21 @@ public class GetDatePopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WorkoutStatsTable table = new WorkoutStatsTable(context);
-                String date = getDate();
-                SubWorkout subWorkout = SubWorkoutFragment.getClickedSubWorkout();
-                subWorkout.setDate(date);
-
-                table.addWorkoutData(workoutData, subWorkout);
-                Toast.makeText(context, "Date Added and Workout Saved", Toast.LENGTH_SHORT).show();
+               addWorkoutData();
                 popupWindow.dismiss();
-                workoutData = null;
             }
         });
+    }
+
+    private void addWorkoutData() {
+        WorkoutStatsTable table = new WorkoutStatsTable(context);
+        String date = getDate();
+        SubWorkout subWorkout = SubWorkoutFragment.getClickedSubWorkout();
+        subWorkout.setDate(date);
+
+        table.addWorkoutData(workoutData, subWorkout);
+        Toast.makeText(context, "Date Added and Workout Saved", Toast.LENGTH_SHORT).show();
+        workoutData = null;
     }
 
     private String getDate() {

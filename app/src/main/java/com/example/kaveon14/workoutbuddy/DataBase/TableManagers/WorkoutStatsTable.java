@@ -4,13 +4,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
-import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultWorkouts;
-import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.WorkoutExercise;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -190,7 +187,7 @@ public class WorkoutStatsTable extends TableManager {
 
         String subName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SUBWORKOUT));
         if (subName != null) {
-            SubWorkout subWorkout = new SubWorkout(subName, null);
+            SubWorkout subWorkout = new SubWorkout(subName);
             subWorkout.setWorkoutData(workoutData);
             subWorkout = getPartialSubWorkout(cursor, subWorkout);
             subWorkout.setTotalSets(totalSets);

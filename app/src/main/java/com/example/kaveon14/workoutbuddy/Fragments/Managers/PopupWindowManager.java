@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows;
+package com.example.kaveon14.workoutbuddy.Fragments.Managers;
 
 import android.content.Context;
 import android.view.Gravity;

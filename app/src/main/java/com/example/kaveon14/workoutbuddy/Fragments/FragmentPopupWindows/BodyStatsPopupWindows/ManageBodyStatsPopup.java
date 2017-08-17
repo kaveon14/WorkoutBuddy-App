@@ -8,17 +8,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 public class ManageBodyStatsPopup extends PopupWindowManager {
 
-    private boolean updatingRow = false;
-    private RecyclerView recyclerView;
     private int position;
     private List<Body> bodyList;
+    private RecyclerView recyclerView;
+    private boolean updatingRow = false;
 
     public ManageBodyStatsPopup(View root, Context context) {
         setRootView(root);
@@ -133,7 +133,6 @@ public class ManageBodyStatsPopup extends PopupWindowManager {
                         ", Data NOT Saved!!",Toast.LENGTH_LONG).show();
                 return null;
             }
-
             return body;
         }
 

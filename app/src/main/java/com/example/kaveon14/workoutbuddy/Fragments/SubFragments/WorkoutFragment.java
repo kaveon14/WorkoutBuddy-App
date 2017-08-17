@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
-import com.example.kaveon14.workoutbuddy.DataBase.WorkoutExercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -298,17 +298,7 @@ public class WorkoutFragment extends Fragment {
             int index = repsAndWeight.indexOf("/");
             String reps = repsAndWeight.subSequence(0,index).toString().trim();
             String weight = repsAndWeight.subSequence(index+1,repsAndWeight.length()).toString().trim();
-
-            Exercise ex = new Exercise(exercise.getExerciseName(),null);
-            try {
-                ex.setActualReps(Integer.valueOf(reps));
-            } catch(NumberFormatException e) {
-                e.printStackTrace();
-                ex.setActualReps(0);
-            }
-            ex.setActualSets(actualSets);
-            ex.setActualWeight(weight);
-            return ex;
+            return new Exercise(exercise.getExerciseName(),null);
         }
 
         private String getData(View rowView) {

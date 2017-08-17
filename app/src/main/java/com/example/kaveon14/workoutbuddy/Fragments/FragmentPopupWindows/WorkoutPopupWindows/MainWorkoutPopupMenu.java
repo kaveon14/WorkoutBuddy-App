@@ -2,19 +2,17 @@ package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.Workout
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 public class MainWorkoutPopupMenu extends PopupWindowManager {
 
-    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
     private List<MainWorkout> mainWorkoutList;
+    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
 
     public MainWorkoutPopupMenu(View root,Context context) {
         setRootView(root);
@@ -77,5 +75,4 @@ public class MainWorkoutPopupMenu extends PopupWindowManager {
         popup.setRecyclerAdapter(recyclerAdapter);
         popup.showPopupWindow();
     }
-
 }

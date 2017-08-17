@@ -5,15 +5,11 @@ import android.support.annotation.Nullable;
 
 public  class Exercise {
 
-    private String exerciseName;
-    private String exerciseDescription;
     private String goalReps;
     private String goalSets;
-    private String goalWeight;
+    private String exerciseName;
     private Bitmap exerciseImage;
-    private int actualSets;//delete
-    private int actualReps;//delete
-    private String actualWeight;//delete
+    private String exerciseDescription;
 
     public Exercise() {
 
@@ -32,27 +28,9 @@ public  class Exercise {
         this.goalSets = sets;
     }
 
-    public void setGoalWeight(String weight) {
-        this.goalWeight = weight;
-    }
-
-    public void setActualSets(int actualSets) {
-        this.actualSets = actualSets;
-    }//delete
-
-    public void setActualReps(int actualReps) {
-        this.actualReps = actualReps;
-    }//delete
-
-    public void setActualWeight(String actualWeight) {
-        this.actualWeight = actualWeight;
-    }//delete
-
     public void setExerciseImage(Bitmap exerciseImage) {
         this.exerciseImage = exerciseImage;
     }
-
-
 
     public String getGoalReps() {
         return goalReps;
@@ -62,10 +40,6 @@ public  class Exercise {
         return goalSets;
     }
 
-    public String getGoalWeight() {
-        return goalWeight;
-    }
-
     public String getExerciseName() {
         return exerciseName;
     }
@@ -73,18 +47,6 @@ public  class Exercise {
     public String getExerciseDescription() {
         return exerciseDescription;
     }
-
-    public int getActualSets() {
-        return actualSets;
-    }//delete
-
-    public int getActualReps() {
-        return actualReps;
-    }//delete
-
-    public String getActualWeight() {
-        return actualWeight;
-    }//delete
 
     public Bitmap getExerciseImage() {
         return exerciseImage;

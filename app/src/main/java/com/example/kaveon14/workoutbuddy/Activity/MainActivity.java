@@ -25,7 +25,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.*;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.CustomExercisePopup;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.*;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -351,7 +351,6 @@ public class MainActivity extends AppCompatActivity
         textView = (TextView) findViewById(R.id.recentCalvesView);
         textView.setText(calves);
     }
-
 
     private void loadRecentWorkoutStatsPt1(WorkoutStatsTable table,int INDEX)
             throws IndexOutOfBoundsException {

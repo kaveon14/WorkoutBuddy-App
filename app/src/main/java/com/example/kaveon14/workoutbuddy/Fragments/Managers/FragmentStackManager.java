@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy.Fragments;
+package com.example.kaveon14.workoutbuddy.Fragments.Managers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,7 +20,6 @@ public class FragmentStackManager {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else {
-
             fragmentTransaction.hide(fragmentManager.findFragmentById(currFragId));
             fragmentTransaction.add(fragId, frag);
             fragmentTransaction.addToBackStack(null);

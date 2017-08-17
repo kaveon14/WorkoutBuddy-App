@@ -10,24 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.Workout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 //add menu to delete or view exercise
 public class BlankSubWorkoutFragment extends Fragment {
 

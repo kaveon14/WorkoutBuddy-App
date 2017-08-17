@@ -83,7 +83,7 @@ public class SubWorkoutTable {
             for(int z=0;z<subWorkoutNames.size();z++) {
                 String subWorkoutName = subWorkoutNames.get(z);
                 List<Exercise> exerciseList = getSubWorkoutExercises(subWorkoutName);
-                SubWorkout subWorkout = new SubWorkout(subWorkoutName, exerciseList);
+                SubWorkout subWorkout = new SubWorkout(subWorkoutName);
                 subWorkout.setMainWorkoutName(mainWorkoutName);
                 subWorkouts.add(subWorkout);
             }

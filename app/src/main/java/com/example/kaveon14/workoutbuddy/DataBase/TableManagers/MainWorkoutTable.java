@@ -4,14 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.COLUMN_ROWID;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_MAINWORKOUT;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_1;
@@ -31,7 +29,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.COLUMN_SUBWORKOUT_9;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.MainWorkoutData.TABLE_NAME;
 
-public class MainWorkoutTable extends TableManager {//need to increase table columns to 10(days)
+public class MainWorkoutTable extends TableManager {
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
 
@@ -98,7 +96,7 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
         for(int x=2;x<=16;x++) {
             String subWorkoutName = cursor.getString(x);
             if(subWorkoutName != null) {
-                SubWorkout subWorkout = new SubWorkout(subWorkoutName, null);
+                SubWorkout subWorkout = new SubWorkout(subWorkoutName);
                 subWorkout.setMainWorkoutName(mainWorkoutName);
                 subWorkouts.add(subWorkout);
             }
@@ -129,7 +127,7 @@ public class MainWorkoutTable extends TableManager {//need to increase table col
                 for(int x=2;x<=16;x++) {
                     String s = cursor.getString(x);
                     if(s!=null) {
-                        rowData.add(new SubWorkout(s,null));
+                        rowData.add(new SubWorkout(s));
                     }
                 }
                 break;

@@ -7,16 +7,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-
 // and don't allow editing of mainWorkout after done testing
 public class CustomSubWorkoutPopup extends PopupWindowManager {
 
@@ -95,7 +93,7 @@ public class CustomSubWorkoutPopup extends PopupWindowManager {
         subWorkoutTable.addSubWorkoutTable(tableName);
         MainWorkoutTable table = new MainWorkoutTable(context);
         List<SubWorkout> subWorkouts = table.getSubWorkouts(clickedMainWorkoutName);
-        subWorkouts.add(new SubWorkout(subWorkoutName,null));
+        subWorkouts.add(new SubWorkout(subWorkoutName));
         MainWorkout mainWorkout = new MainWorkout(clickedMainWorkoutName,subWorkouts);
         mainWorkout.setRowId(MainWorkoutFragment.getClickedMainWorkout().getRowId());
         table.updateRow(mainWorkout);

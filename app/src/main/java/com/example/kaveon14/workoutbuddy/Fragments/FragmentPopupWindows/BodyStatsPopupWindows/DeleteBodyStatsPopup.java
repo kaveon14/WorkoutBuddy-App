@@ -4,13 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.BodyData.COLUMN_DATE;
@@ -20,7 +18,6 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
     private int position;
     private RecyclerView recyclerView;
     private List<Body> bodyStats;
-
 
     public DeleteBodyStatsPopup(View root, Context context) {
         setRootView(root);
@@ -71,7 +68,7 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
         });
     }
 
-    private void setTextView() {//take
+    private void setTextView() {
         String message = "   Do you want to DELETE the clicked body stats'??";
         TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
         textView.setText(message);

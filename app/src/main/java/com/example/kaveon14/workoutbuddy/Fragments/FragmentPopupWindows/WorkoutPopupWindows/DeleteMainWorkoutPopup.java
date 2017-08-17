@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
@@ -21,8 +21,8 @@ import java.util.List;
 public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private int position;
-    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
     private List<MainWorkout> mainWorkoutList;
+    private MainWorkoutFragment.RecyclerAdapter recyclerAdapter;
 
     public DeleteMainWorkoutPopup(View root,Context context) {
         setRootView(root);
@@ -112,7 +112,7 @@ public class DeleteMainWorkoutPopup extends PopupWindowManager {
 
     private class SubWorkoutAdapter extends BaseAdapter {
 
-        List<MainWorkout> mainWorkoutList;
+        private List<MainWorkout> mainWorkoutList;
 
         public SubWorkoutAdapter(List<MainWorkout> mainWorkoutList) {
             this.mainWorkoutList = mainWorkoutList;

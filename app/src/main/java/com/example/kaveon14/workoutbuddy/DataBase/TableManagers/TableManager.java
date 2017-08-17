@@ -3,7 +3,6 @@ package com.example.kaveon14.workoutbuddy.DataBase.TableManagers;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -119,7 +118,6 @@ public abstract class TableManager {
     private String getCursorString(Cursor cursor,int x) {
         return cursor.getString(cursor.getColumnIndexOrThrow(SEARCHABLE_COLUMNS[x]));
     }
-
 
     public void printTable() {
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();

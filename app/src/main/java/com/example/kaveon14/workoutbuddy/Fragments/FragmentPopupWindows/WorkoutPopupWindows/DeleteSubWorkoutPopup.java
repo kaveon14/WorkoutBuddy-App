@@ -10,10 +10,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
-import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.PopupWindowManager;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-
+// TODO fix
 public class DeleteSubWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter subWorkoutAdapter;
