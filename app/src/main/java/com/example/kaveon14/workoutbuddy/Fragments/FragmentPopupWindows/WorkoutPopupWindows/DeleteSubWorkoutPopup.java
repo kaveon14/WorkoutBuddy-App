@@ -14,7 +14,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFrag
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
-// TODO fix
+
 public class DeleteSubWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter subWorkoutAdapter;

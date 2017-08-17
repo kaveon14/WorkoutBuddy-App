@@ -338,6 +338,10 @@ public class MainActivity extends AppCompatActivity
     private void loadRecentStats() {
         try {
             loadRecentBodyStats();
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+        try {
             loadRecentWorkoutStats();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
