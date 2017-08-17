@@ -205,4 +205,10 @@ public class WorkoutStatsTable extends TableManager {
         subWorkout.setDate(date);
         return subWorkout;
     }
+
+    public void deleteRow(String[] datesToDelete) {
+        SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
+        database.delete(TABLE_NAME,COLUMN_DATE+"=?",datesToDelete);
+        database.close();
+    }
 }

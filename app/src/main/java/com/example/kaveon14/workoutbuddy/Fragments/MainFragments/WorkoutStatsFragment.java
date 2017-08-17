@@ -20,6 +20,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutStatsPopupWindows.DeleteWorkoutStatsPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -146,6 +147,14 @@ public class WorkoutStatsFragment extends Fragment {
         return list;
     }
 
+    private void showDeleteWorkoutStatsPopup(int position) {
+        DeleteWorkoutStatsPopup popup = new DeleteWorkoutStatsPopup(root,getContext());
+        popup.setPosition(position);
+        popup.setRecyclerView(recyclerView);
+        popup.setSubWorkoutList(subWorkoutList);
+        popup.showPopupWindow();
+    }
+
     private class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.CustomViewHolder> {
 
         private List<SubWorkout> subWorkoutList;
@@ -181,7 +190,7 @@ public class WorkoutStatsFragment extends Fragment {
             subWorkout.getTotalReps());
             customViewHolder.weightView.setText(customViewHolder.weightView.getText()+" "+
             subWorkout.getTotalWeight());
-            customViewHolder.onClick(customViewHolder.cardView,subWorkout.getWorkoutData());
+            customViewHolder.openFullWorkoutStats(customViewHolder.cardView,subWorkout.getWorkoutData());
         }
 
         private String getParsedDate(String date) {//length will always be the same
@@ -194,7 +203,6 @@ public class WorkoutStatsFragment extends Fragment {
 
         class CustomViewHolder extends RecyclerView.ViewHolder {
 
-            public List<WorkoutExercise> workoutData;
             protected CardView cardView;
             protected TextView dateView;
             protected TextView mainWorkoutView;
@@ -212,15 +220,28 @@ public class WorkoutStatsFragment extends Fragment {
                 setsView = (TextView) rowView.findViewById(R.id.sets_textView);
                 repsView = (TextView) rowView.findViewById(R.id.reps_textView);
                 weightView = (TextView) rowView.findViewById(R.id.weight_textView);
+                deleteWorkoutStats(cardView);
             }
 
-            public void onClick(CardView cardView,List<WorkoutExercise> workoutData) {
+            public void openFullWorkoutStats(CardView cardView, List<WorkoutExercise> workoutData) {
                 cardView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showFullWorkoutStatsFragment(workoutData);}
                 });
             }
+
+            public void deleteWorkoutStats(CardView cardView) {
+                cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        showDeleteWorkoutStatsPopup(getLayoutPosition());
+                        return true;
+                    }
+                });
+            }
+
+
         }
     }
 

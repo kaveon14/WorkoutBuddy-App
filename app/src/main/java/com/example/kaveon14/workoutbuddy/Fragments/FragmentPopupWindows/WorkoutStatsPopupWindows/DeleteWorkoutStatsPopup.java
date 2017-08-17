@@ -1,4 +1,4 @@
-package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ProgressPhotoPopupWindows;
+package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutStatsPopupWindows;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,19 +6,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
-public class DeleteProgressPhotoPopup extends PopupWindowManager {
+public class DeleteWorkoutStatsPopup extends PopupWindowManager {
 
     private int position;
     private RecyclerView recyclerView;
-    private List<ProgressPhoto> progressPhotoList;
+    private List<SubWorkout> subWorkoutList;
 
-    public DeleteProgressPhotoPopup(View root, Context context)  {
+    public DeleteWorkoutStatsPopup(View root, Context context) {
         setRootView(root);
         setWindowManagerContext(context);
         setPopupLayout(R.layout.yes_no_popup_layout);
@@ -33,8 +33,8 @@ public class DeleteProgressPhotoPopup extends PopupWindowManager {
         this.recyclerView = recyclerView;
     }
 
-    public void setProgressPhotoList(List<ProgressPhoto> progressPhotoList) {
-        this.progressPhotoList = progressPhotoList;
+    public void setSubWorkoutList(List<SubWorkout> subWorkoutList) {
+        this.subWorkoutList = subWorkoutList;
     }
 
     public void showPopupWindow() {
@@ -49,9 +49,9 @@ public class DeleteProgressPhotoPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteProgressPhoto();
+                deleteWorkoutStats();
                 deleteRowView();
-                Toast.makeText(context,"Progress Photo Deleted!",
+                Toast.makeText(context,"Workout Stats Deleted!",
                         Toast.LENGTH_SHORT).show();
                 popupWindow.dismiss();
             }
@@ -75,15 +75,15 @@ public class DeleteProgressPhotoPopup extends PopupWindowManager {
     }
 
     private void deleteRowView() {
-        progressPhotoList.remove(position);
+        subWorkoutList.remove(position);
         recyclerView.getAdapter().notifyItemRemoved(position);
     }
 
-    private void deleteProgressPhoto() {
+    private void deleteWorkoutStats() {
         String[] date = new String[] {
-                progressPhotoList.get(position).getDate()
+                subWorkoutList.get(position).getDate()
         };
-        ProgressPhotosTable table = new ProgressPhotosTable(context);
+        WorkoutStatsTable table = new WorkoutStatsTable(context);
         table.deleteRow(date);
     }
 }
