@@ -15,8 +15,12 @@ public class FragmentStackManager {
 
     public void addFragmentToStack(Fragment frag,int fragId) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if(currFragId==0) {
+        /*if(currFragId==0) {
             fragmentTransaction.add(fragId,frag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else if(currFragId==fragId) {
+            fragmentTransaction.add(fragId, frag);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         } else {
@@ -24,7 +28,26 @@ public class FragmentStackManager {
             fragmentTransaction.add(fragId, frag);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+        }*/
+
+
+
+
+        Fragment fragment = fragmentManager.findFragmentById(currFragId);
+        if(fragment != null && fragment.isVisible()) {
+            fragmentTransaction.hide(fragment);
+            fragmentTransaction.add(fragId, frag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        } else {
+            fragmentTransaction.add(fragId,frag);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         }
+
+
+
+
         currFragId = fragId;
     }
 }
