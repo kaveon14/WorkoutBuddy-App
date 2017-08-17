@@ -32,7 +32,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFra
 import com.example.kaveon14.workoutbuddy.R;
 import java.text.*;
 import java.util.Date;
-//still a bug in fragment stack manager
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

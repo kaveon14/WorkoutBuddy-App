@@ -26,10 +26,10 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
     public ExerciseToWorkoutPopup(View root, Context context
             ,boolean fromSubWorkout) {
         this.fromSubWorkout = fromSubWorkout;
-      setRootView(root);
+        setRootView(root);
         setWindowManagerContext(context);
-      setPopupLayout(R.layout.exercise_popup_layout);
-      setPopupViewId(R.id.exercise_popupWindow);
+        setPopupLayout(R.layout.exercise_popup_layout);
+        setPopupViewId(R.id.exercise_popupWindow);
     }
 
     public void showPopupWindow() {
@@ -57,7 +57,8 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                listView.setAdapter(getSubWorkoutAdapter());
+                listView.setAdapter(getSubWorkoutAdapter(
+                        parent.getItemAtPosition(position).toString()));
                 subWorkoutClicked(listView);
             }
         });
@@ -184,10 +185,9 @@ public class ExerciseToWorkoutPopup extends PopupWindowManager {
         return adapter;
     }
 
-    private ArrayAdapter getSubWorkoutAdapter() {
+    private ArrayAdapter getSubWorkoutAdapter(String mainWorkoutName) {
         MainWorkoutTable workoutTable = new MainWorkoutTable(context);
-        List<String> list = workoutTable.getSubWorkoutNames(MainWorkoutFragment.
-                getClickedMainWorkout().getMainWorkoutName());
+        List<String> list = workoutTable.getSubWorkoutNames(mainWorkoutName);
         return  new ArrayAdapter<>(context,
                 R.layout.simple_list_item,list);
     }
