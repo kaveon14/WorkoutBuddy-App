@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.*;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity
         loadRecentStats();
         fragmentStackManager =
                 new FragmentStackManager(getSupportFragmentManager());
+        setTileOnCLickListeners();
     }
 
     private void setBaseContent() {
@@ -206,9 +208,68 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void setTileOnCLickListeners() {
+        exerciseTileCLicked();
+        workoutTileClicked();
+        progressPhotosTileCLicked();
+        workoutStatsTileClicked();
+        bodyStatsTileClicked();
+    }
+
+    private void exerciseTileCLicked() {
+        CardView cardView = (CardView) findViewById(R.id.exerciseTile);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showExerciseFragment();
+            }
+        });
+    }
+
+    private void workoutTileClicked() {
+        CardView cardView = (CardView) findViewById(R.id.workoutTile);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWorkoutFragment();
+            }
+        });
+    }
+
+    private void progressPhotosTileCLicked() {
+        CardView cardView = (CardView) findViewById(R.id.progressPhotoTile);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showProgressPhotoFragment();
+            }
+        });
+    }
+
+    private void workoutStatsTileClicked() {
+        CardView cardView = (CardView) findViewById(R.id.workoutStatsTile);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showWorkoutStatsFragment();
+            }
+        });
+    }
+
+    private void bodyStatsTileClicked() {
+        CardView cardView = (CardView) findViewById(R.id.bodyStatsTile);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBodyStatsFragment();
+            }
+        });
+    }
+
     private void showWorkoutStatsFragment() {
         WorkoutStatsFragment workoutStatsFragment = new WorkoutStatsFragment();
         workoutStatsFragment.setMenu(menu);
+        workoutStatsFragment.setFragmentStackManager(fragmentStackManager);
         fragmentStackManager.addFragmentToStack(workoutStatsFragment,R.id.workoutStats_fragment);
         hideMainActivity();
     }

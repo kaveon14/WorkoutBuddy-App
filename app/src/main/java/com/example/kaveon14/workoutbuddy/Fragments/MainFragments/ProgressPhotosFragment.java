@@ -26,8 +26,8 @@ import static com.example.kaveon14.workoutbuddy.Activity.MainActivity.REQUEST_IM
 
 public class ProgressPhotosFragment extends Fragment {
 
-    private MainActivity mainActivity;
     private View root;
+    private MainActivity mainActivity;
     private List<ProgressPhoto> progressPhotos;
     private ProgressPhotoAdapter progressPhotoAdapter;
 

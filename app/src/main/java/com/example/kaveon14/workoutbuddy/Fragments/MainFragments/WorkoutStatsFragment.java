@@ -19,6 +19,7 @@ import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.WorkoutExercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
+import com.example.kaveon14.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
@@ -29,11 +30,12 @@ import static android.content.Context.SEARCH_SERVICE;
 //possily create binary search tree to speedup matching searched item times
 public class WorkoutStatsFragment extends Fragment {
 
-    private List<SubWorkout> subWorkoutList;
     private Menu menu;
     private View root;
-    private RecyclerAdapter recyclerAdapter;
     private RecyclerView recyclerView;
+    private FragmentStackManager fragmentStackManager;
+    private RecyclerAdapter recyclerAdapter;
+    private List<SubWorkout> subWorkoutList;
 
     public WorkoutStatsFragment() {
         // Required empty public constructor
@@ -70,7 +72,11 @@ public class WorkoutStatsFragment extends Fragment {
         this.menu = menu;
     }
 
-    private void setRecycleView(View root,RecyclerAdapter adapter) {
+    public void setFragmentStackManager(FragmentStackManager fragmentStackManager) {
+        this.fragmentStackManager = fragmentStackManager;
+    }
+
+    private void setRecycleView(View root, RecyclerAdapter adapter) {
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView = (RecyclerView) root.findViewById(R.id.workoutStatsRecycleView);
         recyclerView.setItemViewCacheSize(12);
@@ -107,11 +113,7 @@ public class WorkoutStatsFragment extends Fragment {
     private void showFullWorkoutStatsFragment(List<WorkoutExercise> workoutData) {
         FullWorkoutStatsFragment fw = new FullWorkoutStatsFragment();
         fw.setWorkoutData(workoutData);
-        getFragmentManager().beginTransaction()
-                .hide(this)
-                .add(R.id.fullWorkoutStats_fragment,fw)
-                .addToBackStack(null)
-                .commit();
+
     }
     //redo for better big o
     public List<SubWorkout> loadSearchedItems(Map<String,List<String>> queriedData) {
