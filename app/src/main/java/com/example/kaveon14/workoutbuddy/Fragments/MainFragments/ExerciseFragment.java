@@ -1,5 +1,6 @@
 package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
@@ -137,6 +139,11 @@ public class ExerciseFragment extends Fragment {
         popup.setCustomExerciseList(customExerciseList);
         popup.setFromSubWorkout(fromSubWorkout);
         popup.showPopupWindow();
+    }
+
+    private void setProgressBar(int visiblity) {
+        ProgressBar progressBar = (ProgressBar) root.findViewById(R.id.exerciseProgressBar);
+        progressBar.setVisibility(visiblity);
     }
 
     private void setListView(View root,ArrayAdapter adapter) {
@@ -265,9 +272,13 @@ public class ExerciseFragment extends Fragment {
     private class MyAsyncTask extends AsyncTask<List<String>,Void,List<String>> {
 
         private ExerciseTable table;
+        ProgressDialog wtf;
 
         @Override
         protected void onPreExecute() {
+            wtf = new ProgressDialog(getContext(),ProgressDialog.STYLE_SPINNER);
+            wtf.setMessage("Loading...");
+            wtf.show();
             table = new ExerciseTable(getContext());
         }
 
@@ -284,6 +295,8 @@ public class ExerciseFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<String> exerciseNames) {
+            wtf.dismiss();
+            setProgressBar(View.GONE);
             exerciseAdapter =
                     new ArrayAdapter<String>(getContext(),R.layout.simple_list_item,exerciseNames);
             setListView(root,exerciseAdapter);
