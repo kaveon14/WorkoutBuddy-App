@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
@@ -18,7 +19,7 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
 
     private ArrayAdapter subWorkoutAdapter;
     private List<String> subWorkoutNames;
-    private int subWorkoutCount;
+    private int subWorkoutCount;//not sure why needed
 
     public DeleteSubWorkoutPopup(View root, Context context) {
         setRootView(root);
@@ -54,12 +55,13 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
                 resetSubWorkoutListViewColors(parent);
                 parent.getChildAt(position -
                         parent.getFirstVisiblePosition()).setBackgroundColor(Color.LTGRAY);
-                if(position>=5) {
-                    setDeleteBtn(parent.getItemAtPosition(position).toString());
-                } else {
+                if(MainWorkoutFragment.getClickedMainWorkout()
+                        .getMainWorkoutName().equals("Default Workout")){
                     resetDeleteButton();
                     Toast.makeText(context,"Can Not Delete This SubWorkout!"
                             ,Toast.LENGTH_SHORT).show();
+                } else {
+                    setDeleteBtn(parent.getItemAtPosition(position).toString());
                 }
             }
         });
@@ -96,14 +98,14 @@ public class DeleteSubWorkoutPopup extends PopupWindowManager {
         subWorkoutAdapter.notifyDataSetChanged();
 
         MainWorkoutTable mainWorkoutTable = new MainWorkoutTable(context);
-        //mainWorkoutTable.deleteSubWorkout(MainWorkoutFragment.getClickedMainWorkoutName(),
-          //      subWorkoutName);
+        mainWorkoutTable.deleteSubWorkout(MainWorkoutFragment.getClickedMainWorkout()
+                        .getMainWorkoutName(), subWorkoutName);
 
         SubWorkoutTable subWorkoutTable = new SubWorkoutTable(context);
-        //String tableName = subWorkoutTable.getCorrectTableName(MainWorkoutFragment
-          //      .getClickedMainWorkoutName(),subWorkoutName);
+        String tableName = subWorkoutTable.getCorrectTableName(MainWorkoutFragment
+                .getClickedMainWorkout().getMainWorkoutName(),subWorkoutName);
 
-      //    subWorkoutTable.deleteSubWorkoutTable(tableName);
+        subWorkoutTable.deleteSubWorkoutTable(tableName);
     }
 
     private void resetSubWorkoutListViewColors(AdapterView<?> parent) {

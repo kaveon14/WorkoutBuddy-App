@@ -88,8 +88,6 @@ public class SubWorkoutTable {
                 subWorkouts.add(subWorkout);
             }
         }
-
-
         return subWorkouts;
     }
 

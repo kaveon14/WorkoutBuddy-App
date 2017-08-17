@@ -13,12 +13,11 @@ import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 import static com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment.getClickedExercise;
-//TODO fix this class
+
 public class ExerciseToWorkoutPopup extends PopupWindowManager {
 
     private boolean fromSubWorkout;
