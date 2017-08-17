@@ -69,7 +69,7 @@ public class DeleteWorkoutStatsPopup extends PopupWindowManager {
     }
 
     private void setTextView() {
-        String message = "   Do you want to DELETE the clicked progress photo??";
+        String message = "   Do you want to DELETE the clicked Workout Stats??";
         TextView textView = (TextView) popupLayout.findViewById(R.id.POPUP_TEXT_VIEW);
         textView.setText(message);
     }

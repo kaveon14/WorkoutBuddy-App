@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.SubWorkout;
@@ -126,7 +127,12 @@ public class SubWorkoutFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSubWorkoutPopupMenu();
+                if(!clickedMainWorkout.getMainWorkoutName().equals("Default Workouts")) {
+                    showSubWorkoutPopupMenu();
+                } else {
+                    Toast.makeText(getContext(),"Can not alter the Default SubWorkouts!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -169,10 +175,15 @@ public class SubWorkoutFragment extends Fragment {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                String subWorkoutName = parent.getItemAtPosition(position).toString();
-                setClickedSubWorkout(getSubWorkout(subWorkoutName));
-                ExerciseFragment exerciseFragment = showExercisefragment();
-                exerciseFragment.addExerciseFromSubWorkout(true);
+                if(!clickedMainWorkout.getMainWorkoutName().equals("Default Workouts")) {
+                    String subWorkoutName = parent.getItemAtPosition(position).toString();
+                    setClickedSubWorkout(getSubWorkout(subWorkoutName));
+                    ExerciseFragment exerciseFragment = showExercisefragment();
+                    exerciseFragment.addExerciseFromSubWorkout(true);
+                } else {
+                    Toast.makeText(getContext(),"Can not alter the Default SubWorkouts!",
+                            Toast.LENGTH_SHORT).show();
+                }
                 return true;
             }
         });

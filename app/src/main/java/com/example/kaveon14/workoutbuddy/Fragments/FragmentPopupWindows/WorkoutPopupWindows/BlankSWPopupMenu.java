@@ -6,7 +6,9 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.WorkoutExercise;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
@@ -71,7 +73,13 @@ public class BlankSWPopupMenu extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDeleteExercisePopup();
+                if(!MainWorkoutFragment.getClickedMainWorkout()
+                        .getMainWorkoutName().equals("Default Workouts")) {
+                    showDeleteExercisePopup();
+                } else {
+                    Toast.makeText(context,"Can not alter the Default SubWorkouts!",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

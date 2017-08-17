@@ -1,6 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-/* TODO- make it impossible to add subWorkout to the default workout
- TODO- and also make it impossible to add or delete exercises */
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -54,6 +53,16 @@ public class MainActivity extends AppCompatActivity
         fragmentStackManager =
                 new FragmentStackManager(getSupportFragmentManager());
         setTileOnCLickListeners();
+
+        String d1 = "08/23/1997";
+        String d2 = "08-23-1997";
+
+        String d3 = TableManager.parseDate(d1);
+        String d4 = TableManager.parseDate(d2);
+
+        TableManager.getParsedDate(d3);
+        TableManager.getParsedDate(d4);
+
     }
 
     private void setBaseContent() {

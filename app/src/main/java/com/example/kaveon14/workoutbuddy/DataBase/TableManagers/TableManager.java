@@ -32,6 +32,22 @@ public abstract class TableManager {
         this.SEARCHABLE_COLUMNS = searchableColumns;
     }
 
+    public static String parseDate(String mmddyyyy) {
+        String month = mmddyyyy.substring(0,mmddyyyy.length()-8);
+        String day = mmddyyyy.substring(3,mmddyyyy.length()-5);
+        String year = mmddyyyy.substring(mmddyyyy.length()-4);
+        return new StringBuilder(year).append("-").
+                append(month).append("-").append(day).toString();
+    }
+
+    public static String getParsedDate(String yyyymmdd) {//length will always be the same
+        String year = yyyymmdd.substring(0,yyyymmdd.length()-6);
+        String month = yyyymmdd.substring(5,yyyymmdd.length()-3);
+        String day = yyyymmdd.substring(yyyymmdd.length()-2);
+        return new StringBuilder(month).append("/")
+                .append(day).append("/").append(year).toString();
+    }
+
     public List<String> getColumn(String columnName) {
         List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
