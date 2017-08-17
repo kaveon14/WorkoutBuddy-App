@@ -5,8 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.*;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,8 +14,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.*;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,22 +23,15 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
-import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTable;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.*;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.CustomExercisePopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentStackManager;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ProgressPhotosFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment;
-import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
+import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.*;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.Date;
-
+//still a bug in fragment stack manager
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -87,7 +78,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -216,19 +206,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                }
-            }
-        }
-    }*/
-
     private void showWorkoutStatsFragment() {
         WorkoutStatsFragment workoutStatsFragment = new WorkoutStatsFragment();
         workoutStatsFragment.setMenu(menu);
@@ -319,7 +296,6 @@ public class MainActivity extends AppCompatActivity
         loadRecentBodyStatsPt1(table, INDEX);
         loadRecentBodyStatsPt2(table, INDEX);
         loadRecentBodyStatsPt3(table, INDEX);
-
     }
 
     private void loadRecentBodyStatsPt1(BodyTable table,int INDEX) throws IndexOutOfBoundsException {
