@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.R;
 
@@ -49,7 +51,11 @@ public class DeleteProgressPhotoPopup extends PopupWindowManager {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                deleteProgressPhoto();
+                deleteRowView();
+                Toast.makeText(context,"Progress Photo Succefully Deleted!",
+                        Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
             }
         });
     }
@@ -68,5 +74,18 @@ public class DeleteProgressPhotoPopup extends PopupWindowManager {
         String message = "   Do you want to DELETE the clicked progress photo??";
         TextView textView = (TextView) popupLayout.findViewById(R.id.POPUP_TEXT_VIEW);
         textView.setText(message);
+    }
+
+    private void deleteRowView() {
+        progressPhotoList.remove(position);
+        recyclerView.getAdapter().notifyItemRemoved(position);
+    }
+
+    private void deleteProgressPhoto() {
+        String[] date = new String[] {
+                progressPhotoList.get(position).getDate()
+        };
+        ProgressPhotosTable table = new ProgressPhotosTable(context);
+        table.deleteRow(date);
     }
 }

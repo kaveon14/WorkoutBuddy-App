@@ -84,9 +84,15 @@ public class ProgressPhotosTable extends TableManager {
 
     private byte[] getImageData(Bitmap bitmap) throws IOException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] data = stream.toByteArray();
         stream.close();
         return data;
+    }
+
+    public void deleteRow(String datesToDelete[]) {
+        SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
+        database.delete(TABLE_NAME,COLUMN_DATE+"=?",datesToDelete);
+        database.close();
     }
 }

@@ -80,9 +80,8 @@ public class DeleteBodyStatsPopup extends PopupWindowManager {
     }
 
     private void deleteBodyStatsRow() {
-        List<String> bodyStats = new BodyTable(context).getColumn(COLUMN_DATE);
         String[] date = new String[] {
-                bodyStats.get(position)
+                bodyStats.get(position).getStringDate()
         };
         BodyTable bodyTable = new BodyTable(context);
         bodyTable.deleteRow(date);
