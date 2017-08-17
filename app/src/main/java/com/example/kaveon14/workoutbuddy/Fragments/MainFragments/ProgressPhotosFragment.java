@@ -3,10 +3,12 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
+import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ProgressPhotoPopupWindows.DeleteProgressPhotoPopup;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ProgressPhotoPopupWindows.ExpandedImagePopup;
 import com.example.kaveon14.workoutbuddy.R;
 
@@ -29,6 +32,7 @@ public class ProgressPhotosFragment extends Fragment {
 
     private View root;
     private MainActivity mainActivity;
+    private RecyclerView recyclerView;
     private List<ProgressPhoto> progressPhotos;
     private ProgressPhotoAdapter progressPhotoAdapter;
 
@@ -97,7 +101,7 @@ public class ProgressPhotosFragment extends Fragment {
     }
 
     private void setRecycleView(View root,ProgressPhotoAdapter adapter) {
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.photoRecycleView);
+        recyclerView = (RecyclerView) root.findViewById(R.id.photoRecycleView);
         RecyclerView.LayoutManager manager = new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(manager);
         recyclerView.setItemViewCacheSize(12);
@@ -117,6 +121,14 @@ public class ProgressPhotosFragment extends Fragment {
             progressPhotos.add(0, photo);
             progressPhotoAdapter.notifyItemInserted(0);
         }
+    }
+
+    private void showDeleteProgressPhotoPopup(int positon) {
+        DeleteProgressPhotoPopup popup = new DeleteProgressPhotoPopup(root,getContext());
+        popup.setPosition(positon);
+        popup.setRecyclerView(recyclerView);
+        popup.setProgressPhotoList(progressPhotos);
+        popup.showPopupWindow();
     }
 
     public class ProgressPhotoAdapter extends RecyclerView.Adapter<ProgressPhotoAdapter.CustomViewHolder> {
@@ -156,6 +168,7 @@ public class ProgressPhotosFragment extends Fragment {
                 super(rowView);
                 dateView = (TextView) rowView.findViewById(R.id.progressPhotoDateView);
                 imageView = (ImageView) rowView.findViewById(R.id.progressPhotoImageView);
+                deleteProgressPhoto(imageView);
                 expandedImage(imageView);
             }
 
@@ -169,8 +182,19 @@ public class ProgressPhotosFragment extends Fragment {
                     }
                 });
             }
+
+            private void deleteProgressPhoto(ImageView imageView) {
+               imageView.setOnLongClickListener(new View.OnLongClickListener() {
+                   @Override
+                   public boolean onLongClick(View v) {
+                       showDeleteProgressPhotoPopup(getLayoutPosition());
+                       return true;
+                   }
+               });
+            }
         }
     }
+
     class MyAsyncTask extends AsyncTask<List<ProgressPhoto>,Void,List<ProgressPhoto>> {
 
         private ProgressPhotosTable table;

@@ -32,7 +32,7 @@ import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFra
 import com.example.kaveon14.workoutbuddy.R;
 import java.text.*;
 import java.util.Date;
-// added method to update most recent stats when new data added
+// TODO make sure when a fragment with a recycler view is no longer empty to hide the text view
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

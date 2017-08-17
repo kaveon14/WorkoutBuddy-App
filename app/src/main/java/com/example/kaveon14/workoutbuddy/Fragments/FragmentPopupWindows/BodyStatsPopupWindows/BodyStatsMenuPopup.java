@@ -41,12 +41,12 @@ public class BodyStatsMenuPopup extends PopupWindowManager {
 
     private void setTextView() {
         String message = "Would you like to add new body workout data??";
-        TextView textView = (TextView) popupLayout.findViewById(R.id.bodystatsPopup_textView);
+        TextView textView = (TextView) popupLayout.findViewById(R.id.POPUP_TEXT_VIEW);
         textView.setText(message);
     }
 
     private void setYesPopupButton() {
-        Button btn = (Button) popupLayout.findViewById(R.id.bodyStats_yes_popupBtn);
+        Button btn = (Button) popupLayout.findViewById(R.id.YES_POPUP_BTN);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +61,7 @@ public class BodyStatsMenuPopup extends PopupWindowManager {
     }
 
     private void setNoPopupButton() {
-        Button btn = (Button) popupLayout.findViewById(R.id.bodyStats_no_popupBtn);
+        Button btn = (Button) popupLayout.findViewById(R.id.NO_POPUP_BTN);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
