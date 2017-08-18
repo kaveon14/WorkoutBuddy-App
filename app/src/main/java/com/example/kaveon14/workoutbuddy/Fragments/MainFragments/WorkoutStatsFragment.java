@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 // use floating action button to reset list
 import static android.content.Context.SEARCH_SERVICE;
-//possily create binary search tree to speedup matching searched item times
+//fix search bugs
 public class WorkoutStatsFragment extends Fragment {
 
     private Menu menu;
@@ -191,14 +191,6 @@ public class WorkoutStatsFragment extends Fragment {
             customViewHolder.weightView.setText(customViewHolder.weightView.getText()+" "+
             subWorkout.getTotalWeight());
             customViewHolder.openFullWorkoutStats(customViewHolder.cardView,subWorkout.getWorkoutData());
-        }
-
-        private String getParsedDate(String date) {//length will always be the same
-            String year = date.substring(0,date.length()-6);
-            String month = date.substring(5,date.length()-3);
-            String day = date.substring(date.length()-2);
-            return new StringBuilder(month).append("/")
-                    .append(day).append("/").append(year).toString();
         }
 
         class CustomViewHolder extends RecyclerView.ViewHolder {

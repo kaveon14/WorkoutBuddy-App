@@ -428,7 +428,7 @@ public class MainActivity extends AppCompatActivity
                 DataBaseContract.WorkoutData.COLUMN_DATE+" DESC LIMIT 1").get(INDEX);
 
         TextView textView = (TextView) findViewById(R.id.recentWorkoutDateView);
-        textView.setText(getString(R.string.datePointer)+" "+date);
+        textView.setText(getString(R.string.datePointer)+" "+TableManager.getParsedDate(date));
 
         textView = (TextView) findViewById(R.id.recentMainWorkoutView);
         textView.setText(getString(R.string.mainWorkoutPointer)+" "+mainWorkout);

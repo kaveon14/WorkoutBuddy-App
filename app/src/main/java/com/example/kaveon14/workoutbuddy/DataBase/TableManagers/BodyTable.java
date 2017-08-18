@@ -33,7 +33,7 @@ public class BodyTable extends TableManager {
     public void addStatsToBodyTable(Body body) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_DATE,body.getStringDate());
+        values.put(COLUMN_DATE,parseDate(body.getStringDate()));
         values.put(COLUMN_WEIGHT,body.getWeight());
         values.put(COLUMN_CHEST_SIZE,body.getChestSize());
         values.put(COLUMN_BACK_SIZE,body.getBackSize());
@@ -53,7 +53,8 @@ public class BodyTable extends TableManager {
         Body body;
         List<Body> bodyList = new ArrayList<>();
         while(cursor.moveToNext()) {
-            body = new Body().setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)))
+            body = new Body().setDate(
+                    getParsedDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE))))
                     .setWeight(cursor.getString(cursor.getColumnIndex(COLUMN_WEIGHT)))
                     .setChestSize(cursor.getString(cursor.getColumnIndex(COLUMN_CHEST_SIZE)))
                     .setBackSize(cursor.getString(cursor.getColumnIndex(COLUMN_BACK_SIZE)))
@@ -73,7 +74,7 @@ public class BodyTable extends TableManager {
     public void updateRow(Body body,long rowId) {
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_DATE,body.getStringDate());
+        values.put(COLUMN_DATE,parseDate(body.getStringDate()));
         values.put(COLUMN_WEIGHT,body.getWeight());
         values.put(COLUMN_CHEST_SIZE,body.getChestSize());
         values.put(COLUMN_BACK_SIZE,body.getBackSize());
@@ -87,6 +88,7 @@ public class BodyTable extends TableManager {
 
     public void deleteRow(String datesToDelete[]) {
         SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
+        datesToDelete[0] = parseDate(datesToDelete[0]);
         database.delete(TABLE_NAME,COLUMN_DATE+"=?",datesToDelete);
         database.close();
     }
