@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-
+//TODO map out when to parse a date and when to get a date
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -53,16 +53,6 @@ public class MainActivity extends AppCompatActivity
         fragmentStackManager =
                 new FragmentStackManager(getSupportFragmentManager());
         setTileOnCLickListeners();
-
-        String d1 = "08/23/1997";
-        String d2 = "08-23-1997";
-
-        String d3 = TableManager.parseDate(d1);
-        String d4 = TableManager.parseDate(d2);
-
-        TableManager.getParsedDate(d3);
-        TableManager.getParsedDate(d4);
-
     }
 
     private void setBaseContent() {
@@ -135,7 +125,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {//pop stack
+        FragmentStackManager.PopFragmentStack();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if(getSupportFragmentManager().getBackStackEntryCount()==1
                 && activityHidden) {
