@@ -29,7 +29,7 @@ public class GetDatePopup extends PopupWindowManager {
 
     private void setEditText() {
         EditText editText = (EditText) popupLayout.findViewById(R.id.subWorkoutPopup_editText);
-        editText.setText("YYYY-MM-DD");
+        editText.setText("MM/DD/YYYY");
     }
 
     private void addDateBtn() {

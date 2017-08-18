@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {//pop stack
+    public void onBackPressed() {
         FragmentStackManager.PopFragmentStack();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if(getSupportFragmentManager().getBackStackEntryCount()==1

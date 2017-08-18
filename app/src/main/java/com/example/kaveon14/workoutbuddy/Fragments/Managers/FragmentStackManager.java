@@ -8,29 +8,27 @@ import java.util.Stack;
 
 public class FragmentStackManager {
 
-    private int currFragId = 0;
-    private int prevFragId = 0;
     private FragmentManager fragmentManager;
-    private static Stack<Integer> test;
+    private static Stack<Integer> fragIds;
 
     public FragmentStackManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
-        if(test==null) {
-            test = new Stack<>();
-            test.add(0);
+        if(fragIds ==null) {
+            fragIds = new Stack<>();
+            fragIds.add(0);
         }
     }
 
     public static void PopFragmentStack() {
-        test.pop();
-        if(test.isEmpty()) {
-            test.add(0);
+        fragIds.pop();
+        if(fragIds.isEmpty()) {
+            fragIds.add(0);
         }
     }
 
     public void addFragmentToStack(Fragment frag,int fragId) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = fragmentManager.findFragmentById(test.peek());
+        Fragment fragment = fragmentManager.findFragmentById(fragIds.peek());
         if(fragment != null) {
             fragmentTransaction.hide(fragment);
             fragmentTransaction.add(fragId, frag);
@@ -41,15 +39,6 @@ public class FragmentStackManager {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
-        test.add(fragId);
-
-       /* if(currFragId==fragId) {
-            return;
-        } else if(currFragId != 0) {
-            prevFragId = currFragId;
-            currFragId = fragId;
-        } else {
-            prevFragId = currFragId = fragId;
-        }*/
+        fragIds.add(fragId);
     }
 }

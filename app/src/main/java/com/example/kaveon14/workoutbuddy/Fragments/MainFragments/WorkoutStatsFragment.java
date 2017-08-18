@@ -117,7 +117,7 @@ public class WorkoutStatsFragment extends Fragment {
         fw.setWorkoutData(workoutData);
         fragmentStackManager.addFragmentToStack(fw,R.id.fullWorkoutStats_fragment);
     }
-    //redo for better big o
+
     public List<SubWorkout> loadSearchedItems(Map<String,List<String>> queriedData) {
         List<SubWorkout> list = new ArrayList<>();
         if(queriedData!=null) {
@@ -179,7 +179,7 @@ public class WorkoutStatsFragment extends Fragment {
         public void onBindViewHolder(CustomViewHolder customViewHolder,int i) {
             SubWorkout subWorkout = subWorkoutList.get(i);
             customViewHolder.dateView.setText(customViewHolder.dateView.getText()+" "+
-            getParsedDate(subWorkout.getDate()));
+                    subWorkout.getDate());
             customViewHolder.mainWorkoutView.setText(customViewHolder.mainWorkoutView.getText() + " " +
                     subWorkout.getMainWorkoutName());
             customViewHolder.subWorkoutView.setText(customViewHolder.subWorkoutView.getText()+" "+

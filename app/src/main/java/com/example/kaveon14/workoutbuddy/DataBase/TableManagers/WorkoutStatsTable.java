@@ -41,7 +41,7 @@ public class WorkoutStatsTable extends TableManager {
 
         values.put(COLUMN_MAINWORKOUT, mainWorkoutName);
         values.put(COLUMN_SUBWORKOUT, subWorkoutName);
-        values.put(COLUMN_DATE, subWorkout.getDate());
+        values.put(COLUMN_DATE, parseDate(subWorkout.getDate()));
 
         int currentExerciseIndex = 1;
         int totalsData[] = new int[3];
@@ -202,7 +202,7 @@ public class WorkoutStatsTable extends TableManager {
         String mainName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MAINWORKOUT));
         subWorkout.setMainWorkoutName(mainName);
         String date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE));
-        subWorkout.setDate(date);
+        subWorkout.setDate(getParsedDate(date));
         return subWorkout;
     }
 
