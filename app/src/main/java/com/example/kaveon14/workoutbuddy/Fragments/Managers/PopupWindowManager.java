@@ -55,6 +55,7 @@ public abstract class PopupWindowManager  {
         int height = LinearLayout.LayoutParams.MATCH_PARENT;
         popupWindow = new PopupWindow(popupLayout,width,height);
         popupWindow.setFocusable(true);
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     private void showPopupWindow() {

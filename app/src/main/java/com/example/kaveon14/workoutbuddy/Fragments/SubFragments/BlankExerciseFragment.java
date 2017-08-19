@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class BlankExerciseFragment extends Fragment {
 
     private void setExerciseContent(View view) {
         TextView exTextBox = (TextView) view.findViewById(R.id.exDescriptionBox);
+        exTextBox.setMovementMethod(new ScrollingMovementMethod());
         String exerciseDescription = ExerciseFragment.getClickedExercise().getExerciseDescription();
 
         if(exerciseDescription != null) {
@@ -81,6 +83,7 @@ public class BlankExerciseFragment extends Fragment {
 
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
         if(fab != null) {
             fab.setImageResource(R.drawable.ic_menu_manage);
             handleFloatingActionButtonEvents(fab);

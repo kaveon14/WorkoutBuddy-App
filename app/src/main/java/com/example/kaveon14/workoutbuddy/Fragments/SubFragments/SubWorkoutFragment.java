@@ -117,6 +117,7 @@ public class SubWorkoutFragment extends Fragment {
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if(fab != null) {
+            fab.setVisibility(View.VISIBLE);
             fab.setImageResource(R.drawable.ic_menu_manage);
             handleFloatingActionButtonEvents(fab);
         }

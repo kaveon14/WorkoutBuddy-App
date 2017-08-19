@@ -9,9 +9,12 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Body;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.BodyTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.DeleteBodyStatsPopup;
@@ -20,14 +23,14 @@ import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.BodyStat
 import com.example.kaveon14.workoutbuddy.R;
 import java.util.ArrayList;
 import java.util.List;
-// TODO convert dates(dd-mm-yyyy & dd/mm/yyyy) to yyyy-mm-dd for the database
+
 public class BodyStatsFragment extends Fragment {
 
-    private static Body clickedBodyStatsItem;
     private View root;
     private List<Body> bodyStats;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView;;
     private RecyclerAdapter recyclerAdapter;
+    private static Body clickedBodyStatsItem;
 
     public BodyStatsFragment() {
         // Required empty public constructor
@@ -84,6 +87,7 @@ public class BodyStatsFragment extends Fragment {
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if(fab != null) {
+            fab.setVisibility(View.VISIBLE);
             fab.setImageResource(R.drawable.ic_menu_manage);
             handleFloatingActionButtonEvents(fab);
         }

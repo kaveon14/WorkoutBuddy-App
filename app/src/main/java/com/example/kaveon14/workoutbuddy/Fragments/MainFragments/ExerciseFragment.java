@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -37,17 +38,17 @@ import static android.content.Context.SEARCH_SERVICE;
 
 public class ExerciseFragment extends Fragment {
 
-    private static Exercise clickedExercise;
-    private List<Exercise> exerciseList;
-    private List<Exercise> customExerciseList;
-    private List<String> exerciseNames;
-    private ArrayAdapter<String> exerciseAdapter;
-    private boolean fromSubWorkout = false;
-    private ListView listView;
     private Menu menu;
-    private MainActivity mainActivity;
-    private FragmentStackManager fragmentStackManager;
     private View root;
+    private ListView listView;
+    private MainActivity mainActivity;
+    private List<String> exerciseNames;
+    private List<Exercise> exerciseList;
+    private boolean fromSubWorkout = false;
+    private ArrayAdapter<String> exerciseAdapter;
+    private static Exercise clickedExercise;
+    private List<Exercise> customExerciseList;
+    private FragmentStackManager fragmentStackManager;
 
     public ExerciseFragment() {
 
@@ -117,6 +118,7 @@ public class ExerciseFragment extends Fragment {
     private FloatingActionButton setFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         if(fab != null) {
+            fab.setVisibility(View.VISIBLE);
             fab.setImageResource(R.drawable.ic_menu_manage);
             handleFloatingActionButtonEvents(fab);
         }
@@ -236,7 +238,6 @@ public class ExerciseFragment extends Fragment {
                 loadSearchedItems(table.searchTable(query));
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;

@@ -2,6 +2,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,10 @@ public class FullWorkoutStatsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_full_workout_stats, container, false);
         ListView listView = (ListView) root.findViewById(R.id.fullWorkoutStatsListView);
         listView.setAdapter(setAdapter());
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab != null) {
+            fab.setVisibility(View.INVISIBLE);
+        }
         return root;
     }
 

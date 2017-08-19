@@ -49,6 +49,10 @@ public class WorkoutStatsFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_workout_stats, container, false);
         new MyAsyncTask().execute(subWorkoutList);
         setSearchViewOnClick();
+        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        if(fab !=  null) {
+            fab.setVisibility(View.INVISIBLE);
+        }
         return root;
     }
 
