@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-
+// TODO bug when view exercise content from blankSubWorkoutFragment
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
