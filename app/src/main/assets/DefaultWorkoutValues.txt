@@ -15,7 +15,7 @@ Dumbbell_Row 3 8-12
 Wide_Grip_Lat_Pull-down 3 8-12
 Dumbbell_Shrug 3 8-12
 @//
-Default_Workouts_Leg_Day_wk
+Default_Workouts_Shoulder_Day_wk
 Dumbbell_Shoulder_Press 4 6-10
 Arnold_Dumbbell_Press 3 8-12
 Side_Lateral_Raise 3 8-12
@@ -23,7 +23,7 @@ Hanging_Leg_Raises 3 8-12
 Cable_Crunch 3 8-12
 Exercise_Bike 1 10-30mins
 @//
-Default_Workouts_Arm_Day_wk
+Default_Workouts_Leg_Day_wk
 Squat 4 6-10
 Leg_Press 3 8-12
 Front_Squat 3 8-12
@@ -33,7 +33,7 @@ Seated_Leg_Curl  3 8-12
 Standing_Calv_Raises 4 12-20
 Seated_Calv_Raises 4 12-20
 @//
-Default_Workouts_Shoulder_Day_wk
+Default_Workouts_Arm_Day_wk
 Close_Grip_Bench_Press 4 6-10
 Triceps_Push-downs 3 8-12
 Dumbbell_Kickbacks 3 8-12
