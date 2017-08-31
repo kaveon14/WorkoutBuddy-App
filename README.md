@@ -1,1 +1,1 @@
-WorkoutBuddy
+This is an android application that makes sure you never forget a workout. Workout Buddy stores all of your workout data, body stats, and progress photos in an easily accessible fashion. This app also shows the user how to perform various exercises and allows the user to create their own exercises.
