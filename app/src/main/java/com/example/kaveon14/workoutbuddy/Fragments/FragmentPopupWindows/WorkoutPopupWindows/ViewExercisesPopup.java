@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
+import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ExerciseTable;
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.kaveon14.workoutbuddy.R;
@@ -35,7 +36,6 @@ public class ViewExercisesPopup extends PopupWindowManager {
 
     public void showPopupWindow() {
         displayPopupWindow();
-        System.out.println("showing: "+popupWindow.isShowing());
         setListView();
     }
 
@@ -65,9 +65,11 @@ public class ViewExercisesPopup extends PopupWindowManager {
     private void listViewOnClick(ListView listView) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ExerciseFragment.setClickedExercise(exerciseList.get(position));
-                mainActivity.showBlankExerciseFragment();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {//load ex from table
+                ExerciseTable table = new ExerciseTable(context);
+                Exercise exercise = table.getExercise(exerciseList.get(position).getExerciseName());
+                ExerciseFragment.setClickedExercise(exercise);
+                mainActivity.showBlankExerciseFragment();//think about doing same for ex frag,only load  ex names
                 mainPopupWindow.dismiss();
                 popupWindow.dismiss();
             }

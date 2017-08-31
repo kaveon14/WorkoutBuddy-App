@@ -69,6 +69,7 @@ public class MainWorkoutTable extends TableManager {
             values.put(columns[x],s);
         }
         writableDatabase.update(TABLE_NAME,values,"_id="+mainWorkout.getRowId(),null);
+        writableDatabase.close();
     }
 
     public List<MainWorkout> getMainWorkouts() {

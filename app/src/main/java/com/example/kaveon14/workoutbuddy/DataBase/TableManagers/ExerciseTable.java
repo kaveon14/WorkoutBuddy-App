@@ -61,6 +61,20 @@ public class ExerciseTable extends TableManager {
         return data;
     }
 
+    public Exercise getExercise(String exerciseName) {
+        SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM "+TABLE_NAME+" WHERE "+COLUMN_EXERCISES
+                +" = '"+exerciseName+"'",null);
+        Exercise exercise = null;
+        if(cursor != null && cursor.moveToFirst()) {
+            exercise = new Exercise(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXERCISES)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EXERCISE_DESCRIPTION)));
+            exercise.setExerciseImage(getExerciseImage(exercise));
+        }
+        cursor.close();
+        return exercise;
+    }
+
     public List<Exercise> getExercises() {
         List<String> exerciseNames = getColumn(COLUMN_EXERCISES);
         List<String> exerciseDescriptions = getColumn(COLUMN_EXERCISE_DESCRIPTION);

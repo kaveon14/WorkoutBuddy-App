@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-// TODO bug when view exercise content from blankSubWorkoutFragment
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -145,10 +145,6 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         this.menu = menu;
         return true;
-    }
-
-    public Menu getMenu() {
-        return menu;
     }
 
     @Override
