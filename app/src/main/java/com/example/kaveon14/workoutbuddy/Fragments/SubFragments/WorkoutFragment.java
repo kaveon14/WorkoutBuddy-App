@@ -123,8 +123,8 @@ public class WorkoutFragment extends Fragment {
             public void onChronometerTick(Chronometer chronometer) {
                 int time = getTime(chrono.getText().toString());
                 setProgressBarProgress(root,time);
-                String t = 5 > timeLimit.length() ? "0"+timeLimit : timeLimit;
-                if(chronometer.getText().toString().equalsIgnoreCase(t)) {
+                String maxTime = 5 > timeLimit.length() ? "0"+timeLimit : timeLimit;
+                if(chronometer.getText().toString().equalsIgnoreCase(maxTime)) {
                     resetChronometer(chronometer);
                     setResetButton(root);
                     addSet();
