@@ -135,6 +135,12 @@ Leg Press
 4. Once at maximum depth "push with your heels"
 5. Repeat until goal amount of reps reached or until failure
 @//
+Lying Leg Raise
+1. Lie down on a bench with your knees and lower leg being off the bench
+2. While holding onto the bench,with a slight bend in your knees begin to raise your legs upward
+3. Once at peak, begin to lower your, legs at a slow pace
+4. Repeat until goal amount of reps reached or until failure
+@//
 Hack Squat
 1. Make sure that the pins in the machine are setup for safety in case you where to fail
 2. Sit down and place feet on platform with a slight bend in knee
@@ -325,6 +331,12 @@ Cable Crunch
 6. Let the weight pull you back up at a decent rate
 7. Repeat until goal amount of reps reached or until failure
 @//
+Chest Press Machine
+1. Ensure that the machine is properly setup
+2. Sit in the machine with a slight arch in your back
+3. Begin to press the weight, just like a regular bench press
+4. Repeat until goal amount of reps reached or until failure
+@//
 Barbell Row
 1. Walk towards the bar and place the the middle part of your foot under the barbell
 2. Bend at the hips while keeping chest up and grab the bar with a shoulder width grip
@@ -359,5 +371,53 @@ Bench Press
 6. With shoulder blades butt still in contact with bench, drive your feet into the ground and press the barbell upwards
 7. Repeat until goal amount of reps reached or until failure
 @//
-
-
+Russian Twist
+1. Sit down on the floor on your buttock with a your knees close to your chest
+2. While slightly leaning back, raise you feet off of the ground
+3. Begin To twist your body in each direction
+4. Repeat until goal amount of reps reached or until failure
+@//
+Wide Grip Lat Pull-down
+1. Ensure that the machine is properly setup and that the weight are fully inserted into the weights
+2. Sit down and take a wider than shoulder width grip on the bar
+3. Pull the weight down with 'your elbows' until the bar is at least under your chin
+4. Hold this position for a slight moment
+5. Slowly let the weight raise ascend
+6. Repeat until goal amount of reps reached or until failure
+@//
+Exercise Bike
+1. Ride the bike just like any other bike
+@//
+Side Lateral Raise
+1. With dumbbells in hand and elbows tucked into side
+2. Raise your arms outwards in, to form an lower case 't' at the peak
+3. Hold this position for a slight second
+4. Lower the weight at a decent pace
+5. Repeat until goal amount of reps reached or until failure
+@//
+Hanging Leg Raise
+1. Take a slightly wider than shoulder width grip on the bar
+2. With a slight bend in your knees begin to raise your legs upward
+3. Once at peak, begin to lower your, legs at a slow pace
+4. Repeat until goal amount of reps reached or until failure
+@//
+Arnold Press
+1. Sit down the bench with the weight on your quads with your palms facing inwards towards each other
+2. Use momentum to get the weight in front of your shoulders with you palms facing towards yourself
+3. While pressing the weight upwards rotate your palms until they are facing away from yourself
+4. When lowering the weight, at a slow pace, rotate your palms inwards again and bring the weight back in front of your shoulders
+5. Repeat until goal amount of reps reached or until failure
+@//
+Preacher Curl
+1. Ensure that the machine or bench is properly setup
+2. Get into position with the weight at the peak
+3. Begin lowering the, once arms are at about 120 degrees begin to curl the weight
+4. Repeat until goal amount of reps reached or until failure
+@//
+Dumbbell Shoulder Press
+1. Sit down the bench with the weight on your quads with your palms facing inwards towards each other
+2. Use momentum to get the weight up
+3. Begin pressing upwards until lockout
+4. Once at peak lower the weight at a slow pace until arms form a 90 degrees angle
+5. Repeat until goal amount of reps reached or until failure
+@//

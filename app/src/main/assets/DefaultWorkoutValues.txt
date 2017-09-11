@@ -3,7 +3,7 @@ Bench_Press 3 6-10
 Incline_Dumbbell_Press 3 8-12
 Cable_Crossover 3 8-12
 Chest_Press_Machine 3 8-12
-Crunches 3 8-12
+Ab_Crunch 3 8-12
 Lying_Leg_Raise 3 8-12
 Russian_Twist 3 8-12
 @//
@@ -13,13 +13,13 @@ Pull-ups 3 8-12
 Bent_Over-Rows 3 8-12
 Dumbbell_Row 3 8-12
 Wide_Grip_Lat_Pull-down 3 8-12
-Dumbbell_Shrug 3 8-12
+Shrugs 3 8-12
 @//
 Default_Workouts_Shoulder_Day_wk
 Dumbbell_Shoulder_Press 4 6-10
-Arnold_Dumbbell_Press 3 8-12
+Arnold_Press 3 8-12
 Side_Lateral_Raise 3 8-12
-Hanging_Leg_Raises 3 8-12
+Hanging_Leg_Raise 3 8-12
 Cable_Crunch 3 8-12
 Exercise_Bike 1 10-30mins
 @//
@@ -36,11 +36,11 @@ Seated_Calv_Raises 4 12-20
 Default_Workouts_Arm_Day_wk
 Close_Grip_Bench_Press 4 6-10
 Triceps_Push-downs 3 8-12
-Dumbbell_Kickbacks 3 8-12
+Dumbbell_Kick-Backs 3 8-12
 EZ_Bar_Curl 3 8-12
 Dumbbell_Curl 3 8-12
 Preacher_Curl 3 8-12
-Crunches 3 8-12
+Ab_Crunch 3 8-12
 Lying_Leg_Raise 3 8-12
 Russian_Twist 3 8-12
 @//

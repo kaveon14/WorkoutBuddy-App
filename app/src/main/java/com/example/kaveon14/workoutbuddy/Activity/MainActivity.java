@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Activity;
-
+// TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;

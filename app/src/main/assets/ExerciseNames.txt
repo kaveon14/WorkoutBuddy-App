@@ -6,6 +6,7 @@ Cable Crossover
 Cable Seated Back-Row
 Chin Ups
 Close Grip Bench Press
+Chest Press Machine
 Dead-Lift
 Dumbbell Bench Press
 Dumbbell Curl
@@ -24,6 +25,7 @@ Hamstring Curls
 Leg Extensions
 Leg Press
 Lunges
+Lying Leg Raise
 Lying Triceps Extensions
 Reverse Curls
 Planck
@@ -42,3 +44,11 @@ Weighted Leg Raises
 Ab Crunch
 Seated Leg Curl
 Cable Crunch
+Russian Twist
+Wide Grip Lat Pull-down
+Exercise Bike
+Side Lateral Raise
+Hanging Leg Raise
+Arnold Press
+Preacher Curl
+Dumbbell Shoulder Press

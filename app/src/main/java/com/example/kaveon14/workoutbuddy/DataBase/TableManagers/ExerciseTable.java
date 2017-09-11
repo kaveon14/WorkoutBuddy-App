@@ -21,7 +21,7 @@ import static com.example.kaveon14.workoutbuddy.DataBase.DatabaseManagment.DataB
 public class ExerciseTable extends TableManager {
 
     private DataBaseSQLiteHelper dataBaseSQLiteHelper;
-    public static int DEFAULT_EXERCISE_COUNT = 1;
+    private static int DEFAULT_EXERCISE_COUNT = 1;
 
     public ExerciseTable(Context context) {
         dataBaseSQLiteHelper = new DataBaseSQLiteHelper(context);
