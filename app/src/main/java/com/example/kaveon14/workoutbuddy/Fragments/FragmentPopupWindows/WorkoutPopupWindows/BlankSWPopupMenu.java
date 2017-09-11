@@ -129,6 +129,7 @@ public class BlankSWPopupMenu extends PopupWindowManager {
 
     private void showGetDatePopup() {
         GetDatePopup popup = new GetDatePopup(getRootView(),context);
+
         popup.showPopupWindow();
     }
 }

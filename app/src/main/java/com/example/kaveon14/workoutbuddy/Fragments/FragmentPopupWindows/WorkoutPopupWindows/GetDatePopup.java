@@ -10,6 +10,11 @@ import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.WorkoutStatsTabl
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.kaveon14.workoutbuddy.R;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.BlankSWPopupMenu.workoutData;
 
 public class GetDatePopup extends PopupWindowManager {
@@ -29,7 +34,9 @@ public class GetDatePopup extends PopupWindowManager {
 
     private void setEditText() {
         EditText editText = (EditText) popupLayout.findViewById(R.id.subWorkoutPopup_editText);
-        editText.setText("MM/DD/YYYY");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        String date = dateFormat.format(new Date());
+        editText.setText(date);
     }
 
     private void addDateBtn() {
