@@ -1,5 +1,5 @@
 package com.example.kaveon14.workoutbuddy.Fragments.SubFragments;
-// TODO bug when getting time for chrono ex (1:00 is wrong)
+
 import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;

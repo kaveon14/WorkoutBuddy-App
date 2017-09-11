@@ -77,6 +77,10 @@ public class DeleteWorkoutStatsPopup extends PopupWindowManager {
     private void deleteRowView() {
         subWorkoutList.remove(position);
         recyclerView.getAdapter().notifyItemRemoved(position);
+        if(recyclerView.getAdapter().getItemCount()==0) {
+            TextView textView = (TextView) recyclerView.getRootView().findViewById(R.id.noWorkoutStats);
+            textView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void deleteWorkoutStats() {

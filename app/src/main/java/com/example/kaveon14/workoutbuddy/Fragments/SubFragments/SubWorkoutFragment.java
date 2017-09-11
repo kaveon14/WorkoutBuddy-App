@@ -179,7 +179,7 @@ public class SubWorkoutFragment extends Fragment {
                 if(!clickedMainWorkout.getMainWorkoutName().equals("Default Workouts")) {
                     String subWorkoutName = parent.getItemAtPosition(position).toString();
                     setClickedSubWorkout(getSubWorkout(subWorkoutName));
-                    ExerciseFragment exerciseFragment = showExercisefragment();
+                    ExerciseFragment exerciseFragment = showExerciseFragment();
                     exerciseFragment.addExerciseFromSubWorkout(true);
                 } else {
                     Toast.makeText(getContext(),"Can not alter the Default SubWorkouts!",
@@ -205,7 +205,7 @@ public class SubWorkoutFragment extends Fragment {
                 R.id.blankWorkout_fragment);
     }
 
-    private ExerciseFragment showExercisefragment() {
+    private ExerciseFragment showExerciseFragment() {
         ExerciseFragment exerciseFragment = new ExerciseFragment();
         exerciseFragment.setMenu(menu);
         getFragmentManager().beginTransaction()
