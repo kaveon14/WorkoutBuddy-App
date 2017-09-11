@@ -77,6 +77,10 @@ public class DeleteProgressPhotoPopup extends PopupWindowManager {
     private void deleteRowView() {
         progressPhotoList.remove(position);
         recyclerView.getAdapter().notifyItemRemoved(position);
+        if(recyclerView.getAdapter().getItemCount()==0) {
+            TextView textView = (TextView) recyclerView.getRootView().findViewById(R.id.noProgressPhotosView);
+            textView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void deleteProgressPhoto() {

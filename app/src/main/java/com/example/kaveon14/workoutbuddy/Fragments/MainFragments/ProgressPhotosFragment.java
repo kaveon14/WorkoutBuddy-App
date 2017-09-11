@@ -3,12 +3,10 @@ package com.example.kaveon14.workoutbuddy.Fragments.MainFragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -95,10 +93,10 @@ public class ProgressPhotosFragment extends Fragment {
         mainActivity.startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
     }
 
-    private void showExapndedImagePopup(Bitmap image) {
+    private void showExpandedImagePopup(Bitmap image) {
         ExpandedImagePopup popup = new ExpandedImagePopup(getContext(),root);
         popup.setImage(image);
-        popup.showPopupWindow();
+        popup.showPopupWindow();//expanded
     }
 
     private void setRecycleView(View root,ProgressPhotoAdapter adapter) {
@@ -121,6 +119,10 @@ public class ProgressPhotosFragment extends Fragment {
         } else {
             progressPhotos.add(0, photo);
             progressPhotoAdapter.notifyItemInserted(0);
+        }
+        TextView textView = (TextView) root.findViewById(R.id.noProgressPhotosView);
+        if(textView.getVisibility()==View.VISIBLE) {
+            textView.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -179,7 +181,7 @@ public class ProgressPhotosFragment extends Fragment {
                     public void onClick(View v) {
                         int i = getLayoutPosition();
                         Bitmap image = progressPhotoList.get(i).getProgressPhoto();
-                        showExapndedImagePopup(image);
+                        showExpandedImagePopup(image);
                     }
                 });
             }
