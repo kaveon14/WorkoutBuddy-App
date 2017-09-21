@@ -200,8 +200,7 @@ public class WorkoutFragment extends Fragment {
             return Integer.valueOf(seconds);
         } else {
             int mins = Integer.valueOf(minutes);
-            int sec = (mins*60) + Integer.valueOf(seconds);
-            return sec;
+            return (mins*60) + Integer.valueOf(seconds);
         }
     }
 

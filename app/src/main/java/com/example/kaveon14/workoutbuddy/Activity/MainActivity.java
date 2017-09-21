@@ -32,6 +32,8 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.text.*;
 import java.util.Date;
 // TODO make sure when a fragment with a recycler view is no longer empty to hide the text view
+// TODO fix sql injection
+// TODO add choice to choose kgs or lbs only store number in database and ask(out in setting withs convertors
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

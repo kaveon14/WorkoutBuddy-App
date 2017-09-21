@@ -107,7 +107,7 @@ public class DataBaseContract {
 
         public static final String COLUMN_DATE = "Date";
 
-        public static final String COLUMN_MAX = "MaxWeight";
+        public static final String COLUMN_MAX = "MaxWeight";//never used....I think
 
         public static final String CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +

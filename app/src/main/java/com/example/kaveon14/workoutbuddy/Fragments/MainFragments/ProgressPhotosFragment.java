@@ -25,7 +25,7 @@ import com.example.kaveon14.workoutbuddy.R;
 import java.util.List;
 
 import static com.example.kaveon14.workoutbuddy.Activity.MainActivity.REQUEST_IMAGE_CAPTURE;
-
+// Save photos to file(reork everything)
 public class ProgressPhotosFragment extends Fragment {
 
     private View root;
