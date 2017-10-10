@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
 
 public abstract class PopupWindowManager  {
 

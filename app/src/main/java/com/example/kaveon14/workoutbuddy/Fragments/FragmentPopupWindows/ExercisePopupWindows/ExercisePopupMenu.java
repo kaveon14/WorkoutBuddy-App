@@ -3,7 +3,7 @@ package com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.Exercis
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
-import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
+import com.example.kaveon14.workoutbuddy.Activities.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.Fragments.Managers.PopupWindowManager;
 import com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment;

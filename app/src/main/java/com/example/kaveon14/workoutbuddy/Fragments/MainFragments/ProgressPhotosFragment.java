@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.kaveon14.workoutbuddy.Activity.MainActivity;
+import com.example.kaveon14.workoutbuddy.Activities.MainActivity;
 import com.example.kaveon14.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.kaveon14.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.kaveon14.workoutbuddy.Fragments.FragmentPopupWindows.ProgressPhotoPopupWindows.DeleteProgressPhotoPopup;
@@ -24,7 +24,7 @@ import com.example.kaveon14.workoutbuddy.R;
 
 import java.util.List;
 
-import static com.example.kaveon14.workoutbuddy.Activity.MainActivity.REQUEST_IMAGE_CAPTURE;
+import static com.example.kaveon14.workoutbuddy.Activities.MainActivity.REQUEST_IMAGE_CAPTURE;
 // Save photos to file(reork everything)
 public class ProgressPhotosFragment extends Fragment {
 

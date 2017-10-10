@@ -1,54 +1,46 @@
 Barbell Curl
-                                                                     Barbell Row
-                                                                     Bench Press
-                                                                     Cable Bar Push-Downs
-                                                                     Cable Crossover
-                                                                     Cable Seated Back-Row
-                                                                     Chin Ups
-                                                                     Close Grip Bench Press
-                                                                     Chest Press Machine
-                                                                     Dead-Lift
-                                                                     Dumbbell Bench Press
-                                                                     Dumbbell Curl
-                                                                     Dumbbell Fly
-                                                                     Dumbbell Kick-Backs
-                                                                     EZ Bar Curl
-                                                                     EZ Bar Triceps Press
-                                                                     Front Squat
-                                                                     Incline Bench Press
-                                                                     Incline Curls
-                                                                     Incline Dumbbell Press
-                                                                     Hack Squat
-                                                                     Hammer Curls
-                                                                     Hammer Incline Curls
-                                                                     Hamstring Curls
-                                                                     Leg Extensions
-                                                                     Leg Press
-                                                                     Lunges
-                                                                     Lying Leg Raise
-                                                                     Lying Triceps Extensions
-                                                                     Reverse Curls
-                                                                     Planck
-                                                                     Pull Ups
-                                                                     Push Ups
-                                                                     Overhead Dumbbell Triceps Extensions
-                                                                     Seated Calf Raises
-                                                                     Shrugs
-                                                                     Side Crunch
-                                                                     Sit-up
-                                                                     Standing Calf Raises
-                                                                     Squat
-                                                                     Straight Leg Dead-Lift
-                                                                     Weighted Crunch Machine
-                                                                     Weighted Leg Raises
-                                                                     Ab Crunch
-                                                                     Seated Leg Curl
-                                                                     Cable Crunch
-                                                                     Russian Twist
-                                                                     Wide Grip Lat Pull-down
-                                                                     Exercise Bike
-                                                                     Side Lateral Raise
-                                                                     Hanging Leg Raise
-                                                                     Arnold Press
-                                                                     Preacher Curl
-                                                                     Dumbbell Shoulder Press
+Barbell Row
+Bench Press
+Cable Bar Push-Downs
+Cable Crossover
+Cable Seated Back-Row
+Chin Ups
+Close Grip Bench Press
+Dead-Lift
+Dumbbell Bench Press
+Dumbbell Curl
+Dumbbell Fly
+Dumbbell Kick-Backs
+EZ Bar Curl
+EZ Bar Triceps Press
+Front Squat
+Incline Bench Press
+Incline Curls
+Incline Dumbbell Press
+Hack Squat
+Hammer Curls
+Hammer Incline Curls
+Hamstring Curls
+Leg Extensions
+Leg Press
+Lunges
+Lying Triceps Extensions
+Reverse Curls
+Planck
+Pull Ups
+Push Ups
+Overhead Dumbbell Triceps Extensions
+Seated Calv Raises
+Shrugs
+Side Crunch
+Sit-up
+Standing Calv Raises
+Squat
+Straight Leg Dead-Lift
+Weighted Crunch Machine
+Weighted Leg Raises
+Ab Crunch
+Seated LegCurl
+Cable Crunch
+Dumbbell Row
+Triceps Push-downs

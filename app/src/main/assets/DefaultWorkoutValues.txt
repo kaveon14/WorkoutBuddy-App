@@ -10,7 +10,7 @@ Russian_Twist 3 8-12
 Default_Workouts_Back_Day_wk
 Dead-lift 4 3-5
 Pull-ups 3 8-12
-Bent_Over-Rows 3 8-12
+Barbell_Row 3 8-12
 Dumbbell_Row 3 8-12
 Wide_Grip_Lat_Pull-down 3 8-12
 Shrugs 3 8-12
@@ -30,8 +30,8 @@ Front_Squat 3 8-12
 Leg_Extensions 3 8-12
 Straight_Leg_Dead-lift 3 8-12
 Seated_Leg_Curl  3 8-12
-Standing_Calv_Raises 4 12-20
-Seated_Calv_Raises 4 12-20
+Standing_Calf_Raises 4 12-20
+Seated_Calf_Raises 4 12-20
 @//
 Default_Workouts_Arm_Day_wk
 Close_Grip_Bench_Press 4 6-10

@@ -1,4 +1,11 @@
-package com.example.kaveon14.workoutbuddy.Activity;
+package com.example.kaveon14.workoutbuddy.Activities;
+// TODO decouple even more try to keep database and business login as serpereate as possible,elimnate any mgic numbers
+/*
+-keep local sql database
+-redo photos/store in an actual location and in database just store the file path(for local images)
+-gonna need php
+ */
+// TODO get ready to test the mysql database first run simple test to see if connected
 // TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
 import android.Manifest;
 import android.content.Intent;

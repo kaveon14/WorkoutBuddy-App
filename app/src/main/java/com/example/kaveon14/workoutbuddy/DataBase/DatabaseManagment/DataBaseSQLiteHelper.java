@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import com.example.kaveon14.workoutbuddy.DataBase.Data.Exercise;
 import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultExerciseContent;
 import java.io.ByteArrayOutputStream;
@@ -37,7 +36,6 @@ import com.example.kaveon14.workoutbuddy.DataBase.DefaultData.DefaultWorkouts;
 import com.example.kaveon14.workoutbuddy.R;
 
 public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
-
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "workoutDataBase.db";
@@ -88,8 +86,8 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
             builder = new StringBuilder(columnStart);
             columns[NAME_COL] = builder.append("_Name").toString();
 
-            DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[NAME_COL]);//moved from bottom so name is first
-            for(int z=1;z<=10;z++) {//delete weight and reps num Exercise1_Sets1_Reps1
+            DataBaseContract.WorkoutData.createLiftingStatsColumn(columns[NAME_COL]);
+            for(int z=1;z<=10;z++) {
                 builder = new StringBuilder(columnStart);
                 columns[SETS_COL] = builder.append("_Set").append(z).toString();
                 builder = new StringBuilder(columns[SETS_COL]);
@@ -195,7 +193,7 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
 
     private class DefaultExercisesExtension {
 
-        protected void addDefaultExercises(SQLiteDatabase database) {//add exercise descriptions also change func name
+        protected void addDefaultExercises(SQLiteDatabase database) {// change func name
             List<String> exerciseNames = new DefaultExerciseContent(context)
                     .getExerciseNames();
             Hashtable<String,String> exerciseDescriptions = new DefaultExerciseContent(context)
@@ -210,7 +208,6 @@ public class DataBaseSQLiteHelper extends SQLiteOpenHelper {
                 database.insert(DataBaseContract.ExerciseData.TABLE_NAME, null, values);
             }
         }
-
 
         private byte[] getDefaultImages(String exerciseName) {
             final Field[] mipmapFields = R.mipmap.class.getDeclaredFields();
