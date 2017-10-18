@@ -24,12 +24,13 @@ public class RequestHandler {
             URL url = new URL(requestURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
+            System.out.println("WTF");
             String s;
             while ((s = bufferedReader.readLine()) != null) {
                 sb.append(s + "\n");
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return sb.toString();
     }
