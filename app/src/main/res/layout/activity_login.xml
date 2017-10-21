@@ -73,6 +73,15 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/skipSignInBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:textAppearanceSmall"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:text="Proceed without Personal Data"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

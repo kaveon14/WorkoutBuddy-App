@@ -1,9 +1,12 @@
 package com.example.kaveon14.workoutbuddy.Activities;
-
+// TODO check for internet connection if no connection load up default data only
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.database.Cursor;
@@ -21,7 +24,16 @@ import com.example.kaveon14.workoutbuddy.RemoteDatabase.WorkoutBuddyAPI;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+import java.io.File;
+import java.io.FileNotFoundException;
+
+//on this one change name of wokroutbuddy to match the django one
+//store default on device
+
+// TODO file path example /data/user/0/com.example.kaveon14.workoutbuddy/files/test
+
+// WorkoutBuddy/ExerciseImages/default_exercise_image.png
+public class LoginActivity extends AppCompatActivity {
 
     private AutoCompleteTextView username_textView;
 
@@ -31,7 +43,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         // Set up the login form.
         username_textView = (AutoCompleteTextView) findViewById(R.id.username_textView);
-        setSignInButton();
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if(isConnected) {
+            setSignInButton();
+        } else {
+            Toast.makeText(this,"No network connection!",Toast.LENGTH_LONG).show();
+        }
+        setSkipSignInButton();
+
+        File f = new File(getFilesDir(), "test");
+        System.out.println(f.getAbsolutePath());
+
     }
 
     private void setSignInButton() {
@@ -51,6 +79,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String username = username_textView.getText().toString();
         UserLoginTask userLoginTask = new UserLoginTask(username);
         userLoginTask.execute();
+    }
+
+    private void setSkipSignInButton() {
+        Button btn = (Button) findViewById(R.id.skipSignInBtn);
+        btn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showProgress(true);
+                skipSignIn();
+            }
+        });
+    }
+
+    private void skipSignIn() {
+        //make sure to not load any personal data this way
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -111,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         private void attemptLogin(String s) {
-            try {
+            try {//make sure to get the user id
                 JSONObject jsonObject = new JSONObject(s);
 
                 if(!jsonObject.getBoolean(WorkoutBuddyAPI.JSON_ERROR)) {
