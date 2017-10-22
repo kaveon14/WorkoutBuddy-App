@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fullWorkoutStats_fragment"
-    tools:context="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment">
+    tools:context="com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment">
 
     <ListView
         android:id="@+id/fullWorkoutStatsListView"

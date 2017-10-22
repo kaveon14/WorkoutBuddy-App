@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.kaveon14.workoutbuddy"
+        applicationId "com.example.WorkoutBuddy.workoutbuddy"
         minSdkVersion 21
         targetSdkVersion 25
 
