@@ -1,4 +1,4 @@
-package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase;
+package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -1,4 +1,4 @@
-package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.TableManagers;
+package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
 
 public abstract class TableManager {

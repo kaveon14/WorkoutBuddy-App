@@ -1,8 +1,16 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
-/**
- * Created by kaveon14 on 10/23/17.
- */
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI;
 
 public class WorkoutRequestHandler {
+
+
+    public String sendGetMainWorkoutsRequest(final int userID) {
+        return new RequestHandler().sendGetRequest(null);
+    }
+
+    public String sendGetSubWorkoutRequest(final int subWorkoutId) {
+        return new RequestHandler().sendGetRequest(WorkoutBuddyAPI.GET_SUBWORKOUT_EXERCISES_URL+subWorkoutId);
+    }
+
 }

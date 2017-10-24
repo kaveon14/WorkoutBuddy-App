@@ -17,14 +17,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 import com.example.WorkoutBuddy.workoutbuddy.R;
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandler;
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.WorkoutBuddyAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.RequestHandler;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
 
 //on this one change name of wokroutbuddy to match the django one
 //store default on device

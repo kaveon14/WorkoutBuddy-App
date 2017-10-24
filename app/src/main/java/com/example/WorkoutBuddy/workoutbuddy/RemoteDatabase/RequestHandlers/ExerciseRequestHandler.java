@@ -1,11 +1,11 @@
-package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.TableManagers;
+package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandler;
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.WorkoutBuddyAPI;
-
-//rethink name
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI;
+//may take a list
 public class ExerciseRequestHandler {//needs to be async task or handled in an async task
 
+    public static final JSON_EXERCISE_NAME = "exercise_name";
+    public static final JSON_EXERCISE_DESCRIPTION = "exercise_description";
 
     public String sendGetDefaultExerciseRequest() {
         return new RequestHandler().sendGetRequest(WorkoutBuddyAPI.GET_DEFAULT_EXERCISE_URL);

@@ -27,8 +27,8 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.Exer
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.TableManagers.ExerciseRequestHandler;
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.WorkoutBuddyAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ExerciseRequestHandler;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import static android.content.Context.SEARCH_SERVICE;
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI.JSON_KEY;
 
 public class ExerciseFragment extends Fragment {
 
@@ -325,7 +326,6 @@ public class ExerciseFragment extends Fragment {
                     Toast.makeText(getContext(), jsonObject.getString(WorkoutBuddyAPI.JSON_ERROR_MESSAGE),
                             Toast.LENGTH_SHORT).show();
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -334,14 +334,13 @@ public class ExerciseFragment extends Fragment {
         private List<String> getData(JSONObject jsonObject) throws JSONException {
             List<String> list = new ArrayList<>();
 
-            JSONArray array = jsonObject.getJSONArray("exercise_name");
+            JSONArray array = jsonObject.getJSONArray(JSON_KEY);
             for(int x=0;x<array.length();x++) {
-                String ex_name = ((JSONObject) array.get(x)).getString("exercise_name");//error here got two json arrays
+                String ex_name = ((JSONObject) array.get(x)).getString(JSON_EXERCISE_NAME);//error here got two json arrays
                 list.add(ex_name);
             }
             return list;
         }
     }
-
 }
 //no need to change the custom image name because it is tied and retrieved by an exercise object
