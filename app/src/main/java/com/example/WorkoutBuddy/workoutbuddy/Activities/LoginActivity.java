@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.example.WorkoutBuddy.workoutbuddy.R;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandler;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.WorkoutBuddyAPI;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -160,6 +162,9 @@ public class LoginActivity extends AppCompatActivity {
                 if(!jsonObject.getBoolean(WorkoutBuddyAPI.JSON_ERROR)) {
                     Toast.makeText(getApplicationContext(), jsonObject.getString(WorkoutBuddyAPI.JSON_ERROR_MESSAGE),
                             Toast.LENGTH_SHORT).show();
+                    JSONArray array = jsonObject.getJSONArray("id");
+                    int id = ((JSONObject) array.get(0)).getInt("id");
+                    WorkoutBuddyAPI.setUserId(id);
 
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);

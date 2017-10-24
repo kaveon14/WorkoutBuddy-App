@@ -41,6 +41,7 @@ import java.util.Date;
 // TODO make sure when a fragment with a recycler view is no longer empty to hide the text view
 // TODO fix sql injection
 // TODO add choice to choose kgs or lbs only store number in database and ask(out in setting withs convertors
+// TODO decouple alot by using ids instead of exercise name
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

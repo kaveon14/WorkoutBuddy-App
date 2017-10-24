@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.Exercise;
@@ -26,6 +27,13 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.Exer
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.TableManagers.ExerciseRequestHandler;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.WorkoutBuddyAPI;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -81,7 +89,8 @@ public class ExerciseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_exercise, container, false);
-        new MyAsyncTask().execute(new ArrayList<String>());
+       // new MyAsyncTask().execute(new ArrayList<String>());
+        new Task().execute();
         setFloatingActionButton();
         setSearchViewOnClick();
         return root;
@@ -295,5 +304,44 @@ public class ExerciseFragment extends Fragment {
             setListView(root,exerciseAdapter);
         }
     }
+
+    private class Task extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            ExerciseRequestHandler requestHandler = new ExerciseRequestHandler();
+            return requestHandler.sendGetAllExercisesRequest(WorkoutBuddyAPI.getUserId());
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if(!jsonObject.getBoolean(WorkoutBuddyAPI.JSON_ERROR)) {
+                    exerciseAdapter = new ArrayAdapter<String>(getContext()
+                            ,R.layout.simple_list_item,getData(jsonObject));
+                    setListView(root,exerciseAdapter);
+                } else {
+                    Toast.makeText(getContext(), jsonObject.getString(WorkoutBuddyAPI.JSON_ERROR_MESSAGE),
+                            Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private List<String> getData(JSONObject jsonObject) throws JSONException {
+            List<String> list = new ArrayList<>();
+
+            JSONArray array = jsonObject.getJSONArray("exercise_name");
+            for(int x=0;x<array.length();x++) {
+                String ex_name = ((JSONObject) array.get(x)).getString("exercise_name");//error here got two json arrays
+                list.add(ex_name);
+            }
+            return list;
+        }
+    }
+
 }
 //no need to change the custom image name because it is tied and retrieved by an exercise object
