@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 import com.example.WorkoutBuddy.workoutbuddy.R;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.RequestHandler;
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
-            String username_url = WorkoutBuddyAPI.LOGIN_URL+username;
+            String username_url = CoreAPI.LOGIN_URL+username;
 
             return new RequestHandler().sendGetRequest(username_url);
         }
@@ -157,19 +157,19 @@ public class LoginActivity extends AppCompatActivity {
             try {//make sure to get the user id
                 JSONObject jsonObject = new JSONObject(s);
 
-                if(!jsonObject.getBoolean(WorkoutBuddyAPI.JSON_ERROR)) {
-                    Toast.makeText(getApplicationContext(), jsonObject.getString(WorkoutBuddyAPI.JSON_ERROR_MESSAGE),
+                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
+                    Toast.makeText(getApplicationContext(), jsonObject.getString(CoreAPI.JSON_ERROR_MESSAGE),
                             Toast.LENGTH_SHORT).show();
                     JSONArray array = jsonObject.getJSONArray("id");
                     int id = ((JSONObject) array.get(0)).getInt("id");
-                    WorkoutBuddyAPI.setUserId(id);
+                    CoreAPI.setUserId(id);
 
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
                     finish();
                     //login
                 } else {
-                    Toast.makeText(getApplicationContext(), jsonObject.getString(WorkoutBuddyAPI.JSON_ERROR_MESSAGE),
+                    Toast.makeText(getApplicationContext(), jsonObject.getString(CoreAPI.JSON_ERROR_MESSAGE),
                             Toast.LENGTH_SHORT).show();
                     showProgress(false);
                 }

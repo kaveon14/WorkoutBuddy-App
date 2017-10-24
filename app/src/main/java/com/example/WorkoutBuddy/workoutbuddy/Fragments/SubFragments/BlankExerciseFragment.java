@@ -46,7 +46,7 @@ public class BlankExerciseFragment extends Fragment {
         }
 
         ImageView exImageView = (ImageView) view.findViewById(R.id.exerciseImageView);
-        Bitmap bitmap = ExerciseFragment.getClickedExercise().getExerciseImage();
+        Bitmap bitmap = ExerciseFragment.getClickedExercise().getExerciseImage();//will get path instead
 
         if(bitmap != null) {
             exImageView.setImageBitmap(bitmap);

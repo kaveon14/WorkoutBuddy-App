@@ -17,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.support.v4.app.Fragment;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.Exercise;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
@@ -28,22 +27,22 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackMan
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ExerciseRequestHandler;
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI;
-
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-
 import static android.content.Context.SEARCH_SERVICE;
-import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI.JSON_KEY;
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ExerciseApi.JSON_DEFAULT_EXERCISE;
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ExerciseApi.JSON_EXERCISE_DESCRIPTION;
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ExerciseApi.JSON_EXERCISE_NAME;
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI.JSON_KEY;
 
-public class ExerciseFragment extends Fragment {
+public class ExerciseFragment extends Fragment {//not do transitions and shit
 
     private Menu menu;
     private View root;
@@ -90,8 +89,11 @@ public class ExerciseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_exercise, container, false);
-       // new MyAsyncTask().execute(new ArrayList<String>());
-        new Task().execute();
+        if(CoreAPI.getUserId() == 0) {
+            new LocalAsyncTask().execute(new ArrayList<String>()); //may not be updated
+        } else {
+            new RemoteAsyncTask().execute();
+        }
         setFloatingActionButton();
         setSearchViewOnClick();
         return root;
@@ -273,7 +275,7 @@ public class ExerciseFragment extends Fragment {
         return list;
     }
 
-    private class MyAsyncTask extends AsyncTask<List<String>,Void,List<String>> {
+    private class LocalAsyncTask extends AsyncTask<List<String>,Void,List<String>> {
 
         private ExerciseTable table;
         private ProgressDialog progressDialog;
@@ -306,24 +308,24 @@ public class ExerciseFragment extends Fragment {
         }
     }
 
-    private class Task extends AsyncTask<Void, Void, String> {
+    private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... params) {
             ExerciseRequestHandler requestHandler = new ExerciseRequestHandler();
-            return requestHandler.sendGetAllExercisesRequest(WorkoutBuddyAPI.getUserId());
+            return requestHandler.sendGetAllExercisesRequest(CoreAPI.getUserId());
         }
 
         @Override
         protected void onPostExecute(String s) {
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                if(!jsonObject.getBoolean(WorkoutBuddyAPI.JSON_ERROR)) {
+                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
                     exerciseAdapter = new ArrayAdapter<String>(getContext()
                             ,R.layout.simple_list_item,getData(jsonObject));
                     setListView(root,exerciseAdapter);
                 } else {
-                    Toast.makeText(getContext(), jsonObject.getString(WorkoutBuddyAPI.JSON_ERROR_MESSAGE),
+                    Toast.makeText(getContext(), jsonObject.getString(CoreAPI.JSON_ERROR_MESSAGE),
                             Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -333,11 +335,19 @@ public class ExerciseFragment extends Fragment {
 
         private List<String> getData(JSONObject jsonObject) throws JSONException {
             List<String> list = new ArrayList<>();
+            exerciseList = new ArrayList<>();
+            customExerciseList = new ArrayList<>();
 
             JSONArray array = jsonObject.getJSONArray(JSON_KEY);
-            for(int x=0;x<array.length();x++) {
+            for(int x=0;x<array.length();x++) {//need to declare custom exercises down here
                 String ex_name = ((JSONObject) array.get(x)).getString(JSON_EXERCISE_NAME);//error here got two json arrays
+                String ex_descr = ((JSONObject) array.get(x)).getString(JSON_EXERCISE_DESCRIPTION);
+                boolean custom = !((JSONObject) array.get(x)).getBoolean(JSON_DEFAULT_EXERCISE);
                 list.add(ex_name);
+                exerciseList.add(new Exercise(ex_name,ex_descr));
+                if(custom) {
+                    customExerciseList.add(new Exercise(ex_name,ex_descr));
+                }
             }
             return list;
         }

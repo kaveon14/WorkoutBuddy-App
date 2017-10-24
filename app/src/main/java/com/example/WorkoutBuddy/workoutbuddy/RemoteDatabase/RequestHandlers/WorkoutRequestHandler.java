@@ -1,6 +1,6 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.ApiConstants.WorkoutBuddyAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
 
 public class WorkoutRequestHandler {
 
@@ -10,7 +10,7 @@ public class WorkoutRequestHandler {
     }
 
     public String sendGetSubWorkoutRequest(final int subWorkoutId) {
-        return new RequestHandler().sendGetRequest(WorkoutBuddyAPI.GET_SUBWORKOUT_EXERCISES_URL+subWorkoutId);
+        return new RequestHandler().sendGetRequest(CoreAPI.GET_SUBWORKOUT_EXERCISES_URL+subWorkoutId);
     }
 
 }
