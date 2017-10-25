@@ -24,10 +24,19 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.Work
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.WorkoutApi;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.WorkoutRequestHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import static android.content.Context.SEARCH_SERVICE;
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI.JSON_KEY;
 
 public class MainWorkoutFragment extends Fragment {
 
@@ -69,7 +78,8 @@ public class MainWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_main_workout, container, false);
-        new MyAsyncTask().execute(mainWorkouts);
+        //new MyAsyncTask().execute(mainWorkouts);
+        new RemoteAsyncTask().execute();
         setFloatingActionButton(root);
         setSearchViewOnClick();
         return root;
@@ -267,6 +277,41 @@ public class MainWorkoutFragment extends Fragment {
             recyclerAdapter = new RecyclerAdapter(mainWorkouts);
             setRecycleView(root,recyclerAdapter);
 
+        }
+
+    }
+
+    private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            WorkoutRequestHandler requestHandler = new WorkoutRequestHandler();
+            return requestHandler.sendGetMainWorkoutsRequest(CoreAPI.getUserId());
+        }
+
+        @Override
+        protected void onPostExecute(String s) {//actual none to get lol
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
+                    recyclerAdapter = new RecyclerAdapter(getData(jsonObject));
+                    setRecycleView(root,recyclerAdapter);
+                }
+            } catch(JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private List<MainWorkout> getData(JSONObject jsonObject) throws JSONException {
+            mainWorkouts = new ArrayList<>();
+
+            JSONArray array = jsonObject.getJSONArray(JSON_KEY);
+            for(int x=0;x<array.length();x++) {
+                String mainWorkout_name = ((JSONObject) array.get(x))
+                        .getString(WorkoutApi.JSON_MAINWORKOUT_NAME);
+                mainWorkouts.add(new MainWorkout(mainWorkout_name,null));
+            }
+            return mainWorkouts;
         }
 
     }

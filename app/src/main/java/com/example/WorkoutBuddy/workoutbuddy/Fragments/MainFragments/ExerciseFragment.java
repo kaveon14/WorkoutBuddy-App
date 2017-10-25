@@ -339,8 +339,8 @@ public class ExerciseFragment extends Fragment {//not do transitions and shit
             customExerciseList = new ArrayList<>();
 
             JSONArray array = jsonObject.getJSONArray(JSON_KEY);
-            for(int x=0;x<array.length();x++) {//need to declare custom exercises down here
-                String ex_name = ((JSONObject) array.get(x)).getString(JSON_EXERCISE_NAME);//error here got two json arrays
+            for(int x=0;x<array.length();x++) {
+                String ex_name = ((JSONObject) array.get(x)).getString(JSON_EXERCISE_NAME);
                 String ex_descr = ((JSONObject) array.get(x)).getString(JSON_EXERCISE_DESCRIPTION);
                 boolean custom = !((JSONObject) array.get(x)).getBoolean(JSON_DEFAULT_EXERCISE);
                 list.add(ex_name);
@@ -353,4 +353,3 @@ public class ExerciseFragment extends Fragment {//not do transitions and shit
         }
     }
 }
-//no need to change the custom image name because it is tied and retrieved by an exercise object
