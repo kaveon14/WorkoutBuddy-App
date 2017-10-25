@@ -78,8 +78,11 @@ public class MainWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_main_workout, container, false);
-        //new MyAsyncTask().execute(mainWorkouts);
-        new RemoteAsyncTask().execute();
+        if(CoreAPI.getUserId()==0) {
+            new LocalAsyncTask().execute(mainWorkouts);
+        } else {
+            new RemoteAsyncTask().execute();
+        }
         setFloatingActionButton(root);
         setSearchViewOnClick();
         return root;
@@ -251,7 +254,7 @@ public class MainWorkoutFragment extends Fragment {
         }
     }
 
-    private class MyAsyncTask extends AsyncTask<List<MainWorkout>,Void,List<MainWorkout>> {
+    private class LocalAsyncTask extends AsyncTask<List<MainWorkout>,Void,List<MainWorkout>> {
 
         private MainWorkoutTable table;
         private ProgressDialog progressDialog;
@@ -296,6 +299,8 @@ public class MainWorkoutFragment extends Fragment {
                 if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
                     recyclerAdapter = new RecyclerAdapter(getData(jsonObject));
                     setRecycleView(root,recyclerAdapter);
+                } else {
+                    //do toasr
                 }
             } catch(JSONException e) {
                 e.printStackTrace();

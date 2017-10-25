@@ -1,5 +1,6 @@
 package com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -19,8 +20,20 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.Work
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.WorkoutApi;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.WorkoutRequestHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI.JSON_KEY;
+
+//create local async task and recycle adapter
 public class SubWorkoutFragment extends Fragment {
 
     private Menu menu;
@@ -214,5 +227,40 @@ public class SubWorkoutFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
         return exerciseFragment;
+    }
+
+    private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            WorkoutRequestHandler requestHandler = new WorkoutRequestHandler();
+            return requestHandler.sendGetSubWorkoutRequest(CoreAPI.getUserId());
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
+
+                } else {
+                    //do toast
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private List<String> getData(JSONObject jsonObject) throws JSONException {
+            List<String> list = new ArrayList<>();
+
+            JSONArray array = jsonObject.getJSONArray(JSON_KEY);
+            for(int x=0;x<array.length();x++) {
+                String sub_workout_name = ((JSONObject) array.get(x))
+                        .getString(WorkoutApi.JSON_SUBWORKOUT_NAME);
+                list.add(sub_workout_name);
+            }
+            return list;
+        }
     }
 }//if sets entered over cap warn user that the sets have been changed to ten,the maximum
