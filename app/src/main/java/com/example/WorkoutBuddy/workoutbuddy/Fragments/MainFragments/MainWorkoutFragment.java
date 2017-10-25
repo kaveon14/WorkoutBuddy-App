@@ -293,14 +293,14 @@ public class MainWorkoutFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(String s) {//actual none to get lol
+        protected void onPostExecute(String s) {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
                     recyclerAdapter = new RecyclerAdapter(getData(jsonObject));
                     setRecycleView(root,recyclerAdapter);
                 } else {
-                    //do toasr
+                    //do toast
                 }
             } catch(JSONException e) {
                 e.printStackTrace();
@@ -314,7 +314,10 @@ public class MainWorkoutFragment extends Fragment {
             for(int x=0;x<array.length();x++) {
                 String mainWorkout_name = ((JSONObject) array.get(x))
                         .getString(WorkoutApi.JSON_MAINWORKOUT_NAME);
-                mainWorkouts.add(new MainWorkout(mainWorkout_name,null));
+                int rowId = ((JSONObject) array.get(x)).getInt(WorkoutApi.JSON_ROW_ID);
+                MainWorkout mainWorkout = new MainWorkout(mainWorkout_name,null);
+                mainWorkout.setRowId(rowId);
+                mainWorkouts.add(mainWorkout);
             }
             return mainWorkouts;
         }

@@ -2,7 +2,9 @@ package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api;
 
 public abstract class CoreAPI {//carry over all
 
-    private static int USER_ID = 0;
+    private static long USER_ID = 0;
+
+    public static final String JSON_ROW_ID = "id";
 
     public static final String JSON_KEY = "RequestResponse";
 
@@ -29,7 +31,7 @@ public abstract class CoreAPI {//carry over all
         USER_ID = userId;
     }
 
-    public static int getUserId() {
+    public static long getUserId() {
         return USER_ID;
     }
 }//%2B  to convert + sign

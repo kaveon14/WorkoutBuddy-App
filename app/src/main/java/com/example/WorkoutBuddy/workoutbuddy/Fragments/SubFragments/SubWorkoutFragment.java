@@ -17,6 +17,7 @@ import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.MainWorkout;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.SubWorkout;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers.MainWorkoutTable;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.WorkoutPopupWindows.SubWorkoutMenuPopup;
+import com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
@@ -79,7 +80,9 @@ public class SubWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_subworkout, container, false);
-        setListView(root);
+       //setListView(root);
+        listView =  (ListView) root.findViewById(R.id.subWokoutListView);
+        new RemoteAsyncTask(root).execute();
         openWorkoutOnClick(listView);
         addExerciseToSubWorkout(listView);
         setFloatingActionButton();
@@ -231,10 +234,16 @@ public class SubWorkoutFragment extends Fragment {
 
     private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
 
+        View root;
+        public RemoteAsyncTask(View root) {
+            this.root = root;
+        }
+
         @Override
         protected String doInBackground(Void... params) {
             WorkoutRequestHandler requestHandler = new WorkoutRequestHandler();
-            return requestHandler.sendGetSubWorkoutRequest(CoreAPI.getUserId());
+            return requestHandler
+                    .sendGetSubWorkoutsRequest(MainWorkoutFragment.getClickedMainWorkout().getRowId());
         }
 
         @Override
@@ -242,7 +251,9 @@ public class SubWorkoutFragment extends Fragment {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
-
+                    subWorkoutAdapter = new ArrayAdapter<>(getContext(),
+                            R.layout.simple_list_item,getData(jsonObject));
+                    listView.setAdapter(subWorkoutAdapter);
                 } else {
                     //do toast
                 }
