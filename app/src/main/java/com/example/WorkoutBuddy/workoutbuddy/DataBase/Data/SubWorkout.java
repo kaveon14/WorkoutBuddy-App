@@ -4,6 +4,7 @@ import java.util.List;
 
 public class SubWorkout {
 
+    private long rowID;
     private String mainWorkoutName;
     private String subWorkoutName;
     private String date;
@@ -18,6 +19,11 @@ public class SubWorkout {
 
     public SubWorkout(String subWorkoutName) {
         this.subWorkoutName = subWorkoutName;
+    }
+
+
+    public long getRowID() {
+        return rowID;
     }
 
     public SubWorkout setMainWorkoutName(String mainWorkoutName) {
@@ -44,6 +50,10 @@ public class SubWorkout {
 
     public void setWorkoutData(List<WorkoutExercise> workoutData) {
         this.workoutData = workoutData;
+    }
+
+    public void setRowID(long rowID) {
+        this.rowID = rowID;
     }
 
     public String getMainWorkoutName() {

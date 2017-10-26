@@ -5,6 +5,7 @@ package com.example.WorkoutBuddy.workoutbuddy.Activities;
 -redo photos/store in an actual location and in database just store the file path(for local images)
 -gonna need php
  */
+// go local if no changes between remote  and local database
 // TODO get ready to test the mysql database first run simple test to see if connected
 // TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
 import android.Manifest;

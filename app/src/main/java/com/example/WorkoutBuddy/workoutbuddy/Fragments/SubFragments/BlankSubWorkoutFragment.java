@@ -2,6 +2,7 @@ package com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments;
 //add checkbox to list view if checked workoutData stored un-check workoutData not stores and load workoutData on click in workout fragment
 // in popup menu have start a workout border_accent that brings up the checkboxes and change floating add extra border_accent to submit workoutData
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,15 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.Work
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackManager;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.ExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ExerciseApi;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.WorkoutApi;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.WorkoutRequestHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 //add menu to delete or view exercise
@@ -56,8 +66,9 @@ public class BlankSubWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_blank_workout, container, false);
+        new RemoteAsyncTask(root).execute();
         setTextView(root);
-        setListView(root);
+        //setListView(root);
         setFloatingActionButton();
         return root;
     }
@@ -118,7 +129,7 @@ public class BlankSubWorkoutFragment extends Fragment {
         if(workoutAdapter != null) {
             listView.setAdapter(workoutAdapter);
         } else {
-            listView.setAdapter(setWorkoutAdapter());
+           // listView.setAdapter(setWorkoutAdapter());
         }
         openWorkoutOnClick(listView);
         if(workoutAdapter.isEmpty()) {
@@ -217,5 +228,53 @@ public class BlankSubWorkoutFragment extends Fragment {
             setsView.setText("Sets:"+" "+text);
             return text;
         }
+    }
+
+    private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
+
+        View root;
+
+        public RemoteAsyncTask(View root) {
+            this.root = root;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            WorkoutRequestHandler requestHandler = new WorkoutRequestHandler();
+            return requestHandler.sendGetSubWorkoutExercisesRequest(
+                    SubWorkoutFragment.getClickedSubWorkout().getRowID());
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
+                    workoutAdapter = new WorkoutAdapter(getContext(),getData(jsonObject));
+                    setListView(root);
+                } else {
+                    //do toast
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private List<Exercise> getData(JSONObject jsonObject) throws JSONException {
+            exerciseList = new ArrayList<>();
+            JSONArray array = jsonObject.getJSONArray(CoreAPI.JSON_KEY);
+            for(int x=0;x<array.length();x++) {
+                String ex_name = ((JSONObject) array.get(x)).getString(ExerciseApi.JSON_EXERCISE_NAME);
+                String reps = ((JSONObject) array.get(x)).getString(WorkoutApi.JSON_GOAL_REPS);
+                String sets = ((JSONObject) array.get(x)).getString(WorkoutApi.JSON_GOAL_SETS);
+                Exercise exercise = new Exercise(ex_name,null);
+                exercise.setGoalReps(reps);
+                exercise.setGoalSets(sets);
+                exerciseList.add(exercise);
+            }
+            return exerciseList;
+        }
+
     }
 }

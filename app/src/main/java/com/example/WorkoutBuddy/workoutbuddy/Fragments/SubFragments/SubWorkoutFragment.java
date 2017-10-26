@@ -33,15 +33,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI.JSON_KEY;
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI.JSON_ROW_ID;
 
 //create local async task and recycle adapter
 public class SubWorkoutFragment extends Fragment {
-
+//TODO convert list to sub workout list
     private Menu menu;
     private ListView listView;
     private int subWorkoutCount;
     private MainActivity mainActivity;
     private List<String> subWorkoutNames;
+    private List<SubWorkout> subWorkoutList;
     private MainWorkout clickedMainWorkout;
     private ArrayAdapter subWorkoutAdapter;
     private static SubWorkout clickedSubWorkout;
@@ -181,7 +183,7 @@ public class SubWorkoutFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String subWorkoutName = parent.getItemAtPosition(position).toString();
-                setClickedSubWorkout(getSubWorkout(subWorkoutName));
+                setClickedSubWorkout(getSubWorkout(subWorkoutName,position));
                 getClickedSubWorkout().setMainWorkoutName(clickedMainWorkout.getMainWorkoutName());
                 showBlankWorkoutFragment();
             }
@@ -194,7 +196,7 @@ public class SubWorkoutFragment extends Fragment {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if(!clickedMainWorkout.getMainWorkoutName().equals("Default Workouts")) {
                     String subWorkoutName = parent.getItemAtPosition(position).toString();
-                    setClickedSubWorkout(getSubWorkout(subWorkoutName));
+                    setClickedSubWorkout(getSubWorkout(subWorkoutName,position));
                     ExerciseFragment exerciseFragment = showExerciseFragment();
                     exerciseFragment.addExerciseFromSubWorkout(true);
                 } else {
@@ -206,10 +208,11 @@ public class SubWorkoutFragment extends Fragment {
         });
     }
 
-    private SubWorkout getSubWorkout(String subWorkoutName) {
-        SubWorkout subWorkout = new SubWorkout(subWorkoutName);
-        subWorkout.setMainWorkoutName(clickedMainWorkout.getMainWorkoutName());
-        return subWorkout;
+    private SubWorkout getSubWorkout(String subWorkoutName,int position) {
+       // SubWorkout subWorkout = new SubWorkout(subWorkoutName);
+        //subWorkout.setMainWorkoutName(clickedMainWorkout.getMainWorkoutName());
+
+        return subWorkoutList.get(position);
     }
 
     private void showBlankWorkoutFragment() {
@@ -264,11 +267,16 @@ public class SubWorkoutFragment extends Fragment {
 
         private List<String> getData(JSONObject jsonObject) throws JSONException {
             List<String> list = new ArrayList<>();
+            subWorkoutList = new ArrayList<>();
 
             JSONArray array = jsonObject.getJSONArray(JSON_KEY);
             for(int x=0;x<array.length();x++) {
                 String sub_workout_name = ((JSONObject) array.get(x))
                         .getString(WorkoutApi.JSON_SUBWORKOUT_NAME);
+                long id  = ((JSONObject) array.get(x)).getLong(JSON_ROW_ID);
+                SubWorkout subWorkout = new SubWorkout(sub_workout_name);
+                subWorkout.setRowID(id);
+                subWorkoutList.add(subWorkout);
                 list.add(sub_workout_name);
             }
             return list;
