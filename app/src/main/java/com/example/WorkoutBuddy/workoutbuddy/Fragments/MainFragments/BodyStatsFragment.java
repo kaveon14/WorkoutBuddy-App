@@ -18,8 +18,17 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.Body
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.BodyStatsMenuPopup;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.ManageBodyStatsPopup;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.BodyDataRequestHandler;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI.JSON_KEY;
 
 public class BodyStatsFragment extends Fragment {
 
@@ -51,7 +60,7 @@ public class BodyStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_body_stats, container, false);
         setFloatingActionButton();
-        new MyAsyncTask().execute(new ArrayList<Body>());
+        new LocalAsyncTask().execute(new ArrayList<Body>());
         return root;
     }
 
@@ -217,7 +226,7 @@ public class BodyStatsFragment extends Fragment {
         }
     }
 
-    private class MyAsyncTask extends AsyncTask<List<Body>,Void,List<Body>> {
+    private class LocalAsyncTask extends AsyncTask<List<Body>,Void,List<Body>> {
 
         private BodyTable table;
         private ProgressDialog progressDialog;
@@ -242,6 +251,54 @@ public class BodyStatsFragment extends Fragment {
             progressDialog.dismiss();
             recyclerAdapter = new RecyclerAdapter(bodyStats);
             setRecycleView(root,recyclerAdapter);
+        }
+    }
+
+    private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
+
+        View root;
+
+        public RemoteAsyncTask(View root) {
+            this.root = root;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            BodyDataRequestHandler requestHandler = new BodyDataRequestHandler();
+            return requestHandler.sendGetBodyDataRequest(CoreAPI.getUserId());
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
+                    recyclerAdapter = new RecyclerAdapter();
+                    setRecycleView(root,recyclerAdapter);
+                } else {
+                    //Toast
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private List<Body> getData(JSONObject jsonObject) throws JSONException {
+            bodyStats = new ArrayList<>();
+
+            JSONArray array = jsonObject.getJSONArray(JSON_KEY);
+            for(int x=0;x<array.length();x++) {
+                String date;
+                String weight;
+                String chestSize;
+                String backSize;
+                String armSize;
+                String forearmSize;
+                String waistSize;
+                String quadSize;
+                String calfSize;
+            }
         }
     }
 }
