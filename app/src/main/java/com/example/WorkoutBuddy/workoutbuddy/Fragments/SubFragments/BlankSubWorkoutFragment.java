@@ -275,6 +275,5 @@ public class BlankSubWorkoutFragment extends Fragment {
             }
             return exerciseList;
         }
-
     }
 }
