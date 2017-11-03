@@ -99,7 +99,10 @@ public class MainActivity extends AppCompatActivity
             customExercisePopup.setExerciseImageBitmap(customImageBitmap);
             customExercisePopup.setImageViewWithGalleryImage();
         }
-        customImageBitmap = getCameraImage(requestCode,resultCode,data);
+       // customImageBitmap = getCameraImage(requestCode,resultCode,data);
+
+
+
         if(customImageBitmap != null) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd  HH:mm:ss");
             String date = dateFormat.format(new Date());
@@ -127,20 +130,10 @@ public class MainActivity extends AppCompatActivity
         return null;
     }
 
-
-    private String getIamgePath() {
-        return "";
-    }
-
-
-
-
-
-
     private Bitmap getCameraImage(int requestCode,int resultCode,Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            return (Bitmap) extras.get("data");
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {//store the file path in here
+           // Bundle extras = data.getExtras();//no bitmap with that method must get file path
+            return BitmapFactory.decodeFile(progressPhoto_frag.path);
         }
         return null;
     }

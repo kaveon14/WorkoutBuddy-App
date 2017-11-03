@@ -41,13 +41,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.Context.SYSTEM_HEALTH_SERVICE;
 import static com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity.REQUEST_IMAGE_CAPTURE;
 // Save photos to file(reork everything)
 public class ProgressPhotosFragment extends Fragment {
 
 
 
-    String path;
+    public String path;
 
     private View root;
     private MainActivity mainActivity;
@@ -110,9 +111,18 @@ public class ProgressPhotosFragment extends Fragment {
     }
 
     private void openCamera() {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(i.resolveActivity(mainActivity.getPackageManager()) != null) {
+        try {
+            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            Uri photoURI = FileProvider.getUriForFile(getContext(),
+                    "com.example.WorkoutBuddy.workoutbuddy.FileProvider",
+                    createImageFile());
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            mainActivity.startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(mainActivity.getPackageManager()) != null) {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -123,13 +133,10 @@ public class ProgressPhotosFragment extends Fragment {
                 Uri photoURI = FileProvider.getUriForFile(getContext(),
                         "com.example.WorkoutBuddy.workoutbuddy.FileProvider",
                         photoFile);
-                i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                mainActivity.startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
             }
-        }
-
-
-       // mainActivity.startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+        }*/
     }
 
     private File createImageFile() throws IOException {
