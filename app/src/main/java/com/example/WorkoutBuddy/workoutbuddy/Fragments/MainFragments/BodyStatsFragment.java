@@ -18,6 +18,7 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.Body
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.BodyStatsMenuPopup;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.BodyStatsPopupWindows.ManageBodyStatsPopup;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.BodyApi;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.BodyDataRequestHandler;
 
@@ -60,7 +61,11 @@ public class BodyStatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_body_stats, container, false);
         setFloatingActionButton();
-        new LocalAsyncTask().execute(new ArrayList<Body>());
+        if(CoreAPI.getUserId()==0) {
+            new LocalAsyncTask().execute(new ArrayList<Body>());
+        } else {
+            new RemoteAsyncTask(root).execute();
+        }
         return root;
     }
 
@@ -273,7 +278,7 @@ public class BodyStatsFragment extends Fragment {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
-                    recyclerAdapter = new RecyclerAdapter();
+                    recyclerAdapter = new RecyclerAdapter(getData(jsonObject));
                     setRecycleView(root,recyclerAdapter);
                 } else {
                     //Toast
@@ -289,16 +294,23 @@ public class BodyStatsFragment extends Fragment {
 
             JSONArray array = jsonObject.getJSONArray(JSON_KEY);
             for(int x=0;x<array.length();x++) {
-                String date;
-                String weight;
-                String chestSize;
-                String backSize;
-                String armSize;
-                String forearmSize;
-                String waistSize;
-                String quadSize;
-                String calfSize;
+                String date = jsonObject.getString(BodyApi.JSON_DATE);
+                String weight = jsonObject.getString(BodyApi.JSON_WEIGHT) +
+                        jsonObject.getString(BodyApi.JSON_UNIT);
+                String chestSize = jsonObject.getString(BodyApi.JSON_CHEST_SIZE);
+                String backSize = jsonObject.getString(BodyApi.JSON_BACK_SIZE);
+                String armSize = jsonObject.getString(BodyApi.JSON_ARM_SIZE);
+                String forearmSize = jsonObject.getString(BodyApi.JSON_FOREARM_SIZE);
+                String waistSize = jsonObject.getString(BodyApi.JSON_WAIST_SIZE);
+                String quadSize = jsonObject.getString(BodyApi.JSON_QUAD_SIZE);
+                String calfSize = jsonObject.getString(BodyApi.JSON_CALF_SIZE);
+                Body body = new Body();
+                body.setDate(date).setWeight(weight).setChestSize(chestSize).setBackSize(backSize)
+                        .setArmSize(armSize).setForearmSize(forearmSize).setWaistSize(waistSize)
+                        .setQuadSize(quadSize).setCalfSize(calfSize);
+                bodyStats.add(body);
             }
+            return bodyStats;
         }
     }
 }

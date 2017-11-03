@@ -119,13 +119,23 @@ public class MainActivity extends AppCompatActivity
             cursor.moveToFirst();
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
+            String picturePath = cursor.getString(columnIndex);//its from here
+            cursor.close();//store this not
 
-            return BitmapFactory.decodeFile(picturePath);
+            return BitmapFactory.decodeFile(picturePath);//return path
         }
         return null;
     }
+
+
+    private String getIamgePath() {
+        return "";
+    }
+
+
+
+
+
 
     private Bitmap getCameraImage(int requestCode,int resultCode,Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {

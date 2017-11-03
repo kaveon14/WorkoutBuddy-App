@@ -30,7 +30,11 @@ public class ProgressPhotosTable extends TableManager {
         setSearchableColumns(new String[]{COLUMN_DATE});
     }
 
-    public void addProgressPhoto(String date, Bitmap photo) {
+    public void addProgressPhoto(String date, String photoPath) {
+
+    }
+
+    public void addProgressPhoto(String date, Bitmap photo) {//do not store the bitmap
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_DATE,date);

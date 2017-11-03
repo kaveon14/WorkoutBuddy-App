@@ -6,6 +6,8 @@ public abstract class ExerciseApi extends CoreAPI {
 
     public static final String JSON_EXERCISE_DESCRIPTION = "exercise_description";
 
+    public static final String JSON_EXERCISE_IMAGE = "exercise_image";
+
     public static final String JSON_DEFAULT_EXERCISE = "default";
 
     private static final String EXERCISE_ROOT_URL = ROOT_URL + "RequestHandlers/ExerciseRequestHandler.php?";

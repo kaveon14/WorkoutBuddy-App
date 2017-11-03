@@ -3,10 +3,14 @@ package com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,12 +25,29 @@ import com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers.ProgressPhot
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.ProgressPhotoPopupWindows.DeleteProgressPhotoPopup;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.ProgressPhotoPopupWindows.ExpandedImagePopup;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ProgressPhotoApi;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.WorkoutApi;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ProgressPhotoRequestHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity.REQUEST_IMAGE_CAPTURE;
 // Save photos to file(reork everything)
 public class ProgressPhotosFragment extends Fragment {
+
+
+
+    String path;
 
     private View root;
     private MainActivity mainActivity;
@@ -46,7 +67,7 @@ public class ProgressPhotosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_progress_photos, container, false);
-        new MyAsyncTask().execute(progressPhotos);
+        new LocalAsyncTask().execute(progressPhotos);
         setFloatingActionButton();
         return root;
     }
@@ -90,7 +111,37 @@ public class ProgressPhotosFragment extends Fragment {
 
     private void openCamera() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        mainActivity.startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(i.resolveActivity(mainActivity.getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if(photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getContext(),
+                        "com.example.WorkoutBuddy.workoutbuddy.FileProvider",
+                        photoFile);
+                i.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(i,REQUEST_IMAGE_CAPTURE);
+            }
+        }
+
+
+       // mainActivity.startActivityForResult(intent,REQUEST_IMAGE_CAPTURE);
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_"+timeStamp+"_";
+        File storageDir = mainActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        System.out.println(storageDir.getAbsolutePath());
+        File image = File.createTempFile(imageFileName,".jpg",storageDir);
+
+        path = image.getAbsolutePath();
+        System.out.println(path);
+        return image;
     }
 
     private void showExpandedImagePopup(Bitmap image) {
@@ -198,7 +249,7 @@ public class ProgressPhotosFragment extends Fragment {
         }
     }
 
-    class MyAsyncTask extends AsyncTask<List<ProgressPhoto>,Void,List<ProgressPhoto>> {
+    class LocalAsyncTask extends AsyncTask<List<ProgressPhoto>,Void,List<ProgressPhoto>> {
 
         private ProgressPhotosTable table;
         private ProgressDialog progressDialog;
@@ -223,6 +274,42 @@ public class ProgressPhotosFragment extends Fragment {
             progressDialog.dismiss();
             progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
             setRecycleView(root,progressPhotoAdapter);
+        }
+    }
+
+    private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            ProgressPhotoRequestHandler requestHandler = new ProgressPhotoRequestHandler();
+            return requestHandler.sendGetProgressPhotoPathRequest(CoreAPI.getUserId());
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
+                    //set adapter and shit
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        private List<String> getData(JSONObject jsonObject) throws JSONException {
+            List<String> list = new ArrayList<>();
+
+            JSONArray array = jsonObject.getJSONArray(CoreAPI.JSON_KEY);
+            for(int x=0;x<array.length();x++) {
+                JSONObject object = (JSONObject) array.get(x);
+                String date = object.getString(ProgressPhotoApi.JSON_DATE_TIME);
+                String photoPath = object.getString(ProgressPhotoApi.JSNON_PHOTO_PATH);
+
+
+            }
+
+            return list;
         }
     }
 }

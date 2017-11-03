@@ -6,6 +6,8 @@ public abstract class BodyApi extends CoreAPI {
 
     public static final String JSON_WEIGHT = "weight";
 
+    public static final String JSON_UNIT = "unit";
+
     public static final String JSON_CHEST_SIZE = "chest_size";
 
     public static final String JSON_BACK_SIZE = "back_size";

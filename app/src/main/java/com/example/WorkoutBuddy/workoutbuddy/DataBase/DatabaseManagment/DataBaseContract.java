@@ -163,11 +163,14 @@ public class DataBaseContract {
 
         public static final String COLUMN_PHOTO = "Progress_Photo";
 
+        public static final String COLUMN_PHOTO_PATH = "Photo_Path";
+
         public static final String CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_DATE + " TEXT, " +
-                COLUMN_PHOTO + " BLOB" +")";
+                COLUMN_PHOTO + " BLOB, "  +
+                COLUMN_PHOTO_PATH + " TEXT" +")";
     }
 
     public static final class WorkoutData implements BaseColumns {//gonna have to expand a lot
