@@ -36,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -121,22 +122,6 @@ public class ProgressPhotosFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if(takePictureIntent.resolveActivity(mainActivity.getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if(photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "com.example.WorkoutBuddy.workoutbuddy.FileProvider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                mainActivity.startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE);
-            }
-        }*/
     }
 
     private File createImageFile() throws IOException {
@@ -149,6 +134,13 @@ public class ProgressPhotosFragment extends Fragment {
         path = image.getAbsolutePath();
         System.out.println(path);
         return image;
+    }
+
+    public void saveImageFile() {
+        ProgressPhotosTable table = new ProgressPhotosTable(getContext());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd  HH:mm:ss");
+        String date = dateFormat.format(new Date());
+        table.addProgressPhoto(date,path);
     }
 
     private void showExpandedImagePopup(Bitmap image) {
@@ -271,7 +263,7 @@ public class ProgressPhotosFragment extends Fragment {
 
         @Override
         protected List<ProgressPhoto> doInBackground(List<ProgressPhoto>[] params) {
-            params[0] = table.getProgressPhotos();
+            params[0] = table.getProgressPhotosFromPath();
             progressPhotos = params[0];
             return params[0];
         }

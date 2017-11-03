@@ -17,6 +17,7 @@ import java.util.List;
 
 import static com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_DATE;
 import static com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_PHOTO;
+import static com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_PHOTO_PATH;
 import static com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.TABLE_NAME;
 //add method to delete date on long click(on a different branch)
 public class ProgressPhotosTable extends TableManager {
@@ -31,8 +32,28 @@ public class ProgressPhotosTable extends TableManager {
     }
 
     public void addProgressPhoto(String date, String photoPath) {
-
+        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PHOTO_PATH,photoPath);
+        values.put(COLUMN_DATE,date);
+        writableDatabase.insert(TABLE_NAME,null,values);
+        writableDatabase.close();
     }
+
+
+    public List<ProgressPhoto> getProgressPhotosFromPath() {
+        List<String> paths = getColumn(COLUMN_PHOTO_PATH);
+        List<String> dates = getColumn(COLUMN_DATE);
+        List<ProgressPhoto> progressPhotos = new ArrayList<>(paths.size());
+
+        for(int x=0;x<paths.size();x++) {
+            String path = paths.get(x);
+            String date = dates.get(x);
+            progressPhotos.add(new ProgressPhoto(date,BitmapFactory.decodeFile(path)));
+        }
+        return progressPhotos;
+    }
+
 
     public void addProgressPhoto(String date, Bitmap photo) {//do not store the bitmap
         SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
