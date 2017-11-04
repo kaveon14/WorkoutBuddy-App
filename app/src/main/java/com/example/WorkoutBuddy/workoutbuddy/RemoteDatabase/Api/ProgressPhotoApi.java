@@ -11,5 +11,5 @@ public abstract class ProgressPhotoApi extends CoreAPI {
 
     public static final String GET_PROGRESS_PHOTO_PATH = "request=getProgressPhotoPath&userId=";
 
-    public static final String UPLOAD_PHOTO_URL = ROOT_URL+"fileupload.php";
+    public static final String UPLOAD_PHOTO_URL = ROOT_URL+"FileUpload.php";
 }
