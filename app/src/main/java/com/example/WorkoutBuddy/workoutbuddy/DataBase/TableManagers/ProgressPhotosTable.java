@@ -2,21 +2,24 @@ package com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ProgressPhotoRequestHandler;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 import static com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_DATE;
-import static com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_PHOTO;
 import static com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.COLUMN_PHOTO_PATH;
 import static com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract.ProgressPhotos.TABLE_NAME;
 //add method to delete date on long click(on a different branch)
@@ -40,8 +43,7 @@ public class ProgressPhotosTable extends TableManager {
         writableDatabase.close();
     }
 
-
-    public List<ProgressPhoto> getProgressPhotosFromPath() {
+    public List<ProgressPhoto> getProgressPhotos() {
         List<String> paths = getColumn(COLUMN_PHOTO_PATH);
         List<String> dates = getColumn(COLUMN_DATE);
         List<ProgressPhoto> progressPhotos = new ArrayList<>(paths.size());
@@ -54,70 +56,46 @@ public class ProgressPhotosTable extends TableManager {
         return progressPhotos;
     }
 
-
-    public void addProgressPhoto(String date, Bitmap photo) {//do not store the bitmap
-        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_DATE,date);
-        try {
-            values.put(COLUMN_PHOTO, getImageData(photo));
-        } catch (IOException e) {
-
-        }
-        writableDatabase.insert(TABLE_NAME,null,values);
-        writableDatabase.close();
-    }
-
-    public void addProgressPhoto(ProgressPhoto progressPhoto) {
-        SQLiteDatabase writableDatabase = dataBaseSQLiteHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_DATE,progressPhoto.getDate());
-        try {
-            values.put(COLUMN_PHOTO,getImageData(progressPhoto.getProgressPhoto()));
-        } catch (IOException e) {
-
-        }
-        writableDatabase.insert(TABLE_NAME,null,values);
-        writableDatabase.close();
-    }
-
-    public List<ProgressPhoto> getProgressPhotos() {//get data sorted
-        List<String> dates = getColumn(COLUMN_DATE);
-        List<Bitmap> photos = getImageData();
-        List<ProgressPhoto> progressPhotos = new ArrayList<>(dates.size());
-
-        for(int x=0;x<dates.size();x++) {
-            ProgressPhoto progressPhoto =
-                     new ProgressPhoto(dates.get(x),photos.get(x));
-            progressPhotos.add(progressPhoto);
-        }
-        return progressPhotos;
-    }
-
-    public List<Bitmap> getImageData() {
-        byte[] data;
-        List<Bitmap> photos = new ArrayList<>();
-        SQLiteDatabase database = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = database.query(TABLE_NAME, null, null, null, null, null,COLUMN_DATE+" DESC");
-        while(cursor.moveToNext()) {
-            data = cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_PHOTO));
-            Bitmap bitmap = BitmapFactory.decodeByteArray(data,0,data.length);
-            photos.add(bitmap);
-        }
-        return photos;
-    }
-
-    private byte[] getImageData(Bitmap bitmap) throws IOException {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] data = stream.toByteArray();
-        stream.close();
-        return data;
-    }
-
     public void deleteRow(String datesToDelete[]) {
         SQLiteDatabase database = dataBaseSQLiteHelper.getWritableDatabase();
         database.delete(TABLE_NAME,COLUMN_DATE+"=?",datesToDelete);
         database.close();
     }
+
+    public void uploadPhoto(String path) {
+       new UploadFileToServer(path).execute();
+
+    }
+
+    private class UploadFileToServer extends AsyncTask<Void, Integer, String> {
+
+        String filePath;
+
+        public UploadFileToServer(String filePath) {
+            this.filePath = filePath;
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            ProgressPhotoRequestHandler requestHandler = new ProgressPhotoRequestHandler();
+            return requestHandler.sendPostImageRequest(filePath);
+        }
+
+       /* @Override
+        protected void onPostExecute(String s) {
+            System.out.println("WTF");
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                JSONArray array = jsonObject.getJSONArray(CoreAPI.JSON_KEY);
+                JSONObject object = ((JSONObject) array.get(0));
+                System.out.println(CoreAPI.JSON_ERROR+": "+object.getBoolean(CoreAPI.JSON_ERROR));
+                System.out.println(CoreAPI.JSON_ERROR_MESSAGE+": "+object.getBoolean(CoreAPI.JSON_ERROR_MESSAGE));
+                System.out.println(CoreAPI.JSON_KEY+": "+object.getBoolean(CoreAPI.JSON_KEY));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }*/
+    }
+
 }

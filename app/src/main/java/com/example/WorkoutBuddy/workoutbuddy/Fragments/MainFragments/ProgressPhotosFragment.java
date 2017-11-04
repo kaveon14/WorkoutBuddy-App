@@ -27,7 +27,6 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.Prog
 import com.example.WorkoutBuddy.workoutbuddy.R;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ProgressPhotoApi;
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.WorkoutApi;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ProgressPhotoRequestHandler;
 
 import org.json.JSONArray;
@@ -42,16 +41,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static android.content.Context.SYSTEM_HEALTH_SERVICE;
 import static com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity.REQUEST_IMAGE_CAPTURE;
 // Save photos to file(reork everything)
 public class ProgressPhotosFragment extends Fragment {
 
-
-
-    public String path;
-
     private View root;
+    private String path;
     private MainActivity mainActivity;
     private RecyclerView recyclerView;
     private List<ProgressPhoto> progressPhotos;
@@ -263,7 +258,7 @@ public class ProgressPhotosFragment extends Fragment {
 
         @Override
         protected List<ProgressPhoto> doInBackground(List<ProgressPhoto>[] params) {
-            params[0] = table.getProgressPhotosFromPath();
+            params[0] = table.getProgressPhotos();
             progressPhotos = params[0];
             return params[0];
         }

@@ -64,6 +64,13 @@ public class MainActivity extends AppCompatActivity
         fragmentStackManager =
                 new FragmentStackManager(getSupportFragmentManager());
         setTileOnCLickListeners();
+
+        String path = "/storage/emulated/0/Android/data/com.example.WorkoutBuddy.workoutbuddy/files/Pictures/JPEG_20171103_154733_1895954797.jpg";
+        ProgressPhotosTable table = new ProgressPhotosTable(getApplicationContext());
+        table.uploadPhoto(path);
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        System.out.println(bitmap.getByteCount());
+
     }
 
     private void setBaseContent() {

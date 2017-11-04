@@ -9,4 +9,8 @@ public class ProgressPhotoRequestHandler extends RequestHandler {
         return new RequestHandler().sendGetRequest(ProgressPhotoApi.GET_PROGRESS_PHOTO_PATH+userID);
     }
 
+    public String sendPostImageRequest(String path) {
+       return new RequestHandler().sendPostFileRequest(ProgressPhotoApi.UPLOAD_PHOTO_URL,path);
+    }
+
 }

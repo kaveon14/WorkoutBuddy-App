@@ -13,10 +13,10 @@ public abstract class CoreAPI {//carry over all
     public static final int CODE_POST_REQUEST = 1025;
     //change name OF ALL OF THESEll
     protected static final String ROOT_URL
-            = "http://10.100.52.153/WorkoutBuddy_Scripts/";
+            = "http://10.100.69.171/WorkoutBuddy_Scripts/";
 
     public static final String LOGIN_URL
-            = "http:/10.100.52.153/WorkoutBuddy_Scripts/RequestHandlers/Login.php?username=";
+            = "http:/10.100.69.171/WorkoutBuddy_Scripts/RequestHandlers/Login.php?username=";
 
     public static final String GET_SUBWORKOUT_EXERCISES_URL
             = ROOT_URL + "getGoalExercises&subWorkoutId=";
