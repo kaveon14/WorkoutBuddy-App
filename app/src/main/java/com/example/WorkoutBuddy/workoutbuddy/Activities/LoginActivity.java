@@ -27,7 +27,7 @@ import org.json.JSONObject;
 //on this one change name of wokroutbuddy to match the django one
 //store default on device
 
-// TODO file path example /data/user/0/com.example.kaveon14.workoutbuddy/files/test
+// TODO file path example /data/user/0/com.example.kaveon14.workoutbuddy/files/downloadProgressPhotosTest
 
 //path for progress images =  /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/ProgressPhotos
 //path for profie images = /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/ProfileImage

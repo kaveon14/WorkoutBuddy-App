@@ -96,7 +96,7 @@ public class DataBaseContract {
     }
 
     public static class ExerciseData implements BaseColumns {//change table name
-
+                                    // TODO add column for custom ex image path
         public static final String TABLE_NAME = "Exercise_Names";
 
         public static final String COLUMN_EXERCISES = "Exercises";
@@ -161,11 +161,14 @@ public class DataBaseContract {
 
         public static final String COLUMN_DATE = "Photo_Date";
 
+        public static final String COLUMN_PHOTO = "Photo";
+
         public static final String COLUMN_PHOTO_PATH = "Photo_Path";
 
         public static final String CREATE_TABLE = " CREATE TABLE " +
                 TABLE_NAME + " (" +
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_PHOTO + " BLOB, " +
                 COLUMN_DATE + " TEXT, " +
                 COLUMN_PHOTO_PATH + " TEXT" +")";
     }

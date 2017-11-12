@@ -16,7 +16,7 @@ public abstract class CoreAPI {//carry over all
             = "http://10.100.69.171/WorkoutBuddy_Scripts/";
 
     public static final String LOGIN_URL
-            = "http:/10.100.69.171/WorkoutBuddy_Scripts/RequestHandlers/Login.php?username=";
+            = ROOT_URL+ "RequestHandlers/Login.php?username=";
 
     public static final String GET_SUBWORKOUT_EXERCISES_URL
             = ROOT_URL + "getGoalExercises&subWorkoutId=";

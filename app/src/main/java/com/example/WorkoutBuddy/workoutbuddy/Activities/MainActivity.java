@@ -5,9 +5,6 @@ package com.example.WorkoutBuddy.workoutbuddy.Activities;
 -redo photos/store in an actual location and in database just store the file path(for local images)
 -gonna need php
  */
-// go local if no changes between remote  and local database
-// TODO get ready to test the mysql database first run simple test to see if connected
-// TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers.*;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.CustomExercisePopup;
@@ -37,12 +33,15 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackMan
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.*;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
-import java.text.*;
-import java.util.Date;
+import com.example.WorkoutBuddy.workoutbuddy.VolleyTest;
+
+import java.util.List;
+
+// TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
 // TODO make sure when a fragment with a recycler view is no longer empty to hide the text view
 // TODO fix sql injection
 // TODO add choice to choose kgs or lbs only store number in database and ask(out in setting withs convertors
-// TODO decouple alot by using ids instead of exercise name
+// TODO decouple a lot by using ids instead of exercise name
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -64,13 +63,6 @@ public class MainActivity extends AppCompatActivity
         fragmentStackManager =
                 new FragmentStackManager(getSupportFragmentManager());
         setTileOnCLickListeners();
-
-        String path = "/storage/emulated/0/Android/data/com.example.WorkoutBuddy.workoutbuddy/files/Pictures/JPEG_20171103_154733_1895954797.jpg";
-        ProgressPhotosTable table = new ProgressPhotosTable(getApplicationContext());
-        table.uploadPhoto(path);
-        Bitmap bitmap = BitmapFactory.decodeFile(path);
-        System.out.println(bitmap.getByteCount());
-
     }
 
     private void setBaseContent() {
@@ -105,8 +97,8 @@ public class MainActivity extends AppCompatActivity
         if(customImageBitmap != null) {
             customExercisePopup.setExerciseImageBitmap(customImageBitmap);
             customExercisePopup.setImageViewWithGalleryImage();
-        } else {
-            progressPhoto_frag.saveImageFile();
+        } else  {
+            progressPhoto_frag.foo();
         }
     }
 
@@ -209,8 +201,8 @@ public class MainActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.CAMERA},REQUEST_IMAGE_CAPTURE);
             }
-        }
     }
+}
 
     private void setTileOnCLickListeners() {
         exerciseTileCLicked();

@@ -1,5 +1,7 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -11,6 +13,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -47,20 +50,8 @@ public class RequestHandler {
         return response;
     }
 
-    public String sendPostFileRequest(String requestUrl,String filePath) {
-        String lineEnd = "\r\n";
-        String twoHyphens = "--";
+    private HttpURLConnection getPostFileConnection(String requestUrl,String filePath) {
         String boundary = "*****";
-
-        File selectedFile = new File(filePath);
-        String[] parts = filePath.split("/");
-        String fileName = parts[parts.length-1];
-
-        int serverResponseCode = 0;
-
-        if(!selectedFile.isFile()) {
-            return "Not a file!!";
-        }
 
         try {
             URL url = new URL(requestUrl);
@@ -69,62 +60,76 @@ public class RequestHandler {
             connection.setDoOutput(true);//Allow Outputs
             connection.setUseCaches(false);
             connection.setRequestProperty("ENCTYPE", "multipart/form-data");
-            connection.setRequestProperty("Content-Type", "multipart/form-data;boundary="+boundary);
-            connection.setRequestProperty("uploaded_file",filePath);
+            connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+            connection.setRequestProperty("uploaded_file", filePath);
+            return connection;
+        } catch(MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-            FileInputStream fileInputStream = new FileInputStream(selectedFile);
+    public DataOutputStream dd(HttpURLConnection connection,String filePath) {
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        try {
             DataOutputStream dataOutputStream = new DataOutputStream(connection.getOutputStream());
             dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
             dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
                     + filePath + "\"" + lineEnd);
             dataOutputStream.writeBytes(lineEnd);
+            return dataOutputStream;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    public void sendData(DataOutputStream dataOutputStream,FileInputStream fileInputStream) {
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        try {
             int maxBufferSize = 4024 * 4024;
             int bytesAvailable = fileInputStream.available();
-
-            int bufferSize = Math.min(bytesAvailable,maxBufferSize);
-
+            int bufferSize = Math.min(bytesAvailable, maxBufferSize);
             byte[] buffer = new byte[bufferSize];
+            int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
-            int bytesRead = fileInputStream.read(buffer,0,bufferSize);
-
-            while(bytesRead > 0) {
-                dataOutputStream.write(buffer,0,bufferSize);
+            while (bytesRead > 0) {
+                dataOutputStream.write(buffer, 0, bufferSize);
                 bytesAvailable = fileInputStream.available();
-                bufferSize = Math.min(bytesAvailable,maxBufferSize);
-                bytesRead = fileInputStream.read(buffer,0,bufferSize);
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
             }
-
             dataOutputStream.writeBytes(lineEnd);
             dataOutputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            serverResponseCode = connection.getResponseCode();
-
-
-            StringBuilder sb = new StringBuilder();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String s;
-            while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s + "\n");
-            }
-
-            if(serverResponseCode==200) {
-               System.out.println(sb.toString());
-            }
+    public String sendPostFileRequest(String requestUrl,String filePath) throws IOException {
+        File selectedFile = new File(filePath);
+        if(!selectedFile.isFile()) {
+            return "Not a file!!";
+        }
+        HttpURLConnection connection = getPostFileConnection(requestUrl,filePath);
+        FileInputStream fileInputStream = new FileInputStream(selectedFile);
+        if(connection != null) {
+            DataOutputStream dataOutputStream = dd(connection, filePath);
+            sendData(dataOutputStream, fileInputStream);
 
             fileInputStream.close();
             dataOutputStream.flush();
             dataOutputStream.close();
-
-
-
             return connection.getResponseMessage();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-        return "Nope";
+        fileInputStream.close();
+        return "Error";
     }
 
     private String getServerResponse(URL url,HashMap<String,String> postDataParams) throws IOException {

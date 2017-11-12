@@ -1,6 +1,7 @@
 package com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -46,6 +47,7 @@ import static com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity.REQU
 public class ProgressPhotosFragment extends Fragment {
 
     private View root;
+    private Uri photoURI;
     private String path;
     private MainActivity mainActivity;
     private RecyclerView recyclerView;
@@ -109,7 +111,7 @@ public class ProgressPhotosFragment extends Fragment {
     private void openCamera() {
         try {
             Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-            Uri photoURI = FileProvider.getUriForFile(getContext(),
+            photoURI = FileProvider.getUriForFile(getContext(),
                     "com.example.WorkoutBuddy.workoutbuddy.FileProvider",
                     createImageFile());
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
@@ -123,19 +125,30 @@ public class ProgressPhotosFragment extends Fragment {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_"+timeStamp+"_";
         File storageDir = mainActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        System.out.println(storageDir.getAbsolutePath());
         File image = File.createTempFile(imageFileName,".jpg",storageDir);
 
         path = image.getAbsolutePath();
-        System.out.println(path);
         return image;
     }
 
-    public void saveImageFile() {
-        ProgressPhotosTable table = new ProgressPhotosTable(getContext());
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd  HH:mm:ss");
-        String date = dateFormat.format(new Date());
-        table.addProgressPhoto(date,path);
+    public void foo() {
+        new TakePicAsynTask().execute();
+    }
+
+    public ProgressPhoto saveImageFile() {
+        try {
+            Bitmap bitmap = android.provider.MediaStore.Images.Media.getBitmap(mainActivity.getContentResolver()
+                    , photoURI);
+            ProgressPhotosTable table = new ProgressPhotosTable(getContext());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd  HH:mm:ss");
+            String date = dateFormat.format(new Date());
+            table.addProgressPhoto(date, path, bitmap);
+            //addPhotoToList(new ProgressPhoto(date, bitmap));
+            return new ProgressPhoto(date,bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void showExpandedImagePopup(Bitmap image) {
@@ -157,7 +170,7 @@ public class ProgressPhotosFragment extends Fragment {
         }
     }
 
-    public void addPhotoToList(ProgressPhoto photo) {
+    public void addPhotoToList(ProgressPhoto photo) {//go back to this method
         if(progressPhotoAdapter.getItemCount()==0) {
             progressPhotos.add(photo);
             progressPhotoAdapter.notifyDataSetChanged();
@@ -304,6 +317,19 @@ public class ProgressPhotosFragment extends Fragment {
             }
 
             return list;
+        }
+    }
+
+    public class TakePicAsynTask extends AsyncTask<Void,Void,ProgressPhoto> {
+
+        @Override
+        protected ProgressPhoto doInBackground(Void... params) {
+            return saveImageFile();
+        }
+
+        @Override
+        protected void onPostExecute(ProgressPhoto p) {
+            addPhotoToList(p);
         }
     }
 }
