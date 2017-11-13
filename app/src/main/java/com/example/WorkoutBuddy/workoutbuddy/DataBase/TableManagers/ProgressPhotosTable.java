@@ -100,11 +100,11 @@ public class ProgressPhotosTable extends TableManager {
     }
 
     public void uploadPhoto(String path) {
-       new UploadFileToServer(path).execute();
+   //    new UploadFileToServer(path).execute();
 
     }
 
-    private class UploadFileToServer extends AsyncTask<Void, Integer, String> {
+    /*private class UploadFileToServer extends AsyncTask<Void, Integer, String> {
 
         String filePath;
 
@@ -117,6 +117,6 @@ public class ProgressPhotosTable extends TableManager {
             ProgressPhotoRequestHandler requestHandler = new ProgressPhotoRequestHandler();
             return requestHandler.sendPostImageRequest(filePath);
         }
-    }
+    }*/
 
 }

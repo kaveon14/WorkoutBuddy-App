@@ -52,7 +52,6 @@ public class RequestHandler {
 
     private HttpURLConnection getPostFileConnection(String requestUrl,String filePath) {
         String boundary = "*****";
-
         try {
             URL url = new URL(requestUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -71,7 +70,7 @@ public class RequestHandler {
         return null;
     }
 
-    public DataOutputStream dd(HttpURLConnection connection,String filePath) {
+    public DataOutputStream dd(HttpURLConnection connection,String filePath) {//rename
         String lineEnd = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
@@ -122,7 +121,10 @@ public class RequestHandler {
         if(connection != null) {
             DataOutputStream dataOutputStream = dd(connection, filePath);
             sendData(dataOutputStream, fileInputStream);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(dataOutputStream,"UTF-8"));
 
+            writer.flush();
+            writer.close();
             fileInputStream.close();
             dataOutputStream.flush();
             dataOutputStream.close();
@@ -187,7 +189,6 @@ public class RequestHandler {
             result.append("=");
             result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
         }
-
         return result.toString();
     }
 

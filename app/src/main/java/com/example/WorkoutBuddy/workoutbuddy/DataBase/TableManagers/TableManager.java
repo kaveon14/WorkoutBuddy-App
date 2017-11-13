@@ -52,7 +52,7 @@ public abstract class TableManager {
         List<String> columnList = new ArrayList<>();
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
         Cursor cursor = readableDatabase.query(tableName,null,null,null,null,null,null);
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             columnList.add(cursor.getString(cursor.getColumnIndexOrThrow(columnName)));
         }
         readableDatabase.close();

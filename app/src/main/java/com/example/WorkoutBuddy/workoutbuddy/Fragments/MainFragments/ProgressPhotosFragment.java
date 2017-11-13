@@ -1,9 +1,9 @@
 package com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments;
 
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,16 +34,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity.REQUEST_IMAGE_CAPTURE;
-// Save photos to file(reork everything)
+
 public class ProgressPhotosFragment extends Fragment {
 
     private View root;
@@ -131,11 +134,11 @@ public class ProgressPhotosFragment extends Fragment {
         return image;
     }
 
-    public void foo() {
-        new TakePicAsynTask().execute();
+    public void saveImage() {
+        new TakePicAsyncTask().execute();
     }
 
-    public ProgressPhoto saveImageFile() {
+    private ProgressPhoto saveImageFile() {
         try {
             Bitmap bitmap = android.provider.MediaStore.Images.Media.getBitmap(mainActivity.getContentResolver()
                     , photoURI);
@@ -256,7 +259,7 @@ public class ProgressPhotosFragment extends Fragment {
         }
     }
 
-    class LocalAsyncTask extends AsyncTask<List<ProgressPhoto>,Void,List<ProgressPhoto>> {
+    private class LocalAsyncTask extends AsyncTask<List<ProgressPhoto>,Void,List<ProgressPhoto>> {
 
         private ProgressPhotosTable table;
         private ProgressDialog progressDialog;
@@ -271,16 +274,23 @@ public class ProgressPhotosFragment extends Fragment {
 
         @Override
         protected List<ProgressPhoto> doInBackground(List<ProgressPhoto>[] params) {
-            params[0] = table.getProgressPhotos();
-            progressPhotos = params[0];
-            return params[0];
+            try {
+                params[0] = table.dd();
+                progressPhotos = params[0];
+                return params[0];
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
         protected void onPostExecute(List<ProgressPhoto> progressPhotos) {
             progressDialog.dismiss();
-            progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
-            setRecycleView(root,progressPhotoAdapter);
+            if(progressPhotos != null) {
+                progressPhotoAdapter = new ProgressPhotoAdapter(progressPhotos);
+                setRecycleView(root, progressPhotoAdapter);
+            }
         }
     }
 
@@ -312,19 +322,33 @@ public class ProgressPhotosFragment extends Fragment {
                 JSONObject object = (JSONObject) array.get(x);
                 String date = object.getString(ProgressPhotoApi.JSON_DATE_TIME);
                 String photoPath = object.getString(ProgressPhotoApi.JSNON_PHOTO_PATH);
-
-
             }
-
             return list;
         }
     }
 
-    public class TakePicAsynTask extends AsyncTask<Void,Void,ProgressPhoto> {
+    private class TakePicAsyncTask extends AsyncTask<Void,Void,ProgressPhoto> {
 
         @Override
         protected ProgressPhoto doInBackground(Void... params) {
-            return saveImageFile();
+            try {
+                Bitmap bitmap = android.provider.MediaStore.Images.Media.getBitmap(mainActivity.getContentResolver()
+                        , photoURI);
+                ProgressPhotosTable table = new ProgressPhotosTable(getContext());
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                DateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+                Date da = new Date();
+                String date = dateFormat.format(da);
+                String date_time = dateTimeFormat.format(da);
+                bitmap = Bitmap.createScaledBitmap(bitmap,600,600,true);
+                System.out.println(bitmap.getByteCount());
+                table.addProgressPhoto(date, path, bitmap);
+                new ProgressPhotoRequestHandler().sendPostImageRequest(path,date_time);
+                return new ProgressPhoto(date,bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override

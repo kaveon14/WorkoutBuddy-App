@@ -33,9 +33,6 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackMan
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.*;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
-import com.example.WorkoutBuddy.workoutbuddy.VolleyTest;
-
-import java.util.List;
 
 // TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
 // TODO make sure when a fragment with a recycler view is no longer empty to hide the text view
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity
     private void setBaseContent() {
         setContentView(R.layout.activity_main);
         setDrawer(setToolbar());
-        setNaviagtionView();
+        setNavigationView();
     }
 
     private Toolbar setToolbar() {
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
     }
 
-    private void setNaviagtionView() {
+    private void setNavigationView() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -98,7 +95,7 @@ public class MainActivity extends AppCompatActivity
             customExercisePopup.setExerciseImageBitmap(customImageBitmap);
             customExercisePopup.setImageViewWithGalleryImage();
         } else  {
-            progressPhoto_frag.foo();
+            progressPhoto_frag.saveImage();
         }
     }
 
@@ -112,10 +109,10 @@ public class MainActivity extends AppCompatActivity
             cursor.moveToFirst();
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);//its from here
-            cursor.close();//store this not
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
 
-            return BitmapFactory.decodeFile(picturePath);//return path
+            return BitmapFactory.decodeFile(picturePath);
         }
         return null;
     }
