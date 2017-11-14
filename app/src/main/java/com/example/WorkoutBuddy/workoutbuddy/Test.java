@@ -1,3 +1,5 @@
+package com.example.WorkoutBuddy.workoutbuddy;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;

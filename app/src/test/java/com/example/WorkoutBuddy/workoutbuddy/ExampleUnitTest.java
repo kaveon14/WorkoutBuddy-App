@@ -1,23 +1,14 @@
 package com.example.WorkoutBuddy.workoutbuddy;
-
 import android.content.Context;
-
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers.SubWorkoutTable;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.*;
-
-
-
-
-
 /**
  * Example local unit downloadProgressPhotosTest, which will execute on the development machine (host).
  *

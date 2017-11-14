@@ -34,7 +34,7 @@ public class GetDatePopup extends PopupWindowManager {
 
     private void setEditText() {
         EditText editText = (EditText) popupLayout.findViewById(R.id.subWorkoutPopup_editText);
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("MM/getProgressPhoto/yyyy");
         String date = dateFormat.format(new Date());
         editText.setText(date);
     }

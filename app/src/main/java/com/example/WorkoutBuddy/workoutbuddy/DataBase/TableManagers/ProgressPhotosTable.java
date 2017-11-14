@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ProgressPhotoRequestHandler;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class ProgressPhotosTable extends TableManager {
         return data;
     }
 
-    public List<ProgressPhoto> dd() {
+    public List<ProgressPhoto> getProgressPhoto() {
         List<String> dates = getColumn(COLUMN_DATE);
         List<Bitmap> photos = getImageData();
         List<ProgressPhoto> progressPhotos = new ArrayList<>(dates.size());
@@ -79,18 +78,8 @@ public class ProgressPhotosTable extends TableManager {
         return photos;
     }
 
-    public List<ProgressPhoto> getProgressPhotos() {
-        List<String> paths = getColumn(COLUMN_PHOTO_PATH);
-        List<String> dates = getColumn(COLUMN_DATE);
-        List<ProgressPhoto> progressPhotos = new ArrayList<>(paths.size());
-
-
-        for(int x=0;x<paths.size();x++) {
-            String path = paths.get(x);
-            String date = dates.get(x);
-            progressPhotos.add(new ProgressPhoto(date,BitmapFactory.decodeFile(path)));
-        }
-        return progressPhotos;
+    public ProgressPhoto getFullPhoto(String path) {
+        return null;
     }
 
     public void deleteRow(String datesToDelete[]) {

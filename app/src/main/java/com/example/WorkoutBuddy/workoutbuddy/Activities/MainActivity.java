@@ -26,6 +26,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers.*;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.FragmentPopupWindows.ExercisePopupWindows.CustomExercisePopup;
@@ -33,6 +35,8 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackMan
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.*;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+
+import java.util.List;
 
 // TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
 // TODO make sure when a fragment with a recycler view is no longer empty to hide the text view
@@ -91,11 +95,12 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Bitmap customImageBitmap = getGalleryImage(requestCode, resultCode, data);
-        if(customImageBitmap != null) {
+        if(customImageBitmap != null) {//this is null for some reason
             customExercisePopup.setExerciseImageBitmap(customImageBitmap);
             customExercisePopup.setImageViewWithGalleryImage();
         } else  {
-            progressPhoto_frag.saveImage();
+            progressPhoto_frag.saveImage();//error being thrown here when
+            //not clicking on a custom exercise image from the gallery to save
         }
     }
 

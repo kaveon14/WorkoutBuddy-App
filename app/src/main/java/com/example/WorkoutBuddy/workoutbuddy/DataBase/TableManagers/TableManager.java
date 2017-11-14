@@ -150,4 +150,6 @@ public abstract class TableManager {
         readableDatabase.close();
         cursor.close();
     }
+
+
 }
