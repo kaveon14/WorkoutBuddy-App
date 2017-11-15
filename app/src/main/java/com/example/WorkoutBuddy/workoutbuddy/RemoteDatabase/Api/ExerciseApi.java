@@ -1,6 +1,8 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api;
 
-public abstract class ExerciseApi extends CoreAPI {
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI.ROOT_URL;
+
+public abstract class ExerciseApi {
 
     public static final String JSON_EXERCISE_NAME = "exercise_name";
 

@@ -1,5 +1,12 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.provider.ContactsContract;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ExerciseApi;
 //may take a list
 public class ExerciseRequestHandler {//needs to be async task or handled in an async task
@@ -15,4 +22,16 @@ public class ExerciseRequestHandler {//needs to be async task or handled in an a
     public String sendGetAllExercisesRequest(final long userId) {
         return new RequestHandler().sendGetRequest(ExerciseApi.GET_ALL_EXERCISES_URL+userId);
     }
+
+    public void sendGetExerciseImageRequest(final String imageName,Context context) {//should this return a bitmap>\
+        FileDownloadRequest request = new FileDownloadRequest(context);
+        /*ImageRequest imageRequest = new ImageRequest("", new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+
+            }
+        },0,0,null,null);//play with this some more
+        request.addToRequestQueue(imageRequest);*/
+    }
+
 }

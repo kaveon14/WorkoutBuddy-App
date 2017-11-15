@@ -56,10 +56,6 @@ public class ExerciseFragment extends Fragment {//not do transitions and shit
     private List<Exercise> customExerciseList;
     private FragmentStackManager fragmentStackManager;
 
-    public ExerciseFragment() {
-
-    }
-
     public void addExerciseFromSubWorkout(boolean fromSubWorkout) {
         this.fromSubWorkout = fromSubWorkout;
     }

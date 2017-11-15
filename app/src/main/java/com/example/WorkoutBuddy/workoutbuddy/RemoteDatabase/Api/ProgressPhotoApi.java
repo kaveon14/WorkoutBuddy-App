@@ -1,7 +1,9 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api;
 
 
-public abstract class ProgressPhotoApi extends CoreAPI {
+import static com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI.ROOT_URL;
+
+public abstract class ProgressPhotoApi  {
 
     public static final String JSON_DATE_TIME = "date_time";
 

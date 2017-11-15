@@ -149,7 +149,5 @@ public abstract class TableManager {
         }
         readableDatabase.close();
         cursor.close();
-    }
-
-
+    }//when downloading an image set own path in table and shit
 }

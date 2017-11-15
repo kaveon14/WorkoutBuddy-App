@@ -1,16 +1,14 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-public class FileDownloadRequest {
+public class FileDownloadRequest {//change name to request handler or queue
 
     private static FileDownloadRequest fileDownloadRequest;
     private RequestQueue requestQueue;

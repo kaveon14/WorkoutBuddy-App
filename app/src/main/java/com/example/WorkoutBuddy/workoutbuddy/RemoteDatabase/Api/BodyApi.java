@@ -1,6 +1,6 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api;
 
-public abstract class BodyApi extends CoreAPI {
+public abstract class BodyApi  {
 
     public static final String JSON_DATE = "date";
 
