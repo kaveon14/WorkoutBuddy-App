@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.Exercise;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseContract;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers.*;
@@ -35,7 +36,10 @@ import com.example.WorkoutBuddy.workoutbuddy.Fragments.Managers.FragmentStackMan
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.*;
 import com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment;
 import com.example.WorkoutBuddy.workoutbuddy.R;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ExerciseRequestHandler;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ProgressPhotoRequestHandler;
 
+import java.io.File;
 import java.util.List;
 
 // TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity
     private FragmentStackManager fragmentStackManager;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {//pictures ARE downlowading error in exercise table becuase of the way it is stored
         super.onCreate(savedInstanceState);
         setBaseContent();
         getPermissions();
@@ -64,6 +68,13 @@ public class MainActivity extends AppCompatActivity
         fragmentStackManager =
                 new FragmentStackManager(getSupportFragmentManager());
         setTileOnCLickListeners();
+        String imageName = "007-gym.png";
+        Exercise exercise = new Exercise("Test67","This is a test");
+        ExerciseRequestHandler requestHandler = new ExerciseRequestHandler();
+        requestHandler.sendGetExerciseImageRequest(imageName,getApplicationContext(),exercise);
+
+     //   ProgressPhotoRequestHandler requestHandler = new ProgressPhotoRequestHandler();
+       // requestHandler.sendGetProgressPhotoRequest("007-gym.png",getApplicationContext());
     }
 
     private void setBaseContent() {

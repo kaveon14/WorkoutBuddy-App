@@ -11,11 +11,16 @@ public abstract class ProgressPhotoApi  {
 
     private static final String PROGRESS_PHOTO_ROOT_URL = ROOT_URL+"RequestHandlers/ProgressPhotoRequestHandler.php?";
 
-    public static final String GET_PROGRESS_PHOTO_PATH = "request=getProgressPhotoPath&userId=";
+    public static String getGetProgressPhotoPathUrl() {
+        return PROGRESS_PHOTO_ROOT_URL + "request=getProgressPhotoPath&userId="+CoreAPI.getUserId();
+    }
 
+    public static String getUploadPhotoUrl() {
+        return ROOT_URL+"FileUploading/UploadProgressPhoto.php";
+    }
 
-
-    public static final String UPLOAD_PHOTO_URL = ROOT_URL+"FileUploading/UploadProgressPhoto.php";
-
-    public static final String DOWNLOAD_PHOTO_URL = ROOT_URL+"FileDownloading/DownloadProgressPhoto.php?file_name=";
+    public static String getDownloadProgressPhotoUrl(final String file_name) {
+        return ROOT_URL + "FileDownloading/DownloadProgressPhoto.php?userId="+CoreAPI.getUserId()
+                +"&file_name="+file_name;
+    }
 }

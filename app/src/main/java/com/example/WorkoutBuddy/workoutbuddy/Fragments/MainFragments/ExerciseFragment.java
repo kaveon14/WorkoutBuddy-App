@@ -309,7 +309,7 @@ public class ExerciseFragment extends Fragment {//not do transitions and shit
         @Override
         protected String doInBackground(Void... params) {
             ExerciseRequestHandler requestHandler = new ExerciseRequestHandler();
-            return requestHandler.sendGetAllExercisesRequest(CoreAPI.getUserId());
+            return requestHandler.sendGetAllExercisesRequest();
         }
 
         @Override

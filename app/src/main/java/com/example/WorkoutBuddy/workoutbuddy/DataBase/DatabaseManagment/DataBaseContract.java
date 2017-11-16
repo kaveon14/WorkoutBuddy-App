@@ -3,7 +3,7 @@ package com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment;
 import android.provider.BaseColumns;
 import java.util.LinkedList;
 import java.util.List;
-
+//TODO change database to reflect that of the remote one more closely
 public class DataBaseContract {
 
     public static final String COLUMN_ROWID = "_id";
@@ -105,6 +105,8 @@ public class DataBaseContract {
 
         public static final String COLUMN_EXERCISE_IMAGES = "Exercise_Image_IDs";
 
+    public static final String COLUMN_EXERCISE_IMAGE_PATH = "Custom_Exercise_Image_Path";//for custom exercises
+
         public static final String COLUMN_DATE = "Date";
 
         public static final String COLUMN_MAX = "MaxWeight";//never used....I think
@@ -115,6 +117,7 @@ public class DataBaseContract {
                 COLUMN_EXERCISES + " TEXT, " +
                 COLUMN_EXERCISE_DESCRIPTION + " BLOB, " +
                 COLUMN_EXERCISE_IMAGES + " BLOB" +
+                COLUMN_EXERCISE_IMAGE_PATH + " TEXT, " +
                 COLUMN_DATE + " TEXT, " +
                 COLUMN_MAX + " TEXT" + ")";
     }

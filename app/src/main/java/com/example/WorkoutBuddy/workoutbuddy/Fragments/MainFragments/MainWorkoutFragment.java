@@ -314,7 +314,7 @@ public class MainWorkoutFragment extends Fragment {
             for(int x=0;x<array.length();x++) {
                 String mainWorkout_name = ((JSONObject) array.get(x))
                         .getString(WorkoutApi.JSON_MAINWORKOUT_NAME);
-                int rowId = ((JSONObject) array.get(x)).getInt(WorkoutApi.JSON_ROW_ID);
+                int rowId = ((JSONObject) array.get(x)).getInt(CoreAPI.JSON_ROW_ID);
                 MainWorkout mainWorkout = new MainWorkout(mainWorkout_name,null);
                 mainWorkout.setRowId(rowId);
                 mainWorkouts.add(mainWorkout);

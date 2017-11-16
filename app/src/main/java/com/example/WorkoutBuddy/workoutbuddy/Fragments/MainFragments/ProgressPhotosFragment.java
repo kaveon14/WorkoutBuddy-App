@@ -295,7 +295,7 @@ public class ProgressPhotosFragment extends Fragment {
         @Override
         protected String doInBackground(Void... params) {
             ProgressPhotoRequestHandler requestHandler = new ProgressPhotoRequestHandler();
-            return requestHandler.sendGetProgressPhotoPathRequest(CoreAPI.getUserId());
+            return requestHandler.sendGetProgressPhotoPathRequest();
         }
 
         @Override

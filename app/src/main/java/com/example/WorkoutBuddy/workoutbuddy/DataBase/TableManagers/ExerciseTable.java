@@ -42,7 +42,8 @@ public class ExerciseTable extends TableManager {
         values.put(COLUMN_EXERCISE_DESCRIPTION,exercise.getExerciseDescription());
         //if app is slowing down image chosen  may be too big
 
-        try {//take out
+
+        try {
             values.put(COLUMN_EXERCISE_IMAGES, getImageData(exercise));
         } catch (IOException e) {
             e.printStackTrace();
