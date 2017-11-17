@@ -6,9 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.Exercise;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DefaultData.DefaultExerciseContent;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ExerciseApi;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.FileDownloadRequest;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,6 +113,24 @@ public class ExerciseTable extends TableManager {
             exerciseList.add(exercise);
         }
         return exerciseList;
+    }
+
+    public void downloadAndStoreExerciseImage(final String imageName,Exercise exercise) {
+        FileDownloadRequest request = new FileDownloadRequest(context);
+        ImageRequest imageRequest = new ImageRequest(ExerciseApi.getDownloadExercisePhotoUrl(imageName),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        exercise.setExerciseImage(response);
+                        new ExerciseTable(context).addAnExercise(exercise);
+                    }
+                }, 500, 500, null, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.networkResponse);
+            }
+        });
+        request.addToRequestQueue(imageRequest);
     }
 
     public void deleteExercise(Exercise exercise) {

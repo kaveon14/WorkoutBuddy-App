@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
@@ -36,17 +37,21 @@ public class ProgressPhotoRequestHandler extends RequestHandler {
        return "";
     }
 
+    //need better name or possibly be moved altogether
     public void sendGetProgressPhotoRequest(final String imageName, Context context) {
         FileDownloadRequest request = new FileDownloadRequest(context);
         ImageRequest imageRequest = new ImageRequest(ProgressPhotoApi.getDownloadProgressPhotoUrl(imageName),
                 new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {//these of course need to contain real values
+                        new ProgressPhotosTable(context).addProgressPhoto("2017-12-12 17:35:22", "create path", response);
+                    }
+                }, 500, 500, null, new Response.ErrorListener() {
             @Override
-            public void onResponse(Bitmap response) {//this one is fucking working
-                //photo.
-                System.out.println("Workoing");
-                new ProgressPhotosTable(context).addProgressPhoto("2017-12-12 17:35:22","create path",response);
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.networkResponse);
             }
-        },0,0,null,null);//play with this some more
+        });
         request.addToRequestQueue(imageRequest);
     }
 }

@@ -7,8 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.ProgressPhoto;
 import com.example.WorkoutBuddy.workoutbuddy.DataBase.DatabaseManagment.DataBaseSQLiteHelper;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ProgressPhotoApi;
+import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.FileDownloadRequest;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.ProgressPhotoRequestHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -65,6 +71,23 @@ public class ProgressPhotosTable extends TableManager {
         return progressPhotos;
     }
 
+    public void downloadAndStoreProgressPhoto(final String imageName) {
+        FileDownloadRequest request = new FileDownloadRequest(context);
+        ImageRequest imageRequest = new ImageRequest(ProgressPhotoApi.getDownloadProgressPhotoUrl(imageName),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {//these of course need to contain real values
+                        new ProgressPhotosTable(context).addProgressPhoto("2017-12-12 17:35:22", "create path", response);
+                    }
+                }, 500, 500, null, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.networkResponse);
+            }
+        });
+        request.addToRequestQueue(imageRequest);
+    }
+
     public List<Bitmap> getImageData() {
         byte[] data;
         List<Bitmap> photos = new ArrayList<>();
@@ -87,25 +110,4 @@ public class ProgressPhotosTable extends TableManager {
         database.delete(TABLE_NAME,COLUMN_DATE+"=?",datesToDelete);
         database.close();
     }
-
-    public void uploadPhoto(String path) {
-   //    new UploadFileToServer(path).execute();
-
-    }
-
-    /*private class UploadFileToServer extends AsyncTask<Void, Integer, String> {
-
-        String filePath;
-
-        public UploadFileToServer(String filePath) {
-            this.filePath = filePath;
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            ProgressPhotoRequestHandler requestHandler = new ProgressPhotoRequestHandler();
-            return requestHandler.sendPostImageRequest(filePath);
-        }
-    }*/
-
 }

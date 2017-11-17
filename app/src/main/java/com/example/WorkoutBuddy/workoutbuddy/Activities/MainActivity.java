@@ -68,13 +68,6 @@ public class MainActivity extends AppCompatActivity
         fragmentStackManager =
                 new FragmentStackManager(getSupportFragmentManager());
         setTileOnCLickListeners();
-        String imageName = "007-gym.png";
-        Exercise exercise = new Exercise("Test67","This is a test");
-        ExerciseRequestHandler requestHandler = new ExerciseRequestHandler();
-        requestHandler.sendGetExerciseImageRequest(imageName,getApplicationContext(),exercise);
-
-     //   ProgressPhotoRequestHandler requestHandler = new ProgressPhotoRequestHandler();
-       // requestHandler.sendGetProgressPhotoRequest("007-gym.png",getApplicationContext());
     }
 
     private void setBaseContent() {
