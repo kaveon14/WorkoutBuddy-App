@@ -1,14 +1,5 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
-
-import android.content.Context;
-import android.graphics.Bitmap;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.example.WorkoutBuddy.workoutbuddy.DataBase.Data.ProgressPhoto;
-import com.example.WorkoutBuddy.workoutbuddy.DataBase.TableManagers.ProgressPhotosTable;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.ProgressPhotoApi;
 
@@ -35,23 +26,5 @@ public class ProgressPhotoRequestHandler extends RequestHandler {
             e.printStackTrace();
         }
        return "";
-    }
-
-    //need better name or possibly be moved altogether
-    public void sendGetProgressPhotoRequest(final String imageName, Context context) {
-        FileDownloadRequest request = new FileDownloadRequest(context);
-        ImageRequest imageRequest = new ImageRequest(ProgressPhotoApi.getDownloadProgressPhotoUrl(imageName),
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap response) {//these of course need to contain real values
-                        new ProgressPhotosTable(context).addProgressPhoto("2017-12-12 17:35:22", "create path", response);
-                    }
-                }, 500, 500, null, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error.networkResponse);
-            }
-        });
-        request.addToRequestQueue(imageRequest);
     }
 }

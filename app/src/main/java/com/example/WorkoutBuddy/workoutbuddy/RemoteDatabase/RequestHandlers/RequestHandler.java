@@ -1,7 +1,5 @@
 package com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers;
 
-import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;

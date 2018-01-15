@@ -48,8 +48,6 @@ public class ExerciseTable extends TableManager {
         values.put(COLUMN_EXERCISES,exercise.getExerciseName());
         values.put(COLUMN_EXERCISE_DESCRIPTION,exercise.getExerciseDescription());
         //if app is slowing down image chosen  may be too big
-
-
         try {
             values.put(COLUMN_EXERCISE_IMAGES, getImageData(exercise));
         } catch (IOException e) {
@@ -144,7 +142,8 @@ public class ExerciseTable extends TableManager {
 
     public Bitmap getExerciseImage(Exercise exercise) {
         SQLiteDatabase readableDatabase = dataBaseSQLiteHelper.getReadableDatabase();
-        Cursor cursor = readableDatabase.query(TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = readableDatabase.query(TABLE_NAME, null, null,
+                null, null, null, null);
         Bitmap bitmap = getImageData(cursor,exercise);
         cursor.close();
         readableDatabase.close();

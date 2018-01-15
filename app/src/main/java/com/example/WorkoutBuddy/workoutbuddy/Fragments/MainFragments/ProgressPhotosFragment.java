@@ -42,7 +42,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity.REQUEST_IMAGE_CAPTURE;
-
+//TODO this will have to be an activity to work correctly
 public class ProgressPhotosFragment extends Fragment {
 
     private View root;

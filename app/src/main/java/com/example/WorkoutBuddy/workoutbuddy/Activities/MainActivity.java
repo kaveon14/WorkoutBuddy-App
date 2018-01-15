@@ -42,11 +42,6 @@ import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.Prog
 import java.io.File;
 import java.util.List;
 
-// TODO for instant workout add it to one log for the day and add do exercise option to exercise with max sets(dont take date)
-// TODO make sure when a fragment with a recycler view is no longer empty to hide the text view
-// TODO fix sql injection
-// TODO add choice to choose kgs or lbs only store number in database and ask(out in setting withs convertors
-// TODO decouple a lot by using ids instead of exercise name
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

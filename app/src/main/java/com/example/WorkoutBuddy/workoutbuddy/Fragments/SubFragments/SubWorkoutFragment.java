@@ -82,9 +82,12 @@ public class SubWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_subworkout, container, false);
-       //setListView(root);
-        listView =  (ListView) root.findViewById(R.id.subWokoutListView);
-        new RemoteAsyncTask(root).execute();
+        if(CoreAPI.getUserId() == 0) {
+            setListView(root);
+        } else {
+            listView =  (ListView) root.findViewById(R.id.subWokoutListView);
+            new RemoteAsyncTask(root).execute();
+        }
         openWorkoutOnClick(listView);
         addExerciseToSubWorkout(listView);
         setFloatingActionButton();

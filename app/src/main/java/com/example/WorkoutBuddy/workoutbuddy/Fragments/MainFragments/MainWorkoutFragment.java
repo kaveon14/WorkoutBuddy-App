@@ -279,7 +279,6 @@ public class MainWorkoutFragment extends Fragment {
             progressDialog.dismiss();
             recyclerAdapter = new RecyclerAdapter(mainWorkouts);
             setRecycleView(root,recyclerAdapter);
-
         }
 
     }
@@ -303,6 +302,7 @@ public class MainWorkoutFragment extends Fragment {
                     //do toast
                 }
             } catch(JSONException e) {
+                System.out.println(s);
                 e.printStackTrace();
             }
         }
@@ -321,6 +321,5 @@ public class MainWorkoutFragment extends Fragment {
             }
             return mainWorkouts;
         }
-
     }
 }

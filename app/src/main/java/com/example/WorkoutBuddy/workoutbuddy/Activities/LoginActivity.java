@@ -1,5 +1,5 @@
 package com.example.WorkoutBuddy.workoutbuddy.Activities;
-// TODO check for internet connection if no connection load up default data only
+// TODO login in only once, maybe once per month, store userId and shit in database,skip this activity
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -15,20 +15,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.WorkoutBuddy.workoutbuddy.R;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.RequestHandler;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//on this one change name of wokroutbuddy to match the django one
+import java.util.HashMap;
+//on this one change name of workout buddy to match the django one
 //store default on device
 
 // TODO file path example /data/user/0/com.example.kaveon14.workoutbuddy/files/downloadProgressPhotosTest
-
+//these are not right for some reason
 //path for progress images =  /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/ProgressPhotos
 //path for profie images = /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/ProfileImage
 //path for custom exercise images = /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/CustomExerciseImages
@@ -44,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Set up the login form.
         username_textView = (AutoCompleteTextView) findViewById(R.id.username_textView);
+
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -57,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this,"No network connection!",Toast.LENGTH_LONG).show();
         }
         setSkipSignInButton();
+
+
     }
 
     private void setSignInButton() {
@@ -74,7 +79,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // Store values at the time of the login attempt.
         String username = username_textView.getText().toString();
-        UserLoginTask userLoginTask = new UserLoginTask(username);
+        String password = ((EditText) findViewById(R.id.password)).getText().toString();
+        UserLoginTask userLoginTask = new UserLoginTask(username,password);
         userLoginTask.execute();
     }
 
@@ -135,16 +141,19 @@ public class LoginActivity extends AppCompatActivity {
     private class UserLoginTask extends AsyncTask<Void, Void, String> {
 
         private String username;
+        private String password;
 
-        UserLoginTask(String username) {
+        UserLoginTask(String username,String password) {
             this.username = username;
+            this.password = password;
         }
 
         @Override
         protected String doInBackground(Void... params) {
-            String username_url = CoreAPI.LOGIN_URL+username;
-
-            return new RequestHandler().sendGetRequest(username_url);
+            HashMap<String,String> map = new HashMap<>();
+            map.put("username",username);
+            map.put("password",password);
+            return new RequestHandler().sendPostRequest(CoreAPI.LOGIN_URL,map);
         }
 
         @Override
@@ -160,8 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
                     Toast.makeText(getApplicationContext(), jsonObject.getString(CoreAPI.JSON_ERROR_MESSAGE),
                             Toast.LENGTH_SHORT).show();
-                    JSONArray array = jsonObject.getJSONArray("id");
-                    int id = ((JSONObject) array.get(0)).getInt("id");
+                    int id = jsonObject.getInt("id");
                     CoreAPI.setUserId(id);
 
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
@@ -173,7 +181,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                     showProgress(false);
                 }
-
             } catch(JSONException e) {
                 e.printStackTrace();
             }

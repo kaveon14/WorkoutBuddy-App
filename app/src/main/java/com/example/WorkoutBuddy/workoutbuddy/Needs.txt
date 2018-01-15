@@ -1,0 +1,2 @@
+-need to write the php code to get the workouts
+    -add remote async tasks to both full and sub workout stats fragments

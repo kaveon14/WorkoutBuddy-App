@@ -1,0 +1,1 @@
+-Bug in progress photo when taking image, app closes
