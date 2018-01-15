@@ -1,2 +1,15 @@
 -need to write the php code to get the workouts
     -add remote async tasks to both full and sub workout stats fragments
+
+
+-some random image shit
+    //on this one change name of workout buddy to match the django one
+    //store default on device
+
+    // TODO file path example /data/user/0/com.example.kaveon14.workoutbuddy/files/downloadProgressPhotosTest
+    //these are not right for some reason
+    //path for progress images =  /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/ProgressPhotos
+    //path for profie images = /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/ProfileImage
+    //path for custom exercise images = /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/CustomExerciseImages
+
+    // WorkoutBuddy/ExerciseImages/default_exercise_image.png

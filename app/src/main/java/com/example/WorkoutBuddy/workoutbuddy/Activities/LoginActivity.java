@@ -16,26 +16,14 @@ import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.example.WorkoutBuddy.workoutbuddy.R;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.RequestHandlers.RequestHandler;
 import com.example.WorkoutBuddy.workoutbuddy.RemoteDatabase.Api.CoreAPI;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
-//on this one change name of workout buddy to match the django one
-//store default on device
 
-// TODO file path example /data/user/0/com.example.kaveon14.workoutbuddy/files/downloadProgressPhotosTest
-//these are not right for some reason
-//path for progress images =  /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/ProgressPhotos
-//path for profie images = /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/ProfileImage
-//path for custom exercise images = /data/user/0/com.example.WorkoutBuddy.workoutbuddy/files/CustomExerciseImages
-
-// WorkoutBuddy/ExerciseImages/default_exercise_image.png
 public class LoginActivity extends AppCompatActivity {
 
     private AutoCompleteTextView username_textView;
