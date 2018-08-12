@@ -66,11 +66,11 @@ public class BlankSubWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_blank_workout, container, false);
-        if(CoreAPI.getUserId()==CoreAPI.NOT_AVAILABLE) {
-            setListView(root);
-        } else {
-            new RemoteAsyncTask(root).execute();
-        }
+//        if(CoreAPI.getUserId()==CoreAPI.NOT_AVAILABLE) {
+//            setListView(root);
+//        } else {
+//            new RemoteAsyncTask(root).execute();
+//        }
         setTextView(root);
         setFloatingActionButton();
         return root;
@@ -146,7 +146,7 @@ public class BlankSubWorkoutFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Exercise clickedExercise = exerciseList.get(position);
                 openWorkoutFragment(clickedExercise);
-                Exercigiit fetch seFragment.setClickedExercise(clickedExercise);
+                //Exercigiit fetch seFragment.setClickedExercise(clickedExercise);
             }
         });
     }
@@ -233,50 +233,50 @@ public class BlankSubWorkoutFragment extends Fragment {
         }
     }
 
-    private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
-
-        View root;
-
-        public RemoteAsyncTask(View root) {
-            this.root = root;
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            WorkoutRequestHandler requestHandler = new WorkoutRequestHandler();
-            return requestHandler.sendGetSubWorkoutExercisesRequest(
-                    SubWorkoutFragment.getClickedSubWorkout().getRowID());
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
-                    workoutAdapter = new WorkoutAdapter(getContext(),getData(jsonObject));
-                    setListView(root);
-                } else {
-                    //do toast
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private List<Exercise> getData(JSONObject jsonObject) throws JSONException {
-            exerciseList = new ArrayList<>();
-            JSONArray array = jsonObject.getJSONArray(CoreAPI.JSON_KEY);
-            for(int x=0;x<array.length();x++) {
-                String ex_name = ((JSONObject) array.get(x)).getString(ExerciseApi.JSON_EXERCISE_NAME);
-                String reps = ((JSONObject) array.get(x)).getString(WorkoutApi.JSON_GOAL_REPS);
-                String sets = ((JSONObject) array.get(x)).getString(WorkoutApi.JSON_GOAL_SETS);
-                Exercise exercise = new Exercise(ex_name,null);
-                exercise.setGoalReps(reps);
-                exercise.setGoalSets(sets);
-                exerciseList.add(exercise);
-            }
-            return exerciseList;
-        }
-    }
+//    private class RemoteAsyncTask extends AsyncTask<Void, Void, String> {
+//
+//        View root;
+//
+//        public RemoteAsyncTask(View root) {
+//            this.root = root;
+//        }
+//
+//        @Override
+//        protected String doInBackground(Void... params) {
+//            WorkoutRequestHandler requestHandler = new WorkoutRequestHandler();
+//            return requestHandler.sendGetSubWorkoutExercisesRequest(
+//                    SubWorkoutFragment.getClickedSubWorkout().getRowID());
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            try {
+//                JSONObject jsonObject = new JSONObject(s);
+//                if(!jsonObject.getBoolean(CoreAPI.JSON_ERROR)) {
+//                    workoutAdapter = new WorkoutAdapter(getContext(),getData(jsonObject));
+//                    setListView(root);
+//                } else {
+//                    //do toast
+//                }
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        private List<Exercise> getData(JSONObject jsonObject) throws JSONException {
+//            exerciseList = new ArrayList<>();
+//            JSONArray array = jsonObject.getJSONArray(CoreAPI.JSON_KEY);
+//            for(int x=0;x<array.length();x++) {
+//                String ex_name = ((JSONObject) array.get(x)).getString(ExerciseApi.JSON_EXERCISE_NAME);
+//                String reps = ((JSONObject) array.get(x)).getString(WorkoutApi.JSON_GOAL_REPS);
+//                String sets = ((JSONObject) array.get(x)).getString(WorkoutApi.JSON_GOAL_SETS);
+//                Exercise exercise = new Exercise(ex_name,null);
+//                exercise.setGoalReps(reps);
+//                exercise.setGoalSets(sets);
+//                exerciseList.add(exercise);
+//            }
+//            return exerciseList;
+//        }
+//    }
 }
