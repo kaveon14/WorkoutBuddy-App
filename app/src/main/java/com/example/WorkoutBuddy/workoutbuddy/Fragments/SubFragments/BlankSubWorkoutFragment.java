@@ -66,9 +66,12 @@ public class BlankSubWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_blank_workout, container, false);
-        new RemoteAsyncTask(root).execute();
+        if(CoreAPI.getUserId()==CoreAPI.NOT_AVAILABLE) {
+            setListView(root);
+        } else {
+            new RemoteAsyncTask(root).execute();
+        }
         setTextView(root);
-        //setListView(root);
         setFloatingActionButton();
         return root;
     }
@@ -129,7 +132,7 @@ public class BlankSubWorkoutFragment extends Fragment {
         if(workoutAdapter != null) {
             listView.setAdapter(workoutAdapter);
         } else {
-           // listView.setAdapter(setWorkoutAdapter());
+            listView.setAdapter(setWorkoutAdapter());
         }
         openWorkoutOnClick(listView);
         if(workoutAdapter.isEmpty()) {
@@ -143,7 +146,7 @@ public class BlankSubWorkoutFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Exercise clickedExercise = exerciseList.get(position);
                 openWorkoutFragment(clickedExercise);
-                ExerciseFragment.setClickedExercise(clickedExercise);
+                Exercigiit fetch seFragment.setClickedExercise(clickedExercise);
             }
         });
     }
