@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.kaveon14.workoutbuddy.Activity.MainActivity"
+    tools:context="com.example.WorkoutBuddy.workoutbuddy.Activities.MainActivity"
     tools:showIn="@layout/app_bar_main"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ExerciseFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.ExerciseFragment"
         android:id="@+id/exercise_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.MainWorkoutFragment"
         android:id="@+id/mainWorkout_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.SubWorkoutFragment"
         android:id="@+id/subWorkout_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankExerciseFragment"
         android:id="@+id/blankExercise_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.BlankSubWorkoutFragment"
         android:id="@+id/blankWorkout_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,14 +53,14 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.CalenderFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.CalenderFragment"
         android:id="@+id/calendar_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteY="256dp"
         tools:layout_editor_absoluteX="0dp" />
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.BodyStatsFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.BodyStatsFragment"
         android:id="@+id/bodyStats_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.WorkoutStatsFragment"
         android:id="@+id/workoutStats_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.WorkoutFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.WorkoutFragment"
         android:id="@+id/workout_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.SubFragments.FullWorkoutStatsFragment"
         android:id="@+id/fullWorkoutStats_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <FrameLayout
-        class="com.example.kaveon14.workoutbuddy.Fragments.MainFragments.ProgressPhotosFragment"
+        class="com.example.WorkoutBuddy.workoutbuddy.Fragments.MainFragments.ProgressPhotosFragment"
         android:id="@+id/progressPhotos_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -119,6 +119,78 @@
                 android:gravity="center">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/recentWorkoutStatsTile"
+                    android:layout_weight="1"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    app:cardBackgroundColor="@color/caldroid_lighter_gray"
+                    app:cardCornerRadius="0dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/recentWorkoutDateView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="24dp"
+                            android:text="@string/datePointer"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/recentMainWorkoutView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="24dp"
+                            android:text="@string/mainWorkoutPointer"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/recentSubWorkoutView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="24dp"
+                            android:text="@string/subWorkoutPointer"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/recentTotalSetsView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="24dp"
+                            android:text="@string/totalSets"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/recentTotalRepsView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="27dp"
+                            android:text="@string/totalReps"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/recentTotalWeightView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/totalWeight"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
                     android:id="@+id/recentBodyStatsTile"
                     android:layout_weight="1"
                     android:layout_width="150dp"
@@ -129,7 +201,6 @@
                     <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-
 
                         <TableRow
                             android:layout_width="match_parent"
@@ -317,88 +388,9 @@
 
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    android:id="@+id/recentWorkoutStatsTile"
-                    android:layout_weight="1"
-                    android:layout_width="150dp"
-                    android:layout_height="match_parent"
-                    app:cardBackgroundColor="@color/caldroid_lighter_gray"
-                    app:cardCornerRadius="0dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/recentWorkoutDateView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/datePointer"
-                            android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
-
-                        <TextView
-                            android:id="@+id/recentMainWorkoutView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mainWorkoutPointer"
-                            android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
-
-                        <TextView
-                            android:id="@+id/recentSubWorkoutView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/subWorkoutPointer"
-                            android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
-
-                        <TextView
-                            android:id="@+id/recentTotalSetsView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/totalSets"
-                            android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
-
-                        <TextView
-                            android:id="@+id/recentTotalRepsView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/totalReps"
-                            android:textColor="@android:color/black"
-                            android:textSize="15sp"
-                            android:paddingBottom="29dp"/>
-
-                        <TextView
-                            android:id="@+id/recentTotalWeightView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/totalWeight"
-                            android:textColor="@android:color/black"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="500dp" >
 
-                <ImageView
-                    android:id="@+id/progressPhotoView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/caldroid_lighter_gray"
-                    app:srcCompat="@mipmap/no_image" />
-            </TableRow>
 
             <TableRow
                 android:gravity="center"

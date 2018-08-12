@@ -10,6 +10,7 @@
 
 
     <android.support.v7.widget.CardView
+        android:id="@+id/progressPhotoCardView"
         android:layout_width="@dimen/nav_header_height"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

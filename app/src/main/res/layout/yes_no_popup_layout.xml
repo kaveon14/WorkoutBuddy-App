@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/bodyStats_popupWindow"
+    android:id="@+id/yesNo_popupWindow"
     android:layout_width="wrap_content"
     android:layout_centerInParent="true"
     android:layout_height="wrap_content">
@@ -16,7 +16,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/bodystatsPopup_textView"
+                android:id="@+id/POPUP_TEXT_VIEW"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:background="@android:color/white"
@@ -29,7 +29,7 @@
                 android:layout_gravity="center">
 
                 <Button
-                    android:id="@+id/bodyStats_yes_popupBtn"
+                    android:id="@+id/YES_POPUP_BTN"
                     android:background="@drawable/border_accent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                     android:textColor="@color/colorAccent" />
 
                 <Button
-                    android:id="@+id/bodyStats_no_popupBtn"
+                    android:id="@+id/NO_POPUP_BTN"
                     android:background="@drawable/border_accent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

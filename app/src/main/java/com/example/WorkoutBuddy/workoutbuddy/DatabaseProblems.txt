@@ -1,0 +1,24 @@
+//TODO how to keep the databases in sync
+/* Have the remote DB store everything.
+Have a local DB on the device that reflects the remote DB.
+Have the remote DB contain a version number. At some point, either scheduled or triggered,
+the app compares the version numbers in the local and remote and if the local is
+out of date it will update to the current remote DB. */
+
+
+
+Main Problem(s):
+1. local and remote database can make changes
+
+
+
+
+Possible fixes numbered in accordance with Main Problem(s):
+1. possibly use a second database that is a copy
+1. possibly use a second database to track changes made
+
+
+// TODO USE A LAST MODIFIED COLUMN
+//if this database is out of date redo
+//if remote is out of date redo
+//only send most recent changes

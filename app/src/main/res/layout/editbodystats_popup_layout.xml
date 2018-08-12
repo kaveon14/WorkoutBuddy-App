@@ -29,9 +29,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:autoText="true"
+                android:contextClickable="true"
+                android:cursorVisible="true"
                 android:gravity="center"
                 android:text="@string/date"
-                android:textColor="@color/caldroid_black" />
+                android:textColor="@color/caldroid_black"
+                android:theme="@android:style/Widget.Material.EditText" />
 
         </TableRow>
 
